@@ -1,0 +1,14 @@
+
+body {
+ background-image: url(../img/background.jpg);
+ background-size: cover;
+}
+
+div.login-box {
+ background-color: white;
+ margin-top: 20px;
+}
+
+.white {
+ background-color: white;
+}

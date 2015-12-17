@@ -1,0 +1,53 @@
+
+<div class="row">
+    <div class="col-lg-5 login-box">
+        <form class="form-horizontal" name="auth" novalidate ng-submit="login()">
+          <fieldset>
+            <legend>Welcome</legend>
+
+            <div class="form-group" ng-class="{ 'has-error' : auth.email.$invalid && auth.email.$touched }">
+              <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+              <div class="col-lg-10">
+                <input type="email" class="form-control" name="email" ng-model="email" ng-required="true" id="inputEmail" placeholder="Type your attached email" />
+                
+                <div ng-messages="auth.email.$error" ng-if="auth.email.$touched">
+                    <p ng-message="required" class="help-block">The email is required</p>
+                    <p ng-message="email" class="help-block">Invalid email format</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" ng-class="{ 'has-error' : auth.password.$invalid && auth.password.$touched }">
+              <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+              <div class="col-lg-10">
+                <input type="password" class="form-control" name="password" ng-model="password" ng-required="true" id="inputPassword" placeholder="Type your password" />
+                <div ng-messages="auth.password.$error" ng-if="auth.password.$touched">
+                    <p ng-message="required" class="help-block">Password is required</p>
+                </div>
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" /> Remember me
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <div ng-show="failure" class="alert alert-dismissible alert-danger">
+                  <p><i class="glyphicon glyphicon-remove"></i> Invalid email or password</p>
+                </div>
+
+                <div ng-show="success" class="alert alert-dismissible alert-success">
+                  <p>Successfully logged in. Processing...</p>
+                </div>
+
+                <button type="reset" class="btn btn-default">Cancel</button>
+                <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> Login</button>
+              </div>
+            </div>
+
+          </fieldset>
+        </form>
+    </div>
+</div>

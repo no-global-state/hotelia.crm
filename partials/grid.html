@@ -1,0 +1,77 @@
+
+<div class="container">
+    <table class="table white">
+        <thead>
+            <tr>
+                <th class="text-center text-muted">#</th>
+                <th class="text-center">First name</th>
+                <th class="text-center">Last name</th>
+                <th class="text-center">Gender</th>
+                <th class="text-center">Date entered</th>
+                <th class="text-center">Date leave</th>
+                <th class="text-center">Floor</th>
+                <th class="text-center">Room</th>
+                <th class="text-center">Actions</th>
+            </tr>
+            <tr>
+                <th class="col-lg-1">
+                    <input type="number" class="form-control" min="1" />
+                </th>
+                <th>
+                    <input type="text" class="form-control" />
+                </th>
+                <th>
+                    <input type="text" class="form-control" />
+                </th>
+                <th>
+                    <select class="form-control">
+                        <option> - </option>
+                        <option>Male</option>
+                        <option>Female</option>
+                    </select>
+                </th>
+                <th>
+                    <input type="date" class="form-control" />
+                </th>
+                <th>
+                    <input type="date" class="form-control" />
+                </th>
+                <th>
+                    <select class="form-control">
+                        <option></option>
+                    </select>
+                </th>
+                <th>
+                    <select class="form-control">
+                        
+                    </select>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr ng-repeat="record in records">
+                <td class="text-center text-muted">{{ record.id }}</td>
+                <td class="text-center">{{ record.first_name }}</td>
+                <td class="text-center">{{ record.last_name }}</td>
+                <td class="text-center">{{ record.gender }}</td>
+                <td class="text-center">{{ record.date_entered }}</td>
+                <td class="text-center">{{ record.date_leave }}</td>
+                <td class="text-center">{{ record.floor }}</td>
+                <td class="text-center">{{ record.room }}</td>
+                <td>
+                    <a href="#" title="Edit this record"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="#" title="Remove this record"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        <li class="disabled"><a href="#">&laquo;</a></li>
+        <li ng-repeat="page in pages" ng-class="{ 'active' : isActivePage(page) }" ><a ng-click="paginate(page)">{{ page }}</a></li>
+        <li><a href="#">&raquo;</a></li>
+    </ul>
+
+</div>

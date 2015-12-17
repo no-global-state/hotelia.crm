@@ -1,0 +1,32 @@
+[
+	{
+		"id":"1",
+		"first_name" : "Jared",
+        "last_name" : "Thompson",
+        "gender" : "Male",
+        "date_entered" : "13/13/14",
+        "date_leave" : "14/15/16",
+        "floor" : "5",
+        "room" : "511"
+	},
+	{
+		"id":"2",
+		"first_name" : "Michael",
+        "last_name" : "Davison",
+        "gender" : "Male",
+        "date_entered" : "13/13/14",
+        "date_leave" : "14/15/16",
+        "floor" : "4",
+        "room" : "411"
+	},
+	{
+		"id":"3",
+		"first_name":"Jason",
+        "last_name" : "Jack",
+        "gender" : "Male",
+        "date_entered" : "13/13/14",
+        "date_leave" : "14/15/16",
+        "floor" : "3",
+        "room" : "333"
+	}
+]
