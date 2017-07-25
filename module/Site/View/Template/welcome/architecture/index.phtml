@@ -1,0 +1,60 @@
+
+<div class="row">
+    <div class="col-lg-6">
+        <h2>Floors <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
+
+        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success">Add a floor</a></p>
+
+        <table class="table table-bordered table-stripped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($floors as $floor): ?>
+                <tr>
+                    <td><?php echo $floor['id']; ?></td>
+                    <td><?php echo $floor['name']; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url('Site:Architecture:Floor@editAction', $floor['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?php echo $this->url('Site:Architecture:Floor@deleteAction', $floor['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <h2>Rooms <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
+
+        <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success">Add a room</a></p>
+
+        <table class="table table-bordered table-stripped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($rooms as $room): ?>
+                <tr>
+                    <td><?php echo $room['id']; ?></td>
+                    <td><?php echo $room['name']; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?php echo $this->url('Site:Architecture:Room@deleteAction', $room['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
