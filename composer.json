@@ -1,0 +1,19 @@
+{
+    "name": "no-global-state/krystal-skeleton",
+    "description": "Skeleton Application for Krystal Framework",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "krystal"
+    ],
+    "homepage": "http://krystal-framework.ml/",
+    "require": {
+        "php": ">=5.3",
+	    "no-global-state/krystal": "1.2.x"
+    },
+    "autoload": {
+        "psr-0": {
+            "": "module\\"
+        }
+    }
+}

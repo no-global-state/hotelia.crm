@@ -1,0 +1,56 @@
+<h2 class="page-header"><?php $this->show('Registration'); ?></h2>
+
+<?php $this->loadPartial('breadcrumbs'); ?>
+
+<form class="form-horizontal">
+  <fieldset class="col-lg-5">
+
+    <div class="form-group">
+      <label for="inputName" class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" name="name" id="inputName" placeholder="<?php $this->show('Type your full name'); ?>" />
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputEmail" class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" name="email" id="inputEmail" placeholder="<?php $this->show('Type your email'); ?>" />
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" name="password" id="inputPassword" placeholder="<?php $this->show('Type your password'); ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPasswordConfirm" class="col-lg-2 control-label"><?php $this->show('Password again'); ?></label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" name="passwordConfirm" id="inputPasswordConfirm" placeholder="<?php $this->show('Confirm your password'); ?>" />
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inputCaptcha" class="col-lg-2 control-label"></label>
+        <div class="col-lg-10">
+            <a href="#" title="<?php $this->show('Click to refresh'); ?>" data-captcha="button-refresh"><img data-captcha="image" src="<?php echo $this->url('Site:Site@captchaAction', null); ?>" /></a>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label for="inputCaptcha" class="col-lg-2 control-label"></label>
+        <div class="col-lg-10">
+            <input type="text" class="form-control" id="inputCaptcha" name="captcha" placeholder="<?php $this->show("Prove that you are not a bot"); ?>" />
+        </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="col-lg-10 pull-right">
+        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> <?php $this->show('Register'); ?></button>
+      </div>
+    </div>
+  </fieldset>
+</form>
