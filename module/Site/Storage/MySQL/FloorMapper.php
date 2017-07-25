@@ -30,4 +30,18 @@ final class FloorMapper extends AbstractMapper
     {
         return 'id';
     }
+
+    /**
+     * Fetch all rooms by associated floor ID
+     * 
+     * @return array
+     */
+    public function fetchAll()
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->orderBy('id')
+                        ->desc()
+                        ->queryAll();
+    }
 }
