@@ -22,4 +22,28 @@ final class RoomMapper extends AbstractMapper
     {
         return self::getWithPrefix('hotelia_floor_room');
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getPk()
+    {
+        return 'id';
+    }
+
+    /**
+     * Fetch all rooms by associated floor ID
+     * 
+     * @param string $floorId
+     * @return array
+     */
+    public function fetchAll($floorId)
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->whereEquals('floor_id', $floorId)
+                        ->orderBy('id')
+                        ->desc()
+                        ->queryAll();
+    }
 }
