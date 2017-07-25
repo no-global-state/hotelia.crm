@@ -38,6 +38,24 @@
     </nav>
     
     <div class="container" role="main">
+        <?php if ($flashBag->has('success')): ?>
+
+        <div class="alert alert-dismissible alert-success">
+         <button type="button" class="close" data-dismiss="alert">x</button>
+         <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('success')); ?>
+        </div>
+
+        <?php endif; ?>
+
+        <?php if ($flashBag->has('warning')): ?>
+
+        <div class="alert alert-dismissible alert-warning">
+         <button type="button" class="close" data-dismiss="alert">x</button>
+         <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('warning')); ?>
+        </div>
+
+        <?php endif; ?>
+        
         <?php echo $fragment; ?>
     </div>
     
