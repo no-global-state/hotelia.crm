@@ -22,4 +22,12 @@ final class FloorMapper extends AbstractMapper
     {
         return self::getWithPrefix('hotelia_floor');
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function getPk()
+    {
+        return 'id';
+    }
 }
