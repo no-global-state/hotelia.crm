@@ -16,9 +16,9 @@
 
             <tbody>
                 <?php foreach ($floors as $floor): ?>
-                <tr>
+                <tr class="<?php echo $floorId == $floor['id'] ? 'success' : null; ?>">
                     <td><?php echo $floor['id']; ?></td>
-                    <td><?php echo $floor['name']; ?></td>
+                    <td><a href="<?php echo $this->url('Site:Architecture:Grid@floorAction', $floor['id']); ?>"><?php echo $floor['name']; ?></a></td>
                     <td>
                         <a href="<?php echo $this->url('Site:Architecture:Floor@editAction', $floor['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Floor@deleteAction', $floor['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
