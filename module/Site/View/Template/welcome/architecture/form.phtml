@@ -1,0 +1,39 @@
+<?php
+
+use Krystal\Db\Filter\InputDecorator;
+use Krystal\Form\Element;
+
+$entity = new InputDecorator($entity);
+
+?>
+
+<form class="form-horizontal" action="<?php echo $this->url($action); ?>">
+  <fieldset>
+    <legend>Edit record</legend>
+
+    <?php echo Element::hidden('id', $entity['id']); ?>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Name</label>
+      <div class="col-lg-10">
+        <?php echo Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <?php if (isset($floors)): ?>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Floor</label>
+      <div class="col-lg-10">
+        <?php echo Element::select('floor_id', $floors, $entity['floor_id'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+    <?php endif; ?>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <a href="<?php echo $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
