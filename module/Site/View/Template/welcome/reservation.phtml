@@ -39,7 +39,7 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('country', $countries, $client->getCountry(), array('class' => 'form-control')); ?>
+		<?= Element::select('country', $countries, $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
       </div>
     </div>
 

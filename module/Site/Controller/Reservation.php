@@ -18,7 +18,7 @@ class Reservation extends AbstractSiteController
 	{
 		// Load view plugins
 		$this->view->getPluginBag()
-				   ->load('datetimepicker');
+				   ->load(array('chosen', 'datetimepicker'));
 
 		$this->loadApp();
 

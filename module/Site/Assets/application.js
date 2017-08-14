@@ -8,5 +8,10 @@ $(function(){
 			format: 'DD-MM-YYYY hh:mm:ss',
         });
     }
+
+	// Chosen
+    if (jQuery().chosen) {
+        $('[data-plugin="chosen"]').chosen();
+    }
 	
 });
