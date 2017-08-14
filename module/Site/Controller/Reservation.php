@@ -34,7 +34,7 @@ class Reservation extends AbstractSiteController
 			'snack' => 'Afternoon snack'
 		);
 
-		return $this->view->render('reservation', array(
+		return $this->view->render('reservation/form', array(
 			'client' => $client,
 			'countries' => $countries->getAll(),
 			'statuses' => $statuses,
@@ -45,49 +45,39 @@ class Reservation extends AbstractSiteController
 			)
 		));
 	}
-
+	
 	/**
 	 * Default action
 	 * 
 	 * @return string
 	 */
-	public function indexAction()
+	public function addAction()
 	{
 		if ($this->request->isPost()) {
-			return $this->addAction();
+			$data = $this->request->getPost();
+
+			$formValidator = $this->createValidator(array(
+				'input' => array(
+					'source' => $data,
+					'definition' => array(
+						'first_name' => new Pattern\Name(),
+						'last_name' => new Pattern\Name()
+					)
+				)
+			));
+
+			if ($formValidator->isValid()) {
+				$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+				$mapper->persist($data);
+				
+				$this->flashBag->set('success', 'Your request has been sent!');
+				return '1';
+			} else {
+				return $formValidator->getErrors();
+			}
 		} else {
 			$client = new VirtualEntity;
 			return $this->createForm($client);
-		}
-	}
-
-	/**
-	 * Reservates a room
-	 * 
-	 * @return string
-	 */
-	public function addAction()
-	{
-		$data = $this->request->getPost();
-
-		$formValidator = $this->createValidator(array(
-			'input' => array(
-				'source' => $data,
-				'definition' => array(
-					'first_name' => new Pattern\Name(),
-					'last_name' => new Pattern\Name()
-				)
-			)
-		));
-
-		if ($formValidator->isValid()) {
-			$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-			$mapper->persist($data);
-			
-            $this->flashBag->set('success', 'Your request has been sent!');
-            return '1';
-		} else {
-			return $formValidator->getErrors();
 		}
 	}
 }
