@@ -34,6 +34,19 @@ abstract class AbstractSiteController extends AbstractController
         }
     }
 
+	/**
+	 * Load application
+	 * 
+	 * @return void
+	 */
+	protected function loadApp()
+	{
+        // Append required script paths
+        $this->view->getPluginBag()->appendScripts(array(
+			'@Site/application.js',
+        ));
+	}
+
     /**
      * This method automatically gets called when this controller executes
      * 
@@ -61,7 +74,7 @@ abstract class AbstractSiteController extends AbstractController
         $this->view->getPluginBag()->appendScripts(array(
             '@Site/jquery.min.js',
             '@Site/bootstrap/js/bootstrap.min.js',
-            '@Site/krystal.jquery.js'
+            '@Site/krystal.jquery.js',
         ));
 
         // Add shared variables
