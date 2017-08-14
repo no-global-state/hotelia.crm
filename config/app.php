@@ -69,11 +69,23 @@ return array(
             ),
         ),
 
-        /**
+		/**
          * Configuration for view manager
          */
         'view' => array(
-            'theme' => 'welcome'
+            'theme' => 'welcome',
+			'plugins' => array(
+				// Datetime picker
+				'datetimepicker' => array(
+					'scripts' => array(
+						'@Site/datetimepicker/js/moment.min.js',
+						'@Site/datetimepicker/js/bootstrap-datetimepicker.min.js'
+					),
+					'stylesheets' => array(
+						'@Site/datetimepicker/css/bootstrap-datetimepicker.min.css'
+					)
+				)
+			)
         ),
 
         /**
