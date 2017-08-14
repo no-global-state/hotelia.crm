@@ -1,6 +1,18 @@
 <?php
 
 return array(
+	
+	// Reservation
+	'/reservation' => array(
+		'controller' => 'Reservation@indexAction'
+	),
+
+	// Reservation
+	'/reservation/add' => array(
+		'controller' => 'Reservation@addAction'
+	),
+	
+	
 	'/site/captcha/(:var)' => array(
 		'controller' => 'Site@captchaAction'
 	),

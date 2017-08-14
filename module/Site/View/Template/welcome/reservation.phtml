@@ -1,0 +1,101 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal">
+  <fieldset>
+	<h3 class="text-muted"> <? $this->show('Client information'); ?></h3>
+
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('First name'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('first_name', $client->getFirstName(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Last name'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('last_name', $client->getLastName(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Middle name'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('middle_name', $client->getMiddleName(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::select('gender', $genders, $client->getGender(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::select('country', $countries, $client->getCountry(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::select('country', $statuses, $client->getStatus(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+	
+	<h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
+	
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('arrival', $client->getCountry(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('departure', $client->getCountry(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+	<h3 class="text-muted"> <? $this->show('Room'); ?></h3>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Floor'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('room', $client->getRoom(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('room', $client->getRoom(), array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+	<div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Includes'); ?></label>
+      <div class="col-lg-10">
+		<?php foreach($includes as $id => $name): ?>
+		<p><?= Element::checkbox($id, false, array('id' => md5($id))); ?> <label for="<?= md5($id); ?>"><?= $name; ?></label></p>
+		<?php endforeach; ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+        <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
+      </div>
+    </div>
+  </fieldset>
+</form>
