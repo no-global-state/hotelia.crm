@@ -55,14 +55,14 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('arrival', $client->getCountry(), array('class' => 'form-control')); ?>
+		<?= Element::text('arrival', $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('departure', $client->getCountry(), array('class' => 'form-control')); ?>
+		<?= Element::text('departure', $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 

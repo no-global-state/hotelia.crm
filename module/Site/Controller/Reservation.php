@@ -16,6 +16,12 @@ class Reservation extends AbstractSiteController
 	 */
 	private function createForm($client)
 	{
+		// Load view plugins
+		$this->view->getPluginBag()
+				   ->load('datetimepicker');
+
+		$this->loadApp();
+
 		$countries = new Country();
 		$statuses = array(
 			'r' => 'Regular',
