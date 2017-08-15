@@ -4,6 +4,10 @@ return array(
 	
 	// Reservation add
 	'/reservation/add' => array(
+		'controller' => 'Reservation@addAction'
+	),
+
+	'/reservation/index' => array(
 		'controller' => 'Reservation@indexAction'
 	),
 

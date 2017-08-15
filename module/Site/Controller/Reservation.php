@@ -45,7 +45,23 @@ class Reservation extends AbstractSiteController
 			)
 		));
 	}
-	
+
+	/**
+	 * Renders main grid
+	 * 
+	 * @return string
+	 */
+	public function indexAction()
+	{
+		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+		$countries = new Country();
+
+		return $this->view->render('reservation/index', array(
+			'data' => $mapper->fetchAll(),
+			'countries' => $countries->getAll()
+		));
+	}
+
 	/**
 	 * Default action
 	 * 

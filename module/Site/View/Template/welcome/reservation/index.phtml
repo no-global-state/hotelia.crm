@@ -1,0 +1,88 @@
+<?php
+
+use Krystal\Grid\Grid;
+use Krystal\Form\Element;
+
+?>
+
+<br />
+
+<?= Grid::render($data, array(
+    // A column to be considered as a primary key
+    'pk' => 'id',
+    'batch' => false,
+    'columns' => array(
+        array(
+            'column' => 'id',
+            'label' => 'ID'
+        ),
+
+        array(
+            'sorting' => false,
+            'column' => 'country',
+            'label' => 'Country',
+            'type' => 'select',
+            'filter' => $countries
+        ),
+
+        array(
+            'column' => 'first_name',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'First name',
+        ),
+
+        array(
+            'column' => 'last_name',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Last name',
+        ),
+
+        array(
+            'column' => 'middle_name',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Middle name',
+        ),
+
+        array(
+            'column' => 'floor',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Floor',
+        ),
+
+        array(
+            'column' => 'room',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Room',
+        ),
+
+        array(
+            'column' => 'arrival',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Arrival',
+        ),
+
+        array(
+            'column' => 'departure',
+            'type' => 'text',
+            'filter' => true,
+            'label' => 'Departure',
+        ),
+    ),
+    
+    'actions' => array(
+        'delete' => function($row){
+            return '<a href="#"><i class="glyphicon glyphicon-remove"></i></a>';
+        },
+        
+        'update' => function($row){
+            return '<a href="#"><i class="glyphicon glyphicon-pencil"></i></a>';
+        }
+    )
+    
+)); ?>
