@@ -21,4 +21,19 @@ final class ReservationMapper extends AbstractMapper
 	{
 		return 'id';
 	}
+
+	/**
+	 * Fetch all records
+	 * 
+	 * @return array
+	 */
+	public function fetchAll()
+	{
+		$db = $this->db->select('*')
+					   ->from(self::getTableName())
+					   ->orderBy('id')
+					   ->desc();
+
+		return $db->queryAll();
+	}
 }
