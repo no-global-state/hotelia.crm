@@ -1,6 +1,11 @@
 <?php
 
 return array(
+
+	// Reservation add
+	'/reservation/table' => array(
+		'controller' => 'Reservation@tableAction'
+	),
 	
 	// Reservation add
 	'/reservation/add' => array(

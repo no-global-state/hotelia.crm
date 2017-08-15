@@ -47,6 +47,36 @@ class Reservation extends AbstractSiteController
 	}
 
 	/**
+	 * @return array
+	 */
+	private function createTable()
+	{
+		$output = array();
+
+		$roomMapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
+		$floorMapper = $this->createMapper('\Site\Storage\MySQL\FloorMapper');
+
+		foreach ($floorMapper->fetchAll() as $floor) {
+			$floor['rooms'] = $roomMapper->fetchAll($floor['id']);
+			$output[] = $floor;
+		}
+
+		return $output;
+	}
+
+	/**
+	 * Renders the table
+	 * 
+	 * @return string
+	 */
+	public function tableAction()
+	{
+		return $this->view->render('reservation/table', array(
+			'table' => $this->createTable()
+		));
+	}
+
+	/**
 	 * Renders main grid
 	 * 
 	 * @return string

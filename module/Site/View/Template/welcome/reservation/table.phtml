@@ -1,0 +1,32 @@
+
+<style>
+
+.floor-row {
+	
+}
+
+.floor-row > div {
+ min-height: 30px;
+ background: #79d4d8;
+ margin-right: 15px;
+ text-align: center;
+ font-weight: bold;
+}
+
+</style>
+
+<div class="container">
+<?php foreach (array_reverse($table) as $floor): ?>
+
+<h2><?= $floor['name']; ?></h2>
+
+<div class="row floor-row">
+	<?php foreach (array_reverse($floor['rooms']) as $room): ?>
+	<div class="col-lg-1">
+		<p><?= $room['name']; ?></p>
+	</div>
+	<?php endforeach; ?>
+</div>
+
+<?php endforeach; ?>
+</div>
