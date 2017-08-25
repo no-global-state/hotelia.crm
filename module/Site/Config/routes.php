@@ -1,7 +1,6 @@
 <?php
 
 return array(
-
 	// Reservation add
 	'/reservation/table' => array(
 		'controller' => 'Reservation@tableAction'
@@ -42,6 +41,22 @@ return array(
 		'controller' => 'Register@indexAction'
 	),
 
+	'/architecture/room-type' => array(
+		'controller' => 'Architecture:RoomType@indexAction'
+	),
+
+	'/architecture/room-type/edit/(:var)' => array(
+		'controller' => 'Architecture:RoomType@editAction'
+	),
+
+	'/architecture/room-type/delete/(:var)' => array(
+		'controller' => 'Architecture:RoomType@deleteAction'
+	),
+
+	'/architecture/room-type/save' => array(
+		'controller' => 'Architecture:RoomType@saveAction'
+	),
+	
 	'/architecture' => array(
 		'controller' => 'Architecture:Grid@indexAction'
 	),

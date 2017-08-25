@@ -1,0 +1,55 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<div class="row">
+    <div class="col-lg-3">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($types as $type): ?>
+                <tr class="<?= $type['id'] == $id ? 'success' : null; ?>">
+                    <td><?= $type['id']; ?></td>
+                    <td><?= $type['type']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-3">
+        <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomType@saveAction'); ?>">
+          <fieldset>
+            <legend><?php $this->show(!$entity['id'] ? 'Add room type' : 'Edit room type'); ?></legend>
+
+            <?= Element::hidden('id', $entity['id']); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('type', $entity['type'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
