@@ -5,7 +5,7 @@ use Krystal\Form\Element;
 ?>
 
 <div class="row">
-    <div class="col-lg-3">
+    <div class="col-lg-6">
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -30,7 +30,7 @@ use Krystal\Form\Element;
         </table>
     </div>
 
-    <div class="col-lg-3">
+    <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomType@saveAction'); ?>">
           <fieldset>
             <legend><?php $this->show(!$entity['id'] ? 'Add room type' : 'Edit room type'); ?></legend>
@@ -47,6 +47,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+                <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
               </div>
             </div>
           </fieldset>
