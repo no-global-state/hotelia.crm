@@ -41,6 +41,7 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -50,6 +51,7 @@
                 <tr>
                     <td><?php echo $room['id']; ?></td>
                     <td><?php echo $room['name']; ?></td>
+                    <td><?php echo $room['type']; ?></td>
                     <td>
                         <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Room@deleteAction', $room['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>

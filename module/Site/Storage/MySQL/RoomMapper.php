@@ -39,8 +39,24 @@ final class RoomMapper extends AbstractMapper
      */
     public function fetchAll($floorId)
     {
-        return $this->db->select('*')
+        // Columns to be selected
+        $columns = array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('floor_id'),
+            self::getFullColumnName('type_id'),
+            self::getFullColumnName('name'),
+            RoomTypeMapper::getFullColumnName('type')
+        );
+
+        return $this->db->select($columns)
                         ->from(self::getTableName())
+                        // Type relation
+                        ->leftJoin(RoomTypeMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('type_id'),
+                            RoomTypeMapper::getRawColumn('id')
+                        )
                         ->whereEquals('floor_id', $floorId)
                         ->orderBy('id')
                         ->desc()
