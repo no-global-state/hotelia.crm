@@ -25,19 +25,6 @@ final class Site extends AbstractSiteController
     }
 
     /**
-     * This simple action demonstrates how to deal with variables in route maps
-     * 
-     * @param string $name
-     * @return string
-     */
-    public function helloAction($name)
-    {
-        return $this->view->render('hello', array(
-            'name' => urldecode($name)
-        ));
-    }
-
-    /**
      * This action gets executed when a request to non-existing route has been made
      * 
      * @return string

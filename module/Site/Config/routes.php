@@ -23,14 +23,6 @@ return array(
 		'controller' => 'Site@indexAction'
 	),
 
-	'/hello/(:var)' => array(
-		'controller' => 'Site@helloAction',
-	),
-
-	'/contact' => array(
-		'controller' => 'Contact@indexAction'
-	),
-	
 	'/auth/login' => array(
 		'controller' => 'Auth@indexAction'
 	),
