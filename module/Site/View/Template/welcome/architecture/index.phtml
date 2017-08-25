@@ -43,6 +43,7 @@
                     <th>#</th>
                     <th><? $this->show('Name'); ?></th>
                     <th><? $this->show('Type'); ?></th>
+                    <th><? $this->show('Maximal person amount'); ?></th>
                     <th><? $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -53,6 +54,7 @@
                     <td><?php echo $room['id']; ?></td>
                     <td><?php echo $room['name']; ?></td>
                     <td><?php echo $room['type']; ?></td>
+                    <td><?php echo $room['persons']; ?></td>
                     <td>
                         <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Room@deleteAction', $room['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
