@@ -37,9 +37,8 @@ final class Floor extends AbstractSiteController
 
             return 1;
         } else {
-            return $this->view->render('architecture/form', array(
-                'entity' => $entity,
-                'action' => 'Site:Architecture:Floor@saveAction'
+            return $this->view->render('architecture/form-floor', array(
+                'entity' => $entity
             ));
         }
     }

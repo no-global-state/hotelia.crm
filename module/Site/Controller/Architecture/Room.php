@@ -49,10 +49,9 @@ final class Room extends AbstractSiteController
 
             return 1;
         } else {
-            return $this->view->render('architecture/form', array(
+            return $this->view->render('architecture/form-room', array(
                 'entity' => $entity,
-                'floors' => $this->getFloors(),
-                'action' => 'Site:Architecture:Room@saveAction'
+                'floors' => $this->getFloors()
             ));
         }
     }
