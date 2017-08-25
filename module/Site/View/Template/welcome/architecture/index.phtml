@@ -3,17 +3,16 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h2>Floors <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
-
-        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success">Add a floor</a></p>
+        <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
+        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
 
         <table class="table table-bordered table-stripped">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Room count</th>
-                    <th>Actions</th>
+                    <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Room count'); ?></th>
+                    <th><? $this->show('Actions'); ?></th>
                 </tr>
             </thead>
 
@@ -34,17 +33,17 @@
     </div>
 
     <div class="col-lg-6">
-        <h2>Rooms <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
+        <h2><? $this->show('Rooms'); ?> <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
 
-        <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success">Add a room</a></p>
+        <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
 
         <table class="table table-bordered table-stripped">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Actions</th>
+                    <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Type'); ?></th>
+                    <th><? $this->show('Actions'); ?></th>
                 </tr>
             </thead>
 

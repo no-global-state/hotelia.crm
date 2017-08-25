@@ -9,12 +9,12 @@ $entity = new InputDecorator($entity);
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:Floor@saveAction'); ?>">
   <fieldset>
-    <legend>Edit record</legend>
+    <legend><? $this->show('Edit the floor'); ?></legend>
 
     <?= Element::hidden('id', $entity['id']); ?>
 
     <div class="form-group">
-      <label class="col-lg-2 control-label">Name</label>
+      <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
       <div class="col-lg-10">
         <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
       </div>
@@ -22,8 +22,8 @@ $entity = new InputDecorator($entity);
 
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger">Cancel</a>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+        <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
       </div>
     </div>
   </fieldset>
