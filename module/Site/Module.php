@@ -9,6 +9,14 @@ use Site\Storage\Memory\UserMapper;
 final class Module extends AbstractModule
 {
     /**
+     * {@inheritDoc}
+     */
+    public function getTranslations($language)
+    {
+        return include(__DIR__ . sprintf('/Translations/%s.php', $language));
+    }
+
+    /**
      * Returns routes of this module
      * 
      * @return array

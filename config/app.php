@@ -104,7 +104,7 @@ return array(
          */
         'translator' => array(
             // Default language
-            'default' => 'en',
+            'default' => $_ENV['language'],
         ),
 
         /**
