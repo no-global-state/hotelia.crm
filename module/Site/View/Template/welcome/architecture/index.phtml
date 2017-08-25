@@ -12,6 +12,7 @@
                 <tr>
                     <th>#</th>
                     <th>Name</th>
+                    <th>Room count</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                 <tr class="<?php echo $floorId == $floor['id'] ? 'success' : null; ?>">
                     <td><?php echo $floor['id']; ?></td>
                     <td><a href="<?php echo $this->url('Site:Architecture:Grid@floorAction', $floor['id']); ?>"><?php echo $floor['name']; ?></a></td>
+                    <td><?php echo $floor['room_count']; ?></td>
                     <td>
                         <a href="<?php echo $this->url('Site:Architecture:Floor@editAction', $floor['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Floor@deleteAction', $floor['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>

@@ -38,8 +38,22 @@ final class FloorMapper extends AbstractMapper
      */
     public function fetchAll()
     {
-        return $this->db->select('*')
+        $columns = array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('name')
+        );
+
+        return $this->db->select($columns)
+                        ->count(RoomMapper::getFullColumnName('floor_id'), 'room_count')
                         ->from(self::getTableName())
+                        // Room relation
+                        ->innerJoin(RoomMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('id'),
+                            RoomMapper::getRawColumn('floor_id')
+                        )
+                        ->groupBy($columns)
                         ->orderBy('id')
                         ->desc()
                         ->queryAll();
