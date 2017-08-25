@@ -192,6 +192,7 @@ $(function(){
             var data = $(this).serialize();
 
             $.ajax({
+                url: $form.attr('action') ? $form.attr('action') : '',
                 type : "POST",
                 data : data,
                 success : function(response){
