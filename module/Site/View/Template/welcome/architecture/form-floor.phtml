@@ -9,7 +9,7 @@ $entity = new InputDecorator($entity);
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:Floor@saveAction'); ?>">
   <fieldset>
-    <legend><? $this->show('Edit the floor'); ?></legend>
+    <legend><? $this->show($entity['id'] ? 'Edit the floor' : 'Add a floor'); ?></legend>
 
     <?= Element::hidden('id', $entity['id']); ?>
 
