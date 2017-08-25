@@ -7,6 +7,7 @@ CREATE TABLE hotelia_floor (
 CREATE TABLE hotelia_floor_room (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `floor_id` INT NOT NULL,
+    `type_id` INT NOT NULL COMMENT 'Room type ID',
     `name` varchar(255) NOT NULL
 );
 

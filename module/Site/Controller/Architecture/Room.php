@@ -36,6 +36,17 @@ final class Room extends AbstractSiteController
     }
 
     /**
+     * Returns room types
+     * 
+     * @return array
+     */
+    private function getRoomTypes()
+    {
+        $rows = $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll();
+        return ArrayUtils::arrayList($rows, 'id', 'type');
+    }
+
+    /**
      * Saves a room
      * 
      * @param array $room
@@ -51,7 +62,8 @@ final class Room extends AbstractSiteController
         } else {
             return $this->view->render('architecture/form-room', array(
                 'entity' => $entity,
-                'floors' => $this->getFloors()
+                'floors' => $this->getFloors(),
+                'roomTypes' => $this->getRoomTypes()
             ));
         }
     }
