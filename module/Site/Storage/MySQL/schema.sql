@@ -9,7 +9,8 @@ CREATE TABLE hotelia_floor_room (
     `floor_id` INT NOT NULL,
     `type_id` INT NOT NULL COMMENT 'Room type ID',
     `persons` INT COMMENT 'Maximal amount of persons for the room'
-    `name` varchar(255) NOT NULL
+    `name` varchar(255) NOT NULL,
+    `square` float COMMENT 'Square of the room'
 );
 
 CREATE TABLE hotelia_floor_room_types (
