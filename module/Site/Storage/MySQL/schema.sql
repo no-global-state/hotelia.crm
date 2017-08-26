@@ -23,6 +23,14 @@ CREATE TABLE hotelia_inventory (
     `name` varchar(255) NOT NULL
 );
 
+CREATE TABLE hotelia_room_inventory (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `room_id` INT NOT NULL COMMENT 'Attached room ID',
+    `inventory_id` INT NOT NULL COMMENT 'Attached inventory ID',
+    `code` varchar(255) NOT NULL COMMENT 'Serial number or code',
+    `qty` INT NOT NULL COMMENT 'Quantity',
+    `comment` TEXT
+);
 
 DROP TABLE IF EXISTS hotelia_reservation;
 CREATE TABLE hotelia_reservation (
