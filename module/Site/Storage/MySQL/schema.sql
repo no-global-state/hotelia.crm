@@ -17,18 +17,14 @@ CREATE TABLE hotelia_floor_room_types (
     `type` varchar(255) NOT NULL
 );
 
-
 DROP TABLE IF EXISTS hotelia_reservation;
 CREATE TABLE hotelia_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-	`first_name` varchar(255) NOT NULL,
-	`last_name` varchar(255) NOT NULL,
-	`middle_name` varchar(255) NOT NULL,
+	`room_id` INT NOT NULL,
+	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
 	`gender` varchar(1) NOT NULL,
 	`country` varchar(2) NOT NULL,
 	`status` varchar(1) NOT NULL,
-	`floor` SMALLINT NOT NULL,
-	`room` SMALLINT NOT NULL,
 	`includes` varchar(100),
 
 	/* Date */

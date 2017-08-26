@@ -9,30 +9,16 @@ use Krystal\Form\Element;
 	<h3 class="text-muted"> <? $this->show('Client information'); ?></h3>
 
 	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('First name'); ?></label>
+      <label class="col-lg-2 control-label"><? $this->show('Full name'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('first_name', $client->getFirstName(), array('class' => 'form-control')); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Last name'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('last_name', $client->getLastName(), array('class' => 'form-control')); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Middle name'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('middle_name', $client->getMiddleName(), array('class' => 'form-control')); ?>
+		<?= Element::text('full_name', $client->getFullName(), array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('gender', $genders, $client->getGender(), array('class' => 'form-control')); ?>
+		<?= Element::select('gender', $this->translateArray($genders), $client->getGender(), array('class' => 'form-control')); ?>
       </div>
     </div>
 
@@ -69,16 +55,9 @@ use Krystal\Form\Element;
 	<h3 class="text-muted"> <? $this->show('Room'); ?></h3>
 
     <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Floor'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('room', $client->getRoom(), array('class' => 'form-control')); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('room', $client->getRoom(), array('class' => 'form-control')); ?>
+		<?= Element::select('room_id', $rooms, $client->getRoom(), array('class' => 'form-control')); ?>
       </div>
     </div>
 

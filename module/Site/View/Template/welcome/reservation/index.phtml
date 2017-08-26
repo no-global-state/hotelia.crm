@@ -26,37 +26,16 @@ use Krystal\Form\Element;
         ),
 
         array(
-            'column' => 'first_name',
+            'column' => 'full_name',
             'type' => 'text',
             'filter' => true,
-            'label' => 'First name',
-        ),
-
-        array(
-            'column' => 'last_name',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Last name',
-        ),
-
-        array(
-            'column' => 'middle_name',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Middle name',
-        ),
-
-        array(
-            'column' => 'floor',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Floor',
+            'label' => 'Full name',
         ),
 
         array(
             'column' => 'room',
-            'type' => 'text',
-            'filter' => true,
+            'type' => 'select',
+            'filter' => $rooms,
             'label' => 'Room',
         ),
 

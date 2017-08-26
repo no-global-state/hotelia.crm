@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Krystal\Iso\ISO3166\Country;
 use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 
 class Reservation extends AbstractSiteController
 {
@@ -39,6 +40,7 @@ class Reservation extends AbstractSiteController
 			'countries' => $countries->getAll(),
 			'statuses' => $statuses,
 			'includes' => $includes,
+            'rooms' => $this->createRooms(),
 			'genders' => array(
 				'M' => 'Male',
 				'F' => 'Female'
@@ -64,6 +66,23 @@ class Reservation extends AbstractSiteController
 		return $output;
 	}
 
+    /**
+     * Create rooms
+     * 
+     * @return array
+     */
+    private function createRooms()
+    {
+        $output = array();
+        $rows = $this->createTable();
+
+        foreach ($rows as $row) {
+            $output[$row['name']] = ArrayUtils::arrayList($row['rooms'], 'id', 'name');
+        }
+
+        return $output;
+    }
+
 	/**
 	 * Renders the table
 	 * 
@@ -88,7 +107,8 @@ class Reservation extends AbstractSiteController
 
 		return $this->view->render('reservation/index', array(
 			'data' => $mapper->fetchAll(),
-			'countries' => $countries->getAll()
+			'countries' => $countries->getAll(),
+            'rooms' => $this->createRooms()
 		));
 	}
 
@@ -106,8 +126,7 @@ class Reservation extends AbstractSiteController
 				'input' => array(
 					'source' => $data,
 					'definition' => array(
-						'first_name' => new Pattern\Name(),
-						'last_name' => new Pattern\Name()
+						'full_name' => new Pattern\Name(),
 					)
 				)
 			));
@@ -115,7 +134,7 @@ class Reservation extends AbstractSiteController
 			if ($formValidator->isValid()) {
 				$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
 				$mapper->persist($data);
-				
+
 				$this->flashBag->set('success', 'Your request has been sent!');
 				return '1';
 			} else {
