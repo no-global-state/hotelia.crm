@@ -91,10 +91,27 @@ return array(
 		'controller' => 'Architecture:Room@deleteAction'
 	),
 
+    // Room inventory
+	'/architecture/room/(:var)/inventory' => array(
+		'controller' => 'Architecture:RoomInventory@indexAction'
+	),
+
+	'/architecture/room/(:var)/inventory/edit/(:var)' => array(
+		'controller' => 'Architecture:RoomInventory@editAction'
+	),
+
+	'/architecture/room/inventory/save' => array(
+		'controller' => 'Architecture:RoomInventory@saveAction'
+	),
+
+	'/architecture/room/(:var)/inventory/delete/(:var)' => array(
+		'controller' => 'Architecture:RoomInventory@deleteAction'
+	),
+
 	'/architecture/floor/add' => array(
 		'controller' => 'Architecture:Floor@saveAction'
 	),
-	
+
 	'/architecture/floor/save' => array(
 		'controller' => 'Architecture:Floor@saveAction'
 	),
