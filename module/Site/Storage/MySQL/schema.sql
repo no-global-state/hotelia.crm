@@ -32,6 +32,14 @@ CREATE TABLE hotelia_room_inventory (
     `comment` TEXT
 );
 
+CREATE TABLE hotelia_room_services (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL,
+    `price` FLOAT NOT NULL,
+    `unit` varchar(3) NOT NULL,
+    `comment` TEXT
+);
+
 DROP TABLE IF EXISTS hotelia_reservation;
 CREATE TABLE hotelia_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
