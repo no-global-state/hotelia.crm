@@ -6,3 +6,20 @@
 div[role='main'] {
     margin-top: 79px;
 }
+
+/* Table overrides */
+.table > thead {
+ background: #5079a5;
+ color: #fff;
+ font-family: Tahoma;
+}
+
+.table > thead a, 
+.table > thead a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.table-striped>tbody>tr:nth-of-type(odd) {
+  background-color: #e8eff7;
+}
