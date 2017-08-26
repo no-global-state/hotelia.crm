@@ -33,10 +33,13 @@ use Krystal\Form\Element;
         ),
 
         array(
-            'column' => 'room',
+            'column' => 'room_id',
             'type' => 'select',
             'filter' => $rooms,
             'label' => 'Room',
+            'value' => function($row){
+                return $row['room'];
+            }
         ),
 
         array(
