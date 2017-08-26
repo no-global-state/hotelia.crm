@@ -1,0 +1,86 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><? $this->show('Room inventory'); ?> <small>(<?= count($inventories); ?>)</small></h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Code'); ?></th>
+                    <th><?php $this->show('Inventory'); ?></th>
+                    <th><?php $this->show('Quantity'); ?></th>
+                    <th><?php $this->show('Comment'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($inventories as $inventory): ?>
+                <tr class="<?= $inventory['id'] == $id ? 'success' : null; ?>">
+                    <td><?= $inventory['id']; ?></td>
+                    <td><?= $inventory['code']; ?></td>
+                    <td><?= $inventory['inventory']; ?></td>
+                    <td><?= $inventory['qty']; ?></td>
+                    <td><?= $inventory['comment']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Architecture:RoomInventory@editAction', $roomId, $inventory['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:Architecture:RoomInventory@deleteAction', $roomId, $inventory['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomInventory@saveAction', $roomId); ?>">
+          <fieldset>
+            <legend><?php $this->show(!$entity['id'] ? 'Add an inventory' : 'Edit the inventory'); ?></legend>
+
+            <?= Element::hidden('id', $entity['id']); ?>
+            <?= Element::hidden('room_id', $roomId); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Inventory'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('inventory_id', $collection, $entity['inventory_id'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Quantity'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::number('qty', $entity['qty'], array('class' => 'form-control', 'min' => 1)); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Code'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('code', $entity['code'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Comment'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('comment', $entity['comment'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+                <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
