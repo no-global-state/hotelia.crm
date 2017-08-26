@@ -6,7 +6,7 @@
         <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
         <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
 
-        <table class="table table-bordered table-stripped">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
@@ -37,7 +37,7 @@
 
         <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
 
-        <table class="table table-bordered table-stripped">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
                     <th>#</th>
