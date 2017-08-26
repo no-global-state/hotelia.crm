@@ -18,6 +18,12 @@ CREATE TABLE hotelia_floor_room_types (
     `type` varchar(255) NOT NULL
 );
 
+CREATE TABLE hotelia_inventory (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL
+);
+
+
 DROP TABLE IF EXISTS hotelia_reservation;
 CREATE TABLE hotelia_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
