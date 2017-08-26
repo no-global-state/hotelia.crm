@@ -1,6 +1,24 @@
 <?php
 
 return array(
+
+	// Inventory
+	'/inventory' => array(
+		'controller' => 'Inventory@indexAction'
+	),
+
+	'/inventory/edit/(:var)' => array(
+		'controller' => 'Inventory@editAction'
+	),
+
+	'/inventory/delete/(:var)' => array(
+		'controller' => 'Inventory@deleteAction'
+	),
+    
+	'/inventory/save' => array(
+		'controller' => 'Inventory@saveAction'
+	),
+    
 	// Reservation add
 	'/reservation/table' => array(
 		'controller' => 'Reservation@tableAction'
