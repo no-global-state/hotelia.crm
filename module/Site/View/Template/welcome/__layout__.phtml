@@ -39,6 +39,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('My hotel'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><? $this->show('Architecture'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a></li>
               </ul>
             </li>
             <?php if (!$isLoggedIn): ?>
