@@ -2,6 +2,7 @@
 
 use Krystal\Grid\Grid;
 use Krystal\Form\Element;
+use Krystal\Iso\ISO3166\Country;
 
 ?>
 
@@ -24,7 +25,11 @@ use Krystal\Form\Element;
             'column' => 'country',
             'label' => 'Country',
             'type' => 'select',
-            'filter' => $countries
+            'filter' => $countries,
+            'value' => function($row){
+                $country = new Country();
+                return $country->getCountryByCode($row['country']);
+            }
         ),
 
         array(
