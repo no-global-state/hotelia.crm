@@ -2,6 +2,22 @@
 
 return array(
 
+    '/services' => array(
+		'controller' => 'Service@indexAction'
+    ),
+    
+    '/services/edit/(:var)' => array(
+		'controller' => 'Service@editAction'
+    ),
+
+    '/services/delete/(:var)' => array(
+		'controller' => 'Service@deleteAction'
+    ),
+
+    '/services/save' => array(
+		'controller' => 'Service@saveAction'
+    ),
+
 	// Inventory
 	'/inventory' => array(
 		'controller' => 'Inventory@indexAction'
