@@ -45,6 +45,7 @@
                     <th><? $this->show('Type'); ?></th>
                     <th><? $this->show('Square'); ?></th>
                     <th><? $this->show('Maximal person amount'); ?></th>
+                    <th><? $this->show('Cleaning status'); ?></th>
                     <th><? $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -57,6 +58,7 @@
                     <td><?php echo $room['type']; ?></td>
                     <td><?php echo $room['square']; ?></td>
                     <td><?php echo $room['persons']; ?></td>
+                    <td><?php $this->show($cleaningCollection->findByKey($room['cleaned'])); ?></td>
                     <td>
                         <a href="<?php echo $this->url('Site:Architecture:RoomInventory@indexAction', $room['id']); ?>"><i class="glyphicon glyphicon-eject"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>

@@ -49,6 +49,13 @@ $entity = new InputDecorator($entity);
     </div>
 
     <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Cleaning status'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('cleaned', $this->translateArray($cleaningCollection->getAll()), $entity['cleaned'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
         <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>

@@ -12,6 +12,7 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractSiteController;
+use Site\Service\CleaningCollection;
 use Krystal\Stdlib\ArrayUtils;
 
 final class Room extends AbstractSiteController
@@ -63,7 +64,8 @@ final class Room extends AbstractSiteController
             return $this->view->render('architecture/form-room', array(
                 'entity' => $entity,
                 'floors' => $this->getFloors(),
-                'roomTypes' => $this->getRoomTypes()
+                'roomTypes' => $this->getRoomTypes(),
+                'cleaningCollection' => new CleaningCollection()
             ));
         }
     }
