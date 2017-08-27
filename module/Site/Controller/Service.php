@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
+use Site\Service\UnitCollection;
 
 final class Service extends AbstractSiteController
 {
@@ -28,7 +29,8 @@ final class Service extends AbstractSiteController
         return $this->view->render('services/index', array(
             'services' => $this->createServiceMapper()->fetchAll(),
             'entity' => $entity,
-            'id' => $entity['id']
+            'id' => $entity['id'],
+            'unitCollection' => new UnitCollection
         ));
     }
 

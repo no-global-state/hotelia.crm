@@ -25,7 +25,7 @@ use Krystal\Form\Element;
                     <td><?= $service['id']; ?></td>
                     <td><?= $service['name']; ?></td>
                     <td><?= $service['price']; ?></td>
-                    <td><?= $service['unit']; ?></td>
+                    <td><?php $this->show($unitCollection->findByKey($service['unit'])); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Service@editAction', $service['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?= $this->url('Site:Service@deleteAction', $service['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
@@ -60,7 +60,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Unit'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('unit', $entity['unit'], array('class' => 'form-control')); ?>
+                <?= Element::select('unit', $this->translateArray($unitCollection->getAll()), $entity['unit'], array('class' => 'form-control')); ?>
               </div>
             </div>
 
