@@ -8,6 +8,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
 use Site\Service\ReservationCollection;
+use Site\Service\PurposeCollection;
 
 class Reservation extends AbstractSiteController
 {
@@ -38,6 +39,7 @@ class Reservation extends AbstractSiteController
 			'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
             'states' => (new ReservationCollection)->getAll(),
+            'purposes' => (new PurposeCollection)->getAll(),
 			'genders' => array(
 				'M' => 'Male',
 				'F' => 'Female'

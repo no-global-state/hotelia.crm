@@ -38,6 +38,14 @@ use Krystal\Form\Element;
       </div>
     </div>
 
+    
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+    
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Reservation state'); ?></label>
       <div class="col-lg-10">
