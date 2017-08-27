@@ -83,6 +83,29 @@ final class ReservationMapper extends AbstractMapper
     }
 
     /**
+     * Fetches reservation by its ID
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->whereEquals($this->getPk(), $id)
+                        // Service relation
+                        ->asManyToMany(
+                            self::PARAM_COLUMN_ATTACHED, 
+                            self::getJunctionTableName(), 
+                            self::PARAM_JUNCTION_MASTER_COLUMN, 
+                            RoomServiceMapper::getTableName(), 
+                            'id', 
+                            '*' // Columns to be selected in Service table
+                        )
+                        ->query();
+    }
+
+    /**
      * Fetch all records
      * 
      * @return array

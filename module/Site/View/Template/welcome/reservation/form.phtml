@@ -66,7 +66,7 @@ use Krystal\Form\Element;
 	<div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Includes'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('services[]', $services, null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'multiple' => true)); ?>
+		<?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'multiple' => true)); ?>
       </div>
     </div>
 

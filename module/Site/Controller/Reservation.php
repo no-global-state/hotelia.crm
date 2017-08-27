@@ -142,9 +142,15 @@ class Reservation extends AbstractSiteController
     public function editAction($id)
     {
 		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-        $entity = $mapper->findByPk($id);
+        $entity = $mapper->fetchById($id);
 
         if ($entity) {
+            $entity['service_ids'] = array();
+
+            foreach ($entity['services'] as $row) {
+                $entity['service_ids'][] = $row['id'];
+            }
+
             return $this->createForm($entity);
         } else {
             return false;
