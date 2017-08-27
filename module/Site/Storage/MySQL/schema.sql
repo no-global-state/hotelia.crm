@@ -48,14 +48,13 @@ CREATE TABLE hotelia_reservation (
 	`gender` varchar(1) NOT NULL,
 	`country` varchar(2) NOT NULL,
 	`status` varchar(1) NOT NULL,
-	`includes` varchar(100),
 
 	/* Date */
 	`arrival` varchar(30) NOT NULL,
-	`departure` varchar(20) NOT NULL,
+	`departure` varchar(20) NOT NULL
+);
 
-	/* Food */
-	`breakfast` varchar(1) NOT NULL,
-	`dinner` varchar(1) NOT NULL,
-	`snack` varchar(1) NOT NULL
+CREATE TABLE hotelia_reservation_services (
+    `master_id` INT NOT NULL COMMENT 'Reservation ID',
+    `slave_id` INT NOT NULL COMMENT 'Service ID'
 );
