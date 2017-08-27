@@ -6,13 +6,14 @@ use Krystal\Iso\ISO3166\Country;
 use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Db\Filter\InputDecorator;
 
 class Reservation extends AbstractSiteController
 {
 	/**
 	 * Creates a form
 	 * 
-	 * @param \Krystal\Stdlib\VirtualEntity $client
+	 * @param \Krystal\Db\Filter\InputDecorator|array $client
 	 * @return string
 	 */
 	private function createForm($client)
@@ -106,42 +107,81 @@ class Reservation extends AbstractSiteController
 		));
 	}
 
+    /**
+     * Deletes a reservation
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function deleteAction($id)
+    {
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $mapper->deleteById($id);
+
+        $this->flashBag->set('danger', 'Selected reservation has been removed successfully');
+
+        return $this->redirectToRoute('Site:Reservation@indexAction');
+    }
+
+    /**
+     * Renders adding form
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        return $this->createForm(new InputDecorator());
+    }
+
+    /**
+     * Edits a reservation
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function editAction($id)
+    {
+		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $entity = $mapper->findByPk($id);
+
+        if ($entity) {
+            return $this->createForm($entity);
+        } else {
+            return false;
+        }
+    }
+
 	/**
-	 * Default action
+	 * Saves a reservation
 	 * 
 	 * @return string
 	 */
-	public function addAction()
+	public function saveAction()
 	{
-		if ($this->request->isPost()) {
-			$data = $this->request->getPost();
+        $data = $this->request->getPost();
 
-			$formValidator = $this->createValidator(array(
-				'input' => array(
-					'source' => $data,
-					'definition' => array(
-						'full_name' => new Pattern\Name(),
-					)
-				)
-			));
+        $formValidator = $this->createValidator(array(
+            'input' => array(
+                'source' => $data,
+                'definition' => array(
+                    'full_name' => new Pattern\Name(),
+                )
+            )
+        ));
 
-			if ($formValidator->isValid()) {
-				$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-                
-                if (!empty($data['id'])){
-                    $mapper->update($data);
-                } else {
-                    $mapper->insert($data);
-                }
+        if ($formValidator->isValid()) {
+            $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
 
-				$this->flashBag->set('success', 'Your request has been sent!');
-				return '1';
-			} else {
-				return $formValidator->getErrors();
-			}
-		} else {
-			$client = new VirtualEntity;
-			return $this->createForm($client);
-		}
+            if (!empty($data['id'])) {
+                $mapper->update($data);
+            } else {
+                $mapper->insert($data);
+            }
+
+            $this->flashBag->set('success', 'Your request has been sent!');
+            return '1';
+        } else {
+            return $formValidator->getErrors();
+        }
 	}
 }

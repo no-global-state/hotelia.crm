@@ -4,35 +4,37 @@ use Krystal\Form\Element;
 
 ?>
 
-<form class="form-horizontal">
+<form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
   <fieldset>
 	<h3 class="text-muted"> <? $this->show('Client information'); ?></h3>
+
+    <?= Element::hidden('id', $client['id']); ?>
 
 	<div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Full name'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('full_name', $client->getFullName(), array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
+		<?= Element::text('full_name', $client['full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('gender', $this->translateArray($genders), $client->getGender(), array('class' => 'form-control')); ?>
+		<?= Element::select('gender', $this->translateArray($genders), $client['gender'], array('class' => 'form-control')); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('country', $countries, $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
+		<?= Element::select('country', $countries, $client['country'], array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('country', $statuses, $client->getStatus(), array('class' => 'form-control')); ?>
+		<?= Element::select('status', $statuses, $client['status'], array('class' => 'form-control')); ?>
       </div>
     </div>
 	
@@ -41,14 +43,14 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('arrival', $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+		<?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('departure', $client->getCountry(), array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+		<?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 
@@ -57,7 +59,7 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('room_id', $rooms, $client->getRoom(), array('class' => 'form-control')); ?>
+		<?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control')); ?>
       </div>
     </div>
 

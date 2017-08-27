@@ -45,10 +45,22 @@ return array(
 		'controller' => 'Reservation@addAction'
 	),
 
+	'/reservation/save' => array(
+		'controller' => 'Reservation@saveAction'
+	),
+
 	'/reservation/index' => array(
 		'controller' => 'Reservation@indexAction'
 	),
 
+	'/reservation/edit/(:var)' => array(
+		'controller' => 'Reservation@editAction'
+	),
+    
+	'/reservation/delete/(:var)' => array(
+		'controller' => 'Reservation@deleteAction'
+	),
+    
 	'/site/captcha/(:var)' => array(
 		'controller' => 'Site@captchaAction'
 	),

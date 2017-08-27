@@ -66,11 +66,10 @@ use Krystal\Iso\ISO3166\Country;
     
     'actions' => array(
         'delete' => function($row){
-            return '<a href="#"><i class="glyphicon glyphicon-remove"></i></a>';
+            return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
         },
-        
         'update' => function($row){
-            return '<a href="#"><i class="glyphicon glyphicon-pencil"></i></a>';
+            return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
         }
     )
     
