@@ -29,17 +29,11 @@ class Reservation extends AbstractSiteController
 			'v' => 'VIP'
 		);
 
-		$includes = array(
-			'breakfast' => 'Breakfast',
-			'dinner' => 'Dinner',
-			'snack' => 'Afternoon snack'
-		);
-
 		return $this->view->render('reservation/form', array(
 			'client' => $client,
 			'countries' => $countries->getAll(),
 			'statuses' => $statuses,
-			'includes' => $includes,
+			'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
 			'genders' => array(
 				'M' => 'Male',
@@ -133,7 +127,12 @@ class Reservation extends AbstractSiteController
 
 			if ($formValidator->isValid()) {
 				$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-				$mapper->persist($data);
+                
+                if (!empty($data['id'])){
+                    $mapper->update($data);
+                } else {
+                    $mapper->insert($data);
+                }
 
 				$this->flashBag->set('success', 'Your request has been sent!');
 				return '1';

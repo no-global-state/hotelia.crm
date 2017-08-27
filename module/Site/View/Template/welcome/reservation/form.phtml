@@ -64,9 +64,7 @@ use Krystal\Form\Element;
 	<div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Includes'); ?></label>
       <div class="col-lg-10">
-		<?php foreach($includes as $id => $name): ?>
-		<p><?= Element::checkbox($id, false, array('id' => md5($id))); ?> <label for="<?= md5($id); ?>"><?= $name; ?></label></p>
-		<?php endforeach; ?>
+		<?= Element::select('services[]', $services, null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'multiple' => true)); ?>
       </div>
     </div>
 
