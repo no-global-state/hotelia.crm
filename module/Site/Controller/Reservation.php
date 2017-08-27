@@ -7,6 +7,7 @@ use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
+use Site\Service\ReservationCollection;
 
 class Reservation extends AbstractSiteController
 {
@@ -36,6 +37,7 @@ class Reservation extends AbstractSiteController
 			'statuses' => $statuses,
 			'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
+            'states' => (new ReservationCollection)->getAll(),
 			'genders' => array(
 				'M' => 'Male',
 				'F' => 'Female'
@@ -95,7 +97,7 @@ class Reservation extends AbstractSiteController
 	 * 
 	 * @return string
 	 */
-	public function indexAction()
+    public function indexAction()
 	{
 		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
 		$countries = new Country();
@@ -103,7 +105,8 @@ class Reservation extends AbstractSiteController
 		return $this->view->render('reservation/index', array(
 			'data' => $mapper->fetchAll(),
 			'countries' => $countries->getAll(),
-            'rooms' => $this->createRooms()
+            'rooms' => $this->createRooms(),
+            'reservationCollection' => new ReservationCollection
 		));
 	}
 

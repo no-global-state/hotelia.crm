@@ -50,6 +50,16 @@ use Krystal\Iso\ISO3166\Country;
         ),
 
         array(
+            'column' => 'state',
+            'type' => 'select',
+            'filter' => $reservationCollection->getAll(),
+            'label' => 'Reservation state',
+            'value' => function($row) use ($reservationCollection){
+                return $reservationCollection->findByKey($row['state']);
+            }
+        ),
+
+        array(
             'column' => 'arrival',
             'type' => 'text',
             'filter' => true,
