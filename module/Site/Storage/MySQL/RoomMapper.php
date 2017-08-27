@@ -47,6 +47,7 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('persons'),
             self::getFullColumnName('name'),
             self::getFullColumnName('square'),
+            self::getFullColumnName('cleaned'),
             RoomTypeMapper::getFullColumnName('type')
         );
 
