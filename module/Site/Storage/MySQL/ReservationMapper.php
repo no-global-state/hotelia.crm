@@ -120,6 +120,7 @@ final class ReservationMapper extends AbstractMapper
             self::getFullColumnName('gender'),
             self::getFullColumnName('country'),
             self::getFullColumnName('status'),
+            self::getFullColumnName('state'),
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure'),
             RoomMapper::getFullColumnName('name') => 'room'
