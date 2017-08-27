@@ -56,6 +56,10 @@
     </nav>
     
     <div class="container" role="main">
+        <?php if ($flashBag->has('danger')): ?>
+        <div class="alert alert-danger" role="alert"><i class="glyphicon glyphicon-ok"></i> <?= $flashBag->get('danger'); ?></div>
+        <?php endif; ?>
+
         <?php if ($flashBag->has('success')): ?>
         <div class="alert alert-success" role="alert"><i class="glyphicon glyphicon-ok"></i> <?= $flashBag->get('success'); ?></div>
         <?php endif; ?>
