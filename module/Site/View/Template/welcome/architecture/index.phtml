@@ -2,37 +2,7 @@
 <a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a>
 
 <div class="row">
-    <div class="col-lg-6">
-        <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
-        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
-
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th><? $this->show('Name'); ?></th>
-                    <th><? $this->show('Room count'); ?></th>
-                    <th><? $this->show('Actions'); ?></th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php foreach ($floors as $floor): ?>
-                <tr class="<?php echo $floorId == $floor['id'] ? 'success' : null; ?>">
-                    <td><?php echo $floor['id']; ?></td>
-                    <td><a href="<?php echo $this->url('Site:Architecture:Grid@floorAction', $floor['id']); ?>"><?php echo $floor['name']; ?></a></td>
-                    <td><?php echo $floor['room_count']; ?></td>
-                    <td>
-                        <a href="<?php echo $this->url('Site:Architecture:Floor@editAction', $floor['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?php echo $this->url('Site:Architecture:Floor@deleteAction', $floor['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="col-lg-6">
+    <div class="col-lg-7">
         <h2><? $this->show('Rooms'); ?> <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
 
         <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
@@ -63,6 +33,36 @@
                         <a href="<?php echo $this->url('Site:Architecture:RoomInventory@indexAction', $room['id']); ?>"><i class="glyphicon glyphicon-eject"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?php echo $this->url('Site:Architecture:Room@deleteAction', $room['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-5">
+        <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
+        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Room count'); ?></th>
+                    <th><? $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($floors as $floor): ?>
+                <tr class="<?php echo $floorId == $floor['id'] ? 'success' : null; ?>">
+                    <td><?php echo $floor['id']; ?></td>
+                    <td><a href="<?php echo $this->url('Site:Architecture:Grid@floorAction', $floor['id']); ?>"><?php echo $floor['name']; ?></a></td>
+                    <td><?php echo $floor['room_count']; ?></td>
+                    <td>
+                        <a href="<?php echo $this->url('Site:Architecture:Floor@editAction', $floor['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?php echo $this->url('Site:Architecture:Floor@deleteAction', $floor['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
