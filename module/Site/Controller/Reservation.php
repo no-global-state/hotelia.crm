@@ -145,11 +145,8 @@ class Reservation extends AbstractSiteController
         $entity = $mapper->fetchById($id);
 
         if ($entity) {
-            $entity['service_ids'] = array();
-
-            foreach ($entity['services'] as $row) {
-                $entity['service_ids'][] = $row['id'];
-            }
+            // Append IDs
+            $entity['service_ids'] = array_column($entity['services'], 'id');
 
             return $this->createForm($entity);
         } else {
