@@ -44,6 +44,36 @@ use Krystal\Form\Element;
 		<?= Element::email('email', $client['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type email if any'))); ?>
       </div>
     </div>
+	
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
+      </div>
+    </div>
+
+	<h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
+	
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+      </div>
+    </div>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Payment type'); ?></label>
@@ -60,39 +90,9 @@ use Krystal\Form\Element;
     </div>
     
     <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Reservation state'); ?></label>
       <div class="col-lg-10">
 		<?= Element::select('state', $this->translateArray($states), $client['state'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-	
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
-      </div>
-    </div>
-
-	<h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
-	
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 
