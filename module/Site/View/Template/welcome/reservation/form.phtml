@@ -37,14 +37,13 @@ use Krystal\Form\Element;
 		<?= Element::text('phone', $client['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Client phone with code'))); ?>
       </div>
     </div>
-    
+
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
       <div class="col-lg-10">
 		<?= Element::select('status', $statuses, $client['status'], array('class' => 'form-control')); ?>
       </div>
     </div>
-
     
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
@@ -60,6 +59,13 @@ use Krystal\Form\Element;
       </div>
     </div>
 	
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
+      </div>
+    </div>
+
 	<h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
 	
     <div class="form-group">

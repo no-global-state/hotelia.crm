@@ -52,6 +52,7 @@ CREATE TABLE hotelia_reservation (
     `state` SMALLINT(1) NOT NULL COMMENT 'Reservation state code',
     `purpose` SMALLINT(1) NOT NULL COMMENT 'Reservation purpose code',
     `phone` varchar(250) TEXT NOT NULL,
+    `comment` TEXT NOT NULL COMMENT 'Additional note if any'
 
 	/* Date */
 	`arrival` varchar(30) NOT NULL,
