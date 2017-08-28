@@ -49,6 +49,13 @@ $entity = new InputDecorator($entity);
     </div>
 
     <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Room quality status'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('quality', $this->translateArray($roomQualities), $entity['quality'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Cleaning status'); ?></label>
       <div class="col-lg-10">
         <?= Element::select('cleaned', $this->translateArray($cleaningCollection->getAll()), $entity['cleaned'], array('class' => 'form-control')); ?>

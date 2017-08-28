@@ -13,6 +13,7 @@ namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractSiteController;
 use Site\Service\CleaningCollection;
+use Site\Service\RoomQualityCollection;
 
 final class Grid extends AbstractSiteController
 {
@@ -44,7 +45,8 @@ final class Grid extends AbstractSiteController
             'floors' => $this->createFloorMapper()->fetchAll(),
             'floorId' => $id,
             'rooms' => $this->createRoomMapper()->fetchAll($id),
-            'cleaningCollection' => new CleaningCollection()
+            'cleaningCollection' => new CleaningCollection(),
+            'roomQualityCollection' => new RoomQualityCollection()
         ));
     }
 
