@@ -2,7 +2,7 @@
 <a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a>
 
 <div class="row">
-    <div class="col-lg-7">
+    <div class="col-lg-8">
         <h2><? $this->show('Rooms'); ?> <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
 
         <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
@@ -42,7 +42,7 @@
         </table>
     </div>
 
-    <div class="col-lg-5">
+    <div class="col-lg-4">
         <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
         <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
 
