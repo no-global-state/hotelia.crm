@@ -53,6 +53,7 @@ CREATE TABLE hotelia_reservation (
     `purpose` SMALLINT(1) NOT NULL COMMENT 'Reservation purpose code',
     `payment_type` SMALLINT(1) NOT NULL COMMENT 'Payment type code',
     `phone` varchar(250) TEXT NOT NULL,
+    `email` varchar(100) NOT NULL,
     `comment` TEXT NOT NULL COMMENT 'Additional note if any'
 
 	/* Date */
