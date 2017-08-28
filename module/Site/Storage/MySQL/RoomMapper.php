@@ -32,6 +32,48 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Fetches cleaning data of rooms
+     * 
+     * @return array
+     */
+    public function fetchCleaning()
+    {
+        // Columns to be selected
+        $columns = array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('floor_id'),
+            self::getFullColumnName('type_id'),
+            self::getFullColumnName('persons'),
+            self::getFullColumnName('name'),
+            self::getFullColumnName('square'),
+            self::getFullColumnName('quality'),
+            self::getFullColumnName('cleaned'),
+            RoomTypeMapper::getFullColumnName('type'),
+            FloorMapper::getFullColumnName('name') => 'floor'
+        );
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Type relation
+                        ->leftJoin(RoomTypeMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('type_id'),
+                            RoomTypeMapper::getRawColumn('id')
+                        )
+                        // Floor relation
+                        ->leftJoin(FloorMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('floor_id'),
+                            FloorMapper::getRawColumn('id')
+                        )
+                        ->orderBy(array(FloorMapper::getFullColumnName('name')))
+                        ->desc()
+                        ->queryAll();
+    }
+
+    /**
      * Fetch all rooms by associated floor ID
      * 
      * @param string $floorId
