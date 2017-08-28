@@ -10,6 +10,7 @@ use Krystal\Db\Filter\InputDecorator;
 use Site\Service\ReservationCollection;
 use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
+use Site\Service\LegalStatusCollection;
 
 class Reservation extends AbstractSiteController
 {
@@ -39,9 +40,11 @@ class Reservation extends AbstractSiteController
 			'statuses' => $statuses,
 			'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
+            // Collections
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
+            'legalStatuses' => (new LegalStatusCollection)->getAll(),
 			'genders' => array(
 				'M' => 'Male',
 				'F' => 'Female'
@@ -137,7 +140,10 @@ class Reservation extends AbstractSiteController
      */
     public function addAction()
     {
-        return $this->createForm(new InputDecorator());
+        $entity = new InputDecorator();
+        $entity['legal_status'] = 1;
+
+        return $this->createForm($entity);
     }
 
     /**
