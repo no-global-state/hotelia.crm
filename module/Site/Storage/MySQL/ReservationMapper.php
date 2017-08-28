@@ -123,6 +123,7 @@ final class ReservationMapper extends AbstractMapper
             self::getFullColumnName('phone'),
             self::getFullColumnName('state'),
             self::getFullColumnName('purpose'),
+            self::getFullColumnName('legal_status'),
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure'),
             RoomMapper::getFullColumnName('name') => 'room'
