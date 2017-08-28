@@ -9,6 +9,7 @@ use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
 use Site\Service\ReservationCollection;
 use Site\Service\PurposeCollection;
+use Site\Service\PaymentTypeCollection;
 
 class Reservation extends AbstractSiteController
 {
@@ -40,6 +41,7 @@ class Reservation extends AbstractSiteController
             'rooms' => $this->createRooms(),
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
+            'paymentTypes' => (new PaymentTypeCollection)->getAll(),
 			'genders' => array(
 				'M' => 'Male',
 				'F' => 'Female'
