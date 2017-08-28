@@ -79,6 +79,15 @@ return array(
 		'controller' => 'Register@indexAction'
 	),
 
+    // Room cleaning
+    '/architecture/room-cleaning' => array(
+		'controller' => 'Architecture:RoomCleaning@indexAction'
+    ),
+    
+    '/architecture/room-cleaning/mark/(:var)' => array(
+		'controller' => 'Architecture:RoomCleaning@markAction'
+    ),
+    
 	'/architecture/room-type' => array(
 		'controller' => 'Architecture:RoomType@indexAction'
 	),
