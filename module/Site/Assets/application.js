@@ -14,4 +14,15 @@ $(function(){
         $('[data-plugin="chosen"]').chosen();
     }
 	
+    var $form = $("form");
+
+    $(".form-action-group .dropdown-menu > li > a").click(function(event){
+        event.preventDefault();
+
+        var href = $(this).attr('href');
+
+        $form.attr('action', href);
+        $form.submit();
+    });
+    
 });

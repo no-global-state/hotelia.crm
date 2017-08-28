@@ -1,0 +1,76 @@
+<?php
+
+use Krystal\Grid\Grid;
+use Krystal\Form\Element;
+use Site\Service\CleaningCollection;
+
+?>
+
+<br />
+
+<h2 class="page-header"><i class="glyphicon glyphicon-user"></i> <? $this->show('Room cleaning'); ?></h2>
+
+<form method="POST">
+    <div>
+        <div class="btn-group form-action-group">
+          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> <? $this->show('Apply to selected'); ?></a>
+          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', CleaningCollection::CODE_CLEANED); ?>"><i class="glyphicon glyphicon-ok"></i> <? $this->show('Mark as cleaned'); ?></a></li>
+            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', CleaningCollection::CODE_NONCLEANED); ?>"><i class="glyphicon glyphicon-remove"></i> <? $this->show('Mark as non-cleaned'); ?></a></li>
+            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', CleaningCollection::CODE_CHECKING); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Mark as checking'); ?></a></li>
+            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', CleaningCollection::CODE_UNDEFINED); ?>"><i class="glyphicon glyphicon-share"></i> <? $this->show('Mark as undefined'); ?></a></li>
+          </ul>
+        </div>
+    </div>
+
+    <br />
+
+    <?= Grid::render($data, array(
+        // A column to be considered as a primary key
+        'pk' => 'id',
+        'batch' => true,
+        'columns' => array(
+            array(
+                'column' => 'floor_id',
+                'type' => 'select',
+                'filter' => $floors,
+                'label' => 'Floor',
+                'value' => function($row){
+                    return $row['floor'];
+                }
+            ),
+
+            array(
+                'column' => 'name',
+                'type' => 'text',
+                'filter' => true,
+                'label' => 'Room',
+                'value' => function($row){
+                    return $row['name'];
+                }
+            ),
+
+            array(
+                'column' => 'type_id',
+                'type' => 'select',
+                'filter' => $types,
+                'label' => 'Type',
+                'value' => function($row){
+                    return $row['type'];
+                }
+            ),
+
+            array(
+                'column' => 'cleaned',
+                'type' => 'select',
+                'filter' => (new CleaningCollection())->getAll(),
+                'label' => 'Cleaned',
+                'value' => function($row){
+                    return (new CleaningCollection())->findByKey($row['cleaned']);
+                }
+            )
+        )
+    )); ?>
+
+</form>

@@ -42,8 +42,10 @@
                 <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><? $this->show('Inventory'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><? $this->show('Services'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><? $this->show('Room cleaning'); ?></a></li>
               </ul>
             </li>
+            
             <?php if (!$isLoggedIn): ?>
             <li><a href="<?php echo $this->url('Site:Auth@indexAction'); ?>"><?php $this->show('Login'); ?></a></li>
             <?php else: ?>
