@@ -56,7 +56,8 @@ div[role='main'] {
  word-wrap: break-all;
 }
 
-.floor-row > div p {
+.floor-row > div p,
+.floor-row > div a {
  color: #fff;
  font-size: 12px;
 }

@@ -90,6 +90,8 @@ class Reservation extends AbstractSiteController
      */
     public function tableAction()
     {
+        $this->loadApp();
+
         return $this->view->render('reservation/table', array(
             'table' => $this->createTable()
         ));

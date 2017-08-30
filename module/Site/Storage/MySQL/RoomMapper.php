@@ -99,6 +99,7 @@ final class RoomMapper extends AbstractMapper
             new RawSqlFragment('(CURDATE() BETWEEN arrival AND departure) AS taken'),
             new RawSqlFragment('(CURDATE() > departure) AS free'),
             new RawSqlFragment('(CURDATE() = departure) AS leaving_today'),
+            new RawSqlFragment('DATEDIFF(departure, CURDATE()) AS left_days'),
         );
 
         return $this->db->select($columns)

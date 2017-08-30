@@ -16,12 +16,17 @@ $(function(){
             locale: locale
         });
     }
-
+    
 	// Chosen
     if (jQuery().chosen) {
         $('[data-plugin="chosen"]').chosen();
     }
-	
+
+    // Init tooltip
+    $('[data-toggle="tooltip"]').tooltip({
+        placement: "bottom"
+    }); 	
+
     var $form = $("form");
 
     $(".form-action-group .dropdown-menu > li > a").click(function(event){

@@ -30,7 +30,7 @@
             <?php if ($leavingToday): ?>
             <p class="leaving"><? $this->show('Leaving today'); ?></p>
             <?php else: ?>
-            <p><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></p>
+            <a href="#" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
             <?php endif ;?>
 
             <?php endif; ?>
