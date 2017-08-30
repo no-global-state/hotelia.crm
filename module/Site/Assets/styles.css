@@ -23,3 +23,11 @@ div[role='main'] {
 .table-striped>tbody>tr:nth-of-type(odd) {
   background-color: #e8eff7;
 }
+
+.summary > h4 {
+ display: inline-block;
+}
+
+.summary button {
+ float: right;
+}
