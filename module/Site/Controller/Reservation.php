@@ -7,6 +7,7 @@ use Krystal\Validate\Pattern;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
+use Krystal\Db\Filter\FilterInvoker;
 use Site\Service\ReservationCollection;
 use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
@@ -14,61 +15,61 @@ use Site\Service\LegalStatusCollection;
 
 class Reservation extends AbstractSiteController
 {
-	/**
-	 * Creates a form
-	 * 
-	 * @param \Krystal\Db\Filter\InputDecorator|array $client
-	 * @return string
-	 */
-	private function createForm($client)
-	{
-		// Load view plugins
-		$this->view->getPluginBag()
-				   ->load(array('chosen', 'datetimepicker'));
+    /**
+     * Creates a form
+     * 
+     * @param \Krystal\Db\Filter\InputDecorator|array $client
+     * @return string
+     */
+    private function createForm($client)
+    {
+        // Load view plugins
+        $this->view->getPluginBag()
+                   ->load(array('chosen', 'datetimepicker'));
 
-		$this->loadApp();
+        $this->loadApp();
 
-		$countries = new Country();
-		$statuses = array(
-			'r' => 'Regular',
-			'v' => 'VIP'
-		);
+        $countries = new Country();
+        $statuses = array(
+            'r' => 'Regular',
+            'v' => 'VIP'
+        );
 
-		return $this->view->render('reservation/form', array(
-			'client' => $client,
-			'countries' => $countries->getAll(),
-			'statuses' => $statuses,
-			'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
+        return $this->view->render('reservation/form', array(
+            'client' => $client,
+            'countries' => $countries->getAll(),
+            'statuses' => $statuses,
+            'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
             // Collections
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
-			'genders' => array(
-				'M' => 'Male',
-				'F' => 'Female'
-			)
-		));
-	}
+            'genders' => array(
+                'M' => 'Male',
+                'F' => 'Female'
+            )
+        ));
+    }
 
-	/**
-	 * @return array
-	 */
-	private function createTable()
-	{
-		$output = array();
+    /**
+     * @return array
+     */
+    private function createTable()
+    {
+        $output = array();
 
-		$roomMapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
-		$floorMapper = $this->createMapper('\Site\Storage\MySQL\FloorMapper');
+        $roomMapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
+        $floorMapper = $this->createMapper('\Site\Storage\MySQL\FloorMapper');
 
-		foreach ($floorMapper->fetchAll() as $floor) {
-			$floor['rooms'] = $roomMapper->fetchAll($floor['id']);
-			$output[] = $floor;
-		}
+        foreach ($floorMapper->fetchAll() as $floor) {
+            $floor['rooms'] = $roomMapper->fetchAll($floor['id']);
+            $output[] = $floor;
+        }
 
-		return $output;
-	}
+        return $output;
+    }
 
     /**
      * Create rooms
@@ -87,35 +88,44 @@ class Reservation extends AbstractSiteController
         return $output;
     }
 
-	/**
-	 * Renders the table
-	 * 
-	 * @return string
-	 */
-	public function tableAction()
-	{
-		return $this->view->render('reservation/table', array(
-			'table' => $this->createTable()
-		));
-	}
+    /**
+     * Renders the table
+     * 
+     * @return string
+     */
+    public function tableAction()
+    {
+        return $this->view->render('reservation/table', array(
+            'table' => $this->createTable()
+        ));
+    }
 
-	/**
-	 * Renders main grid
-	 * 
-	 * @return string
-	 */
+    /**
+     * Renders main grid
+     * 
+     * @return string
+     */
     public function indexAction()
-	{
-		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-		$countries = new Country();
+    {
+        $route = '/reservation/index/';
 
-		return $this->view->render('reservation/index', array(
-			'data' => $mapper->fetchAll(),
-			'countries' => $countries->getAll(),
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $countries = new Country();
+
+        $invoker = new FilterInvoker($this->request->getQuery(), $route);
+        $data = $invoker->invoke($mapper, 20);
+
+        $paginator = $mapper->getPaginator();
+
+        return $this->view->render('reservation/index', array(
+            'route' => $route,
+            'data' => $data,
+            'paginator' => $paginator,
+            'countries' => $countries->getAll(),
             'rooms' => $this->createRooms(),
             'reservationCollection' => new ReservationCollection
-		));
-	}
+        ));
+    }
 
     /**
      * Deletes a reservation
@@ -154,7 +164,7 @@ class Reservation extends AbstractSiteController
      */
     public function editAction($id)
     {
-		$mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
         $entity = $mapper->fetchById($id);
 
         if ($entity) {
@@ -167,13 +177,13 @@ class Reservation extends AbstractSiteController
         }
     }
 
-	/**
-	 * Saves a reservation
-	 * 
-	 * @return string
-	 */
-	public function saveAction()
-	{
+    /**
+     * Saves a reservation
+     * 
+     * @return string
+     */
+    public function saveAction()
+    {
         $data = $this->request->getPost();
 
         $formValidator = $this->createValidator(array(
@@ -199,5 +209,5 @@ class Reservation extends AbstractSiteController
         } else {
             return $formValidator->getErrors();
         }
-	}
+    }
 }

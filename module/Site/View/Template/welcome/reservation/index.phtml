@@ -6,81 +6,97 @@ use Krystal\Iso\ISO3166\Country;
 
 ?>
 
-<br />
+<form action="<?= $route; ?>">
 
-<h2 class="page-header"><i class="glyphicon glyphicon-user"></i> <? $this->show('A list of guest'); ?></h2>
+<div class="summary">
+    <h4 class="page-header"><i class="glyphicon glyphicon-user"></i> <?php $this->show('A list of guest'); ?> 
+        <?php if ($paginator->getSummary() != 0): ?>
+        <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
+        <?php endif; ?>
+    </h4>
 
-<?= Grid::render($data, array(
-    // A column to be considered as a primary key
-    'pk' => 'id',
-    'batch' => false,
-    'columns' => array(
-        array(
-            'column' => 'id',
-            'label' => 'ID'
+    <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+</div>
+
+<div class="table-responsive">
+    <?= Grid::render($route, $data, array(
+        // A column to be considered as a primary key
+        'pk' => 'id',
+        'batch' => false,
+        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+        'columns' => array(
+            array(
+                'column' => 'id',
+                'label' => 'ID'
+            ),
+
+            array(
+                'column' => 'country',
+                'label' => 'Country',
+                'type' => 'select',
+                'filter' => $countries,
+                'value' => function($row){
+                    $country = new Country();
+                    return $country->getCountryByCode($row['country']);
+                }
+            ),
+
+            array(
+                'column' => 'full_name',
+                'type' => 'text',
+                'filter' => true,
+                'label' => 'Full name',
+            ),
+
+            array(
+                'column' => 'room_id',
+                'type' => 'select',
+                'filter' => $rooms,
+                'label' => 'Room',
+                'value' => function($row){
+                    return $row['room'];
+                }
+            ),
+
+            array(
+                'column' => 'state',
+                'type' => 'select',
+                'filter' => $this->translator->translateArray($reservationCollection->getAll()),
+                'label' => 'Reservation state',
+                'translateable' => true,
+                'value' => function($row) use ($reservationCollection){
+                    return $reservationCollection->findByKey($row['state']);
+                }
+            ),
+
+            array(
+                'column' => 'arrival',
+                'type' => 'text',
+                'filter' => true,
+                'label' => 'Arrival',
+            ),
+
+            array(
+                'column' => 'departure',
+                'type' => 'text',
+                'filter' => true,
+                'label' => 'Departure',
+            ),
         ),
-
-        array(
-            'sorting' => false,
-            'column' => 'country',
-            'label' => 'Country',
-            'type' => 'select',
-            'filter' => $countries,
-            'value' => function($row){
-                $country = new Country();
-                return $country->getCountryByCode($row['country']);
+        
+        'actions' => array(
+            'delete' => function($row){
+                return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
+            },
+            'update' => function($row){
+                return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
             }
-        ),
+        )
+        
+    ), $this->translator); ?>
 
-        array(
-            'column' => 'full_name',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Full name',
-        ),
+</div>
 
-        array(
-            'column' => 'room_id',
-            'type' => 'select',
-            'filter' => $rooms,
-            'label' => 'Room',
-            'value' => function($row){
-                return $row['room'];
-            }
-        ),
+<? $this->loadPartial('pagination'); ?>
 
-        array(
-            'column' => 'state',
-            'type' => 'select',
-            'filter' => $reservationCollection->getAll(),
-            'label' => 'Reservation state',
-            'value' => function($row) use ($reservationCollection){
-                return $reservationCollection->findByKey($row['state']);
-            }
-        ),
-
-        array(
-            'column' => 'arrival',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Arrival',
-        ),
-
-        array(
-            'column' => 'departure',
-            'type' => 'text',
-            'filter' => true,
-            'label' => 'Departure',
-        ),
-    ),
-    
-    'actions' => array(
-        'delete' => function($row){
-            return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
-        },
-        'update' => function($row){
-            return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
-        }
-    )
-    
-)); ?>
+</form>

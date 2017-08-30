@@ -53,6 +53,10 @@ return array(
 		'controller' => 'Reservation@indexAction'
 	),
 
+    '/reservation/index/(:var)' => array(
+		'controller' => 'Reservation@indexAction'
+	),
+
 	'/reservation/edit/(:var)' => array(
 		'controller' => 'Reservation@editAction'
 	),
