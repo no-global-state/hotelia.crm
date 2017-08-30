@@ -35,6 +35,34 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Returns shared columns to be selected
+     * 
+     * @return array
+     */
+    private function getSharedColumns()
+    {
+        // Columns to be selected
+        return array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('room_id'),
+            self::getFullColumnName('full_name'),
+            self::getFullColumnName('gender'),
+            self::getFullColumnName('country'),
+            self::getFullColumnName('status'),
+            self::getFullColumnName('phone'),
+            self::getFullColumnName('email'),
+            self::getFullColumnName('state'),
+            self::getFullColumnName('purpose'),
+            self::getFullColumnName('payment_type'),
+            self::getFullColumnName('legal_status'),
+            self::getFullColumnName('arrival'),
+            self::getFullColumnName('departure'),
+            self::getFullColumnName('comment'),
+            RoomMapper::getFullColumnName('name') => 'room'
+        );
+    }
+
+    /**
      * Adds a reservation
      * 
      * @param array $input Raw input data
@@ -91,9 +119,16 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public function fetchById($id)
     {
-        return $this->db->select('*')
+        return $this->db->select($this->getSharedColumns())
                         ->from(self::getTableName())
-                        ->whereEquals($this->getPk(), $id)
+                        // Room relation
+                        ->leftJoin(RoomMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('room_id'),
+                            RoomMapper::getRawColumn('id')
+                        )
+                        ->whereEquals(self::getFullColumnName($this->getPk()), $id)
                         // Service relation
                         ->asManyToMany(
                             self::PARAM_COLUMN_ATTACHED, 
@@ -111,24 +146,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
     {
-        // Columns to be selected
-        $columns = array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('room_id'),
-            self::getFullColumnName('full_name'),
-            self::getFullColumnName('gender'),
-            self::getFullColumnName('country'),
-            self::getFullColumnName('status'),
-            self::getFullColumnName('phone'),
-            self::getFullColumnName('state'),
-            self::getFullColumnName('purpose'),
-            self::getFullColumnName('legal_status'),
-            self::getFullColumnName('arrival'),
-            self::getFullColumnName('departure'),
-            RoomMapper::getFullColumnName('name') => 'room'
-        );
-
-        $db = $this->db->select($columns)
+        $db = $this->db->select($this->getSharedColumns())
                        ->from(self::getTableName())
                        // Room relation
                        ->leftJoin(RoomMapper::getTableName())
