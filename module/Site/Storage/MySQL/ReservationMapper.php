@@ -3,8 +3,10 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
-use Krystal\Stdlib\ArrayUtils;
+use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Db\Filter\FilterableServiceInterface;
+use Krystal\Stdlib\ArrayUtils;
+use Closure;
 
 final class ReservationMapper extends AbstractMapper implements FilterableServiceInterface
 {
@@ -112,14 +114,14 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
-     * Fetches reservation by its ID
+     * Finds a row by constraint
      * 
-     * @param string $id
+     * @param \Closure $visitor
      * @return array
      */
-    public function fetchById($id)
+    private function findByConstraint(Closure $visitor)
     {
-        return $this->db->select($this->getSharedColumns())
+        $db = $this->db->select($this->getSharedColumns())
                         ->from(self::getTableName())
                         // Room relation
                         ->leftJoin(RoomMapper::getTableName())
@@ -127,18 +129,49 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->equals(
                             self::getFullColumnName('room_id'),
                             RoomMapper::getRawColumn('id')
-                        )
-                        ->whereEquals(self::getFullColumnName($this->getPk()), $id)
-                        // Service relation
-                        ->asManyToMany(
-                            self::PARAM_COLUMN_ATTACHED, 
-                            self::getJunctionTableName(), 
-                            self::PARAM_JUNCTION_MASTER_COLUMN, 
-                            RoomServiceMapper::getTableName(), 
-                            'id', 
-                            '*' // Columns to be selected in Service table
-                        )
-                        ->query();
+                        );
+
+                        // Apply by reference
+                        $visitor($db);
+
+        // Service relation
+        $db->asManyToMany(
+            self::PARAM_COLUMN_ATTACHED, 
+            self::getJunctionTableName(), 
+            self::PARAM_JUNCTION_MASTER_COLUMN, 
+            RoomServiceMapper::getTableName(), 
+            'id', 
+            '*' // Columns to be selected in Service table
+        );
+
+        return $db->query();
+    }
+
+    /**
+     * Fetches by room ID
+     * 
+     * @param string $roomId
+     * @return array
+     */
+    public function fetchByRoomId($roomId)
+    {
+        return $this->findByConstraint(function($db) use ($roomId){
+            $db->whereEquals(self::getFullColumnName('room_id'), $roomId)
+               ->andWhereGreaterThan(self::getFullColumnName('departure'), new RawSqlFragment('CURDATE()'));
+        });
+    }
+
+    /**
+     * Fetches reservation by its ID
+     * 
+     * @param string $id
+     * @return array
+     */
+    public function fetchById($id)
+    {
+        return $this->findByConstraint(function($db) use ($id){
+            $db->whereEquals(self::getFullColumnName($this->getPk()), $id);
+        });
     }
 
     /**
