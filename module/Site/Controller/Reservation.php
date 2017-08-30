@@ -101,12 +101,29 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * Views reservation info
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function viewAction($id)
+    {
+        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+
+        return $this->view->disableLayout()->render('reservation/view', array(
+            'entity' => $entity
+        ));
+    }
+
+    /**
      * Renders main grid
      * 
      * @return string
      */
     public function indexAction()
     {
+        $this->loadApp();
+
         $route = '/reservation/index/';
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
