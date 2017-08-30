@@ -30,7 +30,7 @@
             <?php if ($leavingToday): ?>
             <p class="leaving"><? $this->show('Leaving today'); ?></p>
             <?php else: ?>
-            <a href="#" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
+            <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
             <?php endif ;?>
 
             <?php endif; ?>
@@ -40,3 +40,5 @@
 
     <?php endforeach; ?>
 </div>
+
+<? $this->loadPartial('client-modal'); ?>

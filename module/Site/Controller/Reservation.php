@@ -98,6 +98,21 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * View info by associated room ID
+     * 
+     * @param string $roomId
+     * @return string
+     */
+    public function viewTakenAction($roomId)
+    {
+        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchByRoomId($roomId);
+
+        return $this->view->disableLayout()->render('reservation/view', array(
+            'entity' => $entity
+        ));
+    }
+
+    /**
      * Views reservation info
      * 
      * @param string $id

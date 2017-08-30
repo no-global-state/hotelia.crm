@@ -39,6 +39,10 @@ return array(
 	'/reservation/table' => array(
 		'controller' => 'Reservation@tableAction'
 	),
+
+	'/reservation/table/taken/(:var)' => array(
+		'controller' => 'Reservation@viewTakenAction'
+	),
 	
 	// Reservation add
 	'/reservation/add/(:var)' => array(
