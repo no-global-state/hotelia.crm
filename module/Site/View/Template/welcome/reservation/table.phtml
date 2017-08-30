@@ -1,32 +1,27 @@
 
-<style>
-
-.floor-row {
-	
-}
-
-.floor-row > div {
- min-height: 30px;
- background: #79d4d8;
- margin-right: 15px;
- text-align: center;
- font-weight: bold;
-}
-
-</style>
-
 <div class="container">
-<?php foreach (array_reverse($table) as $floor): ?>
+    <?php foreach (array_reverse($table) as $floor): ?>
+    <h2><?= $floor['name']; ?></h2>
 
-<h2><?= $floor['name']; ?></h2>
+    <div class="row floor-row">
+        <?php foreach (array_reverse($floor['rooms']) as $index => $room): ?>
+        <? $free = empty($room['taken']); ?>
 
-<div class="row floor-row">
-	<?php foreach (array_reverse($floor['rooms']) as $room): ?>
-	<div class="col-lg-1">
-		<p><?= $room['name']; ?></p>
-	</div>
-	<?php endforeach; ?>
-</div>
+        <div class="col-lg-1 <?= !$free ? 'taken' : 'free'; ?>">
+            <?php if ($free): ?>
 
-<?php endforeach; ?>
+            <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->url('Site:Reservation@addAction'); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
+            <p><? $this->show('Free'); ?></p>
+
+            <?php else: ?>
+
+            <p><?= $room['name']; ?> <?= $room['type']; ?></p>
+            <p><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></p>
+
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <?php endforeach; ?>
 </div>
