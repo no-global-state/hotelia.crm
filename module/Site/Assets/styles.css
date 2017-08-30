@@ -31,3 +31,32 @@ div[role='main'] {
 .summary button {
  float: right;
 }
+
+/* Main desktop */
+.floor-row {}
+
+.floor-row > div.taken {
+ background: red;
+}
+
+.floor-row > div.free {
+ background: #00a65a;
+}
+
+.floor-row > div {
+ min-height: 91px;
+ margin-right: 15px;
+ text-align: center;
+ font-weight: bold;
+ box-shadow: 4px 4px 9px 4px #a4a7a5;
+}
+
+.floor-row > div p {
+ color: #fff;
+ font-size: 12px;
+}
+
+.floor-row > div a {
+  color: #fff;
+}
+
