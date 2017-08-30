@@ -12,6 +12,7 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class RoomMapper extends AbstractMapper
 {
@@ -91,7 +92,12 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            RoomTypeMapper::getFullColumnName('type')
+            RoomTypeMapper::getFullColumnName('type'),
+            ReservationMapper::getFullColumnName('departure'),
+
+            // Availability indicators (virtual columns)
+            new RawSqlFragment('(CURDATE() BETWEEN arrival AND departure) AS taken'),
+            new RawSqlFragment('(CURDATE() > departure) AS free'),
         );
 
         return $this->db->select($columns)
@@ -102,6 +108,13 @@ final class RoomMapper extends AbstractMapper
                         ->equals(
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
+                        )
+                        // Reservation relation
+                        ->leftJoin(ReservationMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('id'),
+                            ReservationMapper::getRawColumn('room_id')
                         )
                         ->whereEquals('floor_id', $floorId)
                         ->orderBy('id')
