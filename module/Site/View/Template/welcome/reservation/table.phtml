@@ -5,9 +5,19 @@
 
     <div class="row floor-row">
         <?php foreach (array_reverse($floor['rooms']) as $index => $room): ?>
-        <? $free = empty($room['taken']); ?>
+        
+        <?php
+            $free = empty($room['taken']);
+            $leavingToday = $room['leaving_today'];
+            
+            if ($leavingToday){
+                $backgroundClass = 'leaving';
+            } else {
+                $backgroundClass = !$free ? 'taken' : 'free';
+            }
+        ?>
 
-        <div class="col-lg-1 <?= !$free ? 'taken' : 'free'; ?>">
+        <div class="col-lg-1 <?= $backgroundClass; ?>">
             <?php if ($free): ?>
 
             <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
@@ -16,7 +26,12 @@
             <?php else: ?>
 
             <p><?= $room['name']; ?> <?= $room['type']; ?></p>
+
+            <?php if ($leavingToday): ?>
+            <p class="leaving"><? $this->show('Leaving today'); ?></p>
+            <?php else: ?>
             <p><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></p>
+            <?php endif ;?>
 
             <?php endif; ?>
         </div>

@@ -98,6 +98,7 @@ final class RoomMapper extends AbstractMapper
             // Availability indicators (virtual columns)
             new RawSqlFragment('(CURDATE() BETWEEN arrival AND departure) AS taken'),
             new RawSqlFragment('(CURDATE() > departure) AS free'),
+            new RawSqlFragment('(CURDATE() = departure) AS leaving_today'),
         );
 
         return $this->db->select($columns)
