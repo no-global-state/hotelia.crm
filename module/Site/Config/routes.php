@@ -41,7 +41,7 @@ return array(
 	),
 	
 	// Reservation add
-	'/reservation/add' => array(
+	'/reservation/add/(:var)' => array(
 		'controller' => 'Reservation@addAction'
 	),
 

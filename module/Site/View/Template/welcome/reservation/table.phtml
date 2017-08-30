@@ -10,7 +10,7 @@
         <div class="col-lg-1 <?= !$free ? 'taken' : 'free'; ?>">
             <?php if ($free): ?>
 
-            <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->url('Site:Reservation@addAction'); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
+            <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
             <p><? $this->show('Free'); ?></p>
 
             <?php else: ?>

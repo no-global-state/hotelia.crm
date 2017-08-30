@@ -163,7 +163,10 @@ class Reservation extends AbstractSiteController
     public function addAction()
     {
         $entity = new InputDecorator();
+
+        // Defaults
         $entity['legal_status'] = 1;
+        $entity['room_id'] = $this->request->getQuery('room_id');
 
         return $this->createForm($entity);
     }
