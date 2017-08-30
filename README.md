@@ -7,3 +7,13 @@ Velveto is a lightweight and functional open-source reservation system built on 
 - Services with their corresponding prices
 - Inventory of rooms
 - Finding free rooms based on date and desired services
+
+
+# Installation
+
+Coming soon
+
+
+# Credits
+
+Coming soon
