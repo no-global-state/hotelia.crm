@@ -1,9 +1,9 @@
 
 $(function(){
-    
-	// Datetimepicker
+
+    // Datetimepicker
     if (jQuery().datetimepicker) {
-        var locale = 'en';
+        var locale = $('html').attr('lang');
 
         moment.locale(locale, {
             week: { dow: 1 } // Monday is the first day of the week
@@ -11,7 +11,7 @@ $(function(){
 
         $('[data-plugin="datetimepicker"]').datetimepicker({
             defaultDate: new Date(),
-			format: 'YYYY-MM-DD',
+            format: 'YYYY-MM-DD',
             showTodayButton: true,
             locale: locale
         });

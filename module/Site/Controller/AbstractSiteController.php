@@ -79,7 +79,8 @@ abstract class AbstractSiteController extends AbstractController
 
         // Add shared variables
         $this->view->addVariables(array(
-            'isLoggedIn' => $this->getAuthService()->isLoggedIn()
+            'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
+            'locale' => $this->appConfig->getLanguage()
         ));
 
         // Define the main layout
