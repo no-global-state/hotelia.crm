@@ -5,6 +5,7 @@ use Site\Service\LegalStatusCollection;
 use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
 use Site\Service\ReservationCollection;
+use Site\Service\StatusCollection;
 
 ?>
 
@@ -34,7 +35,7 @@ use Site\Service\ReservationCollection;
 
                 <tr>
                     <td><? $this->show('Status'); ?></td>
-                    <td><?= $entity['status']; ?></td>
+                    <td><? $this->show((new StatusCollection())->findByKey($entity['status'])); ?></td>
                 </tr>
 
                 <tr>
@@ -62,7 +63,7 @@ use Site\Service\ReservationCollection;
                     <td><?= $entity['room']; ?></td>
                 </tr>
             </tbody>
-        </table>    
+        </table>
     </div>
 
     <div class="col-lg-6">

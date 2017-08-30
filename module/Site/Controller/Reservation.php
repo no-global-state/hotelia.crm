@@ -12,6 +12,7 @@ use Site\Service\ReservationCollection;
 use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
 use Site\Service\LegalStatusCollection;
+use Site\Service\StatusCollection;
 
 class Reservation extends AbstractSiteController
 {
@@ -29,16 +30,9 @@ class Reservation extends AbstractSiteController
 
         $this->loadApp();
 
-        $countries = new Country();
-        $statuses = array(
-            'r' => 'Regular',
-            'v' => 'VIP'
-        );
-
         return $this->view->render('reservation/form', array(
             'client' => $client,
-            'countries' => $countries->getAll(),
-            'statuses' => $statuses,
+            'countries' => (new Country())->getAll(),
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
             // Collections
@@ -46,6 +40,7 @@ class Reservation extends AbstractSiteController
             'purposes' => (new PurposeCollection)->getAll(),
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
+            'statuses' => (new StatusCollection)->getAll(),
             'genders' => array(
                 'M' => 'Male',
                 'F' => 'Female'

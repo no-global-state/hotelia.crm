@@ -49,7 +49,7 @@ CREATE TABLE hotelia_reservation (
 	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
 	`gender` varchar(1) NOT NULL,
 	`country` varchar(2) NOT NULL,
-	`status` varchar(1) NOT NULL,
+	`status` varchar(1) NOT NULL COMMENT 'Person status code (like regular or VIP)',
     `state` SMALLINT(1) NOT NULL COMMENT 'Reservation state code',
     `purpose` SMALLINT(1) NOT NULL COMMENT 'Reservation purpose code',
     `payment_type` SMALLINT(1) NOT NULL COMMENT 'Payment type code',

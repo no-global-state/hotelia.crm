@@ -99,7 +99,7 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('status', $statuses, $client['status'], array('class' => 'form-control')); ?>
+		<?= Element::select('status', $this->translateArray($statuses), $client['status'], array('class' => 'form-control')); ?>
       </div>
     </div>
     
