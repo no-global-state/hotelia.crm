@@ -24,8 +24,9 @@ $(function(){
 
     // Init tooltip
     $('[data-toggle="tooltip"]').tooltip({
-        placement: "bottom"
-    }); 	
+        placement: "bottom",
+        trigger: 'hover'
+    });
 
     var $form = $("form");
 
