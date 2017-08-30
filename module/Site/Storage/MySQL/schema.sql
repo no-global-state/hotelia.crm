@@ -59,8 +59,8 @@ CREATE TABLE hotelia_reservation (
     `comment` TEXT NOT NULL COMMENT 'Additional note if any'
 
 	/* Date */
-	`arrival` varchar(30) NOT NULL,
-	`departure` varchar(20) NOT NULL
+	`arrival` DATE NOT NULL,
+	`departure` DATE NOT NULL
 );
 
 CREATE TABLE hotelia_reservation_services (
