@@ -4,8 +4,9 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Db\Filter\FilterableServiceInterface;
 
-final class ReservationMapper extends AbstractMapper
+final class ReservationMapper extends AbstractMapper implements FilterableServiceInterface
 {
     const PARAM_COLUMN_ATTACHED = 'services';
 
@@ -106,11 +107,9 @@ final class ReservationMapper extends AbstractMapper
     }
 
     /**
-     * Fetch all records
-     * 
-     * @return array
+     * {@inheritDoc}
      */
-    public function fetchAll()
+    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
     {
         // Columns to be selected
         $columns = array(
@@ -138,9 +137,20 @@ final class ReservationMapper extends AbstractMapper
                             self::getFullColumnName('room_id'),
                             RoomMapper::getRawColumn('id')
                        )
-                       ->orderBy('id')
-                       ->desc();
+                       ->whereEquals('1', '1')
+                       ->andWhereEquals('country', $input['country'], true)
+                       ->andWhereLike('full_name', '%'.$input['full_name'].'%', true)
+                       ->andWhereEquals('room_id', $input['room_id'], true)
+                       ->andWhereEquals('state', $input['state'], true)
+                       ->andWhereEquals('arrival', $input['arrival'], true)
+                       ->andWhereEquals('departure', $input['departure'], true)
+                       ->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
 
-        return $db->queryAll();
+        if ($desc) {
+            $db->desc();
+        }
+
+        return $db->paginate($page, $itemsPerPage)
+                  ->queryAll();
     }
 }
