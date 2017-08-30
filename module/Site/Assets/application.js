@@ -1,11 +1,19 @@
 
 $(function(){
-
+    
 	// Datetimepicker
     if (jQuery().datetimepicker) {
+        var locale = 'en';
+
+        moment.locale(locale, {
+            week: { dow: 1 } // Monday is the first day of the week
+        });
+
         $('[data-plugin="datetimepicker"]').datetimepicker({
             defaultDate: new Date(),
-			format: 'DD-MM-YYYY hh:mm:ss',
+			format: 'YYYY-MM-DD',
+            showTodayButton: true,
+            locale: locale
         });
     }
 
