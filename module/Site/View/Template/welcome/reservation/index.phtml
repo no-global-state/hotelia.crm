@@ -85,6 +85,9 @@ use Krystal\Iso\ISO3166\Country;
         ),
         
         'actions' => array(
+            'view' => function($row){
+                return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
+            },
             'delete' => function($row){
                 return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
             },
@@ -100,3 +103,23 @@ use Krystal\Iso\ISO3166\Country;
 <? $this->loadPartial('pagination'); ?>
 
 </form>
+
+<!-- Modal -->
+<div id="infoModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><? $this->show('View reservation details'); ?></h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><? $this->show('Close'); ?></button>
+      </div>
+    </div>
+
+  </div>
+</div>

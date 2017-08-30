@@ -1,0 +1,104 @@
+<?php
+
+use Krystal\Iso\ISO3166\Country;
+use Site\Service\LegalStatusCollection;
+use Site\Service\PurposeCollection;
+use Site\Service\PaymentTypeCollection;
+use Site\Service\ReservationCollection;
+
+?>
+
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <tbody>
+                <tr>
+                    <td><? $this->show('ID'); ?></td>
+                    <td><?= $entity['id']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Full name'); ?></td>
+                    <td><?= $entity['full_name']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Gender'); ?></td>
+                    <td><?= str_replace(array('M', 'F'), array($this->translate('Male'), $this->translate('Female')), $entity['gender']); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Country'); ?></td>
+                    <td><?= (new Country())->getCountryByCode($entity['country']); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Status'); ?></td>
+                    <td><?= $entity['status']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Email'); ?></td>
+                    <td><?= $entity['email']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Phone'); ?></td>
+                    <td><?= $entity['phone']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Arrival'); ?></td>
+                    <td><?= $entity['arrival']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Departure'); ?></td>
+                    <td><?= $entity['departure']; ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Room'); ?></td>
+                    <td><?= $entity['room']; ?></td>
+                </tr>
+            </tbody>
+        </table>    
+    </div>
+
+    <div class="col-lg-6">
+        <table class="table table-condensed table-bordered table-striped table-hover">
+            <tbody>
+                <tr>
+                    <td><? $this->show('Legal status'); ?></td>
+                    <td><? $this->show((new LegalStatusCollection)->findByKey($entity['legal_status'])); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Arrival purpose'); ?></td>
+                    <td><? $this->show((new PurposeCollection)->findByKey($entity['purpose'])); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Payment type'); ?></td>
+                    <td><? $this->show((new PaymentTypeCollection)->findByKey($entity['payment_type'])); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Reservation state'); ?></td>
+                    <td><? $this->show((new ReservationCollection)->findByKey($entity['state'])); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Services'); ?></td>
+                    <td><?= join(', ', array_column($entity['services'], 'name')); ?></td>
+                </tr>
+
+                <tr>
+                    <td><? $this->show('Comment'); ?></td>
+                    <td><?= $entity['comment']; ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+

@@ -33,4 +33,22 @@ $(function(){
         $form.submit();
     });
     
+    
+    $('[data-button="view"]').click(function(event){
+        event.preventDefault();
+
+        var href = $(this).attr('href');
+        var $body = $("#infoModal .modal-body");
+
+        $.ajax({
+            cache: true,
+            url: href,
+            success: function(response){
+                $body.html(response);
+                
+                $("#infoModal").modal('show');
+            }
+        });
+    });
+    
 });
