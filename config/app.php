@@ -78,7 +78,7 @@ return array(
 				// Datetime picker
 				'datetimepicker' => array(
 					'scripts' => array(
-						'@Site/datetimepicker/js/moment.min.js',
+						'@Site/datetimepicker/js/moment-with-locales.min.js',
 						'@Site/datetimepicker/js/bootstrap-datetimepicker.min.js'
 					),
 					'stylesheets' => array(
