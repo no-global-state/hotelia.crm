@@ -6,100 +6,94 @@ use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
 use Site\Service\ReservationCollection;
 use Site\Service\StatusCollection;
+use Krystal\Grid\ListView;
 
 ?>
 
 <div class="row">
     <div class="col-lg-6">
-        <table class="table table-condensed table-bordered table-striped table-hover">
-            <tbody>
-                <tr>
-                    <td><? $this->show('ID'); ?></td>
-                    <td><?= $entity['id']; ?></td>
-                </tr>
+        <?= (new ListView($entity, [
+            'columns' => [
+                ['column' => 'id', 'title' => 'ID'],
+                ['column' => 'full_name'],
+                [
+                    'column' => 'gender', 
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return str_replace(array('M', 'F'), array('Male', 'Female'), $value);
+                    }
+                ],
+                [
+                    'column' => 'country',
+                    'value' => function($column, $value){
+                        return (new Country())->getCountryByCode($value);
+                    }
+                ],
+                [
+                    'column' => 'status',
+                    'value' => function($column, $value){
+                        return (new StatusCollection())->findByKey($value);
+                    }
+                ],
+                ['column' => 'email'],
+                ['column' => 'phone'],
+                ['column' => 'email'],
+                ['column' => 'arrival'],
+                ['column' => 'departure'],
+                ['column' => 'room']
+            ]
 
-                <tr>
-                    <td><? $this->show('Full name'); ?></td>
-                    <td><?= $entity['full_name']; ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Gender'); ?></td>
-                    <td><?= str_replace(array('M', 'F'), array($this->translate('Male'), $this->translate('Female')), $entity['gender']); ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Country'); ?></td>
-                    <td><?= (new Country())->getCountryByCode($entity['country']); ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Status'); ?></td>
-                    <td><? $this->show((new StatusCollection())->findByKey($entity['status'])); ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Email'); ?></td>
-                    <td><?= $entity['email']; ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Phone'); ?></td>
-                    <td><?= $entity['phone']; ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Arrival'); ?></td>
-                    <td><?= $entity['arrival']; ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Departure'); ?></td>
-                    <td><?= $entity['departure']; ?></td>
-                </tr>
-
-                <tr>
-                    <td><? $this->show('Room'); ?></td>
-                    <td><?= $entity['room']; ?></td>
-                </tr>
-            </tbody>
-        </table>
+        ], $this->translator))->render(); ?>
     </div>
 
     <div class="col-lg-6">
-        <table class="table table-condensed table-bordered table-striped table-hover">
-            <tbody>
-                <tr>
-                    <td><? $this->show('Legal status'); ?></td>
-                    <td><? $this->show((new LegalStatusCollection)->findByKey($entity['legal_status'])); ?></td>
-                </tr>
+        <?= (new ListView($entity, [
+            'columns' => [
+                [
+                    'column' => 'purpose',
+                    'title' => 'Arrival purpose',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new PurposeCollection())->findByKey($value);
+                    }
+                ],
 
-                <tr>
-                    <td><? $this->show('Arrival purpose'); ?></td>
-                    <td><? $this->show((new PurposeCollection)->findByKey($entity['purpose'])); ?></td>
-                </tr>
+                [
+                    'column' => 'legal_status', 
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new LegalStatusCollection())->findByKey($value);
+                    }
+                ],
 
-                <tr>
-                    <td><? $this->show('Payment type'); ?></td>
-                    <td><? $this->show((new PaymentTypeCollection)->findByKey($entity['payment_type'])); ?></td>
-                </tr>
+                [
+                    'column' => 'payment_type',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new PaymentTypeCollection())->findByKey($value);
+                    }
+                ],
 
-                <tr>
-                    <td><? $this->show('Reservation state'); ?></td>
-                    <td><? $this->show((new ReservationCollection)->findByKey($entity['state'])); ?></td>
-                </tr>
+                [
+                    'column' => 'state',
+                    'title' => 'Reservation state',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new ReservationCollection())->findByKey($value);
+                    }
+                ],
 
-                <tr>
-                    <td><? $this->show('Services'); ?></td>
-                    <td><?= join(', ', array_column($entity['services'], 'name')); ?></td>
-                </tr>
+                [
+                    'column' => 'services',
+                    'value' => function($column, $value){
+                        return join(', ', array_column($value, 'name'));
+                    }
+                ],
+                
+                ['column' => 'comment']
+            ]
 
-                <tr>
-                    <td><? $this->show('Comment'); ?></td>
-                    <td><?= $entity['comment']; ?></td>
-                </tr>
-            </tbody>
-        </table>
+        ], $this->translator))->render(); ?>
     </div>
 </div>
 
