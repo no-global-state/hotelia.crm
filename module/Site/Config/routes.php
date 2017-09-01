@@ -96,8 +96,12 @@ return array(
 		'controller' => 'Architecture:RoomCleaning@indexAction'
     ),
     
-    '/architecture/room-cleaning/mark/(:var)' => array(
-		'controller' => 'Architecture:RoomCleaning@markAction'
+    '/architecture/room-cleaning/room/(:var)/mark/(:var)' => array(
+        'controller' => 'Architecture:RoomCleaning@markAction'
+    ),
+    
+    '/architecture/room-cleaning/mark-batch/(:var)' => array(
+        'controller' => 'Architecture:RoomCleaning@markBatchAction'
     ),
     
 	'/architecture/room-type' => array(

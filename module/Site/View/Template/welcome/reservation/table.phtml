@@ -39,10 +39,16 @@ use Site\Service\CleaningCollection;
             <?php endif ;?>
 
             <ul class="dropdown-menu">
+                <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
                 <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>
-                <li class="divider"></li>
                 <li><a href="#"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
+
+                <li class="dropdown-header"><? $this->show('Cleaning status'); ?></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Cleaned'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_NONCLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_NONCLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Not cleaned'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CHECKING); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CHECKING): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Checking'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_UNDEFINED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_UNDEFINED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Undefined'); ?></a></li>
             </ul>
 
             <?php endif; ?>

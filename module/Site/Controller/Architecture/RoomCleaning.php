@@ -39,10 +39,33 @@ final class RoomCleaning extends AbstractSiteController
     /**
      * Update "cleaned" attribute
      * 
+     * @param string $id Room id
      * @param string $type
      * @return void
      */
-    public function markAction($type)
+    public function markAction($id, $type)
+    {
+        $collection = new CleaningCollection();
+
+        if ($collection->hasKey($type)) {
+            $mapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
+            $mapper->updateColumnByPk($id, 'cleaned', $type);
+
+            $this->flashBag->set('success', 'Successfully updated');
+            return $this->response->redirectToPreviousPage();
+
+        } else {
+            // Invalid request
+        }
+    }
+
+    /**
+     * Update "cleaned" attribute
+     * 
+     * @param string $type
+     * @return void
+     */
+    public function markBatchAction($type)
     {
         $collection = new CleaningCollection();
 
