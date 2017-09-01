@@ -39,6 +39,7 @@ use Site\Service\CleaningCollection;
             <?php endif ;?>
 
             <ul class="dropdown-menu">
+                <li><a data-button="view" href="<?= $this->url('Site:Architecture:Room@viewAction', $room['id']); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Room details'); ?></a></li>
                 <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
                 <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>

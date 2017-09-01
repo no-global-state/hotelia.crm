@@ -1,0 +1,92 @@
+<?php
+
+use Site\Service\CleaningCollection;
+use Site\Service\RoomQualityCollection;
+use Krystal\Grid\ListView;
+use Krystal\Grid\Grid;
+
+?>
+
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#room" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <?php $this->show('Room'); ?></a></li>
+    <li role="presentation"><a href="#inventory" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Inventory'); ?></a></li>
+    
+</ul>
+
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="room" role="tabpanel">
+        <?= (new ListView($entity, [
+            'columns' => [
+                ['column' => 'floor'],
+
+                [
+                    'column' => 'name',
+                    'title' => 'Room'
+                ],
+
+                [
+                    'column' => 'persons',
+                    'title' => 'Maximal person amount'
+                ],
+
+                ['column' => 'square'],
+
+                [
+                    'column' => 'cleaned',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new CleaningCollection())->findByKey($value);
+                    }
+                ],
+
+                [
+                    'column' => 'quality',
+                    'title' => 'Room quality status',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new RoomQualityCollection())->findByKey($value);
+                    }
+                ],
+
+                ['column' => 'type'],
+            ]
+
+        ], $this->translator))->render(); ?>
+    </div>
+    
+    <div role="tabpanel" class="tab-pane fade" id="inventory" role="tabpanel">
+        <?= Grid::render(null, $inventory, [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'inventory',
+                    'label' => 'Name',
+                    'sorting' => false,
+                ],
+
+                [
+                    'column' => 'code',
+                    'label' => 'Code',
+                    'sorting' => false
+                ],
+
+                [
+                    'column' => 'qty',
+                    'label' => 'Quantity',
+                    'sorting' => false
+                ],
+
+                [
+                    'column' => 'comment',
+                    'label' => 'Comment',
+                    'sorting' => false
+                ]
+            ],
+
+        ], $this->translator); ?>
+    </div>
+</div>
+

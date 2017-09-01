@@ -49,6 +49,22 @@ final class Room extends AbstractSiteController
     }
 
     /**
+     * Renders room info
+     * 
+     * @param string $id
+     * @return string
+     */
+    public function viewAction($id)
+    {
+        $entity = $this->createRoomMapper()->fetchById($id);
+
+        return $this->view->disableLayout()->render('architecture/room-view', array(
+            'entity' => $entity,
+            'inventory' => $this->createMapper('\Site\Storage\MySQL\RoomInventoryMapper')->fetchAll($id)
+        ));
+    }
+
+    /**
      * Saves a room
      * 
      * @param array $room

@@ -132,6 +132,10 @@ return array(
 		'controller' => 'Architecture:Room@saveAction'
 	),
 	
+	'/architecture/room/view/(:var)' => array(
+		'controller' => 'Architecture:Room@viewAction'
+	),
+    
 	'/architecture/room/save' => array(
 		'controller' => 'Architecture:Room@saveAction'
 	),
