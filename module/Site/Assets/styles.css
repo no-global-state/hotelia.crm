@@ -48,12 +48,12 @@ div[role='main'] {
 }
 
 .floor-row > div {
- min-height: 91px;
+ min-height: 105px;
  margin-right: 15px;
  text-align: center;
  font-weight: bold;
  box-shadow: 4px 4px 9px 4px #a4a7a5;
- word-wrap: break-all;
+ padding: 0px;
 }
 
 .floor-row > div > p,

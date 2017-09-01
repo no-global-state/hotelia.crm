@@ -30,21 +30,20 @@ use Site\Service\CleaningCollection;
 
             <?php else: ?>
 
-            <p><?= $room['name']; ?> <?= $room['type']; ?></p>
+            <p><?= $room['name']; ?> <br /><?= $room['type']; ?></p>
 
             <?php if ($leavingToday): ?>
             <a href="#" data-toggle="dropdown" class="dropdown-toggle leaving"><? $this->show('Leaving today'); ?></a>
-            
+            <?php else: ?>
+            <a data-toggle="dropdown" data-toggle="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
+            <?php endif ;?>
+
             <ul class="dropdown-menu">
-                <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('View reservation details'); ?></a></li>
+                <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history of this room'); ?></a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
             </ul>
-
-            <?php else: ?>
-            <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
-            <?php endif ;?>
 
             <?php endif; ?>
 
