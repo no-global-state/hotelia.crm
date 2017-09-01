@@ -157,7 +157,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     {
         return $this->findByConstraint(function($db) use ($roomId){
             $db->whereEquals(self::getFullColumnName('room_id'), $roomId)
-               ->andWhereGreaterThan(self::getFullColumnName('departure'), new RawSqlFragment('CURDATE()'));
+               ->andWhere(self::getFullColumnName('departure'), '>=', new RawSqlFragment('CURDATE()'));
         });
     }
 
