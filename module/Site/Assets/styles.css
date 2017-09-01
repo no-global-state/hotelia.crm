@@ -70,3 +70,25 @@ div[role='main'] {
   color: #fff;
 }
 
+/* Cleaning statuses */
+.cleaning-status {
+ display: block;
+ width: 100%;
+ color: #fff;
+ background: green;
+ font-size: 12px;
+ position: absolute;
+ bottom: 0;    
+}
+
+.status-clean {
+ background: green;
+}
+
+.status-dirty {
+ background: #f92b51;
+}
+
+.status-checking {
+ background: #656060;
+}

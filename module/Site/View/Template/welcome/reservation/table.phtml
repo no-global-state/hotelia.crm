@@ -1,3 +1,8 @@
+<?php
+
+use Site\Service\CleaningCollection;
+
+?>
 
 <div class="container">
     <?php foreach (array_reverse($table) as $floor): ?>
@@ -40,6 +45,17 @@
             <?php else: ?>
             <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
             <?php endif ;?>
+
+            <?php endif; ?>
+
+            <?php if (CleaningCollection::CODE_CLEANED == $room['cleaned']): ?>
+            <span class="cleaning-status status-clean"><? $this->show('Cleaned'); ?></span>
+
+            <?php elseif (CleaningCollection::CODE_NONCLEANED == $room['cleaned']): ?>
+            <span class="cleaning-status status-dirty"><? $this->show('Not cleaned'); ?></span>
+
+            <?php elseif (CleaningCollection::CODE_CHECKING == $room['cleaned']): ?>
+            <span class="cleaning-status status-checking"><? $this->show('Checking'); ?></span>
 
             <?php endif; ?>
         </div>
