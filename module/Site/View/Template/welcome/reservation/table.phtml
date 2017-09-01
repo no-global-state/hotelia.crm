@@ -28,7 +28,15 @@
             <p><?= $room['name']; ?> <?= $room['type']; ?></p>
 
             <?php if ($leavingToday): ?>
-            <p class="leaving"><? $this->show('Leaving today'); ?></p>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle leaving"><? $this->show('Leaving today'); ?></a>
+            
+            <ul class="dropdown-menu">
+                <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('View reservation details'); ?></a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history of this room'); ?></a></li>
+            </ul>
+
             <?php else: ?>
             <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" data-toggle="tooltip" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <?= $room['departure']; ?></a>
             <?php endif ;?>
