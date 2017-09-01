@@ -31,6 +31,7 @@ use Krystal\Grid\ListView;
                 ],
                 [
                     'column' => 'status',
+                    'translate' => true,
                     'value' => function($column, $value){
                         return (new StatusCollection())->findByKey($value);
                     }
