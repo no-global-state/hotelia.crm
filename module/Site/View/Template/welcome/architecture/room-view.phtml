@@ -53,9 +53,9 @@ use Krystal\Grid\Grid;
 
         ], $this->translator))->render(); ?>
     </div>
-    
+
     <div role="tabpanel" class="tab-pane fade" id="inventory" role="tabpanel">
-        <?= Grid::render(null, $inventory, [
+        <?= Grid::render($inventory, [
             // A column to be considered as a primary key
             'pk' => 'id',
             'batch' => false,
@@ -84,7 +84,7 @@ use Krystal\Grid\Grid;
                     'label' => 'Comment',
                     'sorting' => false
                 ]
-            ],
+            ]
 
         ], $this->translator); ?>
     </div>

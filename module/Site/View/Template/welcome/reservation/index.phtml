@@ -19,18 +19,18 @@ use Krystal\Iso\ISO3166\Country;
 </div>
 
 <div class="table-responsive">
-    <?= Grid::render($route, $data, array(
+    <?= Grid::render($data, [
         // A column to be considered as a primary key
         'pk' => 'id',
         'batch' => false,
         'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-        'columns' => array(
-            array(
+        'columns' => [
+            [
                 'column' => 'id',
                 'label' => 'ID'
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'country',
                 'label' => 'Country',
                 'type' => 'select',
@@ -39,16 +39,16 @@ use Krystal\Iso\ISO3166\Country;
                     $country = new Country();
                     return $country->getCountryByCode($row['country']);
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'full_name',
                 'type' => 'text',
                 'filter' => true,
                 'label' => 'Full name',
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'room_id',
                 'type' => 'select',
                 'filter' => $rooms,
@@ -56,9 +56,9 @@ use Krystal\Iso\ISO3166\Country;
                 'value' => function($row){
                     return $row['room'];
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'state',
                 'type' => 'select',
                 'filter' => $this->translator->translateArray($reservationCollection->getAll()),
@@ -67,36 +67,36 @@ use Krystal\Iso\ISO3166\Country;
                 'value' => function($row) use ($reservationCollection){
                     return $reservationCollection->findByKey($row['state']);
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'arrival',
                 'type' => 'text',
                 'filter' => true,
                 'label' => 'Arrival',
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'departure',
                 'type' => 'text',
                 'filter' => true,
                 'label' => 'Departure',
-            ),
-        ),
-        
-        'actions' => array(
+            ]
+        ],
+
+        'actions' => [
             'view' => function($row){
                 return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
             },
-            'delete' => function($row){
-                return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
-            },
             'update' => function($row){
                 return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
+            },
+            'delete' => function($row){
+                return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
             }
-        )
-        
-    ), $this->translator); ?>
+        ]
+
+    ], $this->translator, $route, $query); ?>
 
 </div>
 
