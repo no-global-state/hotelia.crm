@@ -73,6 +73,10 @@ return array(
 		'controller' => 'Reservation@deleteAction'
 	),
     
+    '/reservation/history/room/(:var)' => array(
+        'controller' => 'Reservation@historyAction'
+	),
+    
 	'/site/captcha/(:var)' => array(
 		'controller' => 'Site@captchaAction'
 	),
