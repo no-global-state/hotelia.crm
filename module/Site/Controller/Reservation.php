@@ -20,9 +20,10 @@ class Reservation extends AbstractSiteController
      * Creates a form
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $client
+     * @param string $arrival
      * @return string
      */
-    private function createForm($client)
+    private function createForm($client, $arrival = null)
     {
         // Load view plugins
         $this->view->getPluginBag()
@@ -31,6 +32,7 @@ class Reservation extends AbstractSiteController
         $this->loadApp();
 
         return $this->view->render('reservation/form', array(
+            'arrival' => $arrival,
             'client' => $client,
             'countries' => (new Country())->getAll(),
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
@@ -214,6 +216,13 @@ class Reservation extends AbstractSiteController
         // Defaults
         $entity['legal_status'] = 1;
         $entity['room_id'] = $this->request->getQuery('room_id');
+
+        if ($this->request->hasQuery('arrival')) {
+            $date = new \DateTime($this->request->getQuery('arrival'));
+            $date->modify('+1 day');
+
+            return $this->createForm($entity, $date->format('Y-m-d'));
+        }
 
         return $this->createForm($entity);
     }

@@ -9,8 +9,17 @@ $(function(){
             week: { dow: 1 } // Monday is the first day of the week
         });
 
+        var $datetimepicker = $('[data-plugin="datetimepicker"]');
+
+        // Initialize default date
+        if ($datetimepicker.attr('data-initial-date')){
+            var defaultDate = $datetimepicker.attr('data-initial-date');
+        } else {
+            var defaultDate = new Date();
+        }
+
         $('[data-plugin="datetimepicker"]').datetimepicker({
-            defaultDate: new Date(),
+            defaultDate: defaultDate,
             format: 'YYYY-MM-DD',
             showTodayButton: true,
             locale: locale

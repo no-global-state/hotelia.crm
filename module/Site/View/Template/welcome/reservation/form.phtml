@@ -78,14 +78,14 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+        <?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'data-initial-date' => isset($arrival) ? $arrival : null)); ?>
       </div>
     </div>
 
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
       <div class="col-lg-10">
-		<?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+        <?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
       </div>
     </div>
 
