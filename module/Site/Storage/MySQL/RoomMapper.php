@@ -169,6 +169,9 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('id'),
                             ReservationMapper::getRawColumn('room_id')
                         )
+                        // Remove duplicates in case pre-reservation is done
+                        ->rawAnd()
+                        ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
                         ->whereEquals('floor_id', $floorId)
                         ->orderBy('id')
                         ->desc()
