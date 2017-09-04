@@ -47,6 +47,8 @@ $(function(){
 
         $("[name='room_id']").change(countUpdater);
         $datetimepicker.on('dp.hide', countUpdater);
+
+        countUpdater();
     }
 
 	// Chosen
