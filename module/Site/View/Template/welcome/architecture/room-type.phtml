@@ -13,7 +13,7 @@ use Krystal\Form\Element;
                 <tr>
                     <th>#</th>
                     <th><?php $this->show('Name'); ?></th>
-                    <th><?php $this->show('Day price'); ?></th>
+                    <th><?php $this->show('Daily price'); ?></th>
                     <th><?php $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -23,7 +23,7 @@ use Krystal\Form\Element;
                 <tr class="<?= $type['id'] == $id ? 'success' : null; ?>">
                     <td><?= $type['id']; ?></td>
                     <td><?= $type['type']; ?></td>
-                    <td><?= $type['unit_price']; ?></td>
+                    <td><?= number_format($type['unit_price']); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
@@ -37,7 +37,7 @@ use Krystal\Form\Element;
     <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomType@saveAction'); ?>">
           <fieldset>
-            <legend><?php $this->show(!$entity['id'] ? 'Add room type' : 'Edit room type'); ?></legend>
+            <legend><?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
 
             <?= Element::hidden('id', $entity['id']); ?>
 
@@ -49,9 +49,9 @@ use Krystal\Form\Element;
             </div>
 
             <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Day price'); ?></label>
+              <label class="col-lg-2 control-label"><?php $this->show('Daily price'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('unit_price', $entity['unit_price'], array('class' => 'form-control')); ?>
+                <?= Element::number('unit_price', $entity['unit_price'], array('class' => 'form-control', 'step' => 'any')); ?>
               </div>
             </div>
             
