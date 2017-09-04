@@ -26,10 +26,9 @@ use Site\Service\CleaningCollection;
             <?php if ($free): ?>
 
             <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
-            <p><? $this->show('Free'); ?></p>
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><? $this->show('Free'); ?></a>
 
             <?php else: ?>
-
             <p><?= $room['name']; ?> <br /><?= $room['type']; ?></p>
 
             <?php if ($leavingToday): ?>
@@ -38,11 +37,25 @@ use Site\Service\CleaningCollection;
             <a data-toggle="dropdown" data-toggle="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
             <?php endif ;?>
 
+            <?php endif; ?>
+
             <ul class="dropdown-menu">
                 <li><a data-button="view" href="<?= $this->url('Site:Architecture:Room@viewAction', $room['id']); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Room details'); ?></a></li>
                 <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
+
+                <?php if (!$free): ?>
                 <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
-                <li><a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $room['departure'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>
+                <?php endif; ?>
+
+                <li>
+                    <?php if (!$free): ?>
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $room['departure'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a>
+                    <?php else: ?>
+
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('New reservation'); ?></a>
+                    <?php endif; ?>
+                </li>
+
                 <li><a href="<?= $this->url('Site:Reservation@historyAction', $room['id']); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
 
                 <li class="dropdown-header"><? $this->show('Cleaning status'); ?></li>
@@ -51,8 +64,6 @@ use Site\Service\CleaningCollection;
                 <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CHECKING); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CHECKING): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Checking'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_UNDEFINED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_UNDEFINED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Undefined'); ?></a></li>
             </ul>
-
-            <?php endif; ?>
 
             <?php if (CleaningCollection::CODE_CLEANED == $room['cleaned']): ?>
             <span class="cleaning-status status-clean"><? $this->show('Cleaned'); ?></span>
