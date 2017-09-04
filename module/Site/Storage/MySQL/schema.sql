@@ -69,6 +69,7 @@ CREATE TABLE hotelia_reservation (
     `phone` varchar(250) TEXT NOT NULL,
     `email` varchar(100) NOT NULL,
     `passport` TEXT NOT NULL COMMENT 'Passport data',
+    `discount` FLOAT NOT NULL COMMENT 'Discount percentage',
     `comment` TEXT NOT NULL COMMENT 'Additional note if any'
 
 	/* Date */

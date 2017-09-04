@@ -55,6 +55,12 @@ use Krystal\Grid\ListView;
     <div class="col-lg-6">
         <?= (new ListView($entity, [
             'columns' => [
+                [
+                    'column' => 'discount',
+                    'value' => function($key, $value){
+                        return $value . '%';
+                    }
+                ],
                 ['column' => 'arrival'],
                 ['column' => 'departure'],
                 ['column' => 'room'],

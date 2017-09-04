@@ -134,7 +134,14 @@ use Krystal\Form\Element;
       </div>
     </div>
 
-	<div class="form-group">
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::number('discount', $client['discount'], array('class' => 'form-control', 'min' => 1, 'max' => '99', 'placeholder' => $this->translate('Discount for living'))); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Includes'); ?></label>
       <div class="col-lg-10">
 		<?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'multiple' => true)); ?>
