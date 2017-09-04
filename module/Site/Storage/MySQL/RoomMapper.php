@@ -144,6 +144,7 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
             RoomTypeMapper::getFullColumnName('type'),
+            RoomTypeMapper::getFullColumnName('unit_price'),
             ReservationMapper::getFullColumnName('departure'),
 
             // Availability indicators (virtual columns)

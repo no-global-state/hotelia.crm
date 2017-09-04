@@ -17,7 +17,8 @@ CREATE TABLE hotelia_floor_room (
 
 CREATE TABLE hotelia_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `type` varchar(255) NOT NULL
+    `type` varchar(255) NOT NULL,
+    `unit_price` FLOAT NOT NULL
 );
 
 CREATE TABLE hotelia_inventory (
