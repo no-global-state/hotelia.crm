@@ -42,6 +42,17 @@ CREATE TABLE hotelia_room_services (
     `comment` TEXT
 );
 
+DROP TABLE IF EXISTS hotelia_hotels;
+CREATE TABLE hotelia_hotels (
+    `id` INT DEFAULT 1 PRIMARY KEY,
+    `city` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `address` varchar(255) NOT NULL,
+    `phone` varchar(255) NOT NULL,
+    `description` TEXT NOT NULL,
+    `start_price` FLOAT NOT NULL
+);
+
 DROP TABLE IF EXISTS hotelia_reservation;
 CREATE TABLE hotelia_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
