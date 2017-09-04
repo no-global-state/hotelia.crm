@@ -43,7 +43,7 @@ use Site\Service\CleaningCollection;
                 <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
                 <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                 <li><a href="#"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a></li>
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@historyAction', $room['id']); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
 
                 <li class="dropdown-header"><? $this->show('Cleaning status'); ?></li>
                 <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Cleaned'); ?></a></li>

@@ -49,6 +49,39 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * Renders the grid
+     * 
+     * @param array $query
+     * @param string $title
+     * @param boolean $showRooms Whether to render room column
+     * @return string
+     */
+    private function createGrid(array $query, $title, $showRooms)
+    {
+        $this->loadApp();
+
+        $route = '/reservation/index/';
+
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $countries = new Country();
+
+        $invoker = new FilterInvoker($query, $route);
+        $data = $invoker->invoke($mapper, 20);
+
+        return $this->view->render('reservation/index', array(
+            'title' => $title,
+            'route' => $route,
+            'query' => $this->request->getQuery(),
+            'data' => $data,
+            'paginator' => $mapper->getPaginator(),
+            'countries' => $countries->getAll(),
+            'rooms' => $this->createRooms(),
+            'showRooms' => $showRooms,
+            'reservationCollection' => new ReservationCollection
+        ));
+    }
+
+    /**
      * @return array
      */
     private function createTable()
@@ -128,32 +161,29 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * Renders history of the room by its ID
+     * 
+     * @param string $id Room ID
+     * @return string
+     */
+    public function historyAction($id)
+    {
+        $query = $this->request->getQuery();
+        $query['filter']['room_id'] = $id;
+
+        $title = $this->translator->translate('Browse by room - %s', $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchNameById($id));
+
+        return $this->createGrid($query, $title, false);
+    }
+
+    /**
      * Renders main grid
      * 
      * @return string
      */
     public function indexAction()
     {
-        $this->loadApp();
-
-        $route = '/reservation/index/';
-
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-        $countries = new Country();
-
-        $invoker = new FilterInvoker($this->request->getQuery(), $route);
-        $data = $invoker->invoke($mapper, 20);
-
-        $paginator = $mapper->getPaginator();
-
-        return $this->view->render('reservation/index', array(
-            'route' => $route,
-            'data' => $data,
-            'paginator' => $paginator,
-            'countries' => $countries->getAll(),
-            'rooms' => $this->createRooms(),
-            'reservationCollection' => new ReservationCollection
-        ));
+        return $this->createGrid($this->request->getQuery(), 'A list of guest', true);
     }
 
     /**
