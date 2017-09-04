@@ -68,6 +68,7 @@ CREATE TABLE hotelia_reservation (
     `legal_status ` SMALLINT(1) NOT NULL COMMENT 'Legal status code',
     `phone` varchar(250) TEXT NOT NULL,
     `email` varchar(100) NOT NULL,
+    `passport` TEXT NOT NULL COMMENT 'Passport data',
     `comment` TEXT NOT NULL COMMENT 'Additional note if any'
 
 	/* Date */

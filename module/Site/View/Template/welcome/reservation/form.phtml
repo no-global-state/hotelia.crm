@@ -58,6 +58,13 @@ use Krystal\Form\Element;
 		<?= Element::email('email', $client['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type email if any'))); ?>
       </div>
     </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Passport data'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::textarea('passport', $client['passport'], array('class' => 'form-control', 'placeholder' => $this->translate('Full passport data'))); ?>
+      </div>
+    </div>
 	
 	<div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
