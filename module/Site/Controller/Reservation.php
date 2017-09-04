@@ -37,6 +37,7 @@ class Reservation extends AbstractSiteController
             'countries' => (new Country())->getAll(),
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
             'rooms' => $this->createRooms(),
+            'prices' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchPrices(), 'id', 'unit_price'),
             // Collections
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),

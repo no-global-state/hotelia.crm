@@ -29,6 +29,24 @@ $(function(){
             showTodayButton: true,
             locale: locale
         });
+
+        // Shared counter updater function
+        var countUpdater = function(){
+            var $arrival = $("[name='arrival']");
+            var $departure = $("[name='departure']");
+
+            // Count days difference
+            var a = moment($arrival.val());
+            var b = moment($departure.val());
+            var diff = Math.abs(a.diff(b, 'days'));
+            var price = $("[name='room_id']").find(':selected').attr('data-unit-price');
+
+            $("[data-count='days']").text(diff);
+            $("[data-count='price']").text((diff * price).toLocaleString());
+        };
+
+        $("[name='room_id']").change(countUpdater);
+        $datetimepicker.on('dp.hide', countUpdater);
     }
 
 	// Chosen

@@ -115,7 +115,15 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
       <div class="col-lg-10">
-		<?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control')); ?>
+        <?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control'), false, function($key) use ($prices){
+            foreach ($prices as $id => $price) {
+                if ($id == $key) {
+                    return [
+                        'data-unit-price' => $price
+                    ];
+                }
+            }
+        }); ?>
       </div>
     </div>
 
@@ -125,9 +133,21 @@ use Krystal\Form\Element;
 		<?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'multiple' => true)); ?>
       </div>
     </div>
-
+    
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
+        
+        <div class="list-group">
+          <a href="#" class="list-group-item">
+            <h4 class="list-group-item-heading"><? $this->show('Total days'); ?></h4>
+            <p class="list-group-item-text"><span data-count="days">0</span></p>
+          </a>
+          <a href="#" class="list-group-item">
+            <h4 class="list-group-item-heading"><? $this->show('Total price'); ?></h4>
+            <p class="list-group-item-text"><span data-count="price">0</span></p>
+          </a>
+        </div>
+        
         <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
         <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
       </div>
