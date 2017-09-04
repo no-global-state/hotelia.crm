@@ -1,5 +1,10 @@
 
 $(function(){
+    // Dynamic tooltip
+    $('body').tooltip({
+        selector: "[data-tooltip=tooltip]",
+        container: "body"
+    });
 
     // Datetimepicker
     if (jQuery().datetimepicker) {
@@ -25,7 +30,7 @@ $(function(){
             locale: locale
         });
     }
-    
+
 	// Chosen
     if (jQuery().chosen) {
         $('[data-plugin="chosen"]').chosen();

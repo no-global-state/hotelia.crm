@@ -34,7 +34,7 @@ use Site\Service\CleaningCollection;
             <?php if ($leavingToday): ?>
             <a href="#" data-toggle="dropdown" class="dropdown-toggle leaving"><? $this->show('Leaving today'); ?></a>
             <?php else: ?>
-            <a data-toggle="dropdown" data-toggle="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
+            <a data-toggle="dropdown" data-tooltip="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
             <?php endif ;?>
 
             <?php endif; ?>
