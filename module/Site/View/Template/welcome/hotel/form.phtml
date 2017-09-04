@@ -1,0 +1,62 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Hotel@saveAction'); ?>">
+  <fieldset>
+	<h3 class="text-muted"> <? $this->show('Hotel information'); ?></h3>
+
+    <?= Element::hidden('id', $hotel['id']); ?>
+
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('name', $hotel['name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full hotel name'))); ?>
+      </div>
+    </div>
+
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('City'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('city', $hotel['city'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the city name'))); ?>
+      </div>
+    </div>
+    
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Address'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::textarea('address', $hotel['address'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full address'))); ?>
+      </div>
+    </div>
+
+	<div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('phone', $hotel['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Description'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::textarea('description', $hotel['description'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the description'))); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Start price'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('start_price', $hotel['start_price'], array('class' => 'form-control', 'placeholder' => $this->translate('Minimal possible price of reservation'))); ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+        <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
+      </div>
+    </div>
+  </fieldset>
+</form>

@@ -2,8 +2,16 @@
 
 return array(
 
+    '/hotel' => array(
+        'controller' => 'Hotel@indexAction'
+    ),
+
+    '/hotel/save' => array(
+        'controller' => 'Hotel@saveAction'
+    ),
+
     '/services' => array(
-		'controller' => 'Service@indexAction'
+        'controller' => 'Service@indexAction'
     ),
     
     '/services/edit/(:var)' => array(
