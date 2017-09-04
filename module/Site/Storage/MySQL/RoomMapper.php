@@ -44,6 +44,31 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Fetch prices and their associated room IDs
+     * 
+     * @return array
+     */
+    public function fetchPrices()
+    {
+        $columns = array(
+            self::getFullColumnName($this->getPk()),
+            RoomTypeMapper::getFullColumnName('unit_price')
+        );
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Type relation
+                        ->leftJoin(RoomTypeMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('type_id'),
+                            RoomTypeMapper::getRawColumn('id')
+                        )
+                        ->orderBy(self::getFullColumnName($this->getPk()))
+                        ->queryAll();
+    }
+
+    /**
      * Fetch room data by its associated id
      * 
      * @param string $id Room ID
