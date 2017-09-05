@@ -17,7 +17,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('hotelia_reservation');
+        return self::getWithPrefix('velveto_reservation');
     }
 
     /**
@@ -25,7 +25,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public static function getJunctionTableName()
     {
-        return self::getWithPrefix('hotelia_reservation_services');
+        return self::getWithPrefix('velveto_reservation_services');
     }
 
     /**

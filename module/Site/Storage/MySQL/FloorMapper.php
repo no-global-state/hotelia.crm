@@ -20,7 +20,7 @@ final class FloorMapper extends AbstractMapper
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('hotelia_floor');
+        return self::getWithPrefix('velveto_floor');
     }
 
     /**

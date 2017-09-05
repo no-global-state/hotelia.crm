@@ -11,7 +11,7 @@ final class RoomInventoryMapper extends AbstractMapper
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('hotelia_room_inventory');
+        return self::getWithPrefix('velveto_room_inventory');
     }
 
     /**

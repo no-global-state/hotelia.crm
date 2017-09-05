@@ -4,7 +4,7 @@ CREATE TABLE hotelia_floor (
     `name` varchar(255) NULL
 );
 
-CREATE TABLE hotelia_floor_room (
+CREATE TABLE velveto_floor_room (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `floor_id` INT NOT NULL,
     `type_id` INT NOT NULL COMMENT 'Room type ID',
@@ -15,18 +15,18 @@ CREATE TABLE hotelia_floor_room (
     `quality` SMALLINT(1) NOT NULL COMMENT 'Room quality code'
 );
 
-CREATE TABLE hotelia_floor_room_types (
+CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type` varchar(255) NOT NULL,
     `unit_price` FLOAT NOT NULL
 );
 
-CREATE TABLE hotelia_inventory (
+CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL
 );
 
-CREATE TABLE hotelia_room_inventory (
+CREATE TABLE velveto_room_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_id` INT NOT NULL COMMENT 'Attached room ID',
     `inventory_id` INT NOT NULL COMMENT 'Attached inventory ID',
@@ -35,7 +35,7 @@ CREATE TABLE hotelia_room_inventory (
     `comment` TEXT
 );
 
-CREATE TABLE hotelia_room_services (
+CREATE TABLE velveto_room_services (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL,
     `price` FLOAT NOT NULL,
@@ -43,8 +43,8 @@ CREATE TABLE hotelia_room_services (
     `comment` TEXT
 );
 
-DROP TABLE IF EXISTS hotelia_hotels;
-CREATE TABLE hotelia_hotels (
+DROP TABLE IF EXISTS velveto_hotels;
+CREATE TABLE velveto_hotels (
     `id` INT DEFAULT 1 PRIMARY KEY,
     `city` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL,
@@ -54,8 +54,8 @@ CREATE TABLE hotelia_hotels (
     `start_price` FLOAT NOT NULL
 );
 
-DROP TABLE IF EXISTS hotelia_reservation;
-CREATE TABLE hotelia_reservation (
+DROP TABLE IF EXISTS velveto_reservation;
+CREATE TABLE velveto_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`room_id` INT NOT NULL,
 	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
@@ -77,7 +77,7 @@ CREATE TABLE hotelia_reservation (
 	`departure` DATE NOT NULL
 );
 
-CREATE TABLE hotelia_reservation_services (
+CREATE TABLE velveto_reservation_services (
     `master_id` INT NOT NULL COMMENT 'Reservation ID',
     `slave_id` INT NOT NULL COMMENT 'Service ID'
 );

@@ -20,7 +20,7 @@ final class HotelMapper extends AbstractMapper
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('hotelia_hotels');
+        return self::getWithPrefix('velveto_hotels');
     }
 
     /**
