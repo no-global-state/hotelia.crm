@@ -44,6 +44,37 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Fetches today's statistic
+     * 
+     * @return array
+     */
+    public function fetchStatistic()
+    {
+        // Columns to be selected
+        $columns = array(
+            // Availability indicators (virtual columns)
+            new RawSqlFragment('COUNT(velveto_floor_room.id) AS rooms_count'),
+            new RawSqlFragment('SUM(CURDATE() BETWEEN arrival AND departure) AS rooms_taken'),
+            new RawSqlFragment('SUM(CASE WHEN (CURDATE() > departure) IS NULL THEN 1 ELSE 0 END) AS rooms_free'),
+            new RawSqlFragment('SUM(CURDATE() = departure) AS rooms_leaving_today'),
+        );
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Reservation relation
+                        ->leftJoin(ReservationMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('id'),
+                            ReservationMapper::getRawColumn('room_id')
+                        )
+                        // Remove duplicates in case pre-reservation is done
+                        ->rawAnd()
+                        ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
+                        ->query();
+    }
+
+    /**
      * Fetch prices and their associated room IDs
      * 
      * @return array
