@@ -48,10 +48,6 @@ final class Auth extends AbstractSiteController
             // Then simply go home
             return $this->response->redirect('/');
         } else {
-            // Add a breadcrumb
-            $this->view->getBreadcrumbBag()->addOne('Home', '/')
-                                           ->addOne('Login', '#');
-
             return $this->view->render('login');
         }
     }
