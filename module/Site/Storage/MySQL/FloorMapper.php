@@ -32,6 +32,19 @@ final class FloorMapper extends AbstractMapper
     }
 
     /**
+     * Gets total floor count
+     * 
+     * @return integer
+     */
+    public function getFloorCount()
+    {
+        return $this->db->select()
+                        ->count($this->getPk())
+                        ->from(self::getTableName())
+                        ->queryScalar();
+    }
+
+    /**
      * Fetch all rooms by associated floor ID
      * 
      * @return array
