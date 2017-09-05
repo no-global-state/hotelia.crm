@@ -1,4 +1,14 @@
 
+CREATE TABLE velveto_hotels_transactions (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1,
+    `datetime` TIMESTAMP,
+    `payment_system` varchar(30) NOT NULL,
+    `amount` FLOAT NOT NULL,
+    `currency` varchar(20) NOT NULL,
+    `comment` TEXT NOT NULL
+);
+
 CREATE TABLE velveto_users (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NULL,
