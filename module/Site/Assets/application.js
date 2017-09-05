@@ -34,17 +34,30 @@ $(function(){
         var countUpdater = function(){
             var $arrival = $("[name='arrival']");
             var $departure = $("[name='departure']");
+            var $discount = $("[name='discount']");
 
             // Count days difference
             var a = moment($arrival.val());
             var b = moment($departure.val());
-            var diff = Math.abs(a.diff(b, 'days'));
+            var days = Math.abs(a.diff(b, 'days')); // Days difference
             var price = $("[name='room_id']").find(':selected').attr('data-unit-price');
+            var discount = $discount.val();
+            var totalPrice = (days * price); // Number
 
-            $("[data-count='days']").text(diff);
-            $("[data-count='price']").text((diff * price).toLocaleString());
+            // If provided and positive
+            if (discount) {
+                // To subtract from total price
+                var subtract = (totalPrice * parseFloat(discount) / 100);
+                totalPrice -= subtract;
+            }
+
+            $("[data-count='days']").text(days);
+            $("[data-count='discount']").text(discount ? discount : 0);
+            $("[data-count='price']").text(totalPrice.toLocaleString());
         };
 
+        // Watchers
+        $("[name='discount']").bind('keyup change', countUpdater);
         $("[name='room_id']").change(countUpdater);
         $datetimepicker.on('dp.hide', countUpdater);
 
