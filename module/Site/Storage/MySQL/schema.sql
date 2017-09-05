@@ -1,4 +1,11 @@
 
+CREATE TABLE velveto_users (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NULL,
+    `email` varchar(255) NOT NULL,
+    `password` varchar(100) NOT NULL,
+    `role` varchar(1) NOT NULL
+);
 
 CREATE TABLE velveto_floor (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
