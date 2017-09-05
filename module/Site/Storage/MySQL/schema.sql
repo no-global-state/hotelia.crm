@@ -1,5 +1,6 @@
 
-CREATE TABLE hotelia_floor (
+
+CREATE TABLE velveto_floor (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NULL
 );
