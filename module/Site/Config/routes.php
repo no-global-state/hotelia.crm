@@ -2,6 +2,10 @@
 
 return array(
 
+    '/transaction/index/(:var)' => array(
+        'controller' => 'Transaction@indexAction'
+    ),
+
     '/hotel' => array(
         'controller' => 'Hotel@indexAction'
     ),
