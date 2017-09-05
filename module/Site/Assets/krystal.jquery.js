@@ -152,7 +152,8 @@ $(function(){
 
                 } catch(e) {
                     // Otherwise we'd assume that something went wrong
-                    console.log(response);
+                    $("#errors-modal .modal-body").html(response);
+                    $("#errors-modal").modal('show');
                 }
             }
         }
