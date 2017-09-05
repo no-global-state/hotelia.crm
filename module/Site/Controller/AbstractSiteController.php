@@ -2,10 +2,10 @@
 
 namespace Site\Controller;
 
-use Krystal\Application\Controller\AbstractController;
+use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
 
-abstract class AbstractSiteController extends AbstractController
+abstract class AbstractSiteController extends AbstractAuthAwareController
 {
     /**
      * Returns shared authentication service for the site
@@ -15,6 +15,29 @@ abstract class AbstractSiteController extends AbstractController
     protected function getAuthService()
     {
         return $this->getModuleService('userService');
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function onSuccess()
+    {
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function onFailure()
+    {
+        $this->response->redirect($this->createUrl('Site:Auth@indexAction'));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function onNoRights()
+    {
+        die($this->translator->translate('You do not have enough rights to perform this action!'));
     }
 
     /**

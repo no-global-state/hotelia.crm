@@ -7,6 +7,11 @@ use Krystal\Validate\Pattern;
 final class Auth extends AbstractSiteController
 {
     /**
+     * {@inheritDoc}
+     */
+    protected $authActive = false;
+
+    /**
      * Displays login form
      * 
      * @return string

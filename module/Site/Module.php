@@ -4,7 +4,6 @@ namespace Site;
 
 use Krystal\Application\Module\AbstractModule;
 use Site\Service\UserService;
-use Site\Storage\Memory\UserMapper;
 
 final class Module extends AbstractModule
 {
@@ -23,10 +22,10 @@ final class Module extends AbstractModule
      */
     public function getRoutes()
     {
-		return include(__DIR__.'/config/routes.php');
+        return include(__DIR__.'/config/routes.php');
 	}
 
-	/**
+    /**
      * Returns prepared service instances of this module
      * 
      * @return array
@@ -35,7 +34,7 @@ final class Module extends AbstractModule
     {
         $authManager = $this->getServiceLocator()->get('authManager');
 
-        $userService = new UserService($authManager, new UserMapper());
+        $userService = new UserService($authManager, $this->createMapper('\Site\Storage\MySQL\UserMapper'));
         $authManager->setAuthService($userService);
 
         return array(
