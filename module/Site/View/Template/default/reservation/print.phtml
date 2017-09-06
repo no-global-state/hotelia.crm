@@ -1,0 +1,112 @@
+<?php
+
+use Krystal\Iso\ISO3166\Country;
+use Site\Service\LegalStatusCollection;
+use Site\Service\PurposeCollection;
+use Site\Service\PaymentTypeCollection;
+use Site\Service\ReservationCollection;
+use Site\Service\StatusCollection;
+use Krystal\Grid\ListView;
+
+?>
+
+<p><a href="#" onclick="window.print()" class="btn btn-success hidden-print"><i class="glyphicon glyphicon-saved"></i> <?php $this->show('Print this page'); ?></a></p>
+
+<h2><?php $this->show('Invoice'); ?> №<?= $entity['id']; ?></h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <?= (new ListView($entity, [
+            'columns' => [
+                ['column' => 'id', 'title' => 'ID'],
+                ['column' => 'full_name'],
+                ['column' => 'passport'],
+                [
+                    'column' => 'gender', 
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return str_replace(array('M', 'F'), array('Male', 'Female'), $value);
+                    }
+                ],
+                [
+                    'column' => 'country',
+                    'value' => function($column, $value){
+                        return (new Country())->getCountryByCode($value);
+                    }
+                ],
+                [
+                    'column' => 'status',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new StatusCollection())->findByKey($value);
+                    }
+                ],
+                [
+                    'column' => 'legal_status', 
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new LegalStatusCollection())->findByKey($value);
+                    }
+                ],
+                ['column' => 'email'],
+                ['column' => 'phone'],
+                ['column' => 'email'],
+            ]
+
+        ], $this->translator))->render(); ?>
+    </div>
+
+    <div class="col-lg-6">
+        <?= (new ListView($entity, [
+            'columns' => [
+                [
+                    'column' => 'discount',
+                    'value' => function($key, $value){
+                        return $value . '%';
+                    }
+                ],
+                ['column' => 'arrival'],
+                ['column' => 'departure'],
+                ['column' => 'room'],
+                [
+                    'column' => 'purpose',
+                    'title' => 'Arrival purpose',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new PurposeCollection())->findByKey($value);
+                    }
+                ],
+                [
+                    'column' => 'payment_type',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new PaymentTypeCollection())->findByKey($value);
+                    }
+                ],
+
+                [
+                    'column' => 'state',
+                    'title' => 'Reservation state',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new ReservationCollection())->findByKey($value);
+                    }
+                ],
+
+                [
+                    'column' => 'services',
+                    'value' => function($column, $value){
+                        return join(', ', array_column($value, 'name'));
+                    }
+                ],
+                
+                ['column' => 'comment']
+            ]
+
+        ], $this->translator))->render(); ?>
+    </div>
+</div>
+
+<?php $this->loadPartial('counter', array(
+    'count' => $count
+)); ?>

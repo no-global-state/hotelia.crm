@@ -85,6 +85,9 @@ use Krystal\Iso\ISO3166\Country;
             'view' => function($row){
                 return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
             },
+            'print' => function($row){
+                return sprintf('<a href="/reservation/print/%s"><i class="glyphicon glyphicon-tags"></i></a>', $row['id']);
+            },
             'update' => function($row){
                 return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
             },

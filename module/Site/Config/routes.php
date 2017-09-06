@@ -73,6 +73,10 @@ return array(
         'controller' => 'Reservation@viewAction'
 	),
 
+	'/reservation/print/(:var)' => array(
+        'controller' => 'Reservation@printAction'
+	),
+
     '/reservation/index/(:var)' => array(
 		'controller' => 'Reservation@indexAction'
 	),

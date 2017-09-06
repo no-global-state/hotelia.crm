@@ -166,6 +166,22 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * Renders print-able reservation data
+     * 
+     * @param string $id Reservation id
+     * @return string
+     */
+    public function printAction($id)
+    {
+        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+
+        return $this->view->render('reservation/print', array(
+            'entity' => $entity,
+            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
+        ));
+    }
+
+    /**
      * Renders history of the room by its ID
      * 
      * @param string $id Room ID
