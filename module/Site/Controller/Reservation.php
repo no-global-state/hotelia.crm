@@ -299,7 +299,7 @@ class Reservation extends AbstractSiteController
                 $mapper->insert($data);
             }
 
-            $this->flashBag->set('success', 'Your request has been sent!');
+            $this->flashBag->set('success', 'Reservation is successful');
             return '1';
         } else {
             return $formValidator->getErrors();
