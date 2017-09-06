@@ -13,6 +13,7 @@ use Site\Service\PurposeCollection;
 use Site\Service\PaymentTypeCollection;
 use Site\Service\LegalStatusCollection;
 use Site\Service\StatusCollection;
+use Site\Service\ReservationService;
 
 class Reservation extends AbstractSiteController
 {
@@ -159,7 +160,8 @@ class Reservation extends AbstractSiteController
         $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
 
         return $this->view->disableLayout()->render('reservation/view', array(
-            'entity' => $entity
+            'entity' => $entity,
+            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
         ));
     }
 
