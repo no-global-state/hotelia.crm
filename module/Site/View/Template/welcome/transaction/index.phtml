@@ -40,15 +40,13 @@ use Krystal\Iso\ISO3166\Country;
             [
                 'column' => 'payment_system',
                 'type' => 'text',
-                'filter' => true,
-                'label' => 'Payment System',
+                'filter' => true
             ],
 
             [
                 'column' => 'amount',
                 'type' => 'text',
                 'filter' => true,
-                'label' => 'Amount',
                 'value' => function($row){
                     return number_format($row['amount']);
                 }
@@ -57,14 +55,12 @@ use Krystal\Iso\ISO3166\Country;
             [
                 'column' => 'currency',
                 'type' => 'text',
-                'filter' => true,
-                'label' => 'Currency',
+                'filter' => true
             ],
 
             [
                 'column' => 'comment',
-                'filter' => false,
-                'label' => 'Comment',
+                'filter' => false
             ]
         ]
 

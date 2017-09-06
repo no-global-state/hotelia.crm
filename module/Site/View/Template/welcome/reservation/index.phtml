@@ -32,7 +32,6 @@ use Krystal\Iso\ISO3166\Country;
 
             [
                 'column' => 'country',
-                'label' => 'Country',
                 'type' => 'select',
                 'filter' => $countries,
                 'value' => function($row){
@@ -44,8 +43,7 @@ use Krystal\Iso\ISO3166\Country;
             [
                 'column' => 'full_name',
                 'type' => 'text',
-                'filter' => true,
-                'label' => 'Full name',
+                'filter' => true
             ],
 
             [
@@ -73,15 +71,13 @@ use Krystal\Iso\ISO3166\Country;
             [
                 'column' => 'arrival',
                 'type' => 'text',
-                'filter' => true,
-                'label' => 'Arrival',
+                'filter' => true
             ],
 
             [
                 'column' => 'departure',
                 'type' => 'text',
-                'filter' => true,
-                'label' => 'Departure',
+                'filter' => true
             ]
         ],
 
