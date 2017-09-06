@@ -30,47 +30,48 @@ use Site\Service\CleaningCollection;
         // A column to be considered as a primary key
         'pk' => 'id',
         'batch' => true,
-        'columns' => array(
-            array(
+        'columns' => [
+            [
                 'column' => 'floor_id',
                 'type' => 'select',
-                'filter' => $floors,
+                'sorting' => false,
                 'label' => 'Floor',
                 'value' => function($row){
                     return $row['floor'];
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'name',
                 'type' => 'text',
-                'filter' => true,
+                'sorting' => false,
                 'label' => 'Room',
                 'value' => function($row){
                     return $row['name'];
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'type_id',
                 'type' => 'select',
-                'filter' => $types,
+                'sorting' => false,
                 'label' => 'Type',
                 'value' => function($row){
                     return $row['type'];
                 }
-            ),
+            ],
 
-            array(
+            [
                 'column' => 'cleaned',
                 'type' => 'select',
-                'filter' => (new CleaningCollection())->getAll(),
-                'label' => 'Cleaned',
+                'sorting' => false,
+                'translateable' => true,
                 'value' => function($row){
                     return (new CleaningCollection())->findByKey($row['cleaned']);
                 }
-            )
-        )
-    )); ?>
+            ]
+        ]
+
+    ), $this->translator); ?>
 
 </form>
