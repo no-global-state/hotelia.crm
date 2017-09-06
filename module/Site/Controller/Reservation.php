@@ -145,7 +145,8 @@ class Reservation extends AbstractSiteController
         $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchByRoomId($roomId);
 
         return $this->view->disableLayout()->render('reservation/view', array(
-            'entity' => $entity
+            'entity' => $entity,
+            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
         ));
     }
 
