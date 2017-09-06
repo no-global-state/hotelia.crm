@@ -100,10 +100,13 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
             '@Site/krystal.jquery.js',
         ));
 
+        $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk(1);
+
         // Add shared variables
         $this->view->addVariables(array(
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
-            'locale' => $this->appConfig->getLanguage()
+            'locale' => $this->appConfig->getLanguage(),
+            'currency' => $hotel['currency']
         ));
 
         // Define the main layout

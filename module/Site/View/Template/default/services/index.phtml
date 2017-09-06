@@ -24,7 +24,7 @@ use Krystal\Form\Element;
                 <tr class="<?= $service['id'] == $id ? 'success' : null; ?>">
                     <td><?= $service['id']; ?></td>
                     <td><?= $service['name']; ?></td>
-                    <td><?= $service['price']; ?></td>
+                    <td><?= number_format($service['price']), PHP_EOL, $currency; ?></td>
                     <td><?php $this->show($unitCollection->findByKey($service['unit'])); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Service@editAction', $service['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
