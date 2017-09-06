@@ -26,7 +26,7 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
     /**
      * {@inheritDoc}
      */
-    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
+    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array())
     {
         $db = $this->db->select('*')
                        ->from(self::getTableName())

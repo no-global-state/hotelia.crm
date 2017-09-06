@@ -70,12 +70,16 @@ class Reservation extends AbstractSiteController
         $countries = new Country();
 
         $invoker = new FilterInvoker($query, $route);
-        $data = $invoker->invoke($mapper, 20);
+
+        $data = $invoker->invoke($mapper, 20, array(
+            'leaving' => $this->request->getQuery('leaving'),
+            'coming' => $this->request->getQuery('coming'),
+        ));
 
         return $this->view->render('reservation/index', array(
             'title' => $title,
             'route' => $route,
-            'query' => $this->request->getQuery(),
+            'query' => $query,
             'data' => $data,
             'paginator' => $mapper->getPaginator(),
             'countries' => $countries->getAll(),

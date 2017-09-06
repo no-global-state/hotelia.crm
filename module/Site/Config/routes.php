@@ -65,10 +65,6 @@ return array(
 		'controller' => 'Reservation@saveAction'
 	),
 
-	'/reservation/index' => array(
-		'controller' => 'Reservation@indexAction'
-	),
-
 	'/reservation/view/(:var)' => array(
         'controller' => 'Reservation@viewAction'
 	),

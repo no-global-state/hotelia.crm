@@ -31,7 +31,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reservation'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= $this->url('Site:Reservation@tableAction'); ?>"><?php $this->show('Desktop'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Reservation@indexAction'); ?>"><?php $this->show('Current guests'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><?php $this->show('Current guests'); ?></a></li>
                 <li class="dropdown-header"><? $this->show('Management'); ?></li>
                 <li><a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><?php $this->show('New reservation'); ?></a></li>
                 <li><a href="#"><?php $this->show('Find a free room'); ?></a></li>
@@ -53,10 +53,10 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reports'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="#"><? $this->show('List of departures today'); ?></a></li>
-                <li><a href="#"><? $this->show('Departed today'); ?></a></li>
-                <li><a href="#"><? $this->show('Going out tomorrow'); ?></a></li>
-                <li><a href="#"><? $this->show('Reservation history'); ?></a></li>
+                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'today')); ?>"><? $this->show('List of departures today'); ?></a></li>
+                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'tomorrow')); ?>"><? $this->show('Going out tomorrow'); ?></a></li>
+                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'today')); ?>"><? $this->show('List of coming today'); ?></a></li>
+                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'tomorrow')); ?>"><? $this->show('List coming tomorrow'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><? $this->show('Transactions'); ?></a></li>
               </ul>
             </li>
