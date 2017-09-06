@@ -46,6 +46,13 @@ use Krystal\Form\Element;
     </div>
 
     <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Currency'); ?></label>
+      <div class="col-lg-10">
+		<?= Element::text('currency', $hotel['currency'], array('class' => 'form-control', 'placeholder' => $this->translate('Default hotel currency'))); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Start price'); ?></label>
       <div class="col-lg-10">
 		<?= Element::text('start_price', $hotel['start_price'], array('class' => 'form-control', 'placeholder' => $this->translate('Minimal possible price of reservation'))); ?>
