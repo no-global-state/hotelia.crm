@@ -190,7 +190,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     /**
      * {@inheritDoc}
      */
-    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc)
+    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array())
     {
         $db = $this->db->select($this->getSharedColumns())
                        ->from(self::getTableName())
@@ -205,10 +205,35 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                        ->andWhereEquals('country', $input['country'], true)
                        ->andWhereLike('full_name', '%'.$input['full_name'].'%', true)
                        ->andWhereEquals('room_id', $input['room_id'], true)
-                       ->andWhereEquals('state', $input['state'], true)
-                       ->andWhereEquals('arrival', $input['arrival'], true)
-                       ->andWhereEquals('departure', $input['departure'], true)
-                       ->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
+                       ->andWhereEquals('state', $input['state'], true);
+
+        // Leaving
+        if (!empty($parameters['leaving'])) {
+            if ($parameters['leaving'] == 'today') {
+                $db->andWhereEquals('departure', new RawSqlFragment('CURDATE()'));
+            } elseif ($parameters['leaving'] == 'tomorrow') {
+                $db->andWhereEquals('departure', new RawSqlFragment('DATE_ADD(CURDATE(), INTERVAL 1 DAY)'));
+            }
+
+            $db->andWhereEquals('arrival', $input['arrival'], true);
+
+        // Coming
+        } else if (!empty($parameters['coming'])) {
+            if ($parameters['coming'] == 'today') {
+                $db->andWhereEquals('arrival', new RawSqlFragment('CURDATE()'));
+            } elseif ($parameters['coming'] == 'tomorrow') {
+                $db->andWhereEquals('arrival', new RawSqlFragment('DATE_ADD(CURDATE(), INTERVAL 1 DAY)'));
+            }
+
+            $db->andWhereEquals('departure', $input['departure'], true);
+
+        } else {
+            // Default 
+            $db->andWhereEquals('arrival', $input['arrival'], true)
+               ->andWhereEquals('departure', $input['departure'], true);
+        }
+
+        $db->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
 
         if ($desc) {
             $db->desc();
