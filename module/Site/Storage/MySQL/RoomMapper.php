@@ -13,6 +13,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Db\Sql\RawSqlFragment;
+use Krystal\Db\Sql\QueryBuilder;
 
 final class RoomMapper extends AbstractMapper
 {
@@ -30,6 +31,62 @@ final class RoomMapper extends AbstractMapper
     protected function getPk()
     {
         return 'id';
+    }
+
+    /**
+     * Finds free available rooms
+     * 
+     * @param string $arrival
+     * @param string $departure
+     * @return string
+     */
+    public function findFreeRooms($arrival, $departure)
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->whereNotIn('id', new RawSqlFragment($this->createBookingQuery($arrival, $departure)))
+                        ->queryAll();
+    }
+
+    /**
+     * Create query that finds non-available rooms
+     * 
+     * @param string $arrival
+     * @param string $departure
+     * @return string
+     */
+    private function createBookingQuery($arrival, $departure)
+    {
+        // @TODO: Escape these values
+        $arrival = sprintf("'%s'", $arrival);
+        $departure = sprintf("'%s'", $departure);
+
+        $qb = new QueryBuilder();
+        $qb->select('room_id')
+           ->from(ReservationMapper::getTableName())
+           ->append(' WHERE ')
+
+           // Wrapped expression
+           ->openBracket()
+           ->compare('arrival', '<=', $arrival)
+           ->andWhere('departure', '>=', $arrival)
+           ->closeBracket()
+           ->rawOr()
+
+           // Wrapped expression
+           ->openBracket()
+           ->compare('arrival', '<', $arrival)
+           ->andWhere('departure', '>=', $departure)
+           ->closeBracket()
+           ->rawOr()
+
+           // Wrapped expression
+           ->openBracket()
+           ->compare('arrival', '>=', $arrival)
+           ->andWhere('departure', '<', $departure)
+           ->closeBracket();
+
+        return $qb->getQueryString();
     }
 
     /**
