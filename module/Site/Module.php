@@ -42,7 +42,8 @@ final class Module extends AbstractModule
             'userService' => $userService,
             'architectureService' => new ArchitectureService(
                 $this->createMapper('\Site\Storage\MySQL\FloorMapper'), 
-                $this->createMapper('\Site\Storage\MySQL\RoomMapper')
+                $this->createMapper('\Site\Storage\MySQL\RoomMapper'),
+                $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')
             )
         );
     }

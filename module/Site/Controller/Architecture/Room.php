@@ -27,28 +27,6 @@ final class Room extends AbstractSiteController
     }
 
     /**
-     * Returns a collection of floors
-     * 
-     * @return array
-     */
-    private function getFloors()
-    {
-        $rows = $this->createMapper('\Site\Storage\MySQL\FloorMapper')->fetchAll($this->getHotelId());
-        return ArrayUtils::arrayList($rows, 'id', 'name');
-    }
-
-    /**
-     * Returns room types
-     * 
-     * @return array
-     */
-    private function getRoomTypes()
-    {
-        $rows = $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll($this->getHotelId());
-        return ArrayUtils::arrayList($rows, 'id', 'type');
-    }
-
-    /**
      * Renders room info
      * 
      * @param string $id
@@ -80,8 +58,8 @@ final class Room extends AbstractSiteController
         } else {
             return $this->view->render('architecture/form-room', array(
                 'entity' => $entity,
-                'floors' => $this->getFloors(),
-                'roomTypes' => $this->getRoomTypes(),
+                'floors' => $this->getModuleService('architectureService')->getFloor(),
+                'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes(),
                 'cleaningCollection' => new CleaningCollection(),
                 'roomQualities' => (new RoomQualityCollection())->getAll()
             ));

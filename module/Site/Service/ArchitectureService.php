@@ -5,6 +5,7 @@ namespace Site\Service;
 use Krystal\Stdlib\ArrayUtils;
 use Site\Storage\MySQL\FloorMapper;
 use Site\Storage\MySQL\RoomMapper;
+use Site\Storage\MySQL\RoomTypeMapper;
 
 class ArchitectureService
 {
@@ -18,21 +19,52 @@ class ArchitectureService
     /**
      * Any compliant mapper implementing room mapper
      * 
-     * @var \\Site\Storage\MySQL\RoomMapper
+     * @var \Site\Storage\MySQL\RoomMapper
      */
     private $roomMapper;
+
+    /**
+     * Any compliant mapper implementing room type mapper
+     * 
+     * @var \Site\Storage\MySQL\RoomTypeMapper
+     */
+    private $roomTypeMapper;
 
     /**
      * State initialization
      * 
      * @param \Site\Storage\MySQL\FloorMapper $floorMapper
      * @param \Site\Storage\MySQL\RoomMapper $roomMapper
+     * @param \Site\Storage\MySQL\RoomTypeMapper $roomTypeMapper
      * @return void
      */
-    public function __construct(FloorMapper $floorMapper, RoomMapper $roomMapper)
+    public function __construct(FloorMapper $floorMapper, RoomMapper $roomMapper, RoomTypeMapper $roomTypeMapper)
     {
         $this->floorMapper = $floorMapper;
         $this->roomMapper = $roomMapper;
+        $this->roomTypeMapper = $roomTypeMapper;
+    }
+
+    /**
+     * Returns a collection of floors
+     * 
+     * @param integer $hotelId
+     * @return array
+     */
+    public function getFloors($hotelId)
+    {
+        return ArrayUtils::arrayList($this->floorMapper->fetchAll($hotelId), 'id', 'name');
+    }
+
+    /**
+     * Returns room types
+     * 
+     * @param integer $hotelId
+     * @return array
+     */
+    public function getRoomTypes($hotelId)
+    {
+        return ArrayUtils::arrayList($this->roomTypeMapper->fetchAll($hotelId), 'id', 'type');
     }
 
     /**
