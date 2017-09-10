@@ -34,9 +34,9 @@ class Reservation extends AbstractSiteController
             'arrival' => $arrival,
             'client' => $client,
             'countries' => (new Country())->getAll(),
-            'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll(), 'id', 'name'),
+            'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll($this->getHotelId()), 'id', 'name'),
             'rooms' => $this->createRooms(),
-            'prices' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchPrices(), 'id', 'unit_price'),
+            'prices' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchPrices($this->getHotelId()), 'id', 'unit_price'),
             // Collections
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
@@ -70,6 +70,7 @@ class Reservation extends AbstractSiteController
         $data = $invoker->invoke($mapper, 20, array(
             'leaving' => $this->request->getQuery('leaving'),
             'coming' => $this->request->getQuery('coming'),
+            'hotel_id' => $this->getHotelId()
         ));
 
         return $this->view->render('reservation/index', array(
@@ -95,7 +96,7 @@ class Reservation extends AbstractSiteController
         $roomMapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
         $floorMapper = $this->createMapper('\Site\Storage\MySQL\FloorMapper');
 
-        foreach ($floorMapper->fetchAll() as $floor) {
+        foreach ($floorMapper->fetchAll($this->getHotelId()) as $floor) {
             $floor['rooms'] = $roomMapper->fetchAll($floor['id']);
             $output[] = $floor;
         }

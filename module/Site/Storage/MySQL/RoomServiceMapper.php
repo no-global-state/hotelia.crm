@@ -25,12 +25,14 @@ class RoomServiceMapper extends AbstractMapper
     /**
      * Fetch all services
      * 
+     * @param integer $hotelId
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll($hotelId)
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
+                        ->whereEquals('hotel_id', $hotelId)
                         ->orderBy($this->getPk())
                         ->desc()
                         ->queryAll();

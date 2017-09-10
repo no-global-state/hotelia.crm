@@ -36,26 +36,29 @@ final class RoomMapper extends AbstractMapper
     /**
      * Finds free available rooms
      * 
+     * @param integer $hotelId
      * @param string $arrival
      * @param string $departure
      * @return string
      */
-    public function findFreeRooms($arrival, $departure)
+    public function findFreeRooms($hotelId, $arrival, $departure)
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
-                        ->whereNotIn('id', new RawSqlFragment($this->createBookingQuery($arrival, $departure)))
+                        ->whereNotIn('id', new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
+                        ->andWhereEquals('hotel_id', $hotelId)
                         ->queryAll();
     }
 
     /**
      * Create query that finds non-available rooms
      * 
+     * @param integer $hotelId
      * @param string $arrival
      * @param string $departure
      * @return string
      */
-    private function createBookingQuery($arrival, $departure)
+    private function createBookingQuery($hotelId, $arrival, $departure)
     {
         // @TODO: Escape these values
         $arrival = sprintf("'%s'", $arrival);
@@ -84,7 +87,9 @@ final class RoomMapper extends AbstractMapper
            ->openBracket()
            ->compare('arrival', '>=', $arrival)
            ->andWhere('departure', '<', $departure)
-           ->closeBracket();
+           ->closeBracket()
+
+           ->andWhereEquals('hotel_id', $hotelId);
 
         return $qb->getQueryString();
     }
@@ -103,9 +108,10 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetches today's statistic
      * 
+     * @param integer $hotelId
      * @return array
      */
-    public function fetchStatistic()
+    public function fetchStatistic($hotelId)
     {
         // Columns to be selected
         $columns = array(
@@ -118,6 +124,13 @@ final class RoomMapper extends AbstractMapper
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
+                        // Floor relation
+                        ->innerJoin(FloorMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('floor_id'),
+                            FloorMapper::getRawColumn('id')
+                        )
                         // Reservation relation
                         ->leftJoin(ReservationMapper::getTableName())
                         ->on()
@@ -128,15 +141,17 @@ final class RoomMapper extends AbstractMapper
                         // Remove duplicates in case pre-reservation is done
                         ->rawAnd()
                         ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
+                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
                         ->query();
     }
 
     /**
      * Fetch prices and their associated room IDs
      * 
+     * @param integer $hotelId
      * @return array
      */
-    public function fetchPrices()
+    public function fetchPrices($hotelId)
     {
         $columns = array(
             self::getFullColumnName($this->getPk()),
@@ -145,6 +160,13 @@ final class RoomMapper extends AbstractMapper
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
+                        // Floor relation
+                        ->innerJoin(FloorMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('floor_id'),
+                            FloorMapper::getRawColumn('id')
+                        )
                         // Type relation
                         ->leftJoin(RoomTypeMapper::getTableName())
                         ->on()
@@ -152,6 +174,8 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
                         )
+                        // Filter by Hotel ID
+                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
                         ->orderBy(self::getFullColumnName($this->getPk()))
                         ->queryAll();
     }
@@ -199,9 +223,10 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetches cleaning data of rooms
      * 
+     * @param integer $hotelId
      * @return array
      */
-    public function fetchCleaning()
+    public function fetchCleaning($hotelId)
     {
         // Columns to be selected
         $columns = array(
@@ -233,6 +258,8 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('floor_id'),
                             FloorMapper::getRawColumn('id')
                         )
+                        // Filter by Hotel ID
+                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
                         ->orderBy(array(FloorMapper::getFullColumnName('name')))
                         ->desc()
                         ->queryAll();

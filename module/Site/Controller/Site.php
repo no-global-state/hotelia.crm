@@ -21,8 +21,8 @@ final class Site extends AbstractSiteController
      */
     public function indexAction()
     {
-        $room = $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchStatistic();
-        $floorCount = $this->createMapper('\Site\Storage\MySQL\FloorMapper')->getFloorCount();
+        $room = $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchStatistic($this->getHotelId());
+        $floorCount = $this->createMapper('\Site\Storage\MySQL\FloorMapper')->getFloorCount($this->getHotelId());
 
         // Statistic
         $stat = array(

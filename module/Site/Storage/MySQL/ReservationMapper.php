@@ -46,6 +46,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
         // Columns to be selected
         return array(
             self::getFullColumnName('id'),
+            self::getFullColumnName('hotel_id'),
             self::getFullColumnName('room_id'),
             self::getFullColumnName('full_name'),
             self::getFullColumnName('gender'),
@@ -201,7 +202,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                             self::getFullColumnName('room_id'),
                             RoomMapper::getRawColumn('id')
                        )
-                       ->whereEquals('1', '1')
+                       ->whereEquals(self::getFullColumnName('hotel_id'), $parameters['hotel_id'])
                        ->andWhereEquals('country', $input['country'], true)
                        ->andWhereLike('full_name', '%'.$input['full_name'].'%', true)
                        ->andWhereEquals('room_id', $input['room_id'], true)

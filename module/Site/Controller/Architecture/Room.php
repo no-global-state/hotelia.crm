@@ -33,7 +33,7 @@ final class Room extends AbstractSiteController
      */
     private function getFloors()
     {
-        $rows = $this->createMapper('\Site\Storage\MySQL\FloorMapper')->fetchAll();
+        $rows = $this->createMapper('\Site\Storage\MySQL\FloorMapper')->fetchAll($this->getHotelId());
         return ArrayUtils::arrayList($rows, 'id', 'name');
     }
 
@@ -44,7 +44,7 @@ final class Room extends AbstractSiteController
      */
     private function getRoomTypes()
     {
-        $rows = $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll();
+        $rows = $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll($this->getHotelId());
         return ArrayUtils::arrayList($rows, 'id', 'type');
     }
 

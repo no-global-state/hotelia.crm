@@ -30,7 +30,7 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
     {
         $db = $this->db->select('*')
                        ->from(self::getTableName())
-                       ->whereEquals('1', '1')
+                       ->whereEquals('hotel_id', $parameters['hotel_id'])
                        ->andWhereEquals('datetime', $input['datetime'], true)
                        ->andWhereLike('payment_system', '%'.$input['payment_system'].'%', true)
                        ->andWhereLike('amount', $input['amount'], true)

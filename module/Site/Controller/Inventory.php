@@ -26,7 +26,7 @@ class Inventory extends AbstractSiteController
     private function createGrid($entity)
     {
         return $this->view->render('inventory/index', array(
-            'inventories' => $this->createInventoryMapper()->fetchAll(),
+            'inventories' => $this->createInventoryMapper()->fetchAll($this->getHotelId()),
             'id' => $entity['id'],
             'entity' => $entity
         ));

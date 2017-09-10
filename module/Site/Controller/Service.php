@@ -27,7 +27,7 @@ final class Service extends AbstractSiteController
     private function createGrid($entity)
     {
         return $this->view->render('services/index', array(
-            'services' => $this->createServiceMapper()->fetchAll(),
+            'services' => $this->createServiceMapper()->fetchAll($this->getHotelId()),
             'entity' => $entity,
             'id' => $entity['id'],
             'unitCollection' => new UnitCollection

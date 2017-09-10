@@ -8,6 +8,16 @@ use Krystal\Validate\Renderer;
 abstract class AbstractSiteController extends AbstractAuthAwareController
 {
     /**
+     * Returns current hotel ID
+     * 
+     * @return integer
+     */
+    protected function getHotelId()
+    {
+        return 1;
+    }
+
+    /**
      * Returns shared authentication service for the site
      * 
      * @return \Site\Service\UserService

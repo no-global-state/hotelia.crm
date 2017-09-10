@@ -20,7 +20,9 @@ final class Transaction extends AbstractSiteController
         $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
 
         $invoker = new FilterInvoker($this->request->getQuery(), $route);
-        $data = $invoker->invoke($mapper, 20);
+        $data = $invoker->invoke($mapper, 20, array(
+            'hotel_id' => $this->getHotelId()
+        ));
 
         return $this->view->render('transaction/index', array(
             'route' => $route,

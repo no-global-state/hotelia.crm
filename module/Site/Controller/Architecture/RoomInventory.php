@@ -38,7 +38,7 @@ class RoomInventory extends AbstractSiteController
      */
     private function createGrid($roomId, $entity)
     {
-        $collection = ArrayUtils::arrayList($this->createInventoryMapper()->fetchAll(), 'id', 'name');
+        $collection = ArrayUtils::arrayList($this->createInventoryMapper()->fetchAll($this->getHotelId()), 'id', 'name');
 
         return $this->view->render('architecture/room-inventory', array(
             'inventories' => $this->createRoomInventoryMapper()->fetchAll($roomId),

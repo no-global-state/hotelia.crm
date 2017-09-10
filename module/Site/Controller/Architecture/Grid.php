@@ -42,7 +42,7 @@ final class Grid extends AbstractSiteController
     private function createGrid($id)
     {
         return $this->view->render('architecture/index', array(
-            'floors' => $this->createFloorMapper()->fetchAll(),
+            'floors' => $this->createFloorMapper()->fetchAll($this->getHotelId()),
             'floorId' => $id,
             'rooms' => $this->createRoomMapper()->fetchAll($id),
             'cleaningCollection' => new CleaningCollection(),

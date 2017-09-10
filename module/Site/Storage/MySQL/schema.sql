@@ -1,7 +1,7 @@
 
 CREATE TABLE velveto_hotels_transactions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `datetime` TIMESTAMP,
     `payment_system` varchar(30) NOT NULL,
     `amount` FLOAT NOT NULL,
@@ -11,6 +11,7 @@ CREATE TABLE velveto_hotels_transactions (
 
 CREATE TABLE velveto_users (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NULL,
     `email` varchar(255) NOT NULL,
     `password` varchar(100) NOT NULL,
@@ -19,6 +20,7 @@ CREATE TABLE velveto_users (
 
 CREATE TABLE velveto_floor (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NULL
 );
 
@@ -35,12 +37,14 @@ CREATE TABLE velveto_floor_room (
 
 CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `type` varchar(255) NOT NULL,
     `unit_price` FLOAT NOT NULL
 );
 
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NOT NULL
 );
 
@@ -55,6 +59,7 @@ CREATE TABLE velveto_room_inventory (
 
 CREATE TABLE velveto_room_services (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `unit` varchar(3) NOT NULL,
@@ -76,6 +81,7 @@ CREATE TABLE velveto_hotels (
 DROP TABLE IF EXISTS velveto_reservation;
 CREATE TABLE velveto_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
 	`room_id` INT NOT NULL,
 	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
 	`gender` varchar(1) NOT NULL,
