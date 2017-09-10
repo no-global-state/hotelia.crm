@@ -4,6 +4,7 @@ namespace Site;
 
 use Krystal\Application\Module\AbstractModule;
 use Site\Service\UserService;
+use Site\Service\ArchitectureService;
 
 final class Module extends AbstractModule
 {
@@ -38,7 +39,11 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
-            'userService' => $userService
+            'userService' => $userService,
+            'architectureService' => new ArchitectureService(
+                $this->createMapper('\Site\Storage\MySQL\FloorMapper'), 
+                $this->createMapper('\Site\Storage\MySQL\RoomMapper')
+            )
         );
     }
 }
