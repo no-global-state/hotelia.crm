@@ -30,8 +30,6 @@ class Reservation extends AbstractSiteController
         $this->view->getPluginBag()
                    ->load(array('chosen', 'datetimepicker'));
 
-        $this->loadApp();
-
         return $this->view->render('reservation/form', array(
             'arrival' => $arrival,
             'client' => $client,
@@ -62,8 +60,6 @@ class Reservation extends AbstractSiteController
      */
     private function createGrid(array $query, $title, $showRooms)
     {
-        $this->loadApp();
-
         $route = '/reservation/index/';
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
@@ -131,8 +127,6 @@ class Reservation extends AbstractSiteController
      */
     public function tableAction()
     {
-        $this->loadApp();
-
         return $this->view->render('reservation/table', array(
             'table' => $this->createTable()
         ));

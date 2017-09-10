@@ -57,19 +57,6 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
         }
     }
 
-	/**
-	 * Load application
-	 * 
-	 * @return void
-	 */
-	protected function loadApp()
-	{
-        // Append required script paths
-        $this->view->getPluginBag()->appendScripts(array(
-			'@Site/application.js',
-        ));
-	}
-
     /**
      * This method automatically gets called when this controller executes
      * 
@@ -94,11 +81,14 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
         ));
 
         // Append required script paths
-        $this->view->getPluginBag()->appendScripts(array(
-            '@Site/jquery.min.js',
-            '@Site/bootstrap/js/bootstrap.min.js',
-            '@Site/krystal.jquery.js',
-        ));
+        $this->view->getPluginBag()
+                   ->appendScripts(array(
+                        '@Site/jquery.min.js',
+                        '@Site/bootstrap/js/bootstrap.min.js',
+                        '@Site/krystal.jquery.js',
+                   ))
+                   // This one will always be last
+                   ->appendLastScript('@Site/application.js');
 
         $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk(1);
 

@@ -24,8 +24,6 @@ final class RoomCleaning extends AbstractSiteController
      */
     public function indexAction()
     {
-        $this->loadApp();
-
         $types = ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll(), 'id', 'type');
         $floors = ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\FloorMapper')->fetchAll(), 'id', 'name');
 

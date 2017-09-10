@@ -15,8 +15,6 @@ final class Transaction extends AbstractSiteController
      */
     public function indexAction()
     {
-        $this->loadApp();
-
         $route = '/transaction/index/';
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
