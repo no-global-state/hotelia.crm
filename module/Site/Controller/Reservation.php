@@ -201,10 +201,7 @@ class Reservation extends AbstractSiteController
         $entity['room_id'] = $this->request->getQuery('room_id');
 
         if ($this->request->hasQuery('arrival')) {
-            $date = new \DateTime($this->request->getQuery('arrival'));
-            $date->modify('+1 day');
-
-            return $this->createForm($entity, $date->format('Y-m-d'));
+            return $this->createForm($entity, ReservationService::addOneDay($this->request->getQuery('arrival')));
         }
 
         return $this->createForm($entity);

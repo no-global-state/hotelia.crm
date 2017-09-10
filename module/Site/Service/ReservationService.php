@@ -7,6 +7,20 @@ use DateTime;
 class ReservationService
 {
     /**
+     * Adds one day to current date
+     * 
+     * @param string $date
+     * @return string
+     */
+    public static function addOneDay($date)
+    {
+        $date = new DateTime($date);
+        $date->modify('+1 day');
+
+        return $date->format('Y-m-d');
+    }
+
+    /**
      * Creates count
      * 
      * @param array $entity
