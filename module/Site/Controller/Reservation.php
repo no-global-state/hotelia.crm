@@ -33,11 +33,12 @@ class Reservation extends AbstractSiteController
         return $this->view->render('reservation/form', array(
             'arrival' => $arrival,
             'client' => $client,
-            'countries' => (new Country())->getAll(),
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll($this->getHotelId()), 'id', 'name'),
-            'rooms' => $this->createRooms(),
-            'prices' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchPrices($this->getHotelId()), 'id', 'unit_price'),
+            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
+            'prices' => $this->getModuleService('architectureService')->getRoomPrices($this->getHotelId()),
+
             // Collections
+            'countries' => (new Country())->getAll(),
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
@@ -63,8 +64,6 @@ class Reservation extends AbstractSiteController
         $route = '/reservation/index/';
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-        $countries = new Country();
-
         $invoker = new FilterInvoker($query, $route);
 
         $data = $invoker->invoke($mapper, 20, array(
@@ -79,46 +78,11 @@ class Reservation extends AbstractSiteController
             'query' => $query,
             'data' => $data,
             'paginator' => $mapper->getPaginator(),
-            'countries' => $countries->getAll(),
-            'rooms' => $this->createRooms(),
+            'countries' => (new Country)->getAll(),
+            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
             'showRooms' => $showRooms,
             'reservationCollection' => new ReservationCollection
         ));
-    }
-
-    /**
-     * @return array
-     */
-    private function createTable()
-    {
-        $output = array();
-
-        $roomMapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
-        $floorMapper = $this->createMapper('\Site\Storage\MySQL\FloorMapper');
-
-        foreach ($floorMapper->fetchAll($this->getHotelId()) as $floor) {
-            $floor['rooms'] = $roomMapper->fetchAll($floor['id']);
-            $output[] = $floor;
-        }
-
-        return $output;
-    }
-
-    /**
-     * Create rooms
-     * 
-     * @return array
-     */
-    private function createRooms()
-    {
-        $output = array();
-        $rows = $this->createTable();
-
-        foreach ($rows as $row) {
-            $output[$row['name']] = ArrayUtils::arrayList($row['rooms'], 'id', 'name');
-        }
-
-        return $output;
     }
 
     /**
@@ -129,7 +93,7 @@ class Reservation extends AbstractSiteController
     public function tableAction()
     {
         return $this->view->render('reservation/table', array(
-            'table' => $this->createTable()
+            'table' => $this->getModuleService('architectureService')->createTable($this->getHotelId())
         ));
     }
 
