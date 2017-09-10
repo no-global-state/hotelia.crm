@@ -15,7 +15,7 @@ final class Hotel extends AbstractSiteController
     public function indexAction()
     {
         $mapper = $this->createMapper('/Site/Storage/MySQL/HotelMapper');
-        $hotel = $mapper->findByPk(1);
+        $hotel = $mapper->findByPk($this->getHotelId());
 
         return $this->view->render('hotel/form', array(
             'hotel' => new InputDecorator($hotel ? $hotel : array())

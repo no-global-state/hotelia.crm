@@ -18,6 +18,16 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
     }
 
     /**
+     * Returns shared per page count
+     * 
+     * @return integer
+     */
+    protected function getPerPageCount()
+    {
+        return 20;
+    }
+
+    /**
      * Returns shared authentication service for the site
      * 
      * @return \Site\Service\UserService
@@ -100,7 +110,7 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
                    // This one will always be last
                    ->appendLastScript('@Site/application.js');
 
-        $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk(1);
+        $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk($this->getHotelId());
 
         // Add shared variables
         $this->view->addVariables(array(

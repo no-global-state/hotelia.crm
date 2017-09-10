@@ -66,7 +66,7 @@ class Reservation extends AbstractSiteController
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
         $invoker = new FilterInvoker($query, $route);
 
-        $data = $invoker->invoke($mapper, 20, array(
+        $data = $invoker->invoke($mapper, $this->getPerPageCount(), array(
             'leaving' => $this->request->getQuery('leaving'),
             'coming' => $this->request->getQuery('coming'),
             'hotel_id' => $this->getHotelId()
