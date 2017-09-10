@@ -109,7 +109,7 @@ class Reservation extends AbstractSiteController
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
+            'count' => ReservationService::createCount($entity)
         ));
     }
 
@@ -125,7 +125,7 @@ class Reservation extends AbstractSiteController
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
+            'count' => ReservationService::createCount($entity)
         ));
     }
 
@@ -141,7 +141,7 @@ class Reservation extends AbstractSiteController
 
         return $this->view->render('reservation/print', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount'])
+            'count' => ReservationService::createCount($entity)
         ));
     }
 
