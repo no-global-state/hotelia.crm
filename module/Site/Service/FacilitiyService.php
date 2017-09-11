@@ -36,6 +36,34 @@ final class FacilitiyService
     }
 
     /**
+     * Update relational data
+     * 
+     * @param string $hotelId
+     * @param array $ids
+     * @return boolean
+     */
+    public function updateRelation($hotelId, array $ids)
+    {
+        return $this->itemMapper->updateRelation($hotelId, $ids);
+    }
+
+    /**
+     * Returns collection of categories and their attached items
+     * 
+     * @return array
+     */
+    public function getCollection()
+    {
+        $categories = $this->categoryMapper->fetchAll();
+
+        foreach ($categories as &$category) {
+            $category['items'] = $this->itemMapper->fetchAll($category['id']);
+        }
+
+        return $categories;
+    }
+
+    /**
      * Deletes an item by its associated id
      * 
      * @param string $id
