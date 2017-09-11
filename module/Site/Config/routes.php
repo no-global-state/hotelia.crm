@@ -6,6 +6,10 @@ return array(
         'controller' => 'Facility:Grid@indexAction'
     ),
 
+    '/facility/checklist' => array(
+        'controller' => 'Facility:Grid@checklistAction'
+    ),
+
     '/facility/category/view/(:var)' => array(
         'controller' => 'Facility:Grid@categoryAction'
     ),
