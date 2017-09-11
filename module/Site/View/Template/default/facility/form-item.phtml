@@ -1,0 +1,34 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Facility:Item@saveAction'); ?>">
+  <fieldset>
+    <legend><? $this->show($item['id'] ? 'Edit the item' : 'Add new item'); ?></legend>
+
+    <?= Element::hidden('id', $item['id']); ?>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('name', $item['name'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Category'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('category_id', $categories, $item['category_id'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+        <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
+      </div>
+    </div>
+  </fieldset>
+</form>

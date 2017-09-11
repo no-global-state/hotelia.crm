@@ -1,0 +1,60 @@
+
+<div class="row">
+    <div class="col-lg-7">
+        <h2><? $this->show('Items'); ?> <small class="text-muted">(<?= count($items); ?>)</small></h2>
+        <p><a href="<?= $this->url('Site:Facility:Item@addAction'); ?>" class="btn btn-success"><? $this->show('Add an item'); ?></a></p>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($items as $item): ?>
+                <tr>
+                    <td><?= $item['id']; ?></td>
+                    <td><?= $item['name']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-5">
+        <h2><? $this->show('Categories'); ?> <small class="text-muted">(<?= count($categories); ?>)</small></h2>
+        <p><a href="<?= $this->url('Site:Facility:Category@addAction'); ?>" class="btn btn-success"><? $this->show('Add a category'); ?></a></p>
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Item count'); ?></th>
+                    <th><? $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($categories as $category): ?>
+                <tr class="<?= $categoryId == $category['id'] ? 'success' : null; ?>">
+                    <td><?= $category['id']; ?></td>
+                    <td><a href="<?= $this->url('Site:Facility:Grid@categoryAction', $category['id']); ?>"><?= $category['name']; ?></a></td>
+                    <td><?= $category['item_count']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Facility:Category@editAction', $category['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:Facility:Category@deleteAction', $category['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+</div>
