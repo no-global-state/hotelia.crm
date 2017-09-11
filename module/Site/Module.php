@@ -5,6 +5,7 @@ namespace Site;
 use Krystal\Application\Module\AbstractModule;
 use Site\Service\UserService;
 use Site\Service\ArchitectureService;
+use Site\Service\FacilitiyService;
 
 final class Module extends AbstractModule
 {
@@ -40,10 +41,16 @@ final class Module extends AbstractModule
 
         return array(
             'userService' => $userService,
+
             'architectureService' => new ArchitectureService(
                 $this->createMapper('\Site\Storage\MySQL\FloorMapper'), 
                 $this->createMapper('\Site\Storage\MySQL\RoomMapper'),
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')
+            ),
+
+            'facilitiyService' => new FacilitiyService(
+                $this->createMapper('\Site\Storage\MySQL\FacilitiyCategoryMapper'), 
+                $this->createMapper('\Site\Storage\MySQL\FacilitiyItemMapper')
             )
         );
     }
