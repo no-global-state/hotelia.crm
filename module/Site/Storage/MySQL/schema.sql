@@ -1,4 +1,9 @@
 
+CREATE TABLE velveto_facilitiy_relations (
+    `master_id` INT NOT NULL COMMENT 'Hotel ID',
+    `slave_id` INT NOT NULL COMMENT 'Item ID'
+);
+
 CREATE TABLE velveto_facilitiy_categories (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255)
