@@ -2,6 +2,48 @@
 
 return array(
 
+    '/facility' => array(
+        'controller' => 'Facility:Grid@indexAction'
+    ),
+
+    '/facility/category/view/(:var)' => array(
+        'controller' => 'Facility:Grid@categoryAction'
+    ),
+
+    // Categories
+    '/facility/category/add' => array(
+        'controller' => 'Facility:Category@addAction'
+    ),
+
+    '/facility/category/save' => array(
+        'controller' => 'Facility:Category@saveAction'
+    ),
+
+    '/facility/category/edit/(:var)' => array(
+        'controller' => 'Facility:Category@editAction'
+    ),
+
+    '/facility/category/delete/(:var)' => array(
+        'controller' => 'Facility:Category@deleteAction'
+    ),
+
+    // Item
+    '/facility/item/add' => array(
+        'controller' => 'Facility:Item@addAction'
+    ),
+
+    '/facility/item/save' => array(
+        'controller' => 'Facility:Item@saveAction'
+    ),
+
+    '/facility/item/edit/(:var)' => array(
+        'controller' => 'Facility:Item@editAction'
+    ),
+
+    '/facility/item/delete/(:var)' => array(
+        'controller' => 'Facility:Item@deleteAction'
+    ),
+
     '/transaction/index/(:var)' => array(
         'controller' => 'Transaction@indexAction'
     ),
