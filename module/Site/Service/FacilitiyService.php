@@ -99,11 +99,12 @@ final class FacilitiyService
     /**
      * Return a collection items
      * 
+     * @param string $categoryId
      * @return array
      */
-    public function getItems()
+    public function getItems($categoryId = null)
     {
-        return $this->itemMapper->fetchAll();
+        return $this->itemMapper->fetchAll($categoryId);
     }
 
     /**

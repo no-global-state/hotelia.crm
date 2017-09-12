@@ -7,18 +7,40 @@ use Site\Controller\AbstractSiteController;
 final class Grid extends AbstractSiteController
 {
     /**
+     * Creates the grid
+     * 
+     * @param string $categoryId
+     * @return string
+     */
+    private function createGrid($categoryId)
+    {
+        $service = $this->getModuleService('facilitiyService');
+
+        return $this->view->render('facility/index', array(
+            'categories' => $service->getCategories(),
+            'categoryId' => $categoryId,
+            'items' => $service->getItems($categoryId)
+        ));
+    }
+
+    /**
+     * Renders grid filtering by category id
+     * 
+     * @param string $categoryId
+     * @return string
+     */
+    public function categoryAction($categoryId)
+    {
+        return $this->createGrid($categoryId);
+    }
+
+    /**
      * Renders main grid
      * 
      * @return string
      */
     public function indexAction()
     {
-        $service = $this->getModuleService('facilitiyService');
-
-        return $this->view->render('facility/index', array(
-            'categories' => $service->getCategories(),
-            'categoryId' => null,
-            'items' => $service->getItems()
-        ));
+        return $this->createGrid(null);
     }
 }
