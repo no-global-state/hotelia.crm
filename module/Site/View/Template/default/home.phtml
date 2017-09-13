@@ -1,13 +1,52 @@
 
 <div class="row">
-    <div class="col-lg-4">
+    <div class="col-lg-4 home-box box-new">
+        <a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-plus"></i> <? $this->show('New reservation'); ?></a>
+    </div>
+
+    <div class="col-lg-4 home-box box-find">
+        <a href="#"><i class="glyphicon glyphicon-search"></i> <? $this->show('Find a free room'); ?></a>
+    </div>
+
+    <div class="col-lg-4 home-box box-clients">
+        <a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Customer list'); ?></a>
+    </div>
+
+    <div class="col-lg-4 home-box box-clients">
+        <a href="#" data-toggle="modal" data-target="#statModal"><i class="glyphicon glyphicon-calendar"></i> <? $this->show('Statistic'); ?></a>
+    </div>
+
+    <div class="col-lg-4 home-box box-payments">
+        <a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a>
+    </div>
+
+    <div class="col-lg-4 home-box box-settings">
+        <a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-send"></i> <? $this->show('Configuration'); ?></a>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="statModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-calendar"></i> <? $this->show('Statistic'); ?></h4>
+      </div>
+      <div class="modal-body">
         <div class="list-group">
           <?php foreach($stat as $name => $value): ?>
           <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading"><? $this->show($name); ?></h4>
-            <p class="list-group-item-text"><?= $value; ?></span></p>
+            <p class="list-group-item-text"><b><?= $value; ?></b></span></p>
           </a>
           <?php endforeach; ?>
         </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><? $this->show('Close'); ?></button>
+      </div>
     </div>
+  </div>
 </div>

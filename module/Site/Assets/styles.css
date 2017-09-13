@@ -32,6 +32,55 @@ div[role='main'] {
  float: right;
 }
 
+/* Home page */
+.home-box {
+ min-height: 212px;
+ text-align: center;
+ border: 5px solid #fff;
+ transition: opacity .7s;
+}
+
+.home-box:hover {
+ opacity: 0.8;
+}
+
+.home-box a {
+ color: #fff;
+ font-size: 36px;
+ margin-top: 67px;
+ display: block;
+}
+
+.home-box a:hover, .home-box a:focus {
+ text-decoration: none;
+ outline: none;
+}
+
+.box-new {
+ background: #f04124;
+}
+
+.box-find {
+ background: #6b453e;
+}
+
+.box-clients {
+ background: #097598;
+}
+
+.box-stat {
+ background: #097598;
+}
+
+.box-payments {
+ background: #1b4854;
+}
+
+.box-settings {
+ background: #486067;
+}
+
+
 /* Main desktop */
 .floor-row {}
 
