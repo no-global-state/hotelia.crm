@@ -1,6 +1,7 @@
 <?php
 
 use Krystal\Form\Element;
+use Krystal\Grid\Grid;
 
 ?>
 
@@ -9,6 +10,7 @@ use Krystal\Form\Element;
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#data" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('Data'); ?></a></li>
             <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Facilities'); ?></a></li>
+            <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
         </ul>
 
         <!-- Tab panes -->
@@ -102,6 +104,37 @@ use Krystal\Form\Element;
                     <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
                   </div>
                 </div>
+            </div>
+
+            <div class="tab-pane fade" id="gallery">
+                <br />
+
+                <p><a href="<?= $this->url('Site:Photo@addAction'); ?>" class="btn btn-success"><i class="glyphicon glyphicon-plus"></i> <? $this->show('Add new photo'); ?></a></p>
+
+                <?= Grid::render($photos, [
+                    'pk' => 'id',
+                    'batch' => false,
+                    'columns' => [
+                        [
+                            'column' => 'file',
+                            'title' => 'Image',
+                            'value' => function($row){
+                                return Element::image($row['file']);
+                            }
+                        ],
+                        ['column' => 'order'],
+                    ],
+
+                    'actions' => [
+                        'update' => function($row){
+                            return sprintf('<a href="/photo/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
+                        },
+                        'delete' => function($row){
+                            return sprintf('<a href="/photo/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
+                        }
+                    ]
+
+                ], $this->translator); ?>
             </div>
         </div>
     </div>
