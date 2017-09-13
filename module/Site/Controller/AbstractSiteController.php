@@ -4,9 +4,26 @@ namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
+use Krystal\Form\Gadget\LastCategoryKeeper;
 
 abstract class AbstractSiteController extends AbstractAuthAwareController
 {
+    /**
+     * Returns keeper service
+     * 
+     * @return \Krystal\Form\Gadget\LastCategoryKeeper
+     */
+    protected function getFloorIdKeeper()
+    {
+        static $keeper = null;
+
+        if ($keeper === null) {
+            $keeper = new LastCategoryKeeper($this->sessionBag, 'ack');
+        }
+
+        return $keeper;
+    }
+
     /**
      * Returns current hotel ID
      * 

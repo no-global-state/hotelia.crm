@@ -57,7 +57,12 @@ final class Grid extends AbstractSiteController
      */
     public function indexAction()
     {
-        $id = $this->createFloorMapper()->getMaxId();
+        if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
+            $id = $this->getFloorIdKeeper()->getLastCategoryId();
+        } else {
+            $id = $this->createFloorMapper()->getMaxId();
+        }
+
         return $this->createGrid($id);
     }
 
@@ -69,6 +74,7 @@ final class Grid extends AbstractSiteController
      */
     public function floorAction($id)
     {
+        $this->getFloorIdKeeper()->persistLastCategoryId($id);
         return $this->createGrid($id);
     }
 }
