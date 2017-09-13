@@ -2,6 +2,22 @@
 
 return array(
 
+    '/photo/add' => array(
+        'controller' => 'Photo@addAction'
+    ),
+
+    '/photo/save' => array(
+        'controller' => 'Photo@saveAction'
+    ),
+
+    '/photo/edit/(:var)' => array(
+        'controller' => 'Photo@editAction'
+    ),
+    
+    '/photo/delete/(:var)' => array(
+        'controller' => 'Photo@deleteAction'
+    ),
+
     '/facility' => array(
         'controller' => 'Facility:Grid@indexAction'
     ),

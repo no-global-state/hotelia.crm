@@ -41,7 +41,8 @@ final class Hotel extends AbstractSiteController
 
         return $this->view->render('hotel/form', array(
             'hotel' => new InputDecorator($hotel ? $hotel : array()),
-            'checklist' => $this->getModuleService('facilitiyService')->getCollection()
+            'checklist' => $this->getModuleService('facilitiyService')->getCollection(),
+            'photos' => $this->getModuleService('photoService')->fetchAll($this->getHotelId())
         ));
     }
 
