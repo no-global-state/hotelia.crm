@@ -3,12 +3,43 @@
 namespace Site;
 
 use Krystal\Application\Module\AbstractModule;
+use Krystal\Image\Tool\ImageManager;
 use Site\Service\UserService;
 use Site\Service\ArchitectureService;
 use Site\Service\FacilitiyService;
+use Site\Service\PhotoService;
 
 final class Module extends AbstractModule
 {
+    const PARAM_GALLERY_PATH = '/data/uploads/gallery/';
+
+    /**
+     * Returns product image manager
+     * 
+     * @return \Krystal\Image\Tool\ImageManager
+     */
+    private function getImageManager()
+    {
+        $plugins = array(
+            'thumb' => array(
+                'dimensions' => array(
+                    // Administration area
+                    array(200, 200)
+                )
+            ),
+            'original' => array(
+                'prefix' => 'original'
+            )
+        );
+
+        return new ImageManager(
+            self::PARAM_GALLERY_PATH,
+            $this->appConfig->getRootDir(),
+            $this->appConfig->getRootUrl(),
+            $plugins
+        );
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -51,6 +82,11 @@ final class Module extends AbstractModule
             'facilitiyService' => new FacilitiyService(
                 $this->createMapper('\Site\Storage\MySQL\FacilitiyCategoryMapper'), 
                 $this->createMapper('\Site\Storage\MySQL\FacilitiyItemMapper')
+            ),
+
+            'photoService' => new PhotoService(
+                $this->createMapper('\Site\Storage\MySQL\PhotoMapper'),
+                $this->getImageManager()
             )
         );
     }
