@@ -7,156 +7,169 @@ use Krystal\Form\Element;
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
   <fieldset>
 	<h3 class="text-muted"> <? $this->show('Client information'); ?></h3>
+    <br />
 
     <?= Element::hidden('id', $client['id']); ?>
 
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('full_name', $client['full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
-      </div>
-    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('full_name', $client['full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
+              </div>
+            </div>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('gender', $this->translateArray($genders), $client['gender'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('gender', $this->translateArray($genders), $client['gender'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('country', $countries, $client['country'], array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('country', $countries, $client['country'], array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
+              </div>
+            </div>
 
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Legal Status'); ?></label>
-      <div class="col-lg-10">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Legal Status'); ?></label>
+              <div class="col-lg-10">
 
-        <?php foreach ($legalStatuses as $id => $name): ?>
-        <div class="radio">
-          <label>
-            <?= Element::radio('legal_status', $id, $client['legal_status'] == $id); ?> <? $this->show($name); ?>
-          </label>
+                <?php foreach ($legalStatuses as $id => $name): ?>
+                <div class="radio">
+                  <label>
+                    <?= Element::radio('legal_status', $id, $client['legal_status'] == $id); ?> <? $this->show($name); ?>
+                  </label>
+                </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
         </div>
-        <?php endforeach; ?>
-      </div>
+        
+        <div class="col-lg-6">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('phone', $client['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Client phone with code'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::email('email', $client['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type email if any'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Passport data'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('passport', $client['passport'], array('class' => 'form-control', 'placeholder' => $this->translate('Full passport data'))); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
+              </div>
+            </div>
+        </div>
     </div>
 
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::text('phone', $client['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Client phone with code'))); ?>
-      </div>
-    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'data-initial-date' => isset($arrival) ? $arrival : null)); ?>
+              </div>
+            </div>
 
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::email('email', $client['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type email if any'))); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+              </div>
+            </div>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Passport data'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::textarea('passport', $client['passport'], array('class' => 'form-control', 'placeholder' => $this->translate('Full passport data'))); ?>
-      </div>
-    </div>
-	
-	<div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Payment Type'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('payment_type', $this->translateArray($paymentTypes), $client['payment_type'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('status', $this->translateArray($statuses), $client['status'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Reservation state'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('state', $this->translateArray($states), $client['state'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+        </div>
 
-	<h3 class="text-muted"> <? $this->show('Arrival and Departure'); ?></h3>
-	
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'data-initial-date' => isset($arrival) ? $arrival : null)); ?>
-      </div>
-    </div>
+        <div class="col-lg-6">
+            <h3 class="text-muted"> <? $this->show('Room'); ?></h3>
 
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control'), false, function($key) use ($prices){
+                    foreach ($prices as $id => $price) {
+                        if ($id == $key) {
+                            return [
+                                'data-unit-price' => $price
+                            ];
+                        }
+                    }
+                }); ?>
+              </div>
+            </div>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Payment Type'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('payment_type', $this->translateArray($paymentTypes), $client['payment_type'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('status', $this->translateArray($statuses), $client['status'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Reservation state'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('state', $this->translateArray($states), $client['state'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::number('discount', $client['discount'], array('class' => 'form-control', 'min' => 1, 'max' => '99', 'placeholder' => $this->translate('Discount for living'))); ?>
+              </div>
+            </div>
 
-	<h3 class="text-muted"> <? $this->show('Room'); ?></h3>
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Services'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'data-placeholder' => ' ', 'multiple' => true)); ?>
+              </div>
+            </div>
 
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control'), false, function($key) use ($prices){
-            foreach ($prices as $id => $price) {
-                if ($id == $key) {
-                    return [
-                        'data-unit-price' => $price
-                    ];
-                }
-            }
-        }); ?>
-      </div>
-    </div>
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <?php $this->loadPartial('counter', array(
+                    'count' => array()
+                )); ?>
 
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::number('discount', $client['discount'], array('class' => 'form-control', 'min' => 1, 'max' => '99', 'placeholder' => $this->translate('Discount for living'))); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Services'); ?></label>
-      <div class="col-lg-10">
-		<?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'data-placeholder' => ' ', 'multiple' => true)); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <?php $this->loadPartial('counter', array(
-            'count' => array()
-        )); ?>
-
-        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-        <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
-      </div>
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+                <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
+              </div>
+            </div>
+        </div>
     </div>
   </fieldset>
 </form>
