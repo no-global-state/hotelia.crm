@@ -183,19 +183,22 @@ $(function(){
     // For forms that send data
     $("button[type='submit']").click(function(event){
         event.preventDefault();
-        
+
         // Find its parent form
         var $form = $(this).closest('form');
-        
+
         // Attach the singular handler and cancel any previous if any
         $form.off('submit').submit(function(event){
             event.preventDefault();
-            var data = $(this).serialize();
+            // Support both files and data
+			var data = new FormData($(this)[0]);
 
             $.ajax({
                 url: $form.attr('action') ? $form.attr('action') : '',
                 type : "POST",
-                data : data,
+				processData : false,
+				contentType : false,
+				data : data,
                 success : function(response){
                     $.getValidator($form).handleAll(response);
                 }
