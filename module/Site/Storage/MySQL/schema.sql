@@ -15,6 +15,13 @@ CREATE TABLE velveto_facilitiy_items (
     `name` varchar(255)
 );
 
+CREATE TABLE velveto_hotels_photos (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT DEFAULT 1,
+    `file` varchar(30) NOT NULL COMMENT 'Base name of photo file',
+    `order` INT NOT NULL COMMENT 'Sorting order'
+);
+
 CREATE TABLE velveto_hotels_transactions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
