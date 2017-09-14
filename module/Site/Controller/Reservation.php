@@ -61,6 +61,10 @@ class Reservation extends AbstractSiteController
      */
     private function createGrid(array $query, $title, $showRooms)
     {
+        // Load view plugins
+        $this->view->getPluginBag()
+                   ->load('datetimepicker');
+
         $route = '/reservation/index/';
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
@@ -69,10 +73,16 @@ class Reservation extends AbstractSiteController
         $data = $invoker->invoke($mapper, $this->getPerPageCount(), array(
             'leaving' => $this->request->getQuery('leaving'),
             'coming' => $this->request->getQuery('coming'),
+            'type' => $this->request->getQuery('type'),
+            'from' => $this->request->getQuery('from'),
+            'to' => $this->request->getQuery('to'),
             'hotel_id' => $this->getHotelId()
         ));
 
         return $this->view->render('reservation/index', array(
+            'from' => $this->request->getQuery('from'),
+            'to' => $this->request->getQuery('to'),
+            'type' => $this->request->getQuery('type'),
             'title' => $title,
             'route' => $route,
             'query' => $query,

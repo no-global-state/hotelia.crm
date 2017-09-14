@@ -8,99 +8,138 @@ use Krystal\Iso\ISO3166\Country;
 
 <form action="<?= $route; ?>">
 
-<div class="summary">
-    <h4 class="page-header"><i class="glyphicon glyphicon-user"></i> <?php $this->show($title); ?> 
-        <?php if ($paginator->getSummary() != 0): ?>
-        <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
-        <?php endif; ?>
-    </h4>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="summary">
+                <h4 class="page-header"><i class="glyphicon glyphicon-user"></i> <?php $this->show($title); ?> 
+                    <?php if ($paginator->getSummary() != 0): ?>
+                    <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
+                    <?php endif; ?>
+                </h4>
+            </div>
 
-    <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
-</div>
+            <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+        </div>
 
-<div class="table-responsive">
-    <?= Grid::render($data, [
-        // A column to be considered as a primary key
-        'pk' => 'id',
-        'batch' => false,
-        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-        'columns' => [
-            [
-                'column' => 'id',
-                'label' => 'ID'
+        <div class="col-lg-6">
+            <div class="pull-right">
+                <h3><i class="glyphicon glyphicon-time"></i> <? $this->show('Range filter'); ?></h3>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                          <?= Element::text('from', $from, array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'placeholder' => $this->translate('From'))); ?>
+
+                          <br />
+
+                          <div class="form-inline">
+                            <div class="controls-row">
+                              <label class="radio inline">
+                                <?= Element::radio('type', 'arrival', isset($query['type']) && $query['type'] == 'arrival'); ?> <? $this->show('Arrival'); ?>
+                              </label>
+                              <label class="radio inline">
+                                <?= Element::radio('type', 'departure', isset($query['type']) && $query['type'] === 'departure'); ?> <? $this->show('Departure'); ?>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <?= Element::text('to', $to, array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'placeholder' => $this->translate('To'))); ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="table-responsive">
+        <?= Grid::render($data, [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'id',
+                    'label' => 'ID'
+                ],
+
+                [
+                    'column' => 'country',
+                    'type' => 'select',
+                    'filter' => $countries,
+                    'value' => function($row){
+                        $country = new Country();
+                        return $country->getCountryByCode($row['country']);
+                    }
+                ],
+
+                [
+                    'column' => 'full_name',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'room_id',
+                    'type' => 'select',
+                    'filter' => $rooms,
+                    'label' => 'Room',
+                    'hidden' => !$showRooms,
+                    'value' => function($row){
+                        return $row['room'];
+                    }
+                ],
+
+                [
+                    'column' => 'state',
+                    'type' => 'select',
+                    'filter' => $this->translator->translateArray($reservationCollection->getAll()),
+                    'label' => 'Reservation state',
+                    'translateable' => true,
+                    'value' => function($row) use ($reservationCollection){
+                        return $reservationCollection->findByKey($row['state']);
+                    }
+                ],
+
+                [
+                    'column' => 'arrival',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'departure',
+                    'type' => 'text',
+                    'filter' => true
+                ]
             ],
 
-            [
-                'column' => 'country',
-                'type' => 'select',
-                'filter' => $countries,
-                'value' => function($row){
-                    $country = new Country();
-                    return $country->getCountryByCode($row['country']);
+            'actions' => [
+                'view' => function($row){
+                    return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
+                },
+                'print' => function($row){
+                    return sprintf('<a href="/reservation/print/%s"><i class="glyphicon glyphicon-tags"></i></a>', $row['id']);
+                },
+                'update' => function($row){
+                    return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
+                },
+                'delete' => function($row){
+                    return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
                 }
-            ],
-
-            [
-                'column' => 'full_name',
-                'type' => 'text',
-                'filter' => true
-            ],
-
-            [
-                'column' => 'room_id',
-                'type' => 'select',
-                'filter' => $rooms,
-                'label' => 'Room',
-                'hidden' => !$showRooms,
-                'value' => function($row){
-                    return $row['room'];
-                }
-            ],
-
-            [
-                'column' => 'state',
-                'type' => 'select',
-                'filter' => $this->translator->translateArray($reservationCollection->getAll()),
-                'label' => 'Reservation state',
-                'translateable' => true,
-                'value' => function($row) use ($reservationCollection){
-                    return $reservationCollection->findByKey($row['state']);
-                }
-            ],
-
-            [
-                'column' => 'arrival',
-                'type' => 'text',
-                'filter' => true
-            ],
-
-            [
-                'column' => 'departure',
-                'type' => 'text',
-                'filter' => true
             ]
-        ],
 
-        'actions' => [
-            'view' => function($row){
-                return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
-            },
-            'print' => function($row){
-                return sprintf('<a href="/reservation/print/%s"><i class="glyphicon glyphicon-tags"></i></a>', $row['id']);
-            },
-            'update' => function($row){
-                return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
-            },
-            'delete' => function($row){
-                return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
-            }
-        ]
+        ], $this->translator, $route, $query); ?>
 
-    ], $this->translator, $route, $query); ?>
+    </div>
 
-</div>
-
-<? $this->loadPartial('pagination'); ?>
+    <? $this->loadPartial('pagination'); ?>
 
 </form>
 
