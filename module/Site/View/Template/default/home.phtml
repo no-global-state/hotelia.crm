@@ -1,26 +1,26 @@
 
-<div class="row">
-    <div class="col-lg-4 home-box box-new">
+<div class="row home-row">
+    <div class="col-lg-4">
         <a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-plus"></i> <? $this->show('New reservation'); ?></a>
     </div>
 
-    <div class="col-lg-4 home-box box-find">
+    <div class="col-lg-4">
         <a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <? $this->show('Find a free room'); ?></a>
     </div>
 
-    <div class="col-lg-4 home-box box-clients">
+    <div class="col-lg-4">
         <a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Customer list'); ?></a>
     </div>
 
-    <div class="col-lg-4 home-box box-clients">
+    <div class="col-lg-4">
         <a href="#" data-toggle="modal" data-target="#statModal"><i class="glyphicon glyphicon-calendar"></i> <? $this->show('Statistic'); ?></a>
     </div>
 
-    <div class="col-lg-4 home-box box-payments">
+    <div class="col-lg-4">
         <a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a>
     </div>
 
-    <div class="col-lg-4 home-box box-settings">
+    <div class="col-lg-4">
         <a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-send"></i> <? $this->show('Configuration'); ?></a>
     </div>
 </div>

@@ -33,50 +33,51 @@ div[role='main'] {
 }
 
 /* Home page */
-.home-box {
+.home-row > div {
  min-height: 212px;
  text-align: center;
  border: 5px solid #fff;
  transition: opacity .7s;
 }
 
-.home-box:hover {
+.home-row > div:hover {
  opacity: 0.8;
 }
 
-.home-box a {
+.home-row > div a {
  color: #fff;
  font-size: 36px;
  margin-top: 67px;
  display: block;
 }
 
-.home-box a:hover, .home-box a:focus {
+.home-row > div a:hover, 
+.home-row > div a:focus {
  text-decoration: none;
  outline: none;
 }
 
-.box-new {
+.home-row > div:nth-of-type(1){
  background: #f04124;
 }
 
-.box-find {
+.home-row > div:nth-of-type(2) {
  background: #6b453e;
 }
 
-.box-clients {
+.home-row > div:nth-of-type(3) {
  background: #097598;
 }
 
-.box-stat {
+.home-row > div:nth-of-type(4) {
  background: #097598;
 }
 
-.box-payments {
+.home-row > div:nth-of-type(5) {
  background: #1b4854;
 }
 
-.box-settings {
+.home-row > div:nth-of-type(6) {
  background: #486067;
 }
 
