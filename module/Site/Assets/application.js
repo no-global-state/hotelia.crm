@@ -24,7 +24,7 @@ $(function(){
         }
 
         $('[data-plugin="datetimepicker"]').datetimepicker({
-            defaultDate: defaultDate,
+            minDate: defaultDate,
             format: 'YYYY-MM-DD',
             showTodayButton: true,
             locale: locale
