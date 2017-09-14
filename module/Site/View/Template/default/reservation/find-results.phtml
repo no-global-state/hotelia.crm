@@ -1,0 +1,61 @@
+<?php
+
+use Krystal\Grid\Grid;
+use Site\Service\CleaningCollection;
+use Site\Service\RoomQualityCollection;
+
+?>
+
+<style>
+
+.reservation-find-results {
+ max-height: 346px;
+ overflow-y: scroll;
+}
+
+</style>
+
+<div class="reservation-find-results">
+    <?= Grid::render($rooms, [
+        'batch' => false,
+        'pk' => 'id',
+        'columns' => [
+            ['column' => 'floor'],
+            [
+                'column' => 'name',
+                'label' => 'Room'
+            ],
+            ['column' => 'type'],
+            ['column' => 'square'],
+            
+            [
+                'column' => 'persons',
+                'label' => 'Maximal person amount'
+            ],
+
+            [
+                'column' => 'quality',
+                'label' => 'Room quality status',
+                'translateable' => true,
+                'value' => function($row){
+                    return (new RoomQualityCollection())->findByKey($row['quality']);
+                }
+            ],
+
+            [
+                'column' => 'cleaned',
+                'translateable' => true,
+                'value' => function($row){
+                    return (new CleaningCollection())->findByKey($row['cleaned']);
+                }
+            ]
+        ],
+        
+        'actions' => [
+            'reserve' => function($row){
+                return '<a class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>';
+            }
+        ]
+
+    ], $this->translator); ?>
+</div>

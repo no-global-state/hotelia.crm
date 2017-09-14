@@ -1,0 +1,39 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Reservation@findAction'); ?>">
+  <legend><i class="glyphicon glyphicon-search"></i> <? $this->show('Find a free room'); ?></legend>
+  
+  <fieldset>
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('types[]', $roomTypes, null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'data-placeholder' => ' ', 'multiple' => true)); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Search'); ?></button>
+        <button type="reset" class="btn btn-default"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Cancel'); ?></button>
+      </div>
+    </div>
+  </fieldset>
+</form>
