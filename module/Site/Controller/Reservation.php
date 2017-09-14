@@ -86,6 +86,55 @@ class Reservation extends AbstractSiteController
     }
 
     /**
+     * Find free rooms
+     * 
+     * @return string
+     */
+    public function findAction()
+    {
+        $service = $this->getModuleService('architectureService');
+
+        if ($this->request->isPost()) {
+            $formValidator = $this->createValidator([
+                'input' => [
+                    'source' => $this->request->getPost(),
+                    'definition' => [
+                        'arrival' => new Pattern\DateFormat('Y-m-d'),
+                        'departure' => new Pattern\DateFormat('Y-m-d')
+                    ]
+                ]
+            ]);
+
+            if ($formValidator->isValid()) {
+                // Free rooms
+                $rooms = $service->findFreeRooms(
+                    $this->getHotelId(), 
+                    $this->request->getPost('arrival'), 
+                    $this->request->getPost('departure'), 
+                    $this->request->getPost('types', [])
+                );
+
+                return $this->view->disableLayout()->render('reservation/find-results', [
+                    'rooms' => $rooms
+                ]);
+
+            } else {
+                return $formValidator->getErrors();
+            }
+
+        } else {
+            // Load view plugins
+            $this->view->getPluginBag()
+                       ->load('datetimepicker');
+
+            return $this->view->render('reservation/find', [
+                'client' => new InputDecorator(),
+                'roomTypes' => $service->getRoomTypes($this->getHotelId())
+            ]);
+        }
+    }
+
+    /**
      * Renders the table
      * 
      * @return string

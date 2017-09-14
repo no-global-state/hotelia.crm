@@ -114,6 +114,10 @@ return array(
 		'controller' => 'Reservation@tableAction'
 	),
 
+	'/reservation/find' => array(
+		'controller' => 'Reservation@findAction'
+	),
+    
 	'/reservation/table/taken/(:var)' => array(
 		'controller' => 'Reservation@viewTakenAction'
 	),
