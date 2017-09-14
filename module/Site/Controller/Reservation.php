@@ -80,6 +80,8 @@ class Reservation extends AbstractSiteController
         ));
 
         return $this->view->render('reservation/index', array(
+            // Whether to show range filter or not
+            'hideRange' => $this->request->hasQuery('leaving') || $this->request->hasQuery('coming'),
             'from' => $this->request->getQuery('from'),
             'to' => $this->request->getQuery('to'),
             'type' => $this->request->getQuery('type'),

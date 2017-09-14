@@ -209,7 +209,6 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                        ->andWhereEquals('state', $input['state'], true);
 
         // Date range filter
-        
         if (!empty($parameters['from']) && !empty($parameters['to']) && !empty($parameters['type'])) {
             $db->andWhereBetween($parameters['type'], $parameters['from'], $parameters['to']);
         }

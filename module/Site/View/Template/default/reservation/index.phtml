@@ -21,7 +21,7 @@ use Krystal\Iso\ISO3166\Country;
             <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6 <?= $hideRange === true ? 'hidden' : null; ?>">
             <div class="pull-right">
                 <h3><i class="glyphicon glyphicon-time"></i> <? $this->show('Range filter'); ?></h3>
 
