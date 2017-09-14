@@ -34,19 +34,49 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
-     * Finds free available rooms
+     * Finds free available rooms based on date range and attached hotel ID
      * 
      * @param integer $hotelId
      * @param string $arrival
      * @param string $departure
+     * @param array $typeIds Optional type ID filters
      * @return string
      */
-    public function findFreeRooms($hotelId, $arrival, $departure)
+    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array())
     {
-        return $this->db->select('*')
+        // Columns to be selected
+        $columns = array(
+            self::getFullColumnName('name'),
+            self::getFullColumnName('persons'),
+            self::getFullColumnName('square'),
+            self::getFullColumnName('quality'),
+            self::getFullColumnName('cleaned'),
+            RoomTypeMapper::getFullColumnName('type'),
+            FloorMapper::getFullColumnName('name') => 'floor'
+        );
+
+        return $this->db->select($columns)
                         ->from(self::getTableName())
-                        ->whereNotIn('id', new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
-                        ->andWhereEquals('hotel_id', $hotelId)
+                        // Room type mapper
+                        ->leftJoin(RoomTypeMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('type_id'),
+                            RoomTypeMapper::getRawColumn('id')
+                        )
+                        // Floor relation
+                        ->leftJoin(FloorMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('floor_id'),
+                            FloorMapper::getRawColumn('id')
+                        )
+                        ->whereEquals('1', '1')
+                        ->andWhereNotIn(self::getFullColumnName('id'), new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
+                        ->andWhereIn('type_id', $typeIds) // Will not be appended if $typeIds is empty
+                        ->andWhereEquals(self::getFullColumnName('hotel_id'), $hotelId)
+                        // Sort by floor names
+                        ->orderBy(FloorMapper::getFullColumnName('name'))
                         ->queryAll();
     }
 
@@ -89,7 +119,7 @@ final class RoomMapper extends AbstractMapper
            ->andWhere('departure', '<', $departure)
            ->closeBracket()
 
-           ->andWhereEquals('hotel_id', $hotelId);
+           ->andWhereEquals(ReservationMapper::getFullColumnName('hotel_id'), $hotelId);
 
         return $qb->getQueryString();
     }
