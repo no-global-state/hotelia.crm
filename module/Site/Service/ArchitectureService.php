@@ -46,6 +46,20 @@ class ArchitectureService
     }
 
     /**
+     * Finds free available rooms based on date range and attached hotel ID
+     * 
+     * @param integer $hotelId
+     * @param string $arrival
+     * @param string $departure
+     * @param array $typeIds Optional type ID filters
+     * @return string
+     */
+    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array())
+    {
+        return $this->roomMapper->findFreeRooms($hotelId, $arrival, $departure, $typeIds);
+    }
+
+    /**
      * Returns a collection of floors
      * 
      * @param integer $hotelId
