@@ -15,6 +15,10 @@ use Site\Service\RoomQualityCollection;
 
 </style>
 
+<h3>
+    <small><?= $this->translate('Free rooms from %s to %s', $arrival, $departure); ?></small>
+</h3>
+
 <div class="reservation-find-results">
     <?= Grid::render($rooms, [
         'batch' => false,

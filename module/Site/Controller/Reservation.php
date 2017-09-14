@@ -106,16 +106,17 @@ class Reservation extends AbstractSiteController
             ]);
 
             if ($formValidator->isValid()) {
+                // Request variables
+                $arrival = $this->request->getPost('arrival');
+                $departure = $this->request->getPost('departure');
+
                 // Free rooms
-                $rooms = $service->findFreeRooms(
-                    $this->getHotelId(), 
-                    $this->request->getPost('arrival'), 
-                    $this->request->getPost('departure'), 
-                    $this->request->getPost('types', [])
-                );
+                $rooms = $service->findFreeRooms($this->getHotelId(), $arrival, $departure, $this->request->getPost('types', []));
 
                 return $this->view->disableLayout()->render('reservation/find-results', [
-                    'rooms' => $rooms
+                    'rooms' => $rooms,
+                    'arrival' => $arrival,
+                    'departure' => $departure
                 ]);
 
             } else {
