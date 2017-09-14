@@ -32,6 +32,7 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
                        ->from(self::getTableName())
                        ->whereEquals('hotel_id', $parameters['hotel_id'])
                        ->andWhereEquals('datetime', $input['datetime'], true)
+                       ->andWhereLike('holder', '%'.$input['holder'].'%', true)
                        ->andWhereLike('payment_system', '%'.$input['payment_system'].'%', true)
                        ->andWhereLike('amount', $input['amount'], true)
                        ->andWhereEquals('currency', $input['currency'], true)

@@ -26,6 +26,7 @@ CREATE TABLE velveto_hotels_transactions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `datetime` TIMESTAMP,
+    `holder` varchar(255) NOT NULL COMMENT 'Card holder name',
     `payment_system` varchar(30) NOT NULL,
     `amount` FLOAT NOT NULL,
     `currency` varchar(20) NOT NULL,
