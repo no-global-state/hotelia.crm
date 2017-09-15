@@ -2,264 +2,266 @@
 
 return array(
 
-    '/photo/add' => array(
+    '/site/captcha/(:var)' => array(
+        'controller' => 'Site@captchaAction'
+    ),
+
+    '/' => array(
+        'controller' => 'Site@indexAction'
+    ),
+
+    '/auth/login' => array(
+        'controller' => 'Auth@indexAction'
+    ),
+
+    '/auth/logout' => array(
+        'controller' => 'Auth@logoutAction'
+    ),
+
+    '/register' => array(
+        'controller' => 'Register@indexAction'
+    ),
+
+    '/crm/photo/add' => array(
         'controller' => 'Photo@addAction'
     ),
 
-    '/photo/save' => array(
+    '/crm/photo/save' => array(
         'controller' => 'Photo@saveAction'
     ),
 
-    '/photo/edit/(:var)' => array(
+    '/crm/photo/edit/(:var)' => array(
         'controller' => 'Photo@editAction'
     ),
-    
-    '/photo/delete/(:var)' => array(
+
+    '/crm/photo/delete/(:var)' => array(
         'controller' => 'Photo@deleteAction'
     ),
 
-    '/facility' => array(
+    '/crm/facility' => array(
         'controller' => 'Facility:Grid@indexAction'
     ),
 
-    '/facility/checklist' => array(
+    '/crm/facility/checklist' => array(
         'controller' => 'Facility:Grid@checklistAction'
     ),
 
-    '/facility/category/view/(:var)' => array(
+    '/crm/facility/category/view/(:var)' => array(
         'controller' => 'Facility:Grid@categoryAction'
     ),
 
     // Categories
-    '/facility/category/add' => array(
+    '/crm/facility/category/add' => array(
         'controller' => 'Facility:Category@addAction'
     ),
 
-    '/facility/category/save' => array(
+    '/crm/facility/category/save' => array(
         'controller' => 'Facility:Category@saveAction'
     ),
 
-    '/facility/category/edit/(:var)' => array(
+    '/crm/facility/category/edit/(:var)' => array(
         'controller' => 'Facility:Category@editAction'
     ),
 
-    '/facility/category/delete/(:var)' => array(
+    '/crm/facility/category/delete/(:var)' => array(
         'controller' => 'Facility:Category@deleteAction'
     ),
 
     // Item
-    '/facility/item/add' => array(
+    '/crm/facility/item/add' => array(
         'controller' => 'Facility:Item@addAction'
     ),
 
-    '/facility/item/save' => array(
+    '/crm/facility/item/save' => array(
         'controller' => 'Facility:Item@saveAction'
     ),
 
-    '/facility/item/edit/(:var)' => array(
+    '/crm/facility/item/edit/(:var)' => array(
         'controller' => 'Facility:Item@editAction'
     ),
 
-    '/facility/item/delete/(:var)' => array(
+    '/crm/facility/item/delete/(:var)' => array(
         'controller' => 'Facility:Item@deleteAction'
     ),
 
-    '/transaction/index/(:var)' => array(
+    '/crm/transaction/index/(:var)' => array(
         'controller' => 'Transaction@indexAction'
     ),
 
-    '/hotel' => array(
+    '/crm/hotel' => array(
         'controller' => 'Hotel@indexAction'
     ),
 
-    '/hotel/save' => array(
+    '/crm/hotel/save' => array(
         'controller' => 'Hotel@saveAction'
     ),
 
-    '/services' => array(
+    '/crm/services' => array(
         'controller' => 'Service@indexAction'
     ),
     
-    '/services/edit/(:var)' => array(
-		'controller' => 'Service@editAction'
+    '/crm/services/edit/(:var)' => array(
+        'controller' => 'Service@editAction'
     ),
 
-    '/services/delete/(:var)' => array(
-		'controller' => 'Service@deleteAction'
+    '/crm/services/delete/(:var)' => array(
+        'controller' => 'Service@deleteAction'
     ),
 
-    '/services/save' => array(
-		'controller' => 'Service@saveAction'
+    '/crm/services/save' => array(
+        'controller' => 'Service@saveAction'
     ),
 
-	// Inventory
-	'/inventory' => array(
-		'controller' => 'Inventory@indexAction'
-	),
+    // Inventory
+    '/crm/inventory' => array(
+        'controller' => 'Inventory@indexAction'
+    ),
 
-	'/inventory/edit/(:var)' => array(
-		'controller' => 'Inventory@editAction'
-	),
+    '/crm/inventory/edit/(:var)' => array(
+        'controller' => 'Inventory@editAction'
+    ),
 
-	'/inventory/delete/(:var)' => array(
-		'controller' => 'Inventory@deleteAction'
-	),
+    '/crm/inventory/delete/(:var)' => array(
+        'controller' => 'Inventory@deleteAction'
+    ),
     
-	'/inventory/save' => array(
-		'controller' => 'Inventory@saveAction'
-	),
+    '/crm/inventory/save' => array(
+        'controller' => 'Inventory@saveAction'
+    ),
+
+    // Reservation add
+    '/crm/reservation/table' => array(
+        'controller' => 'Reservation@tableAction'
+    ),
+
+    '/crm/reservation/find' => array(
+        'controller' => 'Reservation@findAction'
+    ),
     
-	// Reservation add
-	'/reservation/table' => array(
-		'controller' => 'Reservation@tableAction'
-	),
+    '/crm/reservation/table/taken/(:var)' => array(
+        'controller' => 'Reservation@viewTakenAction'
+    ),
 
-	'/reservation/find' => array(
-		'controller' => 'Reservation@findAction'
-	),
-    
-	'/reservation/table/taken/(:var)' => array(
-		'controller' => 'Reservation@viewTakenAction'
-	),
-	
-	// Reservation add
-	'/reservation/add/(:var)' => array(
-		'controller' => 'Reservation@addAction'
-	),
+    // Reservation add
+    '/crm/reservation/add/(:var)' => array(
+        'controller' => 'Reservation@addAction'
+    ),
 
-	'/reservation/save' => array(
-		'controller' => 'Reservation@saveAction'
-	),
+    '/crm/reservation/save' => array(
+        'controller' => 'Reservation@saveAction'
+    ),
 
-	'/reservation/view/(:var)' => array(
+    '/crm/reservation/view/(:var)' => array(
         'controller' => 'Reservation@viewAction'
-	),
+    ),
 
-	'/reservation/print/(:var)' => array(
+    '/crm/reservation/print/(:var)' => array(
         'controller' => 'Reservation@printAction'
-	),
+    ),
 
-    '/reservation/index/(:var)' => array(
-		'controller' => 'Reservation@indexAction'
-	),
+    '/crm/reservation/index/(:var)' => array(
+        'controller' => 'Reservation@indexAction'
+    ),
 
-	'/reservation/edit/(:var)' => array(
-		'controller' => 'Reservation@editAction'
-	),
+    '/crm/reservation/edit/(:var)' => array(
+        'controller' => 'Reservation@editAction'
+    ),
     
-	'/reservation/delete/(:var)' => array(
-		'controller' => 'Reservation@deleteAction'
-	),
-    
-    '/reservation/history/room/(:var)' => array(
+    '/crm/reservation/delete/(:var)' => array(
+        'controller' => 'Reservation@deleteAction'
+    ),
+
+    '/crm/reservation/history/room/(:var)' => array(
         'controller' => 'Reservation@historyAction'
-	),
-    
-	'/site/captcha/(:var)' => array(
-		'controller' => 'Site@captchaAction'
-	),
-
-	'/' => array(
-		'controller' => 'Site@indexAction'
-	),
-
-	'/auth/login' => array(
-		'controller' => 'Auth@indexAction'
-	),
-	'/auth/logout' => array(
-		'controller' => 'Auth@logoutAction'
-	),
-	'/register' => array(
-		'controller' => 'Register@indexAction'
-	),
+    ),
 
     // Room cleaning
-    '/architecture/room-cleaning' => array(
-		'controller' => 'Architecture:RoomCleaning@indexAction'
+    '/crm/architecture/room-cleaning' => array(
+        'controller' => 'Architecture:RoomCleaning@indexAction'
     ),
-    
-    '/architecture/room-cleaning/room/(:var)/mark/(:var)' => array(
+
+    '/crm/architecture/room-cleaning/room/(:var)/mark/(:var)' => array(
         'controller' => 'Architecture:RoomCleaning@markAction'
     ),
-    
-    '/architecture/room-cleaning/mark-batch/(:var)' => array(
+
+    '/crm/architecture/room-cleaning/mark-batch/(:var)' => array(
         'controller' => 'Architecture:RoomCleaning@markBatchAction'
     ),
-    
-	'/architecture/room-type' => array(
-		'controller' => 'Architecture:RoomType@indexAction'
-	),
 
-	'/architecture/room-type/edit/(:var)' => array(
-		'controller' => 'Architecture:RoomType@editAction'
-	),
+    '/crm/architecture/room-type' => array(
+        'controller' => 'Architecture:RoomType@indexAction'
+    ),
 
-	'/architecture/room-type/delete/(:var)' => array(
-		'controller' => 'Architecture:RoomType@deleteAction'
-	),
+    '/crm/architecture/room-type/edit/(:var)' => array(
+        'controller' => 'Architecture:RoomType@editAction'
+    ),
 
-	'/architecture/room-type/save' => array(
-		'controller' => 'Architecture:RoomType@saveAction'
-	),
-	
-	'/architecture' => array(
-		'controller' => 'Architecture:Grid@indexAction'
-	),
+    '/crm/architecture/room-type/delete/(:var)' => array(
+        'controller' => 'Architecture:RoomType@deleteAction'
+    ),
 
-	'/architecture/view/(:var)' => array(
-		'controller' => 'Architecture:Grid@floorAction'
-	),
-	
-	'/architecture/room/add' => array(
-		'controller' => 'Architecture:Room@saveAction'
-	),
-	
-	'/architecture/room/view/(:var)' => array(
-		'controller' => 'Architecture:Room@viewAction'
-	),
-    
-	'/architecture/room/save' => array(
-		'controller' => 'Architecture:Room@saveAction'
-	),
-	
-	'/architecture/room/edit/(:var)' => array(
-		'controller' => 'Architecture:Room@editAction'
-	),
+    '/crm/architecture/room-type/save' => array(
+        'controller' => 'Architecture:RoomType@saveAction'
+    ),
 
-	'/architecture/room/delete/(:var)' => array(
-		'controller' => 'Architecture:Room@deleteAction'
-	),
+    '/crm/architecture' => array(
+        'controller' => 'Architecture:Grid@indexAction'
+    ),
+
+    '/crm/architecture/view/(:var)' => array(
+        'controller' => 'Architecture:Grid@floorAction'
+    ),
+
+    '/crm/architecture/room/add' => array(
+        'controller' => 'Architecture:Room@saveAction'
+    ),
+
+    '/crm/architecture/room/view/(:var)' => array(
+        'controller' => 'Architecture:Room@viewAction'
+    ),
+
+    '/crm/architecture/room/save' => array(
+        'controller' => 'Architecture:Room@saveAction'
+    ),
+
+    '/crm/architecture/room/edit/(:var)' => array(
+        'controller' => 'Architecture:Room@editAction'
+    ),
+
+    '/crm/architecture/room/delete/(:var)' => array(
+        'controller' => 'Architecture:Room@deleteAction'
+    ),
 
     // Room inventory
-	'/architecture/room/(:var)/inventory' => array(
-		'controller' => 'Architecture:RoomInventory@indexAction'
-	),
+    '/crm/architecture/room/(:var)/inventory' => array(
+        'controller' => 'Architecture:RoomInventory@indexAction'
+    ),
 
-	'/architecture/room/(:var)/inventory/edit/(:var)' => array(
-		'controller' => 'Architecture:RoomInventory@editAction'
-	),
+    '/crm/architecture/room/(:var)/inventory/edit/(:var)' => array(
+        'controller' => 'Architecture:RoomInventory@editAction'
+    ),
 
-	'/architecture/room/inventory/save' => array(
-		'controller' => 'Architecture:RoomInventory@saveAction'
-	),
+    '/crm/architecture/room/inventory/save' => array(
+        'controller' => 'Architecture:RoomInventory@saveAction'
+    ),
 
-	'/architecture/room/(:var)/inventory/delete/(:var)' => array(
-		'controller' => 'Architecture:RoomInventory@deleteAction'
-	),
+    '/crm/architecture/room/(:var)/inventory/delete/(:var)' => array(
+        'controller' => 'Architecture:RoomInventory@deleteAction'
+    ),
 
-	'/architecture/floor/add' => array(
-		'controller' => 'Architecture:Floor@saveAction'
-	),
+    '/crm/architecture/floor/add' => array(
+        'controller' => 'Architecture:Floor@saveAction'
+    ),
 
-	'/architecture/floor/save' => array(
-		'controller' => 'Architecture:Floor@saveAction'
-	),
-	
-	'/architecture/floor/edit/(:var)' => array(
-		'controller' => 'Architecture:Floor@editAction'
-	),
+    '/crm/architecture/floor/save' => array(
+        'controller' => 'Architecture:Floor@saveAction'
+    ),
 
-	'/architecture/floor/delete/(:var)' => array(
-		'controller' => 'Architecture:Floor@deleteAction'
-	),
+    '/crm/architecture/floor/edit/(:var)' => array(
+        'controller' => 'Architecture:Floor@editAction'
+    ),
+
+    '/crm/architecture/floor/delete/(:var)' => array(
+        'controller' => 'Architecture:Floor@deleteAction'
+    )
 );
