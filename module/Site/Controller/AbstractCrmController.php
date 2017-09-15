@@ -6,7 +6,7 @@ use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
 use Krystal\Form\Gadget\LastCategoryKeeper;
 
-abstract class AbstractSiteController extends AbstractAuthAwareController
+abstract class AbstractCrmController extends AbstractAuthAwareController
 {
     /**
      * Returns keeper service

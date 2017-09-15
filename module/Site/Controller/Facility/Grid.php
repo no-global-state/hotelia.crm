@@ -2,9 +2,9 @@
 
 namespace Site\Controller\Facility;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 
-final class Grid extends AbstractSiteController
+final class Grid extends AbstractCrmController
 {
     /**
      * Creates the grid

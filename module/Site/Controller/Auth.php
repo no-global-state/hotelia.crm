@@ -4,7 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Validate\Pattern;
 
-final class Auth extends AbstractSiteController
+final class Auth extends AbstractCrmController
 {
     /**
      * {@inheritDoc}

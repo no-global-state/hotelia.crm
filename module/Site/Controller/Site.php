@@ -2,7 +2,7 @@
 
 namespace Site\Controller;
 
-final class Site extends AbstractSiteController
+final class Site extends AbstractCrmController
 {
     /**
      * Renders a CAPTCHA

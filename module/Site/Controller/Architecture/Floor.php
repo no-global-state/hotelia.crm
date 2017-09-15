@@ -11,9 +11,9 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 
-final class Floor extends AbstractSiteController
+final class Floor extends AbstractCrmController
 {
     /**
      * @return \Site\Storage\FloorMapper

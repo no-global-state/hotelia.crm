@@ -5,7 +5,7 @@ namespace Site\Controller;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 
-class Inventory extends AbstractSiteController
+class Inventory extends AbstractCrmController
 {
     /**
      * Creates inventory mapper

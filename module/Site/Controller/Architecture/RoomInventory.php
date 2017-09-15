@@ -2,12 +2,12 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 use Krystal\Stdlib\ArrayUtils;
 
-class RoomInventory extends AbstractSiteController
+class RoomInventory extends AbstractCrmController
 {
     /**
      * Creates inventory mapper

@@ -4,7 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Db\Filter\InputDecorator;
 
-final class Photo extends AbstractSiteController
+final class Photo extends AbstractCrmController
 {
     /**
      * Creates a form

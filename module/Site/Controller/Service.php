@@ -6,7 +6,7 @@ use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 use Site\Service\UnitCollection;
 
-final class Service extends AbstractSiteController
+final class Service extends AbstractCrmController
 {
     /**
      * Create service mapper

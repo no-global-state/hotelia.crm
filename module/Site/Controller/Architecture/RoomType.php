@@ -11,11 +11,11 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
 
-final class RoomType extends AbstractSiteController
+final class RoomType extends AbstractCrmController
 {
     /**
      * @return \Site\Storage\RoomMapper

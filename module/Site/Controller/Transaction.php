@@ -5,7 +5,7 @@ namespace Site\Controller;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Db\Filter\FilterInvoker;
 
-final class Transaction extends AbstractSiteController
+final class Transaction extends AbstractCrmController
 {
     /**
      * Renders the grid

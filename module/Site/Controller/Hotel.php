@@ -5,7 +5,7 @@ namespace Site\Controller;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 
-final class Hotel extends AbstractSiteController
+final class Hotel extends AbstractCrmController
 {
     /**
      * Renders checklist

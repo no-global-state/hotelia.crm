@@ -15,7 +15,7 @@ use Site\Service\LegalStatusCollection;
 use Site\Service\StatusCollection;
 use Site\Service\ReservationService;
 
-class Reservation extends AbstractSiteController
+class Reservation extends AbstractCrmController
 {
     /**
      * Creates a form

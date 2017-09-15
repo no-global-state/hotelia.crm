@@ -11,12 +11,12 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Site\Service\CleaningCollection;
 use Site\Service\RoomQualityCollection;
 use Krystal\Stdlib\ArrayUtils;
 
-final class Room extends AbstractSiteController
+final class Room extends AbstractCrmController
 {
     /**
      * @return \Site\Storage\RoomMapper

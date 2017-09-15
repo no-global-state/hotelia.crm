@@ -11,11 +11,11 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Site\Service\CleaningCollection;
 use Krystal\Stdlib\ArrayUtils;
 
-final class RoomCleaning extends AbstractSiteController
+final class RoomCleaning extends AbstractCrmController
 {
     /**
      * Renders room cleaning grid

@@ -11,11 +11,11 @@
 
 namespace Site\Controller\Architecture;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Site\Service\CleaningCollection;
 use Site\Service\RoomQualityCollection;
 
-final class Grid extends AbstractSiteController
+final class Grid extends AbstractCrmController
 {
     /**
      * @return \Site\Storage\RoomMapper

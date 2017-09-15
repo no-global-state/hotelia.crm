@@ -2,10 +2,10 @@
 
 namespace Site\Controller\Facility;
 
-use Site\Controller\AbstractSiteController;
+use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
 
-final class Item extends AbstractSiteController
+final class Item extends AbstractCrmController
 {
     /**
      * Persist an item
