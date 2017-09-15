@@ -133,7 +133,8 @@ abstract class AbstractSiteController extends AbstractAuthAwareController
         $this->view->addVariables(array(
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'locale' => $this->appConfig->getLanguage(),
-            'currency' => $hotel['currency']
+            'currency' => $hotel['currency'],
+            'appName' => $this->paramBag->get('appName')
         ));
 
         // Define the main layout

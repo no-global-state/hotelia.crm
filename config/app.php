@@ -112,6 +112,7 @@ return array(
          * This values can be accessed in controllers, like $this->paramBag->get(..key..)
          */
         'paramBag' => array(
+            'appName' => $_ENV['appName']
         ),
 
         /**
