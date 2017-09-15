@@ -122,16 +122,16 @@ use Krystal\Iso\ISO3166\Country;
 
             'actions' => [
                 'view' => function($row){
-                    return sprintf('<a href="/reservation/view/%s" data-button="view"><i class="glyphicon glyphicon-search"></i></a>', $row['id']);
+                    return Element::link('<i class="glyphicon glyphicon-search"></i>', $this->url('Site:Reservation@viewAction', $row['id']), ['data-button' => 'view']);
                 },
                 'print' => function($row){
-                    return sprintf('<a href="/reservation/print/%s"><i class="glyphicon glyphicon-tags"></i></a>', $row['id']);
+                    return Element::link('<i class="glyphicon glyphicon-tags"></i>', $this->url('Site:Reservation@printAction', $row['id']));
                 },
                 'update' => function($row){
-                    return sprintf('<a href="/reservation/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
+                    return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Reservation@editAction', $row['id']));
                 },
                 'delete' => function($row){
-                    return sprintf('<a href="/reservation/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
+                    return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Reservation@deleteAction', $row['id']));
                 }
             ]
 
