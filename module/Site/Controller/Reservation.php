@@ -65,7 +65,7 @@ class Reservation extends AbstractSiteController
         $this->view->getPluginBag()
                    ->load('datetimepicker');
 
-        $route = '/reservation/index/';
+        $route = $this->createUrl('Site:Reservation@indexAction', [null]);
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
         $invoker = new FilterInvoker($query, $route);

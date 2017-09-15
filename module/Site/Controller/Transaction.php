@@ -10,12 +10,11 @@ final class Transaction extends AbstractSiteController
     /**
      * Renders the grid
      * 
-     * @param array $query
      * @return string
      */
     public function indexAction()
     {
-        $route = '/transaction/index/';
+        $route = $this->createUrl('Site:Transaction@indexAction', [null]);
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
 
