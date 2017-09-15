@@ -99,7 +99,8 @@ CREATE TABLE velveto_hotels (
     `phone` varchar(255) NOT NULL,
     `description` TEXT NOT NULL,
     `currency` varchar(30) NOT NULL COMMENT 'Default hotel currency',
-    `start_price` FLOAT NOT NULL
+    `start_price` FLOAT NOT NULL,
+    `rate` SMALLINT COMMENT 'Hotel rate'
 );
 
 DROP TABLE IF EXISTS velveto_reservation;

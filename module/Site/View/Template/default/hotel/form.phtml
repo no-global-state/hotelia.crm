@@ -44,6 +44,20 @@ use Krystal\Grid\Grid;
                     </div>
 
                     <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Rate'); ?></label>
+                      <div class="col-lg-10">
+                          <?php for ($i = 1; $i < 6; $i++): ?>
+                          <div class="radio">
+                            <label>
+                                <?= Element::radio('rate', $i, $hotel['rate'] == $i); ?> <?= $i; ?> 
+                                <small class="text-muted"><?= str_repeat('<i class="glyphicon glyphicon-star"></i> ', $i); ?></small>
+                            </label>
+                          </div>
+                          <?php endfor; ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
                       <div class="col-lg-10">
                         <?= Element::text('phone', $hotel['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
