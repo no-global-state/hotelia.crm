@@ -50,17 +50,23 @@ final class FacilitiyService
     /**
      * Returns collection of categories and their attached items
      * 
+     * @param boolean $withCategories Whether to fetch with categories
+     * @param integer $hotelId Optional hotel ID filter
      * @return array
      */
-    public function getCollection()
+    public function getCollection($withCategories = true, $hotelId = null)
     {
-        $categories = $this->categoryMapper->fetchAll();
+        if ($withCategories == true) {
+            $categories = $this->categoryMapper->fetchAll();
 
-        foreach ($categories as &$category) {
-            $category['items'] = $this->itemMapper->fetchAll($category['id']);
+            foreach ($categories as &$category) {
+                $category['items'] = $this->itemMapper->fetchAll($category['id']);
+            }
+
+            return $categories;
+        } else {
+            return $this->itemMapper->fetchAll();
         }
-
-        return $categories;
     }
 
     /**
