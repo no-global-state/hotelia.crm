@@ -52,9 +52,10 @@ final class FacilitiyItemMapper extends AbstractMapper
      * Find all items attached to particular category
      * 
      * @param integer $categoryId Optional category ID filter
+     * @param integer $hotelId Optional hotel ID filter
      * @return array
      */
-    public function fetchAll($categoryId = null)
+    public function fetchAll($categoryId = null, $hotelId = null)
     {
         // Columns to be selected
         $columns = array(
@@ -76,6 +77,11 @@ final class FacilitiyItemMapper extends AbstractMapper
 
         if ($categoryId !== null) {
             $db->whereEquals('category_id', $categoryId);
+        }
+
+        // Optional hotel ID filter
+        if ($hotelId !== null) {
+            $db->whereEquals(self::getFullColumnName('master_id', self::getJunctionTableName()), $hotelId);
         }
 
         return $db->queryAll();
