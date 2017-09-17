@@ -148,10 +148,10 @@ use Krystal\Grid\Grid;
 
                     'actions' => [
                         'update' => function($row){
-                            return sprintf('<a href="/photo/edit/%s"><i class="glyphicon glyphicon-pencil"></i></a>', $row['id']);
+                            return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Photo@editAction', $row['id']));
                         },
                         'delete' => function($row){
-                            return sprintf('<a href="/photo/delete/%s"><i class="glyphicon glyphicon-remove"></i></a>', $row['id']);
+                            return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Photo@deleteAction', $row['id']));
                         }
                     ]
 
