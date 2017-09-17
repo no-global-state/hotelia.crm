@@ -30,24 +30,24 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reservation'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->url('Site:Reservation@tableAction'); ?>"><?php $this->show('Desktop'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><?php $this->show('Current guests'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@tableAction'); ?>"><i class="glyphicon glyphicon-blackboard"></i> <?php $this->show('Desktop'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <?php $this->show('Current guests'); ?></a></li>
                 <li class="dropdown-header"><? $this->show('Management'); ?></li>
-                <li><a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><?php $this->show('New reservation'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><?php $this->show('Find a free room'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-pencil"></i> <?php $this->show('New reservation'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Find a free room'); ?></a></li>
               </ul>
             </li>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('My hotel'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><? $this->show('Architecture'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><? $this->show('Inventory'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><? $this->show('Services'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><? $this->show('Room cleaning'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><? $this->show('Hotel information'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><? $this->show('Facilities'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Inventory'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Hotel information'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
               </ul>
             </li>
 
@@ -58,13 +58,13 @@
                 <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'tomorrow')); ?>"><? $this->show('Going out tomorrow'); ?></a></li>
                 <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'today')); ?>"><? $this->show('List of coming today'); ?></a></li>
                 <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'tomorrow')); ?>"><? $this->show('List of coming tomorrow'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><? $this->show('Transactions'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
               </ul>
             </li>
           </ul>
           
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="<?= $this->url('Site:Auth@logoutAction'); ?>"><?php $this->show('Logout'); ?></a></li>
+            <li><a href="<?= $this->url('Site:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Logout'); ?></a></li>
           </ul>
           <?php endif; ?>
         </div>
