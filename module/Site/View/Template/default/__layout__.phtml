@@ -54,10 +54,6 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reports'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'today')); ?>"><? $this->show('List of departures today'); ?></a></li>
-                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'tomorrow')); ?>"><? $this->show('Going out tomorrow'); ?></a></li>
-                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'today')); ?>"><? $this->show('List of coming today'); ?></a></li>
-                <li><a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'tomorrow')); ?>"><? $this->show('List of coming tomorrow'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
               </ul>
             </li>

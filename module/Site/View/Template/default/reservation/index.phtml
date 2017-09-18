@@ -18,7 +18,20 @@ use Krystal\Iso\ISO3166\Country;
                 </h4>
             </div>
 
-            <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+                </div>
+
+                <div class="col-lg-12">
+                    <br />
+
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'today')); ?>"><span class="label label-default"><? $this->show('List of departures today'); ?></span></a>
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'tomorrow')); ?>"><span class="label label-success"><? $this->show('Going out tomorrow'); ?></span></a>
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'today')); ?>"><span class="label label-primary"><? $this->show('List of coming today'); ?></span></a>
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'tomorrow')); ?>"><span class="label label-info"><? $this->show('List of coming tomorrow'); ?></span></a>
+                </div>
+            </div>
         </div>
 
         <div class="col-lg-6 <?= $hideRange === true ? 'hidden' : null; ?>">
