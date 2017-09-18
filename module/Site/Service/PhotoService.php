@@ -9,6 +9,9 @@ use Krystal\Application\Model\AbstractService;
 
 final class PhotoService extends AbstractService
 {
+    const PARAM_IMAGE_SIZE_LARGE = '850x450';
+    const PARAM_IMAGE_SIZE_SMALL = '80x50';
+
     /**
      * Any compliant photo mapper
      * 
@@ -112,15 +115,28 @@ final class PhotoService extends AbstractService
     }
 
     /**
+     * Creates image path URL
+     * 
+     * @param array $row
+     * @param string $size
+     * @return string
+     */
+    private function createImagePath(array $row, $size)
+    {
+        return sprintf('%s/%s/%s', Module::PARAM_GALLERY_PATH . $row['id'], $size, $row['file']);
+    }
+
+    /**
      * Fetch photos by their associated ID
      * 
      * @param string $id
+     * @param string $size
      * @return array
      */
-    public function fetchById($id)
+    public function fetchById($id, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
         $row = $this->photoMapper->findByPk($id);
-        $row['file'] = Module::PARAM_GALLERY_PATH . $row['id'] . '/200x200/' . $row['file'];
+        $row['file'] = $this->createImagePath($row, $size);
 
         return $row;
     }
@@ -129,14 +145,15 @@ final class PhotoService extends AbstractService
      * Fetch all photos
      * 
      * @param string $hotelId
+     * @param string $size
      * @return array
      */
-    public function fetchAll($hotelId)
+    public function fetchAll($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
         $rows = $this->photoMapper->fetchAll($hotelId);
 
         foreach ($rows as &$row) {
-            $row['file'] = Module::PARAM_GALLERY_PATH . $row['id'] . '/200x200/' . $row['file'];
+            $row['file'] = $this->createImagePath($row, $size);
         }
 
         return $rows;
