@@ -24,7 +24,8 @@ final class Module extends AbstractModule
             'thumb' => array(
                 'dimensions' => array(
                     // Administration area
-                    array(200, 200)
+                    array(850, 450),
+                    array(80, 50)
                 )
             ),
             'original' => array(
