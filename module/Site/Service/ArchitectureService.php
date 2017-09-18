@@ -6,6 +6,7 @@ use Krystal\Stdlib\ArrayUtils;
 use Site\Storage\MySQL\FloorMapper;
 use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
+use DateTime;
 
 class ArchitectureService
 {
@@ -43,6 +44,22 @@ class ArchitectureService
         $this->floorMapper = $floorMapper;
         $this->roomMapper = $roomMapper;
         $this->roomTypeMapper = $roomTypeMapper;
+    }
+
+    /**
+     * Find available rooms for next days
+     * 
+     * @param string $hotelId Current hotel ID
+     * @param string $days Days to add to current date
+     * @return array
+     */
+    public function findAvailableRooms($hotelId, $days = '+10 day')
+    {
+        $format = 'Y-m-d';
+        $today = date($format);
+
+        $next = (new DateTime($today))->modify($days)->format($format);
+        return $this->findFreeRooms($hotelId, $today, $next);
     }
 
     /**
