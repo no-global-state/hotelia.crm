@@ -140,7 +140,7 @@ use Krystal\Grid\Grid;
                             'column' => 'file',
                             'title' => 'Image',
                             'value' => function($row){
-                                return Element::image($row['file']);
+                                return Element::image($row['file'], ['class' => 'img-responsive']);
                             }
                         ],
                         ['column' => 'order'],
