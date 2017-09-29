@@ -49,6 +49,11 @@ div[role='main'] {
  font-size: 36px;
  margin-top: 67px;
  display: block;
+ height: 100%;
+ width: 100%;
+ display: block;
+ position: absolute;
+ text-align: center;
 }
 
 .home-row > div a:hover, 
