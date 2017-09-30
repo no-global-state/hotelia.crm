@@ -4,6 +4,8 @@ use Krystal\Form\Element;
 
 ?>
 
+<input type="hidden" id="daily-tax" value="<?= $dailyTax; ?>" />
+
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
   <fieldset>
 	<h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>

@@ -1,3 +1,4 @@
+
 <div class="list-group">
   <a href="#" class="list-group-item">
     <h4 class="list-group-item-heading"><? $this->show('Total days'); ?></h4>
@@ -10,7 +11,7 @@
 
   <a href="#" class="list-group-item">
     <h4 class="list-group-item-heading"><? $this->show('Daily tax'); ?></h4>
-    <p class="list-group-item-text"><span data-count="discount"><?= isset($count['daily_tax']) ? $count['daily_tax'] : 0; ?></span> <?= $currency; ?></p>
+    <p class="list-group-item-text"><span data-count="daily-tax"><?= isset($count['daily_tax']) ? $count['daily_tax'] : 0; ?></span> <?= $currency; ?></p>
   </a>
   
   <a href="#" class="list-group-item">

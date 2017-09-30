@@ -44,6 +44,7 @@ class Reservation extends AbstractCrmController
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
             'statuses' => (new StatusCollection)->getAll(),
+            'dailyTax' => $this->getHotelData()['daily_tax'],
             'genders' => array(
                 'M' => 'Male',
                 'F' => 'Female'

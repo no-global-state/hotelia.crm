@@ -35,6 +35,7 @@ $(function(){
             var $arrival = $("[name='arrival']");
             var $departure = $("[name='departure']");
             var $discount = $("[name='discount']");
+            var $dailyTax = $("#daily-tax");
 
             // Count days difference
             var a = moment($arrival.val());
@@ -51,6 +52,9 @@ $(function(){
                 totalPrice -= subtract;
             }
 
+            console.log($dailyTax.val());
+            
+            $("[data-count='daily-tax']").text(parseFloat(days * $dailyTax.val()));
             $("[data-count='days']").text(days);
             $("[data-count='discount']").text(discount ? discount : 0);
             $("[data-count='price']").text(totalPrice.toLocaleString());
