@@ -33,6 +33,7 @@ use Krystal\Iso\ISO3166\Country;
                     <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('leaving' => 'tomorrow')); ?>"><span class="label label-success"><? $this->show('Going out tomorrow'); ?></span></a>
                     <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'today')); ?>"><span class="label label-primary"><? $this->show('List of coming today'); ?></span></a>
                     <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', array('coming' => 'tomorrow')); ?>"><span class="label label-info"><? $this->show('List of coming tomorrow'); ?></span></a>
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction'); ?>"><span class="label label-danger"><? $this->show('All'); ?></span></a>
                 </div>
             </div>
         </div>
