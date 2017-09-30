@@ -6,6 +6,23 @@ use DateTime;
 
 class ReservationService
 {
+    const PARAM_TIME_FORMAT = 'Y-m-d';
+
+    /**
+     * Returns reservation dates
+     * 
+     * @return array
+     */
+    public static function getReservationDefaultDates()
+    {
+        $today = date(self::PARAM_TIME_FORMAT);
+
+        return [
+            'today' => $today,
+            'tomorrow' => self::addOneDay($today)
+        ];
+    }
+
     /**
      * Adds one day to current date
      * 
@@ -17,7 +34,7 @@ class ReservationService
         $date = new DateTime($date);
         $date->modify('+1 day');
 
-        return $date->format('Y-m-d');
+        return $date->format(self::PARAM_TIME_FORMAT);
     }
 
     /**
