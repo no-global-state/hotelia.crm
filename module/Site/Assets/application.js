@@ -52,8 +52,6 @@ $(function(){
                 totalPrice -= subtract;
             }
 
-            console.log($dailyTax.val());
-            
             $("[data-count='daily-tax']").text(parseFloat(days * $dailyTax.val()));
             $("[data-count='days']").text(days);
             $("[data-count='discount']").text(discount ? discount : 0);
