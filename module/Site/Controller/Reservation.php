@@ -85,6 +85,7 @@ class Reservation extends AbstractCrmController
             'from' => $this->request->getQuery('from'),
             'to' => $this->request->getQuery('to'),
             'type' => $this->request->getQuery('type'),
+            'hasFilter' => $this->request->hasQuery('filter'),
             'title' => $title,
             'route' => $route,
             'query' => $query,
