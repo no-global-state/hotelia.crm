@@ -24,11 +24,12 @@ class ReservationService
      * Creates count
      * 
      * @param array $entity
+     * @param int $dailyTax
      * @return array
      */
-    public static function createCount(array $entity)
+    public static function createCount(array $entity, $dailyTax)
     {
-        return self::getCount($entity['arrival'], $entity['departure'], $entity['room_price'], $entity['discount']);
+        return self::getCount($entity['arrival'], $entity['departure'], $entity['room_price'], $dailyTax, $entity['discount']);
     }
 
     /**
@@ -37,10 +38,11 @@ class ReservationService
      * @param string $arrival
      * @param string $departure
      * @param mixed $price
+     * @param int $dailyTax
      * @param mixed $discount
      * @return array
      */
-    public static function getCount($arrival, $departure, $price, $discount)
+    public static function getCount($arrival, $departure, $price, $dailyTax, $discount)
     {
         $date1 = new DateTime($arrival);
         $date2 = new DateTime($departure);
@@ -57,6 +59,7 @@ class ReservationService
         return array(
             'days' => $days,
             'discount' => $discount ? $discount : 0,
+            'daily_tax' => number_format($days * $dailyTax),
             'price' => number_format($price)
         );
     }

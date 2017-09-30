@@ -7,6 +7,12 @@
     <h4 class="list-group-item-heading"><? $this->show('Discount'); ?></h4>
     <p class="list-group-item-text"><span data-count="discount"><?= isset($count['discount']) ? $count['discount'] : 0; ?></span> <span>%</span></p>
   </a>
+
+  <a href="#" class="list-group-item">
+    <h4 class="list-group-item-heading"><? $this->show('Daily tax'); ?></h4>
+    <p class="list-group-item-text"><span data-count="discount"><?= isset($count['daily_tax']) ? $count['daily_tax'] : 0; ?></span> <?= $currency; ?></p>
+  </a>
+  
   <a href="#" class="list-group-item">
     <h4 class="list-group-item-heading"><? $this->show('Total price'); ?></h4>
     <p class="list-group-item-text"><span data-count="price"><?= isset($count['price']) ? $count['price'] : 0; ?></span> <?= $currency; ?></p>

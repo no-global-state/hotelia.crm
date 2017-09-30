@@ -169,10 +169,11 @@ class Reservation extends AbstractCrmController
     public function viewTakenAction($roomId)
     {
         $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchByRoomId($roomId);
+        $hotel = $this->getHotelData();
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity)
+            'count' => ReservationService::createCount($entity, $hotel['daily_tax'])
         ));
     }
 
@@ -185,10 +186,11 @@ class Reservation extends AbstractCrmController
     public function viewAction($id)
     {
         $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+        $hotel = $this->getHotelData();
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity)
+            'count' => ReservationService::createCount($entity, $hotel['daily_tax'])
         ));
     }
 
@@ -201,10 +203,11 @@ class Reservation extends AbstractCrmController
     public function printAction($id)
     {
         $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+        $hotel = $this->getHotelData();
 
         return $this->view->render('reservation/print', array(
             'entity' => $entity,
-            'count' => ReservationService::createCount($entity)
+            'count' => ReservationService::createCount($entity, $hotel['daily_tax'])
         ));
     }
 

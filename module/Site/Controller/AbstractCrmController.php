@@ -95,6 +95,22 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
     }
 
     /**
+     * Returns current configuration data of hotel
+     * 
+     * @return array
+     */
+    protected function getHotelData()
+    {
+        static $hotel = null;
+
+        if ($hotel === null) {
+            $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk($this->getHotelId());
+        }
+
+        return $hotel;
+    }
+
+    /**
      * This method automatically gets called when this controller executes
      * 
      * @return void
@@ -127,7 +143,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
                    // This one will always be last
                    ->appendLastScript('@Site/application.js');
 
-        $hotel = $this->createMapper('\Site\Storage\MySQL\HotelMapper')->findByPk($this->getHotelId());
+        $hotel = $this->getHotelData();
 
         // Add shared variables
         $this->view->addVariables(array(
