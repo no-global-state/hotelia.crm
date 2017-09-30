@@ -89,6 +89,7 @@ abstract class AbstractSiteController extends AbstractController
 
         // Add shared variables
         $this->view->addVariables(array(
+            'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
             'currency' => $hotel['currency'],
             'appName' => $this->paramBag->get('appName')

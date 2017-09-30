@@ -111,9 +111,7 @@ return array(
          * Param bag which holds application-level parameters
          * This values can be accessed in controllers, like $this->paramBag->get(..key..)
          */
-        'paramBag' => array(
-            'appName' => $_ENV['appName']
-        ),
+        'paramBag' => $_ENV,
 
         /**
          * Router configuration
