@@ -89,6 +89,12 @@ $(function(){
     });
     
     
+    $("[data-button='back']").click(function(event){
+        event.preventDefault();
+        history.go(-1);
+    });
+
+
     $('[data-button="view"]').click(function(event){
         event.preventDefault();
 

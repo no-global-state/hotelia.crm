@@ -10,7 +10,10 @@ use Krystal\Grid\ListView;
 
 ?>
 
-<p><a href="#" onclick="window.print()" class="btn btn-success hidden-print"><i class="glyphicon glyphicon-saved"></i> <?php $this->show('Print this page'); ?></a></p>
+<p>
+    <a href="#" data-button="back" class="btn btn-info hidden-print"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Back'); ?></a>
+    <a href="#" onclick="window.print()" class="btn btn-success hidden-print"><i class="glyphicon glyphicon-saved"></i> <?php $this->show('Print this page'); ?></a>
+</p>
 
 <h2><?php $this->show('Invoice'); ?> №<?= $entity['id']; ?></h2>
 
