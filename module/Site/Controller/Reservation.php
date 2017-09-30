@@ -22,9 +22,10 @@ class Reservation extends AbstractCrmController
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $client
      * @param string $arrival
+     * @param string $departure
      * @return string
      */
-    private function createForm($client, $arrival = null)
+    private function createForm($client, $arrival = null, $departure = null)
     {
         // Load view plugins
         $this->view->getPluginBag()
@@ -32,6 +33,7 @@ class Reservation extends AbstractCrmController
 
         return $this->view->render('reservation/form', array(
             'arrival' => $arrival,
+            'departure' => $departure,
             'client' => $client,
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll($this->getHotelId()), 'id', 'name'),
             'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
@@ -269,9 +271,15 @@ class Reservation extends AbstractCrmController
 
         if ($this->request->hasQuery('arrival')) {
             return $this->createForm($entity, ReservationService::addOneDay($this->request->getQuery('arrival')));
-        }
+        } else {
 
-        return $this->createForm($entity);
+            $dates = ReservationService::getReservationDefaultDates();
+
+            $entity['arrival'] = $dates['today'];
+            $entity['departure'] = $dates['tomorrow'];
+
+            return $this->createForm($entity);
+        }
     }
 
     /**
