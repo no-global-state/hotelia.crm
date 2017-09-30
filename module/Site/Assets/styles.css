@@ -46,9 +46,8 @@ div[role='main'] {
 
 .home-row > div a {
  color: #fff;
- font-size: 36px;
- margin-top: 67px;
- display: block;
+ font-size: 31px;
+ padding-top: 75px;
  height: 100%;
  width: 100%;
  display: block;
