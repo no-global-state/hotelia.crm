@@ -103,7 +103,8 @@ CREATE TABLE velveto_hotels (
     `rate` SMALLINT COMMENT 'Hotel rate',
     `discount` FLOAT COMMENT 'Discount if available',
     `daily_tax` FLOAT COMMENT 'Daily tax for living',
-    `website` varchar(255) NOT NULL COMMENT 'Web-site URL'
+    `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
+    `email` varchar(255) NOT NULL COMMENT 'Hotel email'
 );
 
 DROP TABLE IF EXISTS velveto_reservation;
