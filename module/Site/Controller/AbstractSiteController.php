@@ -58,6 +58,7 @@ abstract class AbstractSiteController extends AbstractController
     protected function bootstrap()
     {
         $this->view->setTheme('site');
+        $this->appConfig->setTheme('site');
 
         // Validate the request on demand
         $this->validateRequest();
