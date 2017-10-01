@@ -56,7 +56,8 @@ CREATE TABLE velveto_floor_room (
     `name` varchar(255) NOT NULL,
     `square` float COMMENT 'Square of the room',
     `cleaned` varchar(1) NOT NULL COMMENT 'Cleaning code status of the room',
-    `quality` SMALLINT(1) NOT NULL COMMENT 'Room quality code'
+    `quality` SMALLINT(1) NOT NULL COMMENT 'Room quality code',
+    `description` TEXT NOT NULL COMMENT 'Room description'
 );
 
 CREATE TABLE velveto_floor_room_types (
