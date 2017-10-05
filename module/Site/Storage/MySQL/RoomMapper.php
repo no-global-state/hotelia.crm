@@ -46,11 +46,13 @@ final class RoomMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = array(
+            self::getFullColumnName('id'),
             self::getFullColumnName('name'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
+            self::getFullColumnName('description'),
             RoomTypeMapper::getFullColumnName('type'),
             RoomTypeMapper::getFullColumnName('unit_price') => 'price',
             FloorMapper::getFullColumnName('name') => 'floor'
@@ -227,6 +229,7 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
+            self::getFullColumnName('description'),
             RoomTypeMapper::getFullColumnName('type'),
             FloorMapper::getFullColumnName('name') => 'floor'
         );
