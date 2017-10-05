@@ -2,12 +2,32 @@
 
 return array(
 
+    '/' => array(
+        'controller' => 'Site@homeAction'
+    ),
+
+    '/payment' => array(
+        'controller' => 'Site@paymentAction'
+    ),
+    
+    '/search/(:var)' => array(
+        'controller' => 'Site@searchAction'
+    ),
+    
+    '/hotel/book/(:var)' => array(
+        'controller' => 'Site@bookAction'
+    ),
+
+    '/hotel/(:var)' => array(
+        'controller' => 'Site@hotelAction'
+    ),
+    
     '/site/captcha/(:var)' => array(
         'controller' => 'Site@captchaAction'
     ),
 
-    '/' => array(
-        'controller' => 'Site@indexAction'
+    '/crm/home' => array(
+        'controller' => 'Crm@indexAction'
     ),
 
     '/auth/login' => array(

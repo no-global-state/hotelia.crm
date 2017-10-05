@@ -2,8 +2,93 @@
 
 namespace Site\Controller;
 
-final class Site extends AbstractCrmController
+use Site\Service\PhotoService;
+
+final class Site extends AbstractSiteController
 {
+    /**
+     * Renders payment page
+     * 
+     * @return string
+     */
+    public function paymentAction()
+    {
+        return $this->view->render('payment', [
+            
+        ]);
+    }
+
+    /**
+     * Renders booking page
+     * 
+     * @param int $hotelId Hotel id
+     * @return string
+     */
+    public function bookAction($hotelId)
+    {
+        $room = $this->getModuleService('architectureService')->getById(29);
+
+        return $this->view->render('book', [
+            'hotelId' => $hotelId,
+            'room' => $room
+        ]);
+    }
+
+    /**
+     * Search action
+     * 
+     * @return string
+     */
+    public function searchAction()
+    {
+        $hotelMapper = $this->createMapper('\Site\Storage\MySQL\HotelMapper');
+
+        return $this->view->render('search', [
+            'hotels' => $hotelMapper->fetchAll(),
+            'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, null)
+        ]);
+    }
+
+    /**
+     * Renders hotel information
+     * 
+     * @param string $id Hotel id
+     * @return string
+     */
+    public function hotelAction($id)
+    {
+        $hotelMapper = $this->createMapper('\Site\Storage\MySQL\HotelMapper');
+        $hotel = $hotelMapper->findByPk($id);
+
+        $photoService = $this->getModuleService('photoService');
+
+        return $this->view->render('hotel', [
+            'hotel' => $hotel,
+            'id' => $id,
+            'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, $this->getHotelId()),
+            // Hotel images
+            'images' => [
+                'large' => $photoService->fetchAll($this->getHotelId(), PhotoService::PARAM_IMAGE_SIZE_LARGE),
+                'small' => $photoService->fetchAll($this->getHotelId(), PhotoService::PARAM_IMAGE_SIZE_SMALL)
+            ],
+
+            'rooms' => $this->getModuleService('architectureService')->findAvailableRooms($this->getHotelId())
+        ]);
+    }
+
+    /**
+     * Renders home page
+     * 
+     * @return string
+     */
+    public function homeAction()
+    {
+        return $this->view->render('home', [
+            'home' => true,
+            'hotels' => $this->createMapper('\Site\Storage\MySQL\HotelMapper')->fetchAll()
+        ]);
+    }
+
     /**
      * Renders a CAPTCHA
      * 
@@ -12,18 +97,6 @@ final class Site extends AbstractCrmController
     public function captchaAction()
     {
         $this->captcha->render();
-    }
-
-    /**
-     * Shows a home page
-     * 
-     * @return string
-     */
-    public function indexAction()
-    {
-        return $this->view->render('home', array(
-            'stat' => $this->getModuleService('architectureService')->createStat($this->getHotelId())
-        ));
     }
 
     /**
