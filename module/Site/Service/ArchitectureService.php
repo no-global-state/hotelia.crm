@@ -47,6 +47,17 @@ class ArchitectureService
     }
 
     /**
+     * Gets room data by its associated ID
+     * 
+     * @param string $id Room ID
+     * @return array
+     */
+    public function getById($id)
+    {
+        return $this->roomMapper->fetchById($id);
+    }
+
+    /**
      * Find available rooms for next days
      * 
      * @param string $hotelId Current hotel ID
