@@ -68,6 +68,32 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Find reservations
+     * 
+     * @return array
+     */
+    public function findReservations()
+    {
+        // Columns to be selected
+        $columns = array(
+            RoomMapper::getFullColumnName('name'),
+            self::getFullColumnName('arrival'),
+            self::getFullColumnName('departure')
+        );
+
+        return $this->db->select($columns)
+                        ->from(RoomMapper::getTableName())
+                        ->leftJoin(self::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('room_id'),
+                            RoomMapper::getRawColumn('id')
+                        )
+                        ->orderBy(RoomMapper::getFullColumnName('name'))
+                        ->queryAll();
+    }
+
+    /**
      * Adds a reservation
      * 
      * @param array $input Raw input data
