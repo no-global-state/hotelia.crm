@@ -3,10 +3,40 @@
 namespace Site\Service;
 
 use DateTime;
+use DateInterval;
+use DatePeriod;
 
 class ReservationService
 {
     const PARAM_TIME_FORMAT = 'Y-m-d';
+
+    /**
+     * Creates week range
+     * 
+     * @param string $range
+     * @return array
+     */
+    public static function createPeriodRange($range = '+6 days')
+    {
+        $output = array();
+
+        $start = new DateTime();
+
+        $end = new DateTime();
+        $end->modify($range);
+
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($start, $interval, $end);
+
+        foreach ($period as $dt) {
+            $output[] = array(
+                'weekday' => $dt->format('l'),
+                'date' => $dt->format(self::PARAM_TIME_FORMAT),
+            );
+        }
+
+        return $output;
+    }
 
     /**
      * Returns reservation dates
