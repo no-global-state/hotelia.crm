@@ -149,7 +149,10 @@ return array(
         'controller' => 'Inventory@saveAction'
     ),
 
-    // Reservation add
+    '/crm/reservation/chess' => array(
+        'controller' => 'Reservation@chessAction'
+    ),
+    
     '/crm/reservation/table' => array(
         'controller' => 'Reservation@tableAction'
     ),

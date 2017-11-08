@@ -152,6 +152,21 @@ class Reservation extends AbstractCrmController
     }
 
     /**
+     * Renders the chess
+     * 
+     * @return string
+     */
+    public function chessAction()
+    {
+        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations();
+        
+        return $this->view->render('reservation/chess', array(
+            'rooms' => $rooms,
+            'period' => ReservationService::createPeriodRange()
+        ));
+    }
+
+    /**
      * Renders the table
      * 
      * @return string
