@@ -11,6 +11,23 @@ class ReservationService
     const PARAM_TIME_FORMAT = 'Y-m-d';
 
     /**
+     * Checks whether date is in range between two another dates
+     * 
+     * @param string $target
+     * @param string $start
+     * @param string $end
+     * @return boolean
+     */
+    public static function isDateInRange($target, $start, $end)
+    {
+        $date = new DateTime($target);
+        $startDate = new DateTime($start);
+        $endDate = new DateTime($end);
+
+        return $date >= $startDate && $date <= $endDate;
+    }
+
+    /**
      * Creates week range
      * 
      * @param string $range
