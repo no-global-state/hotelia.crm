@@ -1,4 +1,33 @@
 
+.room-free, 
+.room-taken {
+    width: 100%;
+    height: 39px;
+    display: block;
+}
+
+.room-free > a,
+.room-taken > a {
+    text-align: center;
+    color: #fff;
+    font-size: 23px;
+    padding: 5px;
+    margin: 0 auto;
+    display: block;
+}
+
+.room-free {
+    background-color: #75bd75;
+}
+
+.room-taken {
+    background-color: #e68946;
+}
+
+.room-name {
+    font-size: 22px;
+}
+
 .jumbotron {
  margin-top: 63px;
 }

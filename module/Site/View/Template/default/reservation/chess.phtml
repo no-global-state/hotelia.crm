@@ -1,0 +1,48 @@
+<?php
+
+use Site\Service\ReservationService;
+
+?>
+
+<table class="table table-responsive">
+    <thead>
+        <tr>
+            <td><? $this->show('Room'); ?></td>
+            <?php foreach ($period as $date): ?>
+            <td class="text-center">
+                <?php $this->show($date['weekday']); ?>
+                <br />
+                <?php echo $date['date']; ?>
+            </td>
+            <?php endforeach; ?>
+        </tr>
+    </thead>
+
+    <tbody>
+        <?php foreach ($rooms as $room): ?>
+        <tr>
+            <td>
+                <span class="room-name"><?php echo $room['name']; ?></span>
+            </td>
+            
+            <?php foreach ($period as $date): ?>
+            <?php
+                $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
+            ?>
+            <td>
+                <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
+                
+                <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
+                    <a href="#"></a>
+                </span>
+                <?php else: ?>
+                <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
+                    <a href="#"></a> 
+                </span>
+                <?php endif; ?>
+            </td>
+            <?php endforeach; ?>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
