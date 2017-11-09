@@ -76,6 +76,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     {
         // Columns to be selected
         $columns = array(
+            RoomMapper::getFullColumnName('id'),
             RoomMapper::getFullColumnName('name'),
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure')
