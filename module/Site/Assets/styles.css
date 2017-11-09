@@ -1,10 +1,14 @@
 
 .chess-grid > tbody > tr > td {
-    padding: 1px !important;
+  padding: 1px !important;
 }
 
 .chess-grid > thead .chess-grid-col-today {
-    background: #5668a9;
+  background: #5668a9;
+}
+
+.chess-grid > tbody > tr > td .room-name > small {
+  font-size: 12px !important;
 }
 
 
