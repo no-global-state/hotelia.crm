@@ -30,17 +30,17 @@ class ReservationService
     /**
      * Creates week range
      * 
-     * @param string $range
+     * @param integer $days
      * @return array
      */
-    public static function createPeriodRange($range = '+6 days')
+    public static function createPeriodRange($days = 6)
     {
         $output = array();
 
         $start = new DateTime();
 
         $end = new DateTime();
-        $end->modify($range);
+        $end->modify(sprintf('+%s days', $days));
 
         $interval = DateInterval::createFromDateString('1 day');
         $period = new DatePeriod($start, $interval, $end);
