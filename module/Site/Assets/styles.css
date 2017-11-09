@@ -3,6 +3,11 @@
     padding: 1px !important;
 }
 
+.chess-grid > thead .chess-grid-col-today {
+    background: #5668a9;
+}
+
+
 .room-free, 
 .room-taken {
     width: 100%;

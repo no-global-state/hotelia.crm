@@ -8,8 +8,8 @@ use Site\Service\ReservationService;
     <thead>
         <tr>
             <td><? $this->show('Room'); ?></td>
-            <?php foreach ($period as $date): ?>
-            <td class="text-center">
+            <?php foreach ($period as $index => $date): ?>
+            <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
                 <?php $this->show($date['weekday']); ?>
                 <br />
                 <?php echo $date['date']; ?>
