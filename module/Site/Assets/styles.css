@@ -4,6 +4,7 @@
     width: 100%;
     height: 39px;
     display: block;
+    position: relative;
 }
 
 .room-free > a,
@@ -14,6 +15,9 @@
     padding: 5px;
     margin: 0 auto;
     display: block;
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 .room-free {
