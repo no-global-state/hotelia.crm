@@ -58,8 +58,16 @@
     background-color: #eefbee;
 }
 
+.room-free:hover {
+    background-color: #eaf5ea;
+}
+
 .room-taken {
     background-color: #e68946;
+}
+
+.room-taken:hover {
+    background-color: #ec7d2d;
 }
 
 .room-name {
