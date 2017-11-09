@@ -4,48 +4,70 @@ use Site\Service\ReservationService;
 
 ?>
 
-<table class="table table-responsive chess-grid">
-    <thead>
-        <tr>
-            <td><? $this->show('Room'); ?></td>
-            <?php foreach ($period as $index => $date): ?>
-            <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
-                <?php $this->show($date['weekday']); ?>
-                <br />
-                <?php echo $date['date']; ?>
-            </td>
-            <?php endforeach; ?>
-        </tr>
-    </thead>
+<div class="row chess-grid-row">
+    <div class="col-lg-2">
+        <table class="table chess-grid">
+            <thead>
+                <tr>
+                    <td><? $this->show('Room'); ?></td>
+                </tr>
+            </thead>
 
-    <tbody>
-        <?php foreach ($rooms as $room): ?>
-        <tr>
-            <td>
-                <span class="room-name">
-                    <?php echo $room['name']; ?>
-                    <small><?php echo $room['type']; ?></small>
-                </span>
-            </td>
-            
-            <?php foreach ($period as $date): ?>
-            <?php
-                $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
-            ?>
-            <td>
-                <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
-                
-                <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
-                    <a href="#"></a>
-                </span>
-                <?php else: ?>
-                <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
-                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $date['date'])); ?>"></a> 
-                </span>
-                <?php endif; ?>
-            </td>
-            <?php endforeach; ?>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+            <tbody>
+                <?php foreach ($rooms as $room): ?>
+                <tr>
+                    <td>
+                        <span class="room-name">
+                            <?php echo $room['name']; ?>
+                            <small><?php echo $room['type']; ?></small>
+                        </span>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-10">
+        <div class="table-responsive">
+            <table class="table chess-grid">
+                <thead>
+                    <tr>
+                        <?php foreach ($period as $index => $date): ?>
+                        <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
+                            <?php $this->show($date['weekday']); ?>
+                            <br />
+                            <?php echo $date['date']; ?>
+                        </td>
+                        <?php endforeach; ?>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($rooms as $room): ?>
+                    <tr>
+                        <?php foreach ($period as $date): ?>
+                        <?php
+                            $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
+                        ?>
+                        <td>
+                            <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
+                            
+                            <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
+                                <a href="#"></a>
+                            </span>
+                            <?php else: ?>
+                            <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
+                                <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $date['date'])); ?>"></a> 
+                            </span>
+                            <?php endif; ?>
+                        </td>
+                        <?php endforeach; ?>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
