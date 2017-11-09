@@ -37,7 +37,7 @@ use Site\Service\ReservationService;
                 </span>
                 <?php else: ?>
                 <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
-                    <a href="#"></a> 
+                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $date['date'])); ?>"></a> 
                 </span>
                 <?php endif; ?>
             </td>
