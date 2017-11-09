@@ -283,11 +283,14 @@ class Reservation extends AbstractCrmController
         // Defaults
         $entity['legal_status'] = 1;
         $entity['room_id'] = $this->request->getQuery('room_id');
+        $arrival = $this->request->getQuery('arrival');
 
-        if ($this->request->hasQuery('arrival')) {
-            return $this->createForm($entity, ReservationService::addOneDay($this->request->getQuery('arrival')));
+        if ($arrival != null) {
+            $entity['arrival'] = $arrival;
+            $entity['departure'] = ReservationService::addOneDay($arrival);
+
+            return $this->createForm($entity);
         } else {
-
             $dates = ReservationService::getReservationDefaultDates();
 
             $entity['arrival'] = $dates['today'];
