@@ -153,36 +153,24 @@ class Reservation extends AbstractCrmController
     }
 
     /**
-     * Renders the chess
-     * 
-     * @return string
-     */
-    public function chessAction()
-    {
-        // Request variables
-        $period = $this->request->getQuery('period', 7);
-        $type = $this->request->getQuery('type', null);
-
-        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations($type);
-
-        return $this->view->render('reservation/chess', array(
-            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
-            'type' => $type,
-            'rooms' => $rooms,
-            'periods' => (new DaysCollection())->getAll(),
-            'period' => $period,
-            'dates' => ReservationService::createPeriodRange($period)
-        ));
-    }
-
-    /**
      * Renders the table
      * 
      * @return string
      */
     public function tableAction()
     {
+        $period = $this->request->getQuery('period', 7);
+        $type = $this->request->getQuery('type', null);
+
+        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations($type);
+
         return $this->view->render('reservation/table', array(
+            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
+            'type' => $type,
+            'rooms' => $rooms,
+            'periods' => (new DaysCollection())->getAll(),
+            'period' => $period,
+            'dates' => ReservationService::createPeriodRange($period),
             'table' => $this->getModuleService('architectureService')->createTable($this->getHotelId())
         ));
     }

@@ -1,85 +1,212 @@
 <?php
 
 use Site\Service\CleaningCollection;
+use Site\Service\ReservationService;
+use Krystal\Form\Element;
 
 ?>
 
-<div class="container">
-    <?php foreach (array_reverse($table) as $floor): ?>
-    <h2><?= $floor['name']; ?></h2>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true"><i class="glyphicon glyphicon-home"></i> <? $this->show('Rooms'); ?></a></li>
+  <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-tower"></i> <? $this->show('Chessboard'); ?></a></li>
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+      <i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?> <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="divider"></li>
+      <li class="dropdown-header"><? $this->show('Period'); ?></li>
+      <?php foreach($this->translateArray($periods) as $id => $name): ?>
+      <li><a href="#" data-toggle="tab"><?= $name; ?></a></li>
+      <?php endforeach; ?>
+      <li class="divider"></li>
+      
+      <li class="dropdown-header"><? $this->show('Type'); ?></li>
+      <?php foreach ($types as $id => $name): ?>
+      <li><a href="#" data-toggle="tab"><?= $name; ?></a></li>
+      <?php endforeach; ?>
+    </ul>
+  </li>
+</ul>
 
-    <div class="row floor-row">
-        <?php foreach (array_reverse($floor['rooms']) as $index => $room): ?>
-        
-        <?php
-            $free = empty($room['taken']);
-            $leavingToday = $room['leaving_today'];
+<div id="myTabContent" class="tab-content">  
+  <div class="tab-pane fade active in" id="home">
+    <div class="">
+        <br />
+        <?php foreach (array_reverse($table) as $floor): ?>
+        <h2><?= $floor['name']; ?></h2>
+
+        <div class="row floor-row">
+            <?php foreach (array_reverse($floor['rooms']) as $index => $room): ?>
             
-            if ($leavingToday){
-                $backgroundClass = 'leaving';
-            } else {
-                $backgroundClass = !$free ? 'taken' : 'free';
-            }
-        ?>
+            <?php
+                $free = empty($room['taken']);
+                $leavingToday = $room['leaving_today'];
+                
+                if ($leavingToday){
+                    $backgroundClass = 'leaving';
+                } else {
+                    $backgroundClass = !$free ? 'taken' : 'free';
+                }
+            ?>
 
-        <div class="col-lg-1 <?= $backgroundClass; ?>">
-            <?php if ($free): ?>
+            <div class="col-lg-1 <?= $backgroundClass; ?>">
+                <?php if ($free): ?>
 
-            <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle"><? $this->show('Free'); ?></a>
+                <p><a title="<? $this->show('Reserve'); ?>" href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><?= $room['name']; ?> <br /><small><?= $room['type']; ?></small></a></p>
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle"><? $this->show('Free'); ?></a>
 
-            <?php else: ?>
-            <p><?= $room['name']; ?> <br /><?= $room['type']; ?></p>
+                <?php else: ?>
+                <p><?= $room['name']; ?> <br /><?= $room['type']; ?></p>
 
-            <?php if ($leavingToday): ?>
-            <a href="#" data-toggle="dropdown" class="dropdown-toggle leaving"><? $this->show('Leaving today'); ?></a>
-            <?php else: ?>
-            <a data-toggle="dropdown" data-tooltip="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
-            <?php endif ;?>
+                <?php if ($leavingToday): ?>
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle leaving"><? $this->show('Leaving today'); ?></a>
+                <?php else: ?>
+                <a data-toggle="dropdown" data-tooltip="tooltip" class="dropdown-toggle" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>" title="<?= $this->translate('Remained days - %s', $room['left_days']); ?>"><? $this->show('Taken up to'); ?> <br /> <?= $room['departure']; ?></a>
+                <?php endif ;?>
 
-            <?php endif; ?>
-
-            <ul class="dropdown-menu">
-                <li><a data-button="view" href="<?= $this->url('Site:Architecture:Room@viewAction', $room['id']); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Room details'); ?></a></li>
-                <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
-
-                <?php if (!$free): ?>
-                <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                 <?php endif; ?>
 
-                <li>
+                <ul class="dropdown-menu">
+                    <li><a data-button="view" href="<?= $this->url('Site:Architecture:Room@viewAction', $room['id']); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Room details'); ?></a></li>
+                    <li class="dropdown-header"><? $this->show('Reservation'); ?></li>
+
                     <?php if (!$free): ?>
-                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $room['departure'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a>
-                    <?php else: ?>
-
-                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('New reservation'); ?></a>
+                    <li><a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Reservation details'); ?></a></li>
                     <?php endif; ?>
-                </li>
 
-                <li><a href="<?= $this->url('Site:Reservation@historyAction', $room['id']); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
+                    <li>
+                        <?php if (!$free): ?>
+                        <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $room['departure'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Reservation in advance'); ?></a>
+                        <?php else: ?>
 
-                <li class="dropdown-header"><? $this->show('Cleaning status'); ?></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Cleaned'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_NONCLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_NONCLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Not cleaned'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CHECKING); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CHECKING): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Checking'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_UNDEFINED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_UNDEFINED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Undefined'); ?></a></li>
-            </ul>
+                        <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'])); ?>"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('New reservation'); ?></a>
+                        <?php endif; ?>
+                    </li>
 
-            <?php if (CleaningCollection::CODE_CLEANED == $room['cleaned']): ?>
-            <span class="cleaning-status status-clean"><? $this->show('Cleaned'); ?></span>
+                    <li><a href="<?= $this->url('Site:Reservation@historyAction', $room['id']); ?>"><i class="glyphicon glyphicon-user"></i> <? $this->show('Reservation history'); ?></a></li>
 
-            <?php elseif (CleaningCollection::CODE_NONCLEANED == $room['cleaned']): ?>
-            <span class="cleaning-status status-dirty"><? $this->show('Not cleaned'); ?></span>
+                    <li class="dropdown-header"><? $this->show('Cleaning status'); ?></li>
+                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Cleaned'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_NONCLEANED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_NONCLEANED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Not cleaned'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_CHECKING); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_CHECKING): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Checking'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markAction', $room['id'], CleaningCollection::CODE_UNDEFINED); ?>"><?php if ($room['cleaned'] == CleaningCollection::CODE_UNDEFINED): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('Undefined'); ?></a></li>
+                </ul>
 
-            <?php elseif (CleaningCollection::CODE_CHECKING == $room['cleaned']): ?>
-            <span class="cleaning-status status-checking"><? $this->show('Checking'); ?></span>
+                <?php if (CleaningCollection::CODE_CLEANED == $room['cleaned']): ?>
+                <span class="cleaning-status status-clean"><? $this->show('Cleaned'); ?></span>
 
-            <?php endif; ?>
+                <?php elseif (CleaningCollection::CODE_NONCLEANED == $room['cleaned']): ?>
+                <span class="cleaning-status status-dirty"><? $this->show('Not cleaned'); ?></span>
+
+                <?php elseif (CleaningCollection::CODE_CHECKING == $room['cleaned']): ?>
+                <span class="cleaning-status status-checking"><? $this->show('Checking'); ?></span>
+
+                <?php endif; ?>
+            </div>
+            <?php endforeach; ?>
         </div>
+
         <?php endforeach; ?>
     </div>
 
-    <?php endforeach; ?>
-</div>
+    <? $this->loadPartial('client-modal'); ?>
+  </div>
+  
+  <div class="tab-pane fade" id="profile">
+    <div>
+        <br />
+        <form class="form-horizontal" action="<?= $this->url('Site:Reservation@chessAction', null); ?>">
+          <fieldset>
+            <legend><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></legend>
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label"><? $this->show('Period'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('period', $this->translateArray($periods), $period, ['class' => 'form-control']); ?>
+              </div>
+            </div>
 
-<? $this->loadPartial('client-modal'); ?>
+            <div class="form-group">
+              <label for="select" class="col-lg-2 control-label"><? $this->show('Type'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('type', $types, $type, ['class' => 'form-control'], $this->translate('All')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" onclick="this.form.submit()" class="btn btn-primary"><? $this->show('Apply'); ?></button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+
+    <div class="row chess-grid-row">
+        <div class="col-lg-2">
+            <table class="table chess-grid">
+                <thead>
+                    <tr>
+                        <td><? $this->show('Room'); ?></td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php foreach ($rooms as $room): ?>
+                    <tr>
+                        <td>
+                            <span class="room-name">
+                                <?php echo $room['name']; ?>
+                                <small><?php echo $room['type']; ?></small>
+                            </span>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-lg-10">
+            <div class="table-responsive">
+                <table class="table chess-grid">
+                    <thead>
+                        <tr>
+                            <?php foreach ($dates as $index => $date): ?>
+                            <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
+                                <?php $this->show($date['weekday']); ?>
+                                <br />
+                                <?php echo $date['date']; ?>
+                            </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <?php foreach ($rooms as $room): ?>
+                        <tr>
+                            <?php foreach ($dates as $date): ?>
+                            <?php
+                                $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
+                            ?>
+                            <td>
+                                <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
+                                
+                                <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
+                                    <a href="#"></a>
+                                </span>
+                                <?php else: ?>
+                                <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
+                                    <a href="<?= $this->createQueryUrl('Site:Reservation@addAction', array('room_id' => $room['id'], 'arrival' => $date['date'])); ?>"></a> 
+                                </span>
+                                <?php endif; ?>
+                            </td>
+                            <?php endforeach; ?>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>  
+</div>
