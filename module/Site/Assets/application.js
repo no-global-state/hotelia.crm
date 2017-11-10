@@ -112,4 +112,16 @@ $(function(){
         });
     });
     
+    // Filter
+    $("a[data-input]").click(function(event){
+        event.preventDefault();
+
+        var inputSelector = $(this).data('input');
+        var value = $(this).data('value');
+
+        $(inputSelector).val(value);
+
+        $("form").submit();
+    });
+    
 });

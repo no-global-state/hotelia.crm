@@ -6,6 +6,11 @@ use Krystal\Form\Element;
 
 ?>
 
+<form class="hidden" action="<?= $this->url('Site:Reservation@tableAction', null); ?>">
+  <?= Element::hidden('period', $period); ?>
+  <?= Element::hidden('type', $type); ?>
+</form>
+
 <ul class="nav nav-tabs">
   <li class="active"><a href="#home" data-toggle="tab" aria-expanded="true"><i class="glyphicon glyphicon-home"></i> <? $this->show('Rooms'); ?></a></li>
   <li class=""><a href="#profile" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-tower"></i> <? $this->show('Chessboard'); ?></a></li>
@@ -16,14 +21,25 @@ use Krystal\Form\Element;
     <ul class="dropdown-menu">
       <li class="divider"></li>
       <li class="dropdown-header"><? $this->show('Period'); ?></li>
-      <?php foreach($this->translateArray($periods) as $id => $name): ?>
-      <li><a href="#" data-toggle="tab"><?= $name; ?></a></li>
+      <?php foreach ($this->translateArray($periods) as $id => $name): ?>
+      <li>
+        <a href="#" data-input="[name='period']" data-value="<?= $id; ?>" data-toggle="tab">
+        <?php if ($id == $period): ?>
+        <i class="glyphicon glyphicon-ok"></i>
+        <?php endif; ?>
+        <?= $name; ?></a>
+        </li>
       <?php endforeach; ?>
       <li class="divider"></li>
-      
+
       <li class="dropdown-header"><? $this->show('Type'); ?></li>
       <?php foreach ($types as $id => $name): ?>
-      <li><a href="#" data-toggle="tab"><?= $name; ?></a></li>
+        <li><a href="#" data-input="[name='type']" data-value="<?= $id; ?>" data-toggle="tab">
+            <?php if ($id == $type): ?>
+            <i class="glyphicon glyphicon-ok"></i>
+            <?php endif; ?>
+            <?= $name; ?></a>
+        </li>
       <?php endforeach; ?>
     </ul>
   </li>
@@ -114,34 +130,7 @@ use Krystal\Form\Element;
   </div>
   
   <div class="tab-pane fade" id="profile">
-    <div>
-        <br />
-        <form class="form-horizontal" action="<?= $this->url('Site:Reservation@chessAction', null); ?>">
-          <fieldset>
-            <legend><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></legend>
-            <div class="form-group">
-              <label for="select" class="col-lg-2 control-label"><? $this->show('Period'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::select('period', $this->translateArray($periods), $period, ['class' => 'form-control']); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label for="select" class="col-lg-2 control-label"><? $this->show('Type'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::select('type', $types, $type, ['class' => 'form-control'], $this->translate('All')); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit" onclick="this.form.submit()" class="btn btn-primary"><? $this->show('Apply'); ?></button>
-              </div>
-            </div>
-          </fieldset>
-        </form>
-    </div>
-
+    <br />
     <div class="row chess-grid-row">
         <div class="col-lg-2">
             <table class="table chess-grid">
