@@ -70,9 +70,10 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     /**
      * Find reservations
      * 
+     * @param string $type Optional room type filter
      * @return array
      */
-    public function findReservations()
+    public function findReservations($type = null)
     {
         // Columns to be selected
         $columns = array(
@@ -83,7 +84,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('departure')
         );
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(RoomMapper::getTableName())
                         // Reservation relation
                         ->leftJoin(self::getTableName())
@@ -98,10 +99,16 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->equals(
                             RoomMapper::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
-                        )
-                        // Sort by name
-                        ->orderBy(RoomMapper::getFullColumnName('name'))
-                        ->queryAll();
+                        );
+
+        // If type is provided, the filter by its ID
+        if ($type != null) {
+            $db->whereEquals(RoomTypeMapper::getFullColumnName('id'), $type);
+        }
+
+        // Sort by name
+        return $db->orderBy(RoomMapper::getFullColumnName('name'))
+                   ->queryAll();
     }
 
     /**
