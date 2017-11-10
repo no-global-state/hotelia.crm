@@ -1,8 +1,29 @@
 <?php
 
+use Krystal\Form\Element;
 use Site\Service\ReservationService;
 
 ?>
+
+<div>
+    <form class="form-horizontal" action="<?= $this->url('Site:Reservation@chessAction', null); ?>">
+      <fieldset>
+        <legend><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></legend>
+        <div class="form-group">
+          <label for="select" class="col-lg-2 control-label"><? $this->show('Period'); ?></label>
+          <div class="col-lg-10">
+            <?= Element::select('period', $this->translateArray($periods), $period, ['class' => 'form-control']); ?>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <button type="submit" onclick="this.form.submit()" class="btn btn-primary"><? $this->show('Apply'); ?></button>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+</div>
 
 <div class="row chess-grid-row">
     <div class="col-lg-2">
@@ -33,7 +54,7 @@ use Site\Service\ReservationService;
             <table class="table chess-grid">
                 <thead>
                     <tr>
-                        <?php foreach ($period as $index => $date): ?>
+                        <?php foreach ($dates as $index => $date): ?>
                         <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
                             <?php $this->show($date['weekday']); ?>
                             <br />
@@ -46,7 +67,7 @@ use Site\Service\ReservationService;
                 <tbody>
                     <?php foreach ($rooms as $room): ?>
                     <tr>
-                        <?php foreach ($period as $date): ?>
+                        <?php foreach ($dates as $date): ?>
                         <?php
                             $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
                         ?>

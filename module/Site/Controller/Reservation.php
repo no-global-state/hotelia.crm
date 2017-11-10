@@ -14,6 +14,7 @@ use Site\Service\PaymentTypeCollection;
 use Site\Service\LegalStatusCollection;
 use Site\Service\StatusCollection;
 use Site\Service\ReservationService;
+use Site\Service\DaysCollection;
 
 class Reservation extends AbstractCrmController
 {
@@ -158,11 +159,16 @@ class Reservation extends AbstractCrmController
      */
     public function chessAction()
     {
+        // Request variables
+        $period = $this->request->getQuery('period', 7);
+
         $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations();
-        
+
         return $this->view->render('reservation/chess', array(
             'rooms' => $rooms,
-            'period' => ReservationService::createPeriodRange()
+            'periods' => (new DaysCollection())->getAll(),
+            'period' => $period,
+            'dates' => ReservationService::createPeriodRange($period)
         ));
     }
 
