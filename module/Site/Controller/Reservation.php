@@ -161,10 +161,13 @@ class Reservation extends AbstractCrmController
     {
         // Request variables
         $period = $this->request->getQuery('period', 7);
+        $type = $this->request->getQuery('type', null);
 
-        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations();
+        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations($type);
 
         return $this->view->render('reservation/chess', array(
+            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
+            'type' => $type,
             'rooms' => $rooms,
             'periods' => (new DaysCollection())->getAll(),
             'period' => $period,
