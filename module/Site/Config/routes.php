@@ -269,7 +269,7 @@ return array(
     ),
 
     '/crm/architecture/floor/add' => array(
-        'controller' => 'Architecture:Floor@saveAction'
+        'controller' => 'Architecture:Floor@addAction'
     ),
 
     '/crm/architecture/floor/save' => array(

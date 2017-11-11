@@ -1,5 +1,5 @@
 
-<a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><? $this->show('Room types'); ?></a>
+<a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a>
 
 <div class="row">
     <div class="col-lg-8">
@@ -44,7 +44,7 @@
 
     <div class="col-lg-4">
         <h2><? $this->show('Floors'); ?> <small class="text-muted">(<?php echo count($floors); ?>)</small></h2>
-        <p><a href="<?php echo $this->url('Site:Architecture:Floor@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
+        <p><a href="<?php echo $this->url('Site:Architecture:Floor@addAction'); ?>" class="btn btn-success"><? $this->show('Add a floor'); ?></a></p>
 
         <table class="table table-bordered table-striped table-hover">
             <thead>

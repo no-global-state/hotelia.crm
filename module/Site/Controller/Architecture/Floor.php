@@ -12,6 +12,7 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
+use Krystal\Db\Filter\InputDecorator;
 
 final class Floor extends AbstractCrmController
 {
@@ -24,52 +25,69 @@ final class Floor extends AbstractCrmController
     }
 
     /**
-     * Saves a room
+     * Creates floor form
      * 
-     * @param array $entity
+     * @param mixed $entity
      * @return string
      */
-    public function saveAction(array $entity = array())
+    private function createForm($entity) : string
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->getPost();
-            $this->createFloorMapper()->persist($data);
-
-            return 1;
-        } else {
-            return $this->view->render('architecture/form-floor', array(
-                'entity' => $entity
-            ));
-        }
+        return $this->view->render('architecture/form-floor', array(
+            'entity' => $entity
+        ));
     }
 
     /**
-     * Edits the room
+     * Renders empty form
      * 
-     * @param string $id
      * @return string
      */
-    public function editAction($id)
+    public function addAction()
+    {
+        return $this->createForm(new InputDecorator());
+    }
+
+    /**
+     * Edits the floor by its ID
+     * 
+     * @param int $id Floor ID
+     * @return string
+     */
+    public function editAction(int $id)
     {
         $floor = $this->createFloorMapper()->findByPk($id);
 
         if (!empty($floor)) {
-            return $this->saveAction($floor);
+            return $this->createForm($floor);
         } else {
             return false;
         }
     }
 
     /**
-     * Deletes a room
+     * Saves a floor
      * 
-     * @param string $id
-     * @return string
+     * @return int
      */
-    public function deleteAction($id)
+    public function saveAction() : int
+    {
+        $data = $this->request->getPost();
+        $this->createFloorMapper()->persist($data);
+
+        $this->flashBag->set('success', $data['id'] ? 'The floor has been updated successfully' : 'The floor has been added successfully');
+        return 1;
+    }
+
+    /**
+     * Deletes a floor by its ID
+     * 
+     * @param int $id Floor ID
+     * @return void
+     */
+    public function deleteAction(int $id) : void
     {
         $this->createFloorMapper()->deleteByPk($id);
-        $this->sessionBag->set('success', 'The floor has been deleted successfully');
+        $this->flashBag->set('danger', 'The floor has been deleted successfully');
 
         return $this->redirectToRoute('Site:Architecture:Grid@indexAction');
     }
