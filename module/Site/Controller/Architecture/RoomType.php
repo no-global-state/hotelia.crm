@@ -31,7 +31,7 @@ final class RoomType extends AbstractCrmController
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
      * @return string
      */
-    private function createGrid($entity)
+    private function createGrid($entity) : string
     {
         return $this->view->render('architecture/room-type', array(
             'entity' => $entity,
@@ -45,17 +45,17 @@ final class RoomType extends AbstractCrmController
      * 
      * @return string
      */
-    public function indexAction()
+    public function indexAction() : string
     {
         return $this->createGrid(new InputDecorator());
     }
 
     /**
-     * Saves a room
+     * Persists room type
      * 
-     * @return string
+     * @return integer
      */
-    public function saveAction()
+    public function saveAction() : int
     {
         $data = $this->request->getPost();
         $this->createRoomTypeMapper()->persist($data);
@@ -65,12 +65,12 @@ final class RoomType extends AbstractCrmController
     }
 
     /**
-     * Edits the room
+     * Edits the room type by its ID
      * 
-     * @param string $id
+     * @param int $id Room type ID
      * @return string
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
         $room = $this->createRoomTypeMapper()->findByPk($id);
 
@@ -84,10 +84,10 @@ final class RoomType extends AbstractCrmController
     /**
      * Deletes a room type by its ID
      * 
-     * @param string $id Room type ID
+     * @param int $id Room type ID
      * @return void
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id) : void
     {
         $this->createRoomTypeMapper()->deleteByPk($id);
         $this->flashBag->set('danger', 'The room type has been deleted successfully');
