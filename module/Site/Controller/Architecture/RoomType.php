@@ -82,16 +82,16 @@ final class RoomType extends AbstractCrmController
     }
 
     /**
-     * Deletes a room
+     * Deletes a room type by its ID
      * 
-     * @param string $id
-     * @return string
+     * @param string $id Room type ID
+     * @return void
      */
     public function deleteAction($id)
     {
         $this->createRoomTypeMapper()->deleteByPk($id);
-        $this->sessionBag->set('success', 'The room has been deleted successfully');
+        $this->flashBag->set('danger', 'The room type has been deleted successfully');
 
-        return $this->redirectToRoute('Site:Architecture:Grid@indexAction');
+        $this->response->redirectToPreviousPage();
     }
 }
