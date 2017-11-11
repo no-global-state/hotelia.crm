@@ -111,7 +111,13 @@ $(function(){
             }
         });
     });
-    
+
+    // Time display
+    setInterval(function() {
+        var time = (new Date()).toLocaleTimeString();
+        $(".date").text(time);
+    }, 500);    
+
     // Filter
     $("a[data-input]").click(function(event){
         event.preventDefault();
