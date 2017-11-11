@@ -5,7 +5,7 @@ namespace Site\Controller;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 
-class Inventory extends AbstractCrmController
+final class Inventory extends AbstractCrmController
 {
     /**
      * Creates inventory mapper
@@ -20,10 +20,10 @@ class Inventory extends AbstractCrmController
     /**
      * Creates the grid
      * 
-     * @param array $entity
+     * @param mixed $entity
      * @return string
      */
-    private function createGrid($entity)
+    private function createForm($entity) : string
     {
         return $this->view->render('inventory/index', array(
             'inventories' => $this->createInventoryMapper()->fetchAll($this->getHotelId()),
@@ -37,23 +37,23 @@ class Inventory extends AbstractCrmController
      * 
      * @return string
      */
-    public function indexAction()
+    public function indexAction() : string
     {
-        return $this->createGrid(new InputDecorator());
+        return $this->createForm(new InputDecorator());
     }
 
     /**
-     * Edits the inventory item
+     * Edits the inventory item by its ID
      * 
-     * @param string $id
-     * @return string
+     * @param int $id Inventory ID
+     * @return mixed
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
         $entity = $this->createInventoryMapper()->findByPk($id);
 
         if ($entity) {
-            return $this->createGrid($entity);
+            return $this->createForm($entity);
         } else {
             return false;
         }
@@ -79,6 +79,8 @@ class Inventory extends AbstractCrmController
 
         if ($formValidator->isValid()) {
             $this->createInventoryMapper()->persist($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'The inventory has been updated successfully' : 'The inventory has been added successfully');
             return 1;
 
         } else {
@@ -92,9 +94,11 @@ class Inventory extends AbstractCrmController
      * @param string $id
      * @return string
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id) : void
     {
         $this->createInventoryMapper()->deleteByPk($id);
-        return 1;
+
+        $this->flashBag->set('danger', 'The inventory has been deleted successfully');
+        $this->response->redirectToPreviousPage();
     }
 }

@@ -4,7 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
 
-class InventoryMapper extends AbstractMapper
+final class InventoryMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
@@ -28,12 +28,13 @@ class InventoryMapper extends AbstractMapper
      * @param integer $hotelId
      * @return array
      */
-    public function fetchAll($hotelId)
+    public function fetchAll(int $hotelId) : array
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
                         ->whereEquals('hotel_id', $hotelId)
                         ->orderBy($this->getPk())
+                        ->desc()
                         ->queryAll();
     }
 }
