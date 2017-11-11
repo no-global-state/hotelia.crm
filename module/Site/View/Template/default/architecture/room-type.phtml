@@ -58,7 +58,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-                <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+                <a href="<?= $this->url($entity['id'] ? 'Site:Architecture:RoomType@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
               </div>
             </div>
           </fieldset>
