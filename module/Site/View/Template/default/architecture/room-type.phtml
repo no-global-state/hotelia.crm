@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<h2 class="page-header"><? $this->show('Room types'); ?> <small>(<?= count($types); ?>)</small></h2>
+<h2 class="page-header"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Room types'); ?> <small>(<?= count($types); ?>)</small></h2>
 
 <div class="row">
     <div class="col-lg-6">
@@ -37,7 +37,7 @@ use Krystal\Form\Element;
     <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomType@saveAction'); ?>">
           <fieldset>
-            <legend><?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
 
             <?= Element::hidden('id', $entity['id']); ?>
 
