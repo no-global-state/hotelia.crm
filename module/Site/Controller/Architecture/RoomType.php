@@ -60,6 +60,7 @@ final class RoomType extends AbstractCrmController
         $data = $this->request->getPost();
         $this->createRoomTypeMapper()->persist($data);
 
+        $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
         return 1;
     }
 
