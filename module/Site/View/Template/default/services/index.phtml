@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<h2 class="page-header"><? $this->show('Services'); ?> <small>(<?= count($services); ?>)</small></h2>
+<h2 class="page-header"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?> <small>(<?= count($services); ?>)</small></h2>
 
 <div class="row">
     <div class="col-lg-6">
@@ -39,7 +39,7 @@ use Krystal\Form\Element;
     <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Service@saveAction'); ?>">
           <fieldset>
-            <legend><?php $this->show(!$entity['id'] ? 'Add a service' : 'Edit the service'); ?></legend>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add a service' : 'Edit the service'); ?></legend>
 
             <?= Element::hidden('id', $entity['id']); ?>
 
@@ -74,7 +74,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-                <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+                <a href="<?= $this->url($entity['id'] ? 'Site:Service@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Back'); ?></a>
               </div>
             </div>
           </fieldset>

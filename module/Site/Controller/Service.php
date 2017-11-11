@@ -24,7 +24,7 @@ final class Service extends AbstractCrmController
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
      * @return string
      */
-    private function createGrid($entity)
+    private function createGrid($entity) : string
     {
         return $this->view->render('services/index', array(
             'services' => $this->createServiceMapper()->fetchAll($this->getHotelId()),
@@ -39,7 +39,7 @@ final class Service extends AbstractCrmController
      * 
      * @return string
      */
-    public function indexAction()
+    public function indexAction() : string
     {
         return $this->createGrid(new InputDecorator());
     }
@@ -47,10 +47,10 @@ final class Service extends AbstractCrmController
     /**
      * Renders edit form
      * 
-     * @param strng $id
-     * @return string
+     * @param int $id Service ID 
+     * @return mixed
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
         $entity = $this->createServiceMapper()->findByPk($id);
 
@@ -64,13 +64,15 @@ final class Service extends AbstractCrmController
     /**
      * Deletes a service
      * 
-     * @param string $id
+     * @param int $id Service ID 
      * @return string
      */
-    public function deleteAction($id)
+    public function deleteAction($id) : void
     {
         $this->createServiceMapper()->deleteByPk($id);
-        return 1;
+
+        $this->flashBag->set('danger', 'The service has been deleted successfully');
+        $this->response->redirectToPreviousPage();
     }
 
     /**
@@ -78,11 +80,12 @@ final class Service extends AbstractCrmController
      * 
      * @return string
      */
-    public function saveAction()
+    public function saveAction() : int
     {
         $data = $this->request->getPost();
         $this->createServiceMapper()->persist($data);
 
+        $this->flashBag->set('success', $data['id'] ? 'The service has been updated successfully' : 'The service has been added successfully');
         return 1;
     }
 }
