@@ -1,15 +1,12 @@
 <?php
 
-use Krystal\Db\Filter\InputDecorator;
 use Krystal\Form\Element;
-
-$entity = new InputDecorator($entity);
 
 ?>
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:Room@saveAction'); ?>">
   <fieldset>
-    <legend><? $this->show($entity['id'] ? 'Edit the room' : 'Add a room'); ?></legend>
+    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the room' : 'Add a room'); ?></legend>
 
     <?= Element::hidden('id', $entity['id']); ?>
 
@@ -71,7 +68,7 @@ $entity = new InputDecorator($entity);
     
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Back'); ?></a>
         <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
       </div>
     </div>

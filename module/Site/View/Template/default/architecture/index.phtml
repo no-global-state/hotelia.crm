@@ -5,7 +5,7 @@
     <div class="col-lg-8">
         <h2><? $this->show('Rooms'); ?> <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
 
-        <p><a href="<?php echo $this->url('Site:Architecture:Room@saveAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
+        <p><a href="<?php echo $this->url('Site:Architecture:Room@addAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
 
         <table class="table table-bordered table-striped table-hover">
             <thead>

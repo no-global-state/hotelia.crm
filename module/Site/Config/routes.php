@@ -232,7 +232,7 @@ return array(
     ),
 
     '/crm/architecture/room/add' => array(
-        'controller' => 'Architecture:Room@saveAction'
+        'controller' => 'Architecture:Room@addAction'
     ),
 
     '/crm/architecture/room/view/(:var)' => array(

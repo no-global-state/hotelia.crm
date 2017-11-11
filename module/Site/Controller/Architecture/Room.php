@@ -15,6 +15,7 @@ use Site\Controller\AbstractCrmController;
 use Site\Service\CleaningCollection;
 use Site\Service\RoomQualityCollection;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Db\Filter\InputDecorator;
 
 final class Room extends AbstractCrmController
 {
@@ -27,12 +28,33 @@ final class Room extends AbstractCrmController
     }
 
     /**
-     * Renders room info
+     * Renders room form
      * 
-     * @param string $id
+     * @param mixed $entity
      * @return string
      */
-    public function viewAction($id)
+    private function createForm($entity) : string
+    {
+        if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
+            $entity['floor_id'] = $this->getFloorIdKeeper()->getLastCategoryId();
+        }
+
+        return $this->view->render('architecture/form-room', array(
+            'entity' => $entity,
+            'floors' => $this->getModuleService('architectureService')->getFloors($this->getHotelId()),
+            'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
+            'cleaningCollection' => new CleaningCollection(),
+            'roomQualities' => (new RoomQualityCollection())->getAll()
+        ));
+    }
+
+    /**
+     * Renders room info
+     * 
+     * @param int $id Room ID
+     * @return string
+     */
+    public function viewAction(int $id)
     {
         $entity = $this->createRoomMapper()->fetchById($id);
 
@@ -45,59 +67,54 @@ final class Room extends AbstractCrmController
     /**
      * Saves a room
      * 
-     * @param array $room
-     * @return string
+     * @return int
      */
-    public function saveAction(array $entity = array())
+    public function saveAction() : int
     {
-        if ($this->request->isPost()) {
-            $data = $this->request->getPost();
-            $this->createRoomMapper()->persist($data);
+        $data = $this->request->getPost();
+        $this->createRoomMapper()->persist($data);
 
-            return 1;
-        } else {
-
-            if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
-                $entity['floor_id'] = $this->getFloorIdKeeper()->getLastCategoryId();
-            }
-
-            return $this->view->render('architecture/form-room', array(
-                'entity' => $entity,
-                'floors' => $this->getModuleService('architectureService')->getFloors($this->getHotelId()),
-                'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
-                'cleaningCollection' => new CleaningCollection(),
-                'roomQualities' => (new RoomQualityCollection())->getAll()
-            ));
-        }
+        $this->flashBag->set('success', $data['id'] ? 'The room has been updated successfully' : 'The room has been added successfully');
+        return 1;
     }
 
     /**
-     * Edits the room
+     * Renders empty form
      * 
-     * @param string $id
      * @return string
      */
-    public function editAction($id)
+    public function addAction() : string
+    {
+        return $this->createForm(new InputDecorator);
+    }
+
+    /**
+     * Edits the room by its ID
+     * 
+     * @param int $id Room ID
+     * @return string
+     */
+    public function editAction(int $id)
     {
         $room = $this->createRoomMapper()->findByPk($id);
 
         if (!empty($room)) {
-            return $this->saveAction($room);
+            return $this->createForm($room);
         } else {
             return false;
         }
     }
 
     /**
-     * Deletes a room
+     * Deletes a room by its ID
      * 
-     * @param string $id
-     * @return string
+     * @param int $id Room ID
+     * @return void
      */
-    public function deleteAction($id)
+    public function deleteAction($id) : void
     {
         $this->createRoomMapper()->deleteByPk($id);
-        $this->sessionBag->set('success', 'The room has been deleted successfully');
+        $this->flashBag->set('success', 'The room has been deleted successfully');
 
         return $this->redirectToRoute('Site:Architecture:Grid@indexAction');
     }
