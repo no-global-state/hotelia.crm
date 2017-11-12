@@ -237,7 +237,13 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array())
     {
-        $db = $this->db->select($this->getSharedColumns())
+        // To be selected
+        $columns = array_merge($this->getSharedColumns(), [
+            // Indicates whether time of there departure is already passed
+            new RawSqlFragment('(CURDATE() > departure) AS passed')
+        ]);
+
+        $db = $this->db->select($columns)
                        ->from(self::getTableName())
                        // Room relation
                        ->leftJoin(RoomMapper::getTableName())
