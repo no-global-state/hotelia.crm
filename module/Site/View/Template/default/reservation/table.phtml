@@ -48,7 +48,7 @@ use Krystal\Form\Element;
             <?php
                 $free = empty($room['taken']);
                 $leavingToday = $room['leaving_today'];
-                
+
                 if ($leavingToday){
                     $backgroundClass = 'leaving';
                 } else {
@@ -115,8 +115,6 @@ use Krystal\Form\Element;
 
         <?php endforeach; ?>
     </div>
-
-    <? $this->loadPartial('client-modal'); ?>
   </div>
   
   <div class="tab-pane fade" id="profile">
@@ -169,9 +167,8 @@ use Krystal\Form\Element;
                             ?>
                             <td>
                                 <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
-                                
                                 <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
-                                    <a href="#"></a>
+                                    <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"></a>
                                 </span>
                                 <?php else: ?>
                                 <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
@@ -189,3 +186,5 @@ use Krystal\Form\Element;
     </div>
   </div>  
 </div>
+
+<? $this->loadPartial('client-modal'); ?>
