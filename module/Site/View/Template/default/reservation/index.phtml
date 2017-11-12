@@ -80,6 +80,11 @@ use Krystal\Iso\ISO3166\Country;
             'pk' => 'id',
             'batch' => false,
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'rowAttributes' => [
+                'class' => function($row){
+                    return $row['passed'] == 1 ? 'reservation-passed' : null;
+                }
+            ],
             'columns' => [
                 [
                     'column' => 'id',

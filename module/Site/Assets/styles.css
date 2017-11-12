@@ -7,6 +7,9 @@ body {
  margin: 0 0 100px;
 }
 
+.reservation-passed {
+    background: #efdde1 !important;
+}
 
 /* Chess */
 .chess-grid {
