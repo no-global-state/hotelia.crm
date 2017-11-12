@@ -1,6 +1,14 @@
+html {
+ position:relative; 
+ min-height: 100%;
+}
+
+body {
+ margin: 0 0 100px;
+}
+
 
 /* Chess */
-
 .chess-grid {
  table-layout: fixed;
 }
@@ -227,3 +235,26 @@ div[role='main'] {
 .status-checking {
  background: #656060;
 }
+
+footer {
+ position: absolute;
+ bottom: -19px;
+ width: 100%;
+ background: #008cba;
+ height: 100px;
+ color: #fff;
+ margin-top: 20px;
+ padding-top: 40px;
+}
+
+footer ul li {
+ float: left;
+ list-style: none;
+ margin-right: 21px;
+}
+
+footer ul li > a, 
+ footer ul li > a:hover {
+ color: #fff;
+}
+

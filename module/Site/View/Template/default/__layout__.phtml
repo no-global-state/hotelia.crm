@@ -101,6 +101,24 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <p>Copyrights <?= date('Y'); ?> NGS Labs</p>
+                </div>
+
+                <div class="col-lg-6 pull-right">
+                    <ul class="pull-right">
+                        <li><a href="#"><? $this->show('FAQ'); ?></a></li>
+                        <li><a href="#"><? $this->show('Terms & Conditions'); ?></a></li>
+                        <li><a href="#"><? $this->show('Help & Support'); ?></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <div class="modal fade" id="errors-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
