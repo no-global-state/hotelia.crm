@@ -6,7 +6,7 @@ use Krystal\Form\Element;
 
 <form class="form-horizontal" action="<?= $this->url('Site:Facility:Category@saveAction'); ?>">
   <fieldset>
-    <legend><? $this->show($category['id'] ? 'Edit the category' : 'Add new category'); ?></legend>
+    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($category['id'] ? 'Edit the category' : 'Add new category'); ?></legend>
 
     <?= Element::hidden('id', $category['id']); ?>
 
