@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<h2 class="page-header"><? $this->show('Room inventory'); ?> <small>(<?= count($inventories); ?>)</small></h2>
+<h2 class="page-header"><i class="glyphicon glyphicon-eject"></i> <? $this->show('Room inventory'); ?> <small>(<?= count($inventories); ?>)</small></h2>
 
 <div class="row">
     <div class="col-lg-6">
@@ -41,7 +41,7 @@ use Krystal\Form\Element;
     <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomInventory@saveAction', $roomId); ?>">
           <fieldset>
-            <legend><?php $this->show(!$entity['id'] ? 'Add an inventory' : 'Edit the inventory'); ?></legend>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add an inventory' : 'Edit the inventory'); ?></legend>
 
             <?= Element::hidden('id', $entity['id']); ?>
             <?= Element::hidden('room_id', $roomId); ?>
@@ -77,7 +77,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-                <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+                <a href="<?= $this->url($entity['id'] ? 'Site:Architecture:RoomInventory@indexAction' : 'Site:Architecture:Grid@indexAction', $roomId); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
               </div>
             </div>
           </fieldset>

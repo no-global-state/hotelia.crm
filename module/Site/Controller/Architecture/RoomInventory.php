@@ -7,7 +7,7 @@ use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
 use Krystal\Stdlib\ArrayUtils;
 
-class RoomInventory extends AbstractCrmController
+final class RoomInventory extends AbstractCrmController
 {
     /**
      * Creates inventory mapper
@@ -32,11 +32,11 @@ class RoomInventory extends AbstractCrmController
     /**
      * Creates a grid
      * 
-     * @param string $roomId
+     * @param int $roomId
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
      * @return string
      */
-    private function createGrid($roomId, $entity)
+    private function createGrid(int $roomId, $entity) : string
     {
         $collection = ArrayUtils::arrayList($this->createInventoryMapper()->fetchAll($this->getHotelId()), 'id', 'name');
 
@@ -50,24 +50,24 @@ class RoomInventory extends AbstractCrmController
     }
 
     /**
-     * Renders main grid
+     * Renders main grid by room ID
      * 
-     * @param string $roomId
+     * @param int $roomId
      * @return string
      */
-    public function indexAction($roomId)
+    public function indexAction(int $roomId) : string
     {
         return $this->createGrid($roomId, new InputDecorator());
     }
 
     /**
-     * Renders edit form
+     * Renders edit form by inventory ID
      * 
-     * @param string $roomId
-     * @param string $id
-     * @return string
+     * @param int $roomId Room ID
+     * @param int $id Inventory ID
+     * @return mixed
      */
-    public function editAction($roomId, $id)
+    public function editAction(int $roomId, int $id)
     {
         $entity = $this->createRoomInventoryMapper()->findByPk($id);
 
@@ -79,28 +79,31 @@ class RoomInventory extends AbstractCrmController
     }
 
     /**
-     * Deletes inventory
+     * Deletes inventory by its ID
      * 
-     * @param string $roomId
-     * @param string $id
-     * @return string
+     * @param int $roomId Room ID
+     * @param int $id Inventory ID
+     * @return void
      */
-    public function deleteAction($roomId, $id)
+    public function deleteAction(int $roomId, int $id) : void
     {
         $this->createRoomInventoryMapper()->deleteByPk($id);
-        return 1;
+
+        $this->flashBag->set('danger', 'The inventory has been deleted successfully');
+        $this->response->redirectToPreviousPage();
     }
 
     /**
      * Saves the inventory
      * 
-     * @return string
+     * @return int
      */
-    public function saveAction()
+    public function saveAction() : int
     {
         $data = $this->request->getPost();
         $this->createRoomInventoryMapper()->persist($data);
 
+        $this->flashBag->set('success', $data['id'] ? 'The inventory has been updated successfully' : 'The inventory has been added successfully');
         return 1;
     }
 }
