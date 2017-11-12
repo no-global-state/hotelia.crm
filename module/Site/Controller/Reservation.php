@@ -345,7 +345,7 @@ class Reservation extends AbstractCrmController
                 $mapper->insert($data);
             }
 
-            $this->flashBag->set('success', 'Reservation is successful');
+            $this->flashBag->set('success', $data['id'] ? 'Reservation is updated' : 'Reservation is successful');
             return '1';
         } else {
             return $formValidator->getErrors();
