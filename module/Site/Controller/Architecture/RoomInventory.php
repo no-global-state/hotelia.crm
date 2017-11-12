@@ -42,6 +42,7 @@ final class RoomInventory extends AbstractCrmController
 
         return $this->view->render('architecture/room-inventory', array(
             'inventories' => $this->createRoomInventoryMapper()->fetchAll($roomId),
+            'name' => $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchNameById($roomId), // Room name
             'entity' => $entity,
             'id' => $entity['id'],
             'collection' => $collection,

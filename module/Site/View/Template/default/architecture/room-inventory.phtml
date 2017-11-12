@@ -4,7 +4,7 @@ use Krystal\Form\Element;
 
 ?>
 
-<h2 class="page-header"><i class="glyphicon glyphicon-eject"></i> <? $this->show('Room inventory'); ?> <small>(<?= count($inventories); ?>)</small></h2>
+<h2 class="page-header"><i class="glyphicon glyphicon-eject"></i> <? $this->show('Room inventory'); ?> <small><?= $name; ?> (<?= count($inventories); ?>)</small></h2>
 
 <div class="row">
     <div class="col-lg-6">
