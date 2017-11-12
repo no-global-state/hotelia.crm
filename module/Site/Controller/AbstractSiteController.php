@@ -26,8 +26,10 @@ abstract class AbstractSiteController extends AbstractController
     {
         // Validate CSRF token from POST requests
         if ($this->request->isPost()) {
+            $token = $this->request->isAjax() ? $this->request->getMetaCsrfToken() : $this->request->getPost('csrf-token');
+
             // Check the validity
-            if (!$this->csrfProtector->isValid($this->request->getMetaCsrfToken())) {
+            if (!$this->csrfProtector->isValid($token)) {
                 $this->response->setStatusCode(400);
                 die('Invalid CSRF token');
             }
