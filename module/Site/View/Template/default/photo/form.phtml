@@ -6,7 +6,7 @@ use Krystal\Form\Element;
 
 <form class="form-horizontal" action="<?= $this->url('Site:Photo@saveAction'); ?>">
   <fieldset>
-    <legend><? $this->show($photo['id'] ? 'Edit the photo' : 'Add a photo'); ?></legend>
+    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($photo['id'] ? 'Edit the photo' : 'Add a photo'); ?></legend>
     <?= Element::hidden('id', $photo['id']); ?>
 
     <div class="form-group">
@@ -29,7 +29,7 @@ use Krystal\Form\Element;
 
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
-        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+        <a href="<?= $this->url('Site:Hotel@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
         <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
       </div>
     </div>

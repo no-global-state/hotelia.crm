@@ -9,10 +9,10 @@ final class Photo extends AbstractCrmController
     /**
      * Creates a form
      * 
-     * @param array $photo
+     * @param mixed $photo
      * @return string
      */
-    private function createForm($photo)
+    private function createForm($photo) : string
     {
         return $this->view->render('photo/form', array(
             'photo' => $photo
@@ -24,7 +24,7 @@ final class Photo extends AbstractCrmController
      * 
      * @return string
      */
-    public function saveAction()
+    public function saveAction() : int
     {
         $service = $this->getModuleService('photoService');
 
@@ -34,6 +34,7 @@ final class Photo extends AbstractCrmController
             $service->add($this->getHotelId(), $this->request->getAll());
         }
 
+        $this->flashBag->set('success', $this->request->getPost('id') ? 'The photo has been updated successfully' : 'The photo has been added successfully');
         return 1;
     }
 
@@ -42,18 +43,18 @@ final class Photo extends AbstractCrmController
      * 
      * @return string
      */
-    public function addAction()
+    public function addAction() : string
     {
         return $this->createForm(new InputDecorator());
     }
 
     /**
-     * Renders edit form
+     * Renders edit form by photo ID
      * 
      * @param string $id Photo ID
      * @return string
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
         $photo = $this->getModuleService('photoService')->fetchById($id);
 
@@ -65,16 +66,16 @@ final class Photo extends AbstractCrmController
     }
 
     /**
-     * Deletes a photo
+     * Deletes a photo by its ID
      * 
      * @param string $id Photo ID
      * @return string
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id)
     {
         $this->getModuleService('photoService')->deleteById($id);
-        $this->flashBag->set('success', 'Selected photo has been deleted successfully');
-
+        
+        $this->flashBag->set('danger', 'Selected photo has been deleted successfully');
         return $this->response->redirectToPreviousPage();
     }
 }
