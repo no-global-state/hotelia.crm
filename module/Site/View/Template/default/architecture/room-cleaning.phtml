@@ -8,22 +8,22 @@ use Site\Service\CleaningCollection;
 
 <br />
 
-<h2 class="page-header"><i class="glyphicon glyphicon-user"></i> <? $this->show('Room cleaning'); ?></h2>
+<h2 class="page-header"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></h2>
 
 <form method="POST">
-    <div>
-        <div class="btn-group form-action-group">
-          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> <? $this->show('Apply to selected'); ?></a>
-          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_CLEANED); ?>"><i class="glyphicon glyphicon-ok"></i> <? $this->show('Mark as cleaned'); ?></a></li>
-            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_NONCLEANED); ?>"><i class="glyphicon glyphicon-remove"></i> <? $this->show('Mark as non-cleaned'); ?></a></li>
-            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_CHECKING); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Mark as checking'); ?></a></li>
-            <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_UNDEFINED); ?>"><i class="glyphicon glyphicon-share"></i> <? $this->show('Mark as undefined'); ?></a></li>
-          </ul>
-        </div>
+    <?= Element::hidden('csrf-token', $csrfToken); ?>
+    <div class="btn-group form-action-group">
+      <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> <? $this->show('Apply to selected'); ?></a>
+      <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_CLEANED); ?>"><i class="glyphicon glyphicon-ok"></i> <? $this->show('Mark as cleaned'); ?></a></li>
+        <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_NONCLEANED); ?>"><i class="glyphicon glyphicon-remove"></i> <? $this->show('Mark as non-cleaned'); ?></a></li>
+        <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_CHECKING); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Mark as checking'); ?></a></li>
+        <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@markBatchAction', CleaningCollection::CODE_UNDEFINED); ?>"><i class="glyphicon glyphicon-share"></i> <? $this->show('Mark as undefined'); ?></a></li>
+      </ul>
     </div>
 
+    <br />
     <br />
 
     <?= Grid::render($data, array(
