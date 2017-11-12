@@ -12,23 +12,24 @@ final class Item extends AbstractCrmController
      * 
      * @return string
      */
-    public function saveAction()
+    public function saveAction() : int
     {
-        $input = $this->request->getPost();
+        $data = $this->request->getPost();
 
         $service = $this->getModuleService('facilitiyService');
-        $service->saveItem($input);
+        $service->saveItem($data);
 
+        $this->flashBag->set('success', $data['id'] ? 'The item has been updated successfully' : 'The item has been added successfully');
         return 1;
     }
 
     /**
      * Creates a form
      * 
-     * @param array $item
+     * @param mixed $item
      * @return string
      */
-    private function createForm($item)
+    private function createForm($item) : string
     {
         return $this->view->render('facility/form-item', array(
             'item' => $item,
@@ -41,18 +42,18 @@ final class Item extends AbstractCrmController
      * 
      * @return string
      */
-    public function addAction()
+    public function addAction() : string
     {
         return $this->createForm(new InputDecorator());
     }
 
     /**
-     * Renders item edit form
+     * Renders item edit form by its ID
      * 
      * @param string $id
      * @return string
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
         $item = $this->getModuleService('facilitiyService')->getItemById($id);
 
@@ -64,16 +65,17 @@ final class Item extends AbstractCrmController
     }
 
     /**
-     * Persist a category
+     * Persist an item
      * 
      * @param string $id Item ID
      * @return string
      */
-    public function deleteAction($id)
+    public function deleteAction(int $id) : void
     {
         $service = $this->getModuleService('facilitiyService');
         $service->deleteItem($id);
 
-        return 1;
+        $this->flashBag->set('danger', 'The item has been deleted successfully');
+        $this->response->redirectToPreviousPage();
     }
 }
