@@ -22,25 +22,14 @@ use Krystal\Form\Element;
       <li class="divider"></li>
       <li class="dropdown-header"><? $this->show('Period'); ?></li>
       <?php foreach ($this->translateArray($periods) as $id => $name): ?>
-      <li>
-        <a href="#" data-input="[name='period']" data-value="<?= $id; ?>" data-toggle="tab">
-        <?php if ($id == $period): ?>
-        <i class="glyphicon glyphicon-ok"></i>
-        <?php endif; ?>
-        <?= $name; ?></a>
-        </li>
+      <li><a href="#" data-input="[name='period']" data-value="<?= $id; ?>"><?php if ($id == $period): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
       <?php endforeach; ?>
       <li class="divider"></li>
 
       <li class="dropdown-header"><? $this->show('Type'); ?></li>
-      <li><a href="#" data-input="[name='type']" data-value=""><?php if (!$type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?><? $this->show('All'); ?></a></li>
+      <li><a href="#" data-input="[name='type']" data-value=""><?php if (!$type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('All'); ?></a></li>
       <?php foreach ($types as $id => $name): ?>
-        <li><a href="#" data-input="[name='type']" data-value="<?= $id; ?>" data-toggle="tab">
-            <?php if ($id == $type): ?>
-            <i class="glyphicon glyphicon-ok"></i>
-            <?php endif; ?>
-            <?= $name; ?></a>
-        </li>
+      <li><a href="#" data-input="[name='type']" data-value="<?= $id; ?>"><?php if ($id == $type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
       <?php endforeach; ?>
     </ul>
   </li>
