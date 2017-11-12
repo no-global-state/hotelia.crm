@@ -9,7 +9,7 @@ use Krystal\Grid\Grid;
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="nav active"><a href="#data" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('Data'); ?></a></li>
-            <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Facilities'); ?></a></li>
+            <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
             <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
         </ul>
 
@@ -18,7 +18,7 @@ use Krystal\Grid\Grid;
             <div class="tab-pane fade in active" id="data">
                 <div class="form-horizontal">
                   <fieldset>
-                    <h3 class="text-muted"> <? $this->show('Hotel information'); ?></h3>
+                    <h3 class="text-muted"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('Hotel information'); ?></h3>
 
                     <?= Element::hidden('id', $hotel['id']); ?>
 
@@ -112,13 +112,6 @@ use Krystal\Grid\Grid;
                         <?= Element::text('email', $hotel['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Hotel email'))); ?>
                       </div>
                     </div>
-                    
-                    <div class="form-group">
-                      <div class="col-lg-10 col-lg-offset-2">
-                        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-                        <button type="reset" class="btn btn-default"><?php $this->show('Cancel'); ?></button>
-                      </div>
-                    </div>
                   </fieldset>
                 </div>
             </div>
@@ -139,13 +132,6 @@ use Krystal\Grid\Grid;
                   </div>
                 </div>
                 <?php endforeach; ?>
-
-                <div class="form-group">
-                  <div class="col-lg-10">
-                    <button type="reset" class="btn btn-default"><? $this->show('Cancel'); ?></button>
-                    <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
-                  </div>
-                </div>
             </div>
 
             <div class="tab-pane fade" id="gallery">
@@ -178,6 +164,13 @@ use Krystal\Grid\Grid;
 
                 ], $this->translator); ?>
             </div>
+        </div>
+
+        <div class="form-group">
+          <div class="pull-right">
+            <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+            <a href="<?= $this->url('Site:Reservation@tableAction', null); ?>" class="btn btn-default"><?php $this->show('Cancel'); ?></a>
+          </div>
         </div>
     </div>
 </form>

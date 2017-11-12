@@ -51,7 +51,7 @@ final class Hotel extends AbstractCrmController
      * 
      * @return string
      */
-    public function saveAction()
+    public function saveAction() : int
     {
         $data = $this->request->getPost();
 
@@ -64,6 +64,7 @@ final class Hotel extends AbstractCrmController
         $mapper = $this->createMapper('/Site/Storage/MySQL/HotelMapper');
         $mapper->persist($data);
 
+        $this->flashBag->set('success', 'Settings have been updated successfully');
         return 1;
     }
 }
