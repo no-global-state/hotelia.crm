@@ -54,10 +54,12 @@ use Site\Service\RoomQualityCollection;
                 }
             ]
         ],
-        
+
         'actions' => [
-            'reserve' => function($row){
-                return '<a class="btn btn-success"><i class="glyphicon glyphicon-share-alt"></i></a>';
+            'reserve' => function($row) use ($arrival, $departure){
+                // Create URL
+                $url = $this->createQueryUrl('Site:Reservation@addAction', array('arrival' => $arrival, 'departure' => $departure));
+                return sprintf('<a class="btn btn-success" href="%s"><i class="glyphicon glyphicon-share-alt"></i></a>', $url);
             }
         ]
 
