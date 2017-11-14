@@ -68,6 +68,26 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Checks room availability based on arrival date and its ID
+     * 
+     * @param string $arrival Arrival date
+     * @param int $roomId Room ID
+     * @return boolean
+     */
+    public function hasAvailability(string $arrival, int $roomId) : bool
+    {
+        $result = $this->db->select()
+                        ->count($this->getPk())
+                        ->from(self::getTableName())
+                        ->where('arrival', '<=', $arrival)
+                        ->andWhere('departure', '>=', $arrival)
+                        ->andWhere('room_id', '=', $roomId)
+                        ->queryScalar();
+
+        return boolval(!$result);
+    }
+
+    /**
      * Find reservations
      * 
      * @param string $type Optional room type filter
