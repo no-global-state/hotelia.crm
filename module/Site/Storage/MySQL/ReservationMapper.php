@@ -101,7 +101,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             RoomMapper::getFullColumnName('name'),
             RoomTypeMapper::getFullColumnName('type'),
             self::getFullColumnName('arrival'),
-            self::getFullColumnName('departure')
+            self::getFullColumnName('departure'),
+            self::getFullColumnName('id') => 'reservation_id'
         );
 
         $db = $this->db->select($columns)
