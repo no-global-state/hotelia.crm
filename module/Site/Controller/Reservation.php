@@ -332,18 +332,27 @@ class Reservation extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
 
-        $formValidator = $this->createValidator(array(
-            'input' => array(
+        $formValidator = $this->createValidator([
+            'input' => [
                 'source' => $data,
-                'definition' => array(
+                'definition' => [
                     'full_name' => new Pattern\Name(),
-                )
-            )
-        ));
+                    'arrival' => [
+                        'required' => true,
+                        'rules' => [
+                            'Unique' => [
+                                'message' => 'Selected room is already reserved on provided arrival date',
+                                'value' => !$mapper->hasAvailability($data['arrival'], $data['room_id'])
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
 
         if ($formValidator->isValid()) {
-            $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
 
             if (!empty($data['id'])) {
                 $mapper->update($data);
