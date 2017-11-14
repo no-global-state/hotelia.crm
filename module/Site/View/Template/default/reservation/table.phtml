@@ -168,7 +168,7 @@ use Krystal\Form\Element;
                             <td>
                                 <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
                                 <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
-                                    <a data-button="view" href="<?= $this->url('Site:Reservation@viewTakenAction', $room['id']); ?>"></a>
+                                    <a data-button="view" href="<?= $this->url('Site:Reservation@viewAction', $room['reservation_id']); ?>"></a>
                                 </span>
                                 <?php else: ?>
                                 <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">
