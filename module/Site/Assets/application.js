@@ -52,10 +52,20 @@ $(function(){
                 totalPrice -= subtract;
             }
 
-            $("[data-count='daily-tax']").text(parseFloat(days * $dailyTax.val()));
+            // Daily tax
+            var dailyTax = parseFloat(days * $dailyTax.val());
+            var discount = discount ? discount : 0;
+
+            // Captions
+            $("[data-count='daily-tax']").text(dailyTax);
             $("[data-count='days']").text(days);
-            $("[data-count='discount']").text(discount ? discount : 0);
+            $("[data-count='discount']").text(discount);
             $("[data-count='price']").text(totalPrice.toLocaleString());
+
+            // Inputs
+            $("[name='tax']").val(dailyTax);
+            $("[name='discount']").val(discount);
+            $("[name='price']").val(totalPrice.toLocaleString());
         };
 
         // Watchers

@@ -161,6 +161,10 @@ use Krystal\Form\Element;
               </div>
             </div>
 
+            <?= Element::hidden('tax', $client['tax']); ?>
+            <?= Element::hidden('price', $client['price']); ?>
+            <?= Element::hidden('discount', $client['discount']); ?>
+
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
                 <?php $this->loadPartial('counter', array(
