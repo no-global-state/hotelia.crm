@@ -62,6 +62,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('legal_status'),
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure'),
+            new RawSqlFragment('ABS(DATEDIFF(departure, arrival)) AS days'),
             self::getFullColumnName('comment'),
             self::getFullColumnName('tax'),
             self::getFullColumnName('price'),
