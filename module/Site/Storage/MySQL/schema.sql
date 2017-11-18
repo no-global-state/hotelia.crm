@@ -125,7 +125,9 @@ CREATE TABLE velveto_reservation (
     `email` varchar(100) NOT NULL,
     `passport` TEXT NOT NULL COMMENT 'Passport data',
     `discount` FLOAT NOT NULL COMMENT 'Discount percentage',
-    `comment` TEXT NOT NULL COMMENT 'Additional note if any'
+    `comment` TEXT NOT NULL COMMENT 'Additional note if any',
+    `tax` float NOT NULL COMMENT 'Fixed tax',
+    `price` float NOT NULL COMMENT 'Total reservation price',
 
 	/* Date */
 	`arrival` DATE NOT NULL,
