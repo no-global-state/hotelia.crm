@@ -282,5 +282,13 @@ return array(
 
     '/crm/architecture/floor/delete/(:var)' => array(
         'controller' => 'Architecture:Floor@deleteAction'
+    ),
+
+    '/crm/stat' => array(
+        'controller' => 'Stat@indexAction'
+    ),
+
+    '/crm/stat/count' => array(
+        'controller' => 'Stat@deleteAction'
     )
 );

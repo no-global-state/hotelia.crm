@@ -55,6 +55,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reports'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
+                <li><a href="<?= $this->url('Site:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></a></li>
               </ul>
             </li>
           </ul>
