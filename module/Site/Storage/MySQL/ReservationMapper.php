@@ -94,9 +94,9 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
-     * Gets sum count
+     * Gets sum count (price, tax, id) based on period
      * 
-     * @param string $column
+     * @param array $values
      * @param string $func SQL function
      * @return array
      */
