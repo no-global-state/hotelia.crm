@@ -4,6 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Db\Sql\RawSqlFragment;
+use Krystal\Db\Sql\RawBinding;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Stdlib\ArrayUtils;
 use Closure;
@@ -68,6 +69,47 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('price'),
             RoomMapper::getFullColumnName('name') => 'room'
         );
+    }
+
+    /**
+     * Gets month count
+     * 
+     * @param mixed $month
+     * @return array
+     */
+    public function getMonthCount($month) : array
+    {
+        return $this->getSumCount((array) $month, 'MONTH');
+    }
+
+    /**
+     * Gets year count
+     * 
+     * @param mixed $year
+     * @return array
+     */
+    public function getYearCount($year) : array
+    {
+        return $this->getSumCount((array) $year, 'YEAR');
+    }
+
+    /**
+     * Gets sum count
+     * 
+     * @param string $column
+     * @param string $func SQL function
+     * @return array
+     */
+    private function getSumCount(array $values, string $func) : array
+    {
+        return $this->db->select()
+                        // Calculate functions
+                        ->sum('price', 'price')
+                        ->sum('tax', 'tax')
+                        ->count('id', 'id')
+                        ->from(self::getTableName())
+                        ->whereIn(sprintf('%s(arrival)', $func), new RawBinding($values))
+                        ->query();
     }
 
     /**
