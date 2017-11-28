@@ -147,13 +147,20 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
 
         $hotel = $this->getHotelData();
 
+        // Language loading
+        $code = $this->sessionBag->get('language', $this->appConfig->getLanguage());
+        $this->loadTranslations($code);
+
         // Add shared variables
         $this->view->addVariables(array(
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'locale' => $this->appConfig->getLanguage(),
             'currency' => $hotel['currency'],
-            'appName' => $this->paramBag->get('appName')
+            'appName' => $this->paramBag->get('appName'),
+            'languages' => $this->createMapper('\Site\Storage\MySQL\LanguageMapper')->fetchAll(),
+            'code' => $code
         ));
+
 
         // Define the main layout
         $this->view->setLayout('__layout__');

@@ -62,6 +62,21 @@
           </ul>
           
           <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Language'); ?> <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <?php foreach ($languages as $language): ?>
+                <li>
+                    <a href="<?= $this->url('Site:Language@switchAction', $language['code']); ?>">
+                        <?php if ($code == $language['code']): ?>
+                        <i class="glyphicon glyphicon-ok"></i>
+                        <?php endif; ?>
+                        <?= $language['name']; ?>
+                    </a>
+                </li>
+                <?php endforeach; ?>
+              </ul>
+            </li>
             <li><a><span class="date"></span></a></li>
             <li><a href="<?= $this->url('Site:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Logout'); ?></a></li>
           </ul>
