@@ -1,0 +1,30 @@
+<?php
+
+use Krystal\Grid\ListView;
+
+?>
+
+<?= (new ListView($sum, [
+    'tableClass' => 'table table-bordered table-striped table-hover table-stat',
+    'columns' => [
+        [
+            'column' => 'id',
+            'title' => $this->translate('Total reservations')
+        ],
+        
+        [
+            'column' => 'price',
+            'title' => $this->translate('Total incoming'),
+            'value' => function() use ($sum, $currency){
+                return number_format($sum['price']) . ' ' . $currency;
+            }
+        ],
+
+        [
+            'column' => 'tax',
+            'title' => $this->translate('Total tax')
+        ]
+    ]
+]))->render();
+
+?>

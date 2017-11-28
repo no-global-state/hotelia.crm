@@ -7,6 +7,11 @@ body {
  margin: 0 0 100px;
 }
 
+.table-stat {
+ font-size: 27px;
+ color: #6f6f6f;
+}
+
 .reservation-passed {
     background: #efdde1 !important;
 }

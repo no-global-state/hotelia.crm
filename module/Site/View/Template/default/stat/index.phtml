@@ -1,0 +1,37 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></h2>
+
+<form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Year'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::number('year', $year, ['class' => 'form-control']); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Select months'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('months[]', $this->translateArray($months), '*', ['class' => 'form-control', 'multiple' => true]); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Select rooms'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('rooms[]', $rooms, '*', ['class' => 'form-control', 'multiple' => true]); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-stats"></i> <?php $this->show('Generate'); ?></button>
+        <a href="#" data-button="back" class="btn btn-info hidden-print"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Back'); ?></a>
+      </div>
+    </div>
+</form>
