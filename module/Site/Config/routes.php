@@ -6,6 +6,22 @@ return array(
         'controller' => 'Site@homeAction'
     ),
 
+    '/crm/languages' => array(
+        'controller' => 'Language@indexAction'
+    ),
+    
+    '/crm/languages/save' => array(
+        'controller' => 'Language@saveAction'
+    ),
+
+    '/crm/languages/edit/(:var)' => array(
+        'controller' => 'Language@editAction'
+    ),
+    
+    '/crm/languages/delete/(:var)' => array(
+        'controller' => 'Language@deleteAction'
+    ),
+    
     '/payment' => array(
         'controller' => 'Site@paymentAction'
     ),
