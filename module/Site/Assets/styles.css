@@ -16,6 +16,10 @@ body {
     background: #efdde1 !important;
 }
 
+.has-success .form-control {
+  border-color: #cbf5da;
+}
+
 /* Chess */
 .chess-grid {
  table-layout: fixed;
