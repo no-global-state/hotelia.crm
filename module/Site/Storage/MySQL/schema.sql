@@ -2,6 +2,7 @@
 CREATE TABLE velveto_languages (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL COMMENT 'Language name',
+    `code` varchar(5) NOT NULL COMMENT 'Language code',
     `order` INT DEFAULT 0 COMMENT 'Sorting order'
 );
 
