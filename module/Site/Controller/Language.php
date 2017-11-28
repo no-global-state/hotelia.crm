@@ -9,6 +9,18 @@ use Krystal\Db\Filter\InputDecorator;
 final class Language extends AbstractCrmController
 {
     /**
+     * Switches to another language
+     * 
+     * @param string $code Language code
+     * @return void
+     */
+    public function switchAction(string $code) : void
+    {
+        $this->sessionBag->set('language', $code);
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Creates language form
      * 
      * @param mixed $entity
