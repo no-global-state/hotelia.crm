@@ -286,9 +286,5 @@ return array(
 
     '/crm/stat' => array(
         'controller' => 'Stat@indexAction'
-    ),
-
-    '/crm/stat/count' => array(
-        'controller' => 'Stat@deleteAction'
     )
 );

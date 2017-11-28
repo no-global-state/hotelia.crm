@@ -72,35 +72,13 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
-     * Gets month count
-     * 
-     * @param mixed $month
-     * @return array
-     */
-    public function getMonthCount($month) : array
-    {
-        return $this->getSumCount((array) $month, 'MONTH');
-    }
-
-    /**
-     * Gets year count
-     * 
-     * @param mixed $year
-     * @return array
-     */
-    public function getYearCount($year) : array
-    {
-        return $this->getSumCount((array) $year, 'YEAR');
-    }
-
-    /**
      * Gets sum count (price, tax, id) based on period
      * 
      * @param array $values
      * @param string $func SQL function
      * @return array
      */
-    private function getSumCount(array $values, string $func) : array
+    public function getSumCount(int $year, array $months, array $roomIds) : array
     {
         return $this->db->select()
                         // Calculate functions
@@ -108,7 +86,9 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->sum('tax', 'tax')
                         ->count('id', 'id')
                         ->from(self::getTableName())
-                        ->whereIn(sprintf('%s(arrival)', $func), new RawBinding($values))
+                        ->whereIn('MONTH(arrival)', new RawBinding($months))
+                        ->andWhereIn('room_id', $roomIds)
+                        ->andWhereEquals('YEAR(arrival)', $year)
                         ->query();
     }
 
