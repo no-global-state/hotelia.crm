@@ -1,4 +1,10 @@
 
+CREATE TABLE velveto_languages (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL COMMENT 'Language name',
+    `order` INT DEFAULT 0 COMMENT 'Sorting order'
+);
+
 CREATE TABLE velveto_facilitiy_relations (
     `master_id` INT NOT NULL COMMENT 'Hotel ID',
     `slave_id` INT NOT NULL COMMENT 'Item ID'
