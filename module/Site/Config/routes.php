@@ -1,5 +1,7 @@
 <?php
 
+use Site\Service\UserService;
+
 return [
     '/' => [
         'controller' => 'Site@homeAction'
@@ -18,7 +20,8 @@ return [
     ],
     
     '/crm/languages/save' => [
-        'controller' => 'Language@saveAction'
+        'controller' => 'Language@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/languages/edit/(:var)' => [
@@ -26,7 +29,8 @@ return [
     ],
     
     '/crm/languages/delete/(:var)' => [
-        'controller' => 'Language@deleteAction'
+        'controller' => 'Language@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
     
     '/payment' => [
@@ -70,7 +74,8 @@ return [
     ],
 
     '/crm/photo/save' => [
-        'controller' => 'Photo@saveAction'
+        'controller' => 'Photo@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/photo/edit/(:var)' => [
@@ -78,7 +83,8 @@ return [
     ],
 
     '/crm/photo/delete/(:var)' => [
-        'controller' => 'Photo@deleteAction'
+        'controller' => 'Photo@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/facility' => [
@@ -99,7 +105,8 @@ return [
     ],
 
     '/crm/facility/category/save' => [
-        'controller' => 'Facility:Category@saveAction'
+        'controller' => 'Facility:Category@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/facility/category/edit/(:var)' => [
@@ -107,7 +114,8 @@ return [
     ],
 
     '/crm/facility/category/delete/(:var)' => [
-        'controller' => 'Facility:Category@deleteAction'
+        'controller' => 'Facility:Category@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     // Item
@@ -116,7 +124,8 @@ return [
     ],
 
     '/crm/facility/item/save' => [
-        'controller' => 'Facility:Item@saveAction'
+        'controller' => 'Facility:Item@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/facility/item/edit/(:var)' => [
@@ -124,7 +133,8 @@ return [
     ],
 
     '/crm/facility/item/delete/(:var)' => [
-        'controller' => 'Facility:Item@deleteAction'
+        'controller' => 'Facility:Item@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/transaction/index/(:var)' => [
@@ -136,7 +146,8 @@ return [
     ],
 
     '/crm/hotel/save' => [
-        'controller' => 'Hotel@saveAction'
+        'controller' => 'Hotel@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/services' => [
@@ -148,11 +159,13 @@ return [
     ],
 
     '/crm/services/delete/(:var)' => [
-        'controller' => 'Service@deleteAction'
+        'controller' => 'Service@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/services/save' => [
-        'controller' => 'Service@saveAction'
+        'controller' => 'Service@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     // Inventory
@@ -165,7 +178,8 @@ return [
     ],
 
     '/crm/inventory/delete/(:var)' => [
-        'controller' => 'Inventory@deleteAction'
+        'controller' => 'Inventory@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
     
     '/crm/inventory/save' => [
@@ -190,7 +204,8 @@ return [
     ],
 
     '/crm/reservation/save' => [
-        'controller' => 'Reservation@saveAction'
+        'controller' => 'Reservation@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/reservation/view/(:var)' => [
@@ -210,7 +225,8 @@ return [
     ],
     
     '/crm/reservation/delete/(:var)' => [
-        'controller' => 'Reservation@deleteAction'
+        'controller' => 'Reservation@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/reservation/history/room/(:var)' => [
@@ -223,11 +239,13 @@ return [
     ],
 
     '/crm/architecture/room-cleaning/room/(:var)/mark/(:var)' => [
-        'controller' => 'Architecture:RoomCleaning@markAction'
+        'controller' => 'Architecture:RoomCleaning@markAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/room-cleaning/mark-batch/(:var)' => [
-        'controller' => 'Architecture:RoomCleaning@markBatchAction'
+        'controller' => 'Architecture:RoomCleaning@markBatchAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/room-type' => [
@@ -239,11 +257,13 @@ return [
     ],
 
     '/crm/architecture/room-type/delete/(:var)' => [
-        'controller' => 'Architecture:RoomType@deleteAction'
+        'controller' => 'Architecture:RoomType@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/room-type/save' => [
-        'controller' => 'Architecture:RoomType@saveAction'
+        'controller' => 'Architecture:RoomType@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture' => [
@@ -263,7 +283,8 @@ return [
     ],
 
     '/crm/architecture/room/save' => [
-        'controller' => 'Architecture:Room@saveAction'
+        'controller' => 'Architecture:Room@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/room/edit/(:var)' => [
@@ -271,7 +292,8 @@ return [
     ],
 
     '/crm/architecture/room/delete/(:var)' => [
-        'controller' => 'Architecture:Room@deleteAction'
+        'controller' => 'Architecture:Room@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     // Room inventory
@@ -284,7 +306,8 @@ return [
     ],
 
     '/crm/architecture/room/inventory/save' => [
-        'controller' => 'Architecture:RoomInventory@saveAction'
+        'controller' => 'Architecture:RoomInventory@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/room/(:var)/inventory/delete/(:var)' => [
@@ -296,7 +319,8 @@ return [
     ],
 
     '/crm/architecture/floor/save' => [
-        'controller' => 'Architecture:Floor@saveAction'
+        'controller' => 'Architecture:Floor@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/architecture/floor/edit/(:var)' => [
@@ -304,7 +328,8 @@ return [
     ],
 
     '/crm/architecture/floor/delete/(:var)' => [
-        'controller' => 'Architecture:Floor@deleteAction'
+        'controller' => 'Architecture:Floor@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/stat' => [
