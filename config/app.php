@@ -85,7 +85,6 @@ return array(
 						'@Site/datetimepicker/css/bootstrap-datetimepicker.min.css'
 					)
 				),
-
 				// Improved plugin for dropdowns
 				'chosen' => array(
 					'stylesheets' => array(
@@ -94,6 +93,13 @@ return array(
 					),
 					'scripts' => array(
 						'@Site/chosen/chosen.jquery.min.js'
+					)
+				),
+                // Chart.js library
+                'chart' => array(
+					'scripts' => array(
+						'@Site/chart/chart.bundle.js',
+                        '@Site/chart/utils.js',
 					)
 				)
 			)
