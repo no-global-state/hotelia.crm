@@ -139,6 +139,12 @@ $(function(){
 
         $("form").submit();
     });
+    
+    $(".room-taken").each(function(){
+        $(this).css('background', $(this).data('background-color'));
+    }).hover(function(){
+        $(this).css('background', $(this).data('hover-color'));
+    });
 });
 
 

@@ -11,6 +11,37 @@ class ReservationService
     const PARAM_TIME_FORMAT = 'Y-m-d';
 
     /**
+     * Returns random color
+     * 
+     * @return array
+     */
+    public static function getRandomColor()
+    {
+        $colors = self::getColors();
+        $key = array_rand($colors);
+        
+        return [
+            'background' => $key,
+            'hover' => $colors[$key]
+        ];
+    }
+
+    /**
+     * Returns a collection of colors for chessboard
+     * 
+     * @return array
+     */
+    public static function getColors()
+    {
+        // Initial => Hover colors
+        return [
+            '#e68946' => '#ca7436',
+            '#cc8315' => '#ad6e10',
+            '#72257b' => '#53175a'
+        ];
+    }
+
+    /**
      * Checks whether date is in range between two another dates
      * 
      * @param string $target

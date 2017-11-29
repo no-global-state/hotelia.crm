@@ -160,6 +160,10 @@ use Krystal\Form\Element;
 
                     <tbody>
                         <?php foreach ($rooms as $room): ?>
+                        <?php
+                            $hover = ReservationService::getRandomColor()['hover'];
+                            $background = ReservationService::getRandomColor()['background'];
+                        ?>
                         <tr>
                             <?php foreach ($dates as $date): ?>
                             <?php
@@ -167,7 +171,7 @@ use Krystal\Form\Element;
                             ?>
                             <td>
                                 <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
-                                <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken">
+                                <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken" data-background-color="<?= $background; ?>" data-background-hover="<?= $hover; ?>">
                                     <a data-button="view" href="<?= $this->url('Site:Reservation@viewAction', $room['reservation_id']); ?>"></a>
                                 </span>
                                 <?php else: ?>
