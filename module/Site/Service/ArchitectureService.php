@@ -136,7 +136,7 @@ class ArchitectureService
             'Total room count' => $room['rooms_count'],
             'Total floors count' => $floorCount,
             'Taken rooms count' => $room['rooms_taken'],
-            'Free rooms count' => $room['rooms_free'],
+            'Free rooms count' => ($room['rooms_count'] - $room['rooms_taken']),
             'Rooms freeing today' => $room['rooms_leaving_today']
         );
     }

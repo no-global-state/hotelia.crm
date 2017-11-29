@@ -151,7 +151,6 @@ final class RoomMapper extends AbstractMapper
             // Availability indicators (virtual columns)
             new RawSqlFragment('COUNT(velveto_floor_room.id) AS rooms_count'),
             new RawSqlFragment('SUM(CURDATE() BETWEEN arrival AND departure) AS rooms_taken'),
-            new RawSqlFragment('SUM(CASE WHEN (CURDATE() > departure) IS NULL THEN 1 ELSE 0 END) AS rooms_free'),
             new RawSqlFragment('SUM(CURDATE() = departure) AS rooms_leaving_today'),
         );
 
