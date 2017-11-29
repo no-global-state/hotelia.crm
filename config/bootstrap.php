@@ -12,7 +12,7 @@
 // Make paths relative to the root folder
 chdir(dirname(__DIR__));
 
-function d($v) { echo '<pre>', print_r($v, 1), '</pre>'; /*exit;*/ }
+function d($v) { echo '<pre>', print_r($v, 1), '</pre>'; exit; }
 
 require('vendor/autoload.php');
 require('environment.php');
