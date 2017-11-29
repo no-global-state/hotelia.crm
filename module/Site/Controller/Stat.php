@@ -20,13 +20,16 @@ final class Stat extends AbstractCrmController
 
             $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
             $sum = $mapper->getSumCount($year, $months, $rooms);
-            
+
             return $this->view->disableLayout()->render('stat/response', [
                 'sum' => $sum
             ]);
 
         } else {
+            $this->view->getPluginBag()->load('chart');
+
             return $this->view->render('stat/index', [
+                'stat' => true,
                 'months' => TimeHelper::getMonths(),
                 'year' => date('Y'),
                 'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId())

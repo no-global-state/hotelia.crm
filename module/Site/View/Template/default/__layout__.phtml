@@ -1,3 +1,9 @@
+<?php
+
+use Krystal\Date\TimeHelper;
+
+?>
+
 <!DOCTYPE html>
 <html lang="<?= $locale; ?>">
   <head>
@@ -155,5 +161,82 @@
     <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
     <script src="<?php echo $script; ?>"></script>
     <?php endforeach;?>
+
+    <?php if (isset($stat)): ?>
+    <?php $months = json_encode($this->translateArray(array_values(TimeHelper::getMonths()))); ?>
+
+    <script>
+        var MONTHS = <?= $months; ?>;
+        var config = {
+            type: 'line',
+            data: {
+                labels: MONTHS,
+                datasets: [{
+                    label: "<? $this->show('Total reservations'); ?>",
+                    borderColor: window.chartColors.red,
+                    backgroundColor: window.chartColors.red,
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ],
+                }, {
+                    label: "<? $this->show('Total incoming'); ?>",
+                    borderColor: window.chartColors.blue,
+                    backgroundColor: window.chartColors.blue,
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ],
+                },  {
+                    label: "<? $this->show('Total tax'); ?>",
+                    borderColor: window.chartColors.yellow,
+                    backgroundColor: window.chartColors.yellow,
+                    data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                    ],
+                }]
+            },
+            options: {
+                responsive: true,
+                title:{
+                    display:true,
+                    text:"<? $this->show('Summary statistic for year'); ?>"
+                },
+                tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                }
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        };
+
+    </script>
+    <?php endif; ?>
   </body>
 </html>
