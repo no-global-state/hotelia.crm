@@ -243,7 +243,7 @@ class Reservation extends AbstractCrmController
      */
     public function indexAction()
     {
-        return $this->createGrid($this->request->getQuery(), 'A list of guest', true);
+        return $this->createGrid($this->request->getQuery(), 'Clients', true);
     }
 
     /**
