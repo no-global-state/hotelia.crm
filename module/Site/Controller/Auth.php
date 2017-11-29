@@ -46,7 +46,7 @@ final class Auth extends AbstractCrmController
         // If trying to render login form when already logged in
         if ($this->getAuthService()->isLoggedIn()) {
             // Then simply go home
-            return $this->response->redirect('/');
+            return $this->response->redirect('/crm');
         } else {
             return $this->view->render('login');
         }

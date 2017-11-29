@@ -5,6 +5,10 @@ return array(
     '/' => array(
         'controller' => 'Site@homeAction'
     ),
+    
+    '/crm' => array(
+        'controller' => 'Crm@indexAction'
+    ),
 
     '/crm/languages/switch/(:var)' => array(
         'controller' => 'Language@switchAction'
