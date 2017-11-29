@@ -19,7 +19,7 @@ class ReservationService
     {
         $colors = self::getColors();
         $key = array_rand($colors);
-        
+
         return [
             'background' => $key,
             'hover' => $colors[$key]
