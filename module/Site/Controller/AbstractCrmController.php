@@ -148,7 +148,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $hotel = $this->getHotelData();
 
         // Language loading
-        $code = $this->sessionBag->get('language', $this->appConfig->getLanguage());
+        $bag = $this->request->getCookieBag();
+        $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
         // Add shared variables

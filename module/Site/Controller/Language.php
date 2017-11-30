@@ -14,12 +14,12 @@ final class Language extends AbstractCrmController
      * @param string $code Language code
      * @return void
      */
-    public function switchAction(string $code) : void
+    public function switchAction(string $code)
     {
         $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
 
         if ($languageMapper->exists($code)) {
-            $this->sessionBag->set('language', $code);
+            $this->request->getCookieBag()->set('language', $code);
         }
 
         $this->response->redirectToPreviousPage();
