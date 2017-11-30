@@ -34,7 +34,7 @@ use Krystal\Form\Element;
         </table>
     </div>
 
-    <div class="col-lg-6">
+    <div class="col-lg-6" role="box">
         <form class="form-horizontal" action="<?= $this->url('Site:Language@saveAction'); ?>">
           <fieldset>
             <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add a language' : 'Edit the language'); ?></legend>

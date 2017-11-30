@@ -8,6 +8,16 @@ body {
  margin: 0 0 100px;
 }
 
+body {
+  background: gainsboro;
+}
+
+div[role='main'] {
+  background: #fff;
+  padding: 23px;
+  border-radius: 7px;
+}
+
 .navbar-inverse, 
 .navbar-inverse .dropdown-menu {
     background: #2c3e50;
