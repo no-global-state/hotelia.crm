@@ -12,7 +12,7 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
-use Site\Service\CleaningCollection;
+use Site\Collection\CleaningCollection;
 use Krystal\Stdlib\ArrayUtils;
 
 final class RoomCleaning extends AbstractCrmController

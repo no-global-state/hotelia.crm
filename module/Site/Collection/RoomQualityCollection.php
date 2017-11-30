@@ -1,6 +1,6 @@
 <?php
 
-namespace Site\Service;
+namespace Site\Collection;
 
 use Krystal\Stdlib\ArrayCollection;
 

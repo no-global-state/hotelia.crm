@@ -4,7 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Validate\Pattern;
-use Site\Service\UnitCollection;
+use Site\Collection\UnitCollection;
 
 final class Service extends AbstractCrmController
 {

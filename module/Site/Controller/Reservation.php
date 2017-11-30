@@ -8,13 +8,13 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Db\Filter\FilterInvoker;
-use Site\Service\ReservationCollection;
-use Site\Service\PurposeCollection;
-use Site\Service\PaymentTypeCollection;
-use Site\Service\LegalStatusCollection;
-use Site\Service\StatusCollection;
+use Site\Collection\ReservationCollection;
+use Site\Collection\PurposeCollection;
+use Site\Collection\PaymentTypeCollection;
+use Site\Collection\LegalStatusCollection;
+use Site\Collection\StatusCollection;
+use Site\Collection\DaysCollection;
 use Site\Service\ReservationService;
-use Site\Service\DaysCollection;
 
 class Reservation extends AbstractCrmController
 {
