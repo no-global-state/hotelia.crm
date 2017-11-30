@@ -12,8 +12,8 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
-use Site\Service\CleaningCollection;
-use Site\Service\RoomQualityCollection;
+use Site\Collection\CleaningCollection;
+use Site\Collection\RoomQualityCollection;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
 
