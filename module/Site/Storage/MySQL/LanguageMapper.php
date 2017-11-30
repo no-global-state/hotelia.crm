@@ -23,6 +23,23 @@ final class LanguageMapper extends AbstractMapper
     }
 
     /**
+     * Checks whether language code is valid
+     * 
+     * @param string $code
+     * @return boolean
+     */
+    public function exists(string $code) : bool
+    {
+        $row = $this->db->select()
+                        ->count($this->getPk())
+                        ->from(self::getTableName())
+                        ->whereEquals('code', $code)
+                        ->queryScalar();
+
+        return $row > 0;
+    }
+
+    /**
      * Fetch all languages
      * 
      * @return array
