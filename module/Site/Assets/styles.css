@@ -149,6 +149,7 @@ div[role='main'] {
  text-align: center;
  border: 5px solid #fff;
  transition: opacity .7s;
+ background: #2c3e50;
 }
 
 .home-row > div:hover {
@@ -158,7 +159,7 @@ div[role='main'] {
 .home-row > div a {
  color: #fff;
  font-size: 31px;
- padding-top: 75px;
+ padding-top: 43px;
  height: 100%;
  width: 100%;
  display: block;
@@ -166,40 +167,16 @@ div[role='main'] {
  text-align: center;
 }
 
+.home-row > div a > .glyphicon {
+ font-size: 61px;
+}
+
+
 .home-row > div a:hover, 
 .home-row > div a:focus {
  text-decoration: none;
  outline: none;
 }
-
-.home-row > div:nth-of-type(1){
- background: #569456;
-}
-
-.home-row > div:nth-of-type(2){
- background: #f04124;
-}
-
-.home-row > div:nth-of-type(3) {
- background: #6b453e;
-}
-
-.home-row > div:nth-of-type(4) {
- background: #097598;
-}
-
-.home-row > div:nth-of-type(5) {
- background: #097598;
-}
-
-.home-row > div:nth-of-type(6) {
- background: #1b4854;
-}
-
-.home-row > div:nth-of-type(7) {
- background: #486067;
-}
-
 
 /* Main desktop */
 .floor-row {}
