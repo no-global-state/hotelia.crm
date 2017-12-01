@@ -1,0 +1,55 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Feedback@submitAction'); ?>">
+  <fieldset>
+	<h3 class="text-muted"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('Feedback'); ?></h3>
+    <br />
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('name', null, array('class' => 'form-control', 'placeholder' => $this->translate('Type your name'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Subject'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('subject', $this->translateArray($subjects), null, array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Message'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('message', null, array('rows' => 8, 'class' => 'form-control', 'placeholder' => $this->translate('Type your message'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" data-button="submit" class="btn btn-primary"><i class="glyphicon glyphicon-send"></i> <?php $this->show('Send'); ?></button>
+                <a href="#" data-button="back" class="btn btn-info hidden-print"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Back'); ?></a>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <p><? $this->show('We appreciate your feedback. We constantly looking forward to make our service better.'); ?></p>
+            <p><? $this->show('Please make sure you follow these advices, before writing a message.'); ?></p>
+
+            <ul>
+                <li><? $this->show('Be objective and constructive'); ?></li>
+                <li><? $this->show('Describe your problem clearly step by step'); ?></li>
+                <li><? $this->show('Make sure you include only relevant details'); ?></li>
+            </ul>
+        </div>
+    </div>
+  </fieldset>
+</form>
