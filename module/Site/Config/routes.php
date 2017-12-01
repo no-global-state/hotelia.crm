@@ -3,6 +3,15 @@
 use Site\Service\UserService;
 
 return [
+    '/crm/feedback' => [
+        'controller' => 'Feedback@indexAction'
+    ],
+    
+    '/crm/feedback/submit' => [
+        'controller' => 'Feedback@submitAction',
+        'disallow' => [UserService::USER_ROLE_GUEST]
+    ],
+    
     '/' => [
         'controller' => 'Site@homeAction'
     ],
