@@ -1,0 +1,32 @@
+<h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Reviews'); ?> <small>(<?= count($reviews); ?>)</small></h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?php $this->show('Title'); ?></th>
+                <th><?php $this->show('Date'); ?></th>
+                <th><?php $this->show('Review'); ?></th>
+                <th><?php $this->show('Rating'); ?></th>
+                <th><?php $this->show('Actions'); ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($reviews as $review): ?>
+            <tr>
+                <td><?= $review['id']; ?></td>
+                <td><?= $review['title']; ?></td>
+                <td><?= $review['date']; ?></td>
+                <td><?= $review['review']; ?></td>
+                <td><?= $review['rating']; ?></td>
+                <td>
+                    <a href="<?= $this->url('Site:Review:Review@editAction', $review['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a href="<?= $this->url('Site:Review:Review@deleteAction', $review['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

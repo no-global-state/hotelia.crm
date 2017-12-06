@@ -1,0 +1,38 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Review:Review@saveAction'); ?>">
+  <fieldset>
+    <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add a review' : 'Edit the review'); ?></legend>
+
+    <?= Element::hidden('id', $entity['id']); ?>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><?php $this->show('Title'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('title', $entity['title'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><?php $this->show('Review'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::textarea('review', $entity['review'], array('class' => 'form-control', 'rows' => 6)); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+
+        <?php if ($entity['id']): ?>
+        <a href="<?= $this->url('Site:Review:Review@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+        <?php endif; ?>
+
+      </div>
+    </div>
+  </fieldset>
+</form>
