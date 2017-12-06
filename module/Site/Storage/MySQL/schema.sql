@@ -5,6 +5,15 @@ CREATE TABLE velveto_reviews_types (
     `name` varchar(255)
 );
 
+CREATE TABLE velveto_reviews (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `language_id` INT NOT NULL,
+    `date` TIMESTAMP NOT NULL,
+    `title` varchar(255) NOT NULL COMMENT 'Review title',
+    `review` TEXT COMMENT 'Review itself',
+    `rating` SMALLINT NOT NULL COMMENT 'Summary rating'
+);
+
 CREATE TABLE velveto_languages (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL COMMENT 'Language name',
