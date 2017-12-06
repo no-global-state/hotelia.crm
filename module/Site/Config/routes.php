@@ -3,6 +3,20 @@
 use Site\Service\UserService;
 
 return [
+    // Reviews
+    '/crm/reviews' => [
+        'controller' => 'Review:Review@indexAction'
+    ],
+    '/crm/reviews/edit/(:var)' => [
+        'controller' => 'Review:Review@editAction'
+    ],
+    '/crm/reviews/delete/(:var)' => [
+        'controller' => 'Review:Review@deleteAction'
+    ],
+    '/crm/reviews/save' => [
+        'controller' => 'Review:Review@saveAction'
+    ],
+    
     // Review types
     '/crm/review-type' => [
         'controller' => 'Review:ReviewType@indexAction'
