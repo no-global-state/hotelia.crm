@@ -18,6 +18,7 @@ CREATE TABLE velveto_facilitiy_categories (
 
 CREATE TABLE velveto_facilitiy_items (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `icon` varchar(255) NOT NULL,
     `category_id` INT NOT NULL,
     `name` varchar(255)
 );

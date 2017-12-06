@@ -60,6 +60,7 @@ final class FacilitiyItemMapper extends AbstractMapper
         // Columns to be selected
         $columns = array(
             self::getFullColumnName('id'),
+            self::getFullColumnName('icon'),
             self::getFullColumnName('category_id'),
             self::getFullColumnName('name'),
             new RawSqlFragment('(slave_id = id) AS checked')
