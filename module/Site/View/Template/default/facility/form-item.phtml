@@ -25,6 +25,13 @@ use Krystal\Form\Element;
     </div>
     
     <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Front'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::checkbox('front', $item['front']); ?>
+      </div>
+    </div>
+    
+    <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Category'); ?></label>
       <div class="col-lg-10">
         <?= Element::select('category_id', $categories, $item['category_id'], array('class' => 'form-control')); ?>

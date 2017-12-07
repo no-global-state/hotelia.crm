@@ -10,6 +10,7 @@
                     <th>#</th>
                     <th><? $this->show('Icon'); ?></th>
                     <th><? $this->show('Name'); ?></th>
+                    <th><? $this->show('Front'); ?></th>
                     <th><? $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -20,6 +21,7 @@
                     <td><?= $item['id']; ?></td>
                     <td><i class="<?= $item['icon']; ?>"></i></td>
                     <td><?= $item['name']; ?></td>
+                    <td><? $this->show($item['front'] ? 'Yes' : 'No'); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
