@@ -53,9 +53,10 @@ final class FacilitiyItemMapper extends AbstractMapper
      * 
      * @param integer $categoryId Optional category ID filter
      * @param integer $hotelId Optional hotel ID filter
+     * @param bool $front Whether to fetch only front items
      * @return array
      */
-    public function fetchAll($categoryId = null, $hotelId = null)
+    public function fetchAll($categoryId = null, $hotelId = null, $front = false)
     {
         // Columns to be selected
         $columns = array(
@@ -84,6 +85,10 @@ final class FacilitiyItemMapper extends AbstractMapper
         // Optional hotel ID filter
         if ($hotelId !== null) {
             $db->whereEquals(self::getFullColumnName('master_id', self::getJunctionTableName()), $hotelId);
+        }
+
+        if ($front === true) {
+            $db->whereEquals(self::getFullColumnName('front'), '1');
         }
 
         return $db->queryAll();
