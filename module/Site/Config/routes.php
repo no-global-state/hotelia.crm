@@ -3,6 +3,23 @@
 use Site\Service\UserService;
 
 return [
+    // Regions
+    '/crm/regions' => [
+        'controller' => 'Region@indexAction'
+    ],
+    '/crm/regions/edit/(:var)' => [
+        'controller' => 'Region@editAction'
+    ],
+    '/crm/regions/delete/(:var)' => [
+        'controller' => 'Region@deleteAction'
+    ],
+    '/crm/regions/add' => [
+        'controller' => 'Region@addAction'
+    ],
+    '/crm/regions/save' => [
+        'controller' => 'Region@saveAction'
+    ],
+
     // Reviews
     '/crm/reviews' => [
         'controller' => 'Review:Review@indexAction'
