@@ -34,6 +34,7 @@ CREATE TABLE velveto_facilitiy_categories (
 CREATE TABLE velveto_facilitiy_items (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `icon` varchar(255) NOT NULL,
+    `front` SMALLINT(1) NOT NULL COMMENT 'Whether item must be front or not',
     `category_id` INT NOT NULL,
     `name` varchar(255)
 );
