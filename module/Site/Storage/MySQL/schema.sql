@@ -1,4 +1,10 @@
 
+CREATE TABLE velveto_regions (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL COMMENT 'Region name',
+    `order` INT NOT NULL COMMENT 'Region sorting order'
+);
+
 CREATE TABLE velveto_reviews_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL COMMENT 'Sorting order',
