@@ -1,0 +1,37 @@
+<?php
+
+use Krystal\Form\Element;
+use Krystal\Grid\Grid;
+
+?>
+
+<p>
+    <a href="<?= $this->url('Site:Architecture:RoomGallery@addAction', $roomId); ?>" class="btn btn-success"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Add new photo'); ?></a>
+</p>
+
+<div class="table-responsive">
+    <?= Grid::render($images, [
+        'pk' => 'id',
+        'batch' => false,
+        'columns' => [
+            [
+                'column' => 'photo',
+                'title' => 'Image',
+                'value' => function($row){
+                    return Element::image($row['photo'], ['class' => 'img-responsive']);
+                }
+            ],
+            ['column' => 'order'],
+        ],
+
+        'actions' => [
+            'update' => function($row){
+                return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Architecture:RoomGallery@editAction', $row['id']));
+            },
+            'delete' => function($row){
+                return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Architecture:RoomGallery@deleteAction', $row['id']));
+            }
+        ]
+
+    ], $this->translator); ?>
+</div>
