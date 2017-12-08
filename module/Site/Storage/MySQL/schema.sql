@@ -97,6 +97,13 @@ CREATE TABLE velveto_floor_room_types (
     `unit_price` FLOAT NOT NULL
 );
 
+CREATE TABLE velveto_floor_room_gallery (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `room_id` INT NOT NULL COMMENT 'Attahced Room ID',
+    `photo` varchar(255) COMMENT 'Photo file path',
+    `order` INT COMMENT 'Sorting order'
+);
+
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
