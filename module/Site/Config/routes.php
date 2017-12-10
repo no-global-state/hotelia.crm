@@ -3,6 +3,24 @@
 use Site\Service\UserService;
 
 return [
+
+    // Price groups
+    '/crm/price-groups' => [
+        'controller' => 'PriceGroup@indexAction'
+    ],
+
+    '/crm/price-groups/edit/(:var)' => [
+        'controller' => 'PriceGroup@editAction'
+    ],
+
+    '/crm/price-groups/delete/(:var)' => [
+        'controller' => 'PriceGroup@deleteAction'
+    ],
+
+    '/crm/price-groups/save' => [
+        'controller' => 'PriceGroup@saveAction'
+    ],
+    
     // Room gallery
     '/crm/architecture/room/gallery/index/(:var)' => [
         'controller' => 'Architecture:RoomGallery@indexAction'
