@@ -8,10 +8,39 @@ use Site\Service\UserService;
 use Site\Service\ArchitectureService;
 use Site\Service\FacilitiyService;
 use Site\Service\PhotoService;
+use Site\Service\RoomGalleryService;
 
 final class Module extends AbstractModule
 {
     const PARAM_GALLERY_PATH = '/data/uploads/gallery/';
+    const PARAM_ROOM_GALLERY_PATH = '/data/uploads/room-gallery/';
+
+    /**
+     * Returns room gallery service
+     * 
+     * @return \Site\Service\PhotoService
+     */
+    private function createRoomGalleryService()
+    {
+        // Create image service
+        $imageManager = new ImageManager(self::PARAM_ROOM_GALLERY_PATH, $this->appConfig->getRootDir(), $this->appConfig->getRootUrl(), [
+            'thumb' => [
+                'dimensions' => [
+                    // Administration area
+                    [850, 450],
+                    [80, 50]
+                ]
+            ],
+            'original' => [
+                'prefix' => 'original'
+            ]
+        ]);
+        
+        // Create mapper
+        $mapper = $this->createMapper('\Site\Storage\MySQL\RoomGalleryMapper');
+
+        return new RoomGalleryService($mapper, $imageManager);
+    }
 
     /**
      * Returns product image manager
@@ -88,7 +117,9 @@ final class Module extends AbstractModule
             'photoService' => new PhotoService(
                 $this->createMapper('\Site\Storage\MySQL\PhotoMapper'),
                 $this->getImageManager()
-            )
+            ),
+
+            'roomGalleryService' => $this->createRoomGalleryService()
         );
     }
 }
