@@ -1,4 +1,10 @@
 
+CREATE TABLE velveto_price_groups (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `name` varchar(255) NOT NULL COMMENT 'Price Group Name',
+    `order` INT NOT NULL COMMENT 'Price Group Sorting Order'
+);
+
 CREATE TABLE velveto_regions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL COMMENT 'Region name',
