@@ -92,7 +92,7 @@ final class RoomGallery extends AbstractCrmController
      */
     public function deleteAction(int $id)
     {
-        $this->getModuleService('roomGalleryService')->deleteByPk($id);
+        $this->getModuleService('roomGalleryService')->deleteById($id);
 
         $this->flashBag->set('danger', 'The photo has been deleted successfully');
         $this->response->redirectToPreviousPage();
