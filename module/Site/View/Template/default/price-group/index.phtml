@@ -1,0 +1,71 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?> <small>(<?= count($priceGroups); ?>)</small></h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Order'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($priceGroups as $priceGroup): ?>
+                <tr class="<?= $priceGroup['id'] == $entity['id'] ? 'success' : null; ?>">
+                    <td><?= $priceGroup['id']; ?></td>
+                    <td><?= $priceGroup['name']; ?></td>
+                    <td><?= $priceGroup['order']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:PriceGroup@editAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:PriceGroup@deleteAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6" role="box">
+        <form class="form-horizontal" action="<?= $this->url('Site:PriceGroup@saveAction'); ?>">
+          <fieldset>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add price group' : 'Edit the price group'); ?></legend>
+
+            <?= Element::hidden('id', $entity['id']); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('order', $entity['order'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+
+                <?php if ($entity['id']): ?>
+                <a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+                <?php endif; ?>
+
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
