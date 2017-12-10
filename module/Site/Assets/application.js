@@ -76,6 +76,11 @@ $(function(){
         countUpdater();
     }
 
+    $("[data-button='print']").click(function(event){
+        event.preventDefault();
+        window.print();
+    });
+
 	// Chosen
     if (jQuery().chosen) {
         $('[data-plugin="chosen"]').chosen();
