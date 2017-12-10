@@ -100,7 +100,7 @@ CREATE TABLE velveto_floor_room_types (
 CREATE TABLE velveto_floor_room_gallery (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_id` INT NOT NULL COMMENT 'Attahced Room ID',
-    `photo` varchar(255) COMMENT 'Photo file path',
+    `file` varchar(255) COMMENT 'Photo file path',
     `order` INT COMMENT 'Sorting order'
 );
 

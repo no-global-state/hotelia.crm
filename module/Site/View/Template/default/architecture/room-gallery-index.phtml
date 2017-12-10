@@ -15,10 +15,10 @@ use Krystal\Grid\Grid;
         'batch' => false,
         'columns' => [
             [
-                'column' => 'photo',
+                'column' => 'file',
                 'title' => 'Image',
                 'value' => function($row){
-                    return Element::image($row['photo'], ['class' => 'img-responsive']);
+                    return Element::image($row['file'], ['class' => 'img-responsive']);
                 }
             ],
             ['column' => 'order'],

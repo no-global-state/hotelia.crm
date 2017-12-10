@@ -17,7 +17,11 @@ $roomId = isset($roomId) ? $roomId : $entity['room_id'];
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Photo'); ?></label>
       <div class="col-lg-10">
-        <?= Element::text('photo', $entity['photo'], array('class' => 'form-control')); ?>
+        <?php if ($entity['file'] != ''): ?>
+        <p><img class="img-responsive" src="<?= $entity['file']; ?>" /></p>
+        <?php endif; ?>
+
+        <?= Element::file('file', null, array('class' => 'form-control')); ?>
       </div>
     </div>
 
