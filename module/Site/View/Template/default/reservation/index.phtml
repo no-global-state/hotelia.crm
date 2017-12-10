@@ -18,9 +18,10 @@ use Krystal\Iso\ISO3166\Country;
                 </h4>
             </div>
 
-            <div class="row">
+            <div class="row hidden-print">
                 <div class="col-lg-12">
                     <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+                    <button class="btn btn-primary" data-button="print"><i class="glyphicon glyphicon-print"></i> <? $this->show('Print'); ?></button>
                     <?php if ($hasFilter): ?>
                     <a class="btn btn-danger" href="<?= $this->url('Site:Reservation@indexAction'); ?>"><i class="glyphicon glyphicon-file"></i> <? $this->show('Reset filter'); ?></a>
                     <?php endif; ?>
@@ -38,7 +39,7 @@ use Krystal\Iso\ISO3166\Country;
             </div>
         </div>
 
-        <div class="col-lg-6 <?= $hideRange === true ? 'hidden' : null; ?>">
+        <div class="col-lg-6 hidden-print <?= $hideRange === true ? 'hidden' : null; ?>">
             <div class="pull-right">
                 <h3><i class="glyphicon glyphicon-time"></i> <? $this->show('Range filter'); ?></h3>
 
