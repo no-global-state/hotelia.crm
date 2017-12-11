@@ -25,14 +25,21 @@ final class PriceGroupMapper extends AbstractMapper
     /**
      * Fetch all price groups
      * 
+     * @param boolean $sort Whether to sort
      * @return array
      */
-    public function fetchAll() : array
+    public function fetchAll($sort = false) : array
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->orderBy($this->getPk())
-                        ->desc()
-                        ->queryAll();
+        $query = $this->db->select('*')
+                          ->from(self::getTableName());
+
+        if ($sort == true) {
+            $query->orderBy('order');
+        } else {
+            $query->orderBy($this->getPk())
+                  ->desc();
+        }
+
+        return $query->queryAll();
     }
 }
