@@ -67,6 +67,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('comment'),
             self::getFullColumnName('tax'),
             self::getFullColumnName('price'),
+            self::getFullColumnName('price_group_id'),
             RoomMapper::getFullColumnName('name') => 'room'
         );
     }

@@ -175,7 +175,9 @@ CREATE TABLE velveto_reservation (
 
 	/* Date */
 	`arrival` DATE NOT NULL,
-	`departure` DATE NOT NULL
+	`departure` DATE NOT NULL,
+
+    `price_group_id` INT COMMENT 'Attached price group ID'
 );
 
 CREATE TABLE velveto_reservation_services (
