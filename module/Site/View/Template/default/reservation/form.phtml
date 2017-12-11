@@ -161,6 +161,13 @@ use Krystal\Form\Element;
               </div>
             </div>
 
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Price group'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('price_group_id', $priceGroups, $client['price_group_id'], array('class' => 'form-control', 'disabled' => $client['id'])); ?>
+              </div>
+            </div>
+
             <?= Element::hidden('tax', $client['tax']); ?>
             <?= Element::hidden('price', $client['price']); ?>
             <?= Element::hidden('discount', $client['discount']); ?>
