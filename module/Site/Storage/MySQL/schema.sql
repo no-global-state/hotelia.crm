@@ -101,8 +101,16 @@ CREATE TABLE velveto_floor_room (
 CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
-    `type` varchar(255) NOT NULL,
-    `unit_price` FLOAT NOT NULL
+    `type` varchar(255) NOT NULL
+);
+
+CREATE TABLE velveto_floor_room_type_prices (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `room_type_id` INT NOT NULL COMMENT 'Room type ID',
+    `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
+    `price` FLOAT NOT NULL,
+
+    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_floor_room_gallery (
