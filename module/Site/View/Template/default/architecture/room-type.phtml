@@ -48,12 +48,14 @@ use Krystal\Form\Element;
               </div>
             </div>
 
+            <?php foreach ($priceGroups as $priceGroup): ?>
             <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Daily price'); ?></label>
+              <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>
               <div class="col-lg-10">
-                <?= Element::number('unit_price', $entity['unit_price'], array('class' => 'form-control', 'step' => 'any')); ?>
+                <?= Element::number(sprintf('price_group_ids[%s]', $priceGroup['id']), null, array('class' => 'form-control')); ?>
               </div>
             </div>
+            <?php endforeach; ?>
             
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
