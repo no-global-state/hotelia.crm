@@ -110,7 +110,8 @@ CREATE TABLE velveto_floor_room_type_prices (
     `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
     `price` FLOAT NOT NULL,
 
-    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE
+    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_floor_room_gallery (
