@@ -23,6 +23,35 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Find data by room type ID
+     * 
+     * @param int $roomTypeId
+     * @return array
+     */
+    public function findAllByRoomTypeId(int $roomTypeId) : array
+    {
+        // Columns to be selected
+        $columns = [
+            PriceGroupMapper::getFullColumnName('name'),
+            PriceGroupMapper::getFullColumnName('currency'),
+            self::getFullColumnName('price'),
+            self::getFullColumnName('room_type_id'),
+            self::getFullColumnName('price_group_id') => 'id'
+        ];
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        ->leftJoin(PriceGroupMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            self::getFullColumnName('price_group_id'),
+                            PriceGroupMapper::getRawColumn('id')
+                        )
+                        ->whereEquals('room_type_id', $roomTypeId)
+                        ->queryAll();
+    }
+
+    /**
      * Adds room type price
      * 
      * @param int $roomTypeId
