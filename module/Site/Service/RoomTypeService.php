@@ -45,7 +45,7 @@ final class RoomTypeService
      */
     public function deleteById(int $id)
     {
-        return $this->roomTypeMapper->roomTypeMapper($id);
+        return $this->roomTypeMapper->deleteByPk($id);
     }
 
     /**
@@ -108,7 +108,7 @@ final class RoomTypeService
     public function update(array $input)
     {
         $priceGroupIds = $this->save($input);
-        $this->roomTypePriceMapper->update($input['id'], $priceGroupIds);
+        $this->roomTypePriceMapper->save($input['id'], $priceGroupIds);
 
         return true;
     }
@@ -122,7 +122,7 @@ final class RoomTypeService
     public function add(array $input)
     {
         $priceGroupIds = $this->save($input);
-        $this->roomTypePriceMapper->add($this->roomTypeMapper->getMaxId(), $priceGroupIds);
+        $this->roomTypePriceMapper->save($this->roomTypeMapper->getMaxId(), $priceGroupIds);
 
         return true;
     }
