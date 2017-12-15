@@ -178,41 +178,6 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
-     * Fetch prices and their associated room IDs
-     * 
-     * @param integer $hotelId
-     * @return array
-     */
-    public function fetchPrices($hotelId)
-    {
-        $columns = array(
-            self::getFullColumnName($this->getPk()),
-            RoomTypeMapper::getFullColumnName('unit_price')
-        );
-
-        return $this->db->select($columns)
-                        ->from(self::getTableName())
-                        // Floor relation
-                        ->innerJoin(FloorMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('floor_id'),
-                            FloorMapper::getRawColumn('id')
-                        )
-                        // Type relation
-                        ->leftJoin(RoomTypeMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('type_id'),
-                            RoomTypeMapper::getRawColumn('id')
-                        )
-                        // Filter by Hotel ID
-                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
-                        ->orderBy(self::getFullColumnName($this->getPk()))
-                        ->queryAll();
-    }
-
-    /**
      * Fetch room data by its associated id
      * 
      * @param string $id Room ID

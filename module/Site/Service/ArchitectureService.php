@@ -110,17 +110,6 @@ class ArchitectureService
     }
 
     /**
-     * Returns room prices
-     * 
-     * @param integer $hotelId
-     * @return array
-     */
-    public function getRoomPrices($hotelId)
-    {
-        return ArrayUtils::arrayList($this->roomMapper->fetchPrices($hotelId), 'id', 'unit_price');
-    }
-
-    /**
      * Creates basic statistic
      * 
      * @param integer $hotelId
