@@ -9,6 +9,7 @@ use Site\Service\ArchitectureService;
 use Site\Service\FacilitiyService;
 use Site\Service\PhotoService;
 use Site\Service\RoomGalleryService;
+use Site\Service\RoomTypeService;
 
 final class Module extends AbstractModule
 {
@@ -117,6 +118,11 @@ final class Module extends AbstractModule
             'photoService' => new PhotoService(
                 $this->createMapper('\Site\Storage\MySQL\PhotoMapper'),
                 $this->getImageManager()
+            ),
+
+            'roomTypeService' => new RoomTypeService(
+                $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper'),
+                $this->createMapper('\Site\Storage\MySQL\RoomTypePriceMapper')
             ),
 
             'roomGalleryService' => $this->createRoomGalleryService()
