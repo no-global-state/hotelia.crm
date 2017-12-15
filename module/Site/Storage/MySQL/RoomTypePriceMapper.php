@@ -83,28 +83,13 @@ final class RoomTypePriceMapper extends AbstractMapper
     public function add(int $roomTypeId, array $priceGroupIds)
     {
         foreach ($priceGroupIds as $priceGroupId => $price) {
-            $this->insert($roomTypeId, $priceGroupId, $price);
+            $this->persist([
+                'room_type_id' => $roomTypeId,
+                'price_group_id' => $priceGroupId,
+                'price' => $price
+            ]);
         }
 
         return true;
-    }
-
-    /**
-     * Adds new item
-     * 
-     * @param int $roomTypeId
-     * @param int $priceGroupId
-     * @param float $price
-     * @return boolean
-     */
-    private function insert(int $roomTypeId, int $priceGroupId, float $price)
-    {
-        $data = [
-            'room_type_id' => $roomTypeId,
-            'price_group_id' => $priceGroupId,
-            'price' => $price
-        ];
-
-        return $this->persist($data);
     }
 }
