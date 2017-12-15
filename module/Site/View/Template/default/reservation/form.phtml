@@ -136,13 +136,18 @@ use Krystal\Form\Element;
               <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
               <div class="col-lg-10">
                 <?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control'), false, function($key) use ($prices){
-                    foreach ($prices as $id => $price) {
+                    $result = [];
+
+                    foreach ($prices as $id => $collection) {
                         if ($id == $key) {
-                            return [
-                                'data-unit-price' => $price
-                            ];
+                            foreach ($collection as $groupId => $price) {
+                                $result[sprintf('data-price-group-%s', $groupId)] = $price;
+                            }
+
+                            return $result;
                         }
                     }
+
                 }); ?>
               </div>
             </div>
