@@ -18,25 +18,21 @@ use Krystal\Stdlib\ArrayUtils;
 final class RoomType extends AbstractCrmController
 {
     /**
-     * @return \Site\Storage\RoomMapper
-     */
-    private function createRoomTypeMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper');
-    }
-
-    /**
      * Creates the grid
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
+     * @param array $priceGroups
      * @return string
      */
-    private function createGrid($entity) : string
+    private function createGrid($entity, array $priceGroups) : string
     {
+        $service = $this->getModuleService('roomTypeService');
+
         return $this->view->render('architecture/room-type', array(
             'entity' => $entity,
             'id' => $entity['id'],
-            'types' => $this->createRoomTypeMapper()->fetchAll()
+            'types' => $service->fetchAll(),
+            'priceGroups' => $priceGroups
         ));
     }
 
@@ -47,7 +43,8 @@ final class RoomType extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        return $this->createGrid(new InputDecorator());
+        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+        return $this->createGrid(new InputDecorator(), $priceGroups);
     }
 
     /**
@@ -58,7 +55,9 @@ final class RoomType extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
-        $this->createRoomTypeMapper()->persist($data);
+        $service = $this->getModuleService('roomTypeService');
+
+        !$data['id'] ? $service->add($data) : $service->update($data);
 
         $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
         return 1;
@@ -72,10 +71,11 @@ final class RoomType extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $room = $this->createRoomTypeMapper()->findByPk($id);
+        $service = $this->getModuleService('roomTypeService');
+        $room = $service->findById($id);
 
         if (!empty($room)) {
-            return $this->createGrid($room);
+            return $this->createGrid($room, $service->findPricesByRoomTypeId($id));
         } else {
             return false;
         }
@@ -89,9 +89,10 @@ final class RoomType extends AbstractCrmController
      */
     public function deleteAction(int $id) : void
     {
-        $this->createRoomTypeMapper()->deleteByPk($id);
-        $this->flashBag->set('danger', 'The room type has been deleted successfully');
+        $service = $this->getModuleService('roomTypeService');
+        $service->deleteById($id);
 
+        $this->flashBag->set('danger', 'The room type has been deleted successfully');
         $this->response->redirectToPreviousPage();
     }
 }
