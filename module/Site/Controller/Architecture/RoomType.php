@@ -75,7 +75,10 @@ final class RoomType extends AbstractCrmController
         $room = $service->findById($id);
 
         if (!empty($room)) {
-            return $this->createGrid($room, $service->findPricesByRoomTypeId($id));
+            $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+            $priceGroups = array_replace_recursive($priceGroups, $service->findPricesByRoomTypeId($id));
+
+            return $this->createGrid($room, $priceGroups);
         } else {
             return false;
         }
