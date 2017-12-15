@@ -58,36 +58,33 @@ final class RoomTypePriceMapper extends AbstractMapper
      * @param array $priceGroupIds
      * @return boolean
      */
-    public function update(int $roomTypeId, array $priceGroupIds)
+    public function save(int $roomTypeId, array $priceGroupIds)
     {
         foreach ($priceGroupIds as $priceGroupId => $price) {
-            // Updates
-            $this->db->update(self::getTableName(), [
-                        'price' => $price
-                    ])
-                    ->whereEquals('room_type_id', $roomTypeId)
-                    ->andWhereEquals('price_group_id', $priceGroupId)
-                    ->execute();
-        }
+            // Exist counter
+            $exists = $this->db->select()
+                               ->count('id')
+                               ->from(self::getTableName())
+                               ->whereEquals('room_type_id', $roomTypeId)
+                               ->andWhereEquals('price_group_id', $priceGroupId)
+                               ->queryScalar();
 
-        return true;
-    }
-
-    /**
-     * Adds room type price
-     * 
-     * @param int $roomTypeId
-     * @param array $priceGroupIds
-     * @return boolean
-     */
-    public function add(int $roomTypeId, array $priceGroupIds)
-    {
-        foreach ($priceGroupIds as $priceGroupId => $price) {
-            $this->persist([
-                'room_type_id' => $roomTypeId,
-                'price_group_id' => $priceGroupId,
-                'price' => $price
-            ]);
+            if ($exists) {
+                // Updates
+                $this->db->update(self::getTableName(), [
+                            'price' => $price
+                        ])
+                        ->whereEquals('room_type_id', $roomTypeId)
+                        ->andWhereEquals('price_group_id', $priceGroupId)
+                        ->execute();
+            } else {
+                // Insert
+                $this->persist([
+                    'room_type_id' => $roomTypeId,
+                    'price_group_id' => $priceGroupId,
+                    'price' => $price
+                ]);
+            }
         }
 
         return true;
