@@ -51,7 +51,7 @@ final class RoomTypeService
         $output = [];
 
         foreach ($collection as $id => $items) {
-            $output[$id] =  array_column($items, 'price');
+            $output[$id] =  array_column($items, 'price', 'price_group_id');
         }
 
         return $output;

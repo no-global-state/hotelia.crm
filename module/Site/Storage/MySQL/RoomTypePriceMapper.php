@@ -32,7 +32,8 @@ final class RoomTypePriceMapper extends AbstractMapper
     {
         return $this->db->select([
                             RoomMapper::getFullColumnName('id'),
-                            self::getFullColumnName('price')
+                            self::getFullColumnName('price'),
+                            self::getFullColumnName('price_group_id')
                         ])
                         ->from(self::getTableName())
                         // Price relation
