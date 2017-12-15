@@ -5,6 +5,7 @@ namespace Site\Service;
 use Site\Storage\MySQL\RoomTypeMapper;
 use Site\Storage\MySQL\PriceGroupMapper;
 use Site\Storage\MySQL\RoomTypePriceMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class RoomTypeService
 {
@@ -35,6 +36,25 @@ final class RoomTypeService
     {
         $this->roomTypeMapper = $roomTypeMapper;
         $this->roomTypePriceMapper = $roomTypePriceMapper;
+    }
+
+    /**
+     * Fetch all room prices
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function findAllPrices(int $hotelId) : array
+    {
+        // Turn raw result-set into collection
+        $collection = ArrayUtils::arrayPartition($this->roomTypePriceMapper->findAllPrices($hotelId), 'id');
+        $output = [];
+
+        foreach ($collection as $id => $items) {
+            $output[$id] =  array_column($items, 'price');
+        }
+
+        return $output;
     }
 
     /**

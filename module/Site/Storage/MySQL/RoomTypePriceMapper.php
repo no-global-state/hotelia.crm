@@ -23,6 +23,31 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Fetch all room prices
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function findAllPrices(int $hotelId) : array
+    {
+        return $this->db->select([
+                            RoomMapper::getFullColumnName('id'),
+                            self::getFullColumnName('price')
+                        ])
+                        ->from(self::getTableName())
+                        // Price relation
+                        ->leftJoin(RoomMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            RoomMapper::getFullColumnName('type_id'),
+                            self::getRawColumn('room_type_id')
+                        )
+                        // Hotel ID constraint
+                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
+                        ->queryAll();
+    }
+
+    /**
      * Find data by room type ID
      * 
      * @param int $roomTypeId
