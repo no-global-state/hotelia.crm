@@ -52,6 +52,28 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Updates room type price
+     * 
+     * @param int $roomTypeId
+     * @param array $priceGroupIds
+     * @return boolean
+     */
+    public function update(int $roomTypeId, array $priceGroupIds)
+    {
+        foreach ($priceGroupIds as $priceGroupId => $price) {
+            // Updates
+            $this->db->update(self::getTableName(), [
+                        'price' => $price
+                    ])
+                    ->whereEquals('room_type_id', $roomTypeId)
+                    ->andWhereEquals('price_group_id', $priceGroupId)
+                    ->execute();
+        }
+
+        return true;
+    }
+
+    /**
      * Adds room type price
      * 
      * @param int $roomTypeId
