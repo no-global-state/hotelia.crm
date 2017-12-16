@@ -25,6 +25,16 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
     }
 
     /**
+     * Returns current language ID
+     * 
+     * @return int
+     */
+    protected function getCurrentLangId() : int
+    {
+        return 1;
+    }
+
+    /**
      * Returns current hotel ID
      * 
      * @return integer
