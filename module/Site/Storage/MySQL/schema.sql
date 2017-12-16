@@ -41,8 +41,16 @@ CREATE TABLE velveto_facilitiy_relations (
 );
 
 CREATE TABLE velveto_facilitiy_categories (
-    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `name` varchar(255)
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+);
+
+CREATE TABLE velveto_facilitiy_categories_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255),
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_facilitiy_categories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_facilitiy_items (
