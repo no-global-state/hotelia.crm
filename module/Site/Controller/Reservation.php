@@ -32,14 +32,22 @@ class Reservation extends AbstractCrmController
         $this->view->getPluginBag()
                    ->load(array('chosen', 'datetimepicker'));
 
+        // Price group list
+        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(true);
+
         return $this->view->render('reservation/form', array(
             'arrival' => $arrival,
             'departure' => $departure,
             'client' => $client,
             'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll($this->getHotelId()), 'id', 'name'),
-            'priceGroups' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(true), 'id', 'name'),
+
+            // Price groups
+            'priceGroupList' => ArrayUtils::arrayList($priceGroups, 'id', 'name'),
+            'priceGroups' => $priceGroups,
+
             'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
             'prices' => $this->getModuleService('roomTypeService')->findAllPrices($this->getHotelId()),
+
             // Collections
             'countries' => (new Country())->getAll(),
             'states' => (new ReservationCollection)->getAll(),
@@ -47,7 +55,6 @@ class Reservation extends AbstractCrmController
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
             'statuses' => (new StatusCollection)->getAll(),
-            'dailyTax' => $this->getHotelData()['daily_tax'],
             'genders' => array(
                 'M' => 'Male',
                 'F' => 'Female'

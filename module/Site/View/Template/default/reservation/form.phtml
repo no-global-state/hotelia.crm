@@ -4,8 +4,6 @@ use Krystal\Form\Element;
 
 ?>
 
-<input type="hidden" id="daily-tax" value="<?= $dailyTax; ?>" />
-
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
   <fieldset>
 	<h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
@@ -166,7 +164,18 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Price group'); ?></label>
               <div class="col-lg-10">
-                <?= Element::select('price_group_id', $priceGroups, $client['price_group_id'], array('class' => 'form-control', 'disabled' => $client['id'])); ?>
+                <?= Element::select('price_group_id', $priceGroupList, $client['price_group_id'], array('class' => 'form-control', 'disabled' => $client['id']), false, function($key) use ($priceGroups){
+                    $result = [];
+
+                    foreach ($priceGroups as $priceGroup) {
+                        if ($priceGroup['id'] == $key) {
+                            $result['data-price-group-tax'] = $priceGroup['daily_tax'];
+                            $result['data-price-group-currency'] = $priceGroup['currency'];
+                            return $result;
+                        }
+                    }
+
+                }); ?>
               </div>
             </div>
 

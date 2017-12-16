@@ -35,7 +35,9 @@ $(function(){
             var $arrival = $("[name='arrival']");
             var $departure = $("[name='departure']");
             var $discount = $("[name='discount']");
-            var $dailyTax = $("#daily-tax");
+
+            // Currently selected
+            var $group = $("[name='price_group_id']").find(':selected');
 
             // Count days difference
             var a = moment($arrival.val());
@@ -53,13 +55,13 @@ $(function(){
             }
 
             // Daily tax
-            var dailyTax = parseFloat(days * $dailyTax.val());
+            var dailyTax = parseFloat(days * $group.data('price-group-tax'));
             var discount = discount ? discount : 0;
 
             // Captions
             $("[data-count='daily-tax']").text(dailyTax);
             $("[data-count='days']").text(days);
-            $("[data-count='discount']").text(discount);
+            $("[data-count='currency']").text($group.data('price-group-currency'));
             $("[data-count='price']").text(totalPrice.toLocaleString());
 
             // Inputs
