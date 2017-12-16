@@ -50,14 +50,15 @@ final class FacilitiyService
     /**
      * Returns collection of categories and their attached items
      * 
+     * @param int $langId
      * @param boolean $withCategories Whether to fetch with categories
      * @param integer $hotelId Optional hotel ID filter
      * @return array
      */
-    public function getCollection($withCategories = true, $hotelId = null)
+    public function getCollection(int $langId, $withCategories = true, $hotelId = null)
     {
         if ($withCategories == true) {
-            $categories = $this->categoryMapper->fetchAll();
+            $categories = $this->categoryMapper->fetchAll($langId);
 
             foreach ($categories as &$category) {
                 $category['items'] = $this->itemMapper->fetchAll($category['id'], $hotelId);
@@ -119,9 +120,9 @@ final class FacilitiyService
      * @param array $data Category data
      * @return boolean
      */
-    public function saveCategory(array $data)
+    public function saveCategory(array $input)
     {
-        return $this->categoryMapper->persist($data);
+        return $this->categoryMapper->saveEntity($input['category'], $input['translation']);
     }
 
     /**
@@ -149,20 +150,22 @@ final class FacilitiyService
      * Gets category information by its associated ID
      * 
      * @param string $id
+     * @param int $langId
      * @return boolean
      */
-    public function getCategoryById($id)
+    public function getCategoryById(int $id, int $langId = 0)
     {
-        return $this->categoryMapper->findByPk($id);
+        return $this->categoryMapper->fetchById($id, $langId);
     }
 
     /**
      * Returns a collection of categories
      * 
+     * @param int $langId
      * @return array
      */
-    public function getCategories()
+    public function getCategories(int $langId)
     {
-        return $this->categoryMapper->fetchAll();
+        return $this->categoryMapper->fetchAll($langId);
     }
 }

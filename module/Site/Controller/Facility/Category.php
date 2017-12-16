@@ -19,7 +19,7 @@ final class Category extends AbstractCrmController
         $service = $this->getModuleService('facilitiyService');
         $service->saveCategory($data);
 
-        $this->flashBag->set('success', $data['id'] ? 'The category has been updated successfully' : 'The category has been added successfully');
+        $this->flashBag->set('success', $data['category']['id'] ? 'The category has been updated successfully' : 'The category has been added successfully');
         return 1;
     }
 
@@ -54,7 +54,7 @@ final class Category extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $category = $this->getModuleService('facilitiyService')->getCategoryById($id);
+        $category = $this->getModuleService('facilitiyService')->getCategoryById($id, $this->getCurrentLangId());
 
         if ($category) {
             return $this->createForm($category);

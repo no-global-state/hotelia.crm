@@ -17,7 +17,7 @@ final class Grid extends AbstractCrmController
         $service = $this->getModuleService('facilitiyService');
 
         return $this->view->render('facility/index', array(
-            'categories' => $service->getCategories(),
+            'categories' => $service->getCategories($this->getCurrentLangId()),
             'categoryId' => $categoryId,
             'items' => $service->getItems($categoryId)
         ));
