@@ -139,11 +139,12 @@ final class FacilitiyService
     /**
      * Returns category list
      * 
+     * @param int $langId
      * @return array
      */
-    public function getCategoryList()
+    public function getCategoryList(int $langId)
     {
-        return ArrayUtils::arrayList($this->categoryMapper->fetchAll(), 'id', 'name');
+        return ArrayUtils::arrayList($this->categoryMapper->fetchAll($langId), 'id', 'name');
     }
 
     /**

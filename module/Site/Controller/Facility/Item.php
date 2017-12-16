@@ -33,7 +33,7 @@ final class Item extends AbstractCrmController
     {
         return $this->view->render('facility/form-item', array(
             'item' => $item,
-            'categories' => $this->getModuleService('facilitiyService')->getCategoryList()
+            'categories' => $this->getModuleService('facilitiyService')->getCategoryList($this->getCurrentLangId())
         ));
     }
 
