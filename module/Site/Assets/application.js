@@ -41,7 +41,7 @@ $(function(){
             var a = moment($arrival.val());
             var b = moment($departure.val());
             var days = Math.abs(a.diff(b, 'days')); // Days difference
-            var price = $("[name='room_id']").find(':selected').attr('data-unit-price');
+            var price = $("[name='room_id']").find(':selected').data('price-group')[$("[name='price_group_id']").val()];
             var discount = $discount.val();
             var totalPrice = (days * price); // Number
 
@@ -71,6 +71,7 @@ $(function(){
         // Watchers
         $("[name='discount']").bind('keyup change', countUpdater);
         $("[name='room_id']").change(countUpdater);
+        $("[name='price_group_id']").change(countUpdater);
         $datetimepicker.on('dp.hide', countUpdater);
 
         countUpdater();
