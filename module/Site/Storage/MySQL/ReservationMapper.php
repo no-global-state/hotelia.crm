@@ -216,7 +216,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     private function findByConstraint(Closure $visitor)
     {
         $columns = array_merge($this->getSharedColumns(), array(
-            RoomTypeMapper::getFullColumnName('unit_price') => 'room_price'
+            PriceGroupMapper::getFullColumnName('currency')
         ));
 
         $db = $this->db->select($columns)
@@ -234,6 +234,13 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->equals(
                             RoomMapper::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
+                        )
+                        // Price group mapper
+                        ->leftJoin(PriceGroupMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            PriceGroupMapper::getFullColumnName('id'),
+                            self::getRawColumn('price_group_id')
                         );
 
                         // Apply by reference
