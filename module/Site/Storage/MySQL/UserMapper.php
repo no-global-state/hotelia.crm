@@ -3,7 +3,6 @@
 namespace Site\Storage\MySQL;
 
 use Site\Storage\UserMapperInterface;
-use Krystal\Db\Sql\AbstractMapper;
 
 final class UserMapper extends AbstractMapper implements UserMapperInterface
 {
@@ -13,14 +12,6 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_users');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**
