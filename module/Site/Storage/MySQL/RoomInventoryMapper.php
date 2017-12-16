@@ -2,8 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-
 final class RoomInventoryMapper extends AbstractMapper
 {
     /**
@@ -12,14 +10,6 @@ final class RoomInventoryMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_room_inventory');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

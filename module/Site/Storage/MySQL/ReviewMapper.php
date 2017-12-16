@@ -2,9 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-use Krystal\Db\Sql\RawSqlFragment;
-
 final class ReviewMapper extends AbstractMapper
 {
     /**
@@ -13,14 +10,6 @@ final class ReviewMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_reviews');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

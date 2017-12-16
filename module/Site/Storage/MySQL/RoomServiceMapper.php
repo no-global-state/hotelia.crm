@@ -2,9 +2,7 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-
-class RoomServiceMapper extends AbstractMapper
+final class RoomServiceMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
@@ -12,14 +10,6 @@ class RoomServiceMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_room_services');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

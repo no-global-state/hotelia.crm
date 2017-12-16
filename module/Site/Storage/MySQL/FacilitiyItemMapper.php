@@ -2,9 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-use Krystal\Db\Sql\RawSqlFragment;
-
 final class FacilitiyItemMapper extends AbstractMapper
 {
     /**
@@ -21,14 +18,6 @@ final class FacilitiyItemMapper extends AbstractMapper
     public static function getJunctionTableName()
     {
         return self::getWithPrefix('velveto_facilitiy_relations');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

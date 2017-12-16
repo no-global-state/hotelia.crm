@@ -2,8 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-
 final class RegionMapper extends AbstractMapper
 {
     /**
@@ -12,14 +10,6 @@ final class RegionMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_regions');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

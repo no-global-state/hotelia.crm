@@ -2,8 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-
 final class LanguageMapper extends AbstractMapper
 {
     /**
@@ -12,14 +10,6 @@ final class LanguageMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_languages');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

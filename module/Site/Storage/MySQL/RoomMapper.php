@@ -1,17 +1,7 @@
 <?php
 
-/**
- * This file is part of the Hotelia CRM Solution
- * 
- * Copyright (c) No Global State Lab
- * 
- * For the full copyright and license information, please view
- * the license file that was distributed with this source code.
- */
-
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Db\Sql\QueryBuilder;
 
@@ -23,14 +13,6 @@ final class RoomMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_floor_room');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

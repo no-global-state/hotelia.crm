@@ -2,7 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Db\Filter\FilterableServiceInterface;
 
 final class TransactionMapper extends AbstractMapper implements FilterableServiceInterface

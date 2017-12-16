@@ -2,8 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
-
 final class FacilitiyCategoryMapper extends AbstractMapper
 {
     /**
@@ -12,14 +10,6 @@ final class FacilitiyCategoryMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_facilitiy_categories');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**

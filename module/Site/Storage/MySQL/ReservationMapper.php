@@ -2,7 +2,6 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Sql\AbstractMapper;
 use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Db\Sql\RawBinding;
 use Krystal\Db\Filter\FilterableServiceInterface;
@@ -27,14 +26,6 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     public static function getJunctionTableName()
     {
         return self::getWithPrefix('velveto_reservation_services');
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function getPk()
-    {
-        return 'id';
     }
 
     /**
