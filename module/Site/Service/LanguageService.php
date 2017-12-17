@@ -27,7 +27,7 @@ final class LanguageService
         }
 
         $input = new InputDecorator();
-        $input['id'] = $entity[0]['id'];
+        $input['id'] = isset($entity[0]) ? $entity[0]['id'] : null;
 
         return $input;
     }
