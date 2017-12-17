@@ -2,9 +2,6 @@
 
 namespace Site\Controller;
 
-use Krystal\Db\Filter\InputDecorator;
-use Krystal\Validate\Pattern;
-
 final class Hotel extends AbstractCrmController
 {
     /**
@@ -12,16 +9,13 @@ final class Hotel extends AbstractCrmController
      * 
      * @return string
      */
-    public function indexAction()
+    public function indexAction() : string
     {
-        $mapper = $this->createMapper('/Site/Storage/MySQL/HotelMapper');
-        $hotel = $mapper->findByPk($this->getHotelId());
-
-        return $this->view->render('hotel/form', array(
-            'hotel' => new InputDecorator($hotel ? $hotel : array()),
+        return $this->view->render('hotel/form', [
+            'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId(), $this->getCurrentLangId()),
             'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId()),
             'photos' => $this->getModuleService('photoService')->fetchAll($this->getHotelId())
-        ));
+        ]);
     }
 
     /**
@@ -37,10 +31,8 @@ final class Hotel extends AbstractCrmController
         $ids = array_keys($this->request->getPost('checked'));
         $this->getModuleService('facilitiyService')->updateRelation($this->getHotelId(), $ids);
 
-        unset($data['checked']);
-
-        $mapper = $this->createMapper('/Site/Storage/MySQL/HotelMapper');
-        $mapper->persist($data);
+        $service = $this->getModuleService('hotelService');
+        $service->save($data);
 
         $this->flashBag->set('success', 'Settings have been updated successfully');
         return 1;
