@@ -8,6 +8,7 @@ use Krystal\Grid\Grid;
 <form action="<?= $this->url('Site:Hotel@saveAction'); ?>">
     <ul class="nav nav-tabs">
         <li class="nav active"><a href="#data" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('Data'); ?></a></li>
+        <li class="nav"><a href="#basic" data-toggle="tab"><i class="glyphicon glyphicon-bookmark"></i> <? $this->show('Basic'); ?></a></li>
         <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
         <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
     </ul>
@@ -43,75 +44,84 @@ use Krystal\Grid\Grid;
                 </div>
 
                 <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Rate'); ?></label>
-                  <div class="col-lg-10">
-                      <?php for ($i = 1; $i < 6; $i++): ?>
-                      <div class="radio">
-                        <label>
-                            <?= Element::radio('rate', $i, $hotel['rate'] == $i); ?> <?= $i; ?> 
-                            <small class="text-muted"><?= str_repeat('<i class="glyphicon glyphicon-star"></i> ', $i); ?></small>
-                        </label>
-                      </div>
-                      <?php endfor; ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::text('phone', $hotel['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Description'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::textarea('description', $hotel['description'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the description'))); ?>
+                    <?= Element::textarea('description', $hotel['description'], array('rows' => 10, 'class' => 'form-control', 'placeholder' => $this->translate('Type the description'))); ?>
                   </div>
                 </div>
 
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Currency'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::text('currency', $hotel['currency'], array('class' => 'form-control', 'placeholder' => $this->translate('Default hotel currency'))); ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Start price'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::text('start_price', $hotel['start_price'], array('class' => 'form-control', 'placeholder' => $this->translate('Minimal possible price of reservation'))); ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::number('discount', $hotel['discount'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Discount loyalty if available'))); ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Daily tax'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::number('daily_tax', $hotel['daily_tax'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Daily tax for living'))); ?>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::text('website', $hotel['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site'))); ?>
-                  </div>
-                </div>
-                
-                <div class="form-group">
-                  <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
-                  <div class="col-lg-10">
-                    <?= Element::text('email', $hotel['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Hotel email'))); ?>
-                  </div>
-                </div>
               </fieldset>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="basic">
+            <div class="form-horizontal">
+                <fieldset>
+                    <br />
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('phone', $hotel['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Currency'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('currency', $hotel['currency'], array('class' => 'form-control', 'placeholder' => $this->translate('Default hotel currency'))); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Start price'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('start_price', $hotel['start_price'], array('class' => 'form-control', 'placeholder' => $this->translate('Minimal possible price of reservation'))); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::number('discount', $hotel['discount'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Discount loyalty if available'))); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Daily tax'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::number('daily_tax', $hotel['daily_tax'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Daily tax for living'))); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('website', $hotel['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site'))); ?>
+                      </div>
+                    </div>
+                    
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('email', $hotel['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Hotel email'))); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Rate'); ?></label>
+                      <div class="col-lg-10">
+                          <?php for ($i = 1; $i < 6; $i++): ?>
+                          <div class="radio">
+                            <label>
+                                <?= Element::radio('rate', $i, $hotel['rate'] == $i); ?> <?= $i; ?> 
+                                <small class="text-muted"><?= str_repeat('<i class="glyphicon glyphicon-star"></i> ', $i); ?></small>
+                            </label>
+                          </div>
+                          <?php endfor; ?>
+                      </div>
+                    </div>
+                </fieldset>
             </div>
         </div>
 
