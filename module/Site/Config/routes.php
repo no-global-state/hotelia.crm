@@ -3,6 +3,10 @@
 use Site\Service\UserService;
 
 return [
+    // Property
+    '/crm/property/(:var)' => [
+        'controller' => 'Property@indexAction'
+    ],
 
     // Price groups
     '/crm/price-groups' => [
