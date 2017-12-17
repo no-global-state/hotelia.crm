@@ -84,34 +84,36 @@ final class FacilitiyService
     /**
      * Saves an item
      * 
-     * @param array $data
+     * @param array $input
      * @return boolean
      */
-    public function saveItem(array $data)
+    public function saveItem(array $input)
     {
-        return $this->itemMapper->persist($data);
+        return $this->itemMapper->saveEntity($input['item'], $input['translation']);
     }
 
     /**
      * Gets item information by its associated ID
      * 
-     * @param string $id
-     * @return boolean
+     * @param int $id
+     * @param int $langId
+     * @return array
      */
-    public function getItemById($id)
+    public function getItemById(int $id, int $langId = 0)
     {
-        return $this->itemMapper->findByPk($id);
+        return $this->itemMapper->fetchById($id, $langId);
     }
 
     /**
      * Return a collection items
      * 
+     * @param int $langId
      * @param string $categoryId
      * @return array
      */
-    public function getItems($categoryId = null)
+    public function getItems(int $langId, $categoryId = null)
     {
-        return $this->itemMapper->fetchAll($categoryId);
+        return $this->itemMapper->fetchAll($langId, $categoryId);
     }
 
     /**
