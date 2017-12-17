@@ -169,11 +169,7 @@ CREATE TABLE velveto_room_services (
 DROP TABLE IF EXISTS velveto_hotels;
 CREATE TABLE velveto_hotels (
     `id` INT DEFAULT 1 PRIMARY KEY,
-    `city` varchar(255) NOT NULL,
-    `name` varchar(255) NOT NULL,
-    `address` varchar(255) NOT NULL,
     `phone` varchar(255) NOT NULL,
-    `description` TEXT NOT NULL,
     `currency` varchar(30) NOT NULL COMMENT 'Default hotel currency',
     `start_price` FLOAT NOT NULL,
     `rate` SMALLINT COMMENT 'Hotel rate',
@@ -181,6 +177,18 @@ CREATE TABLE velveto_hotels (
     `daily_tax` FLOAT COMMENT 'Daily tax for living',
     `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
     `email` varchar(255) NOT NULL COMMENT 'Hotel email'
+);
+
+CREATE TABLE velveto_hotels_translation (
+    `id` INT,
+    `lang_id` INT NOT NULL,
+    `city` varchar(255) NOT NULL,
+    `name` varchar(255) NOT NULL,
+    `address` varchar(255) NOT NULL,
+    `description` TEXT NOT NULL,
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS velveto_reservation;
