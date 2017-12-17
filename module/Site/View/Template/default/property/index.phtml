@@ -1,0 +1,64 @@
+<?php
+
+use Krystal\Grid\Grid;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-home"></i> <? $this->show('Propery list'); ?></h2>
+
+
+<form action="<?= $route; ?>">
+    <p><button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button></p>
+
+    <div class="table-responsive">
+        <?= Grid::render($data, [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'id',
+                    'type' => 'text',
+                    'label' => 'ID'
+                ],
+
+                [
+                    'column' => 'name',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'city',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'address',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'phone',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'rate',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+
+                [
+                    'column' => 'website',
+                    'type' => 'text',
+                    'filter' => true
+                ],
+            ]
+        ], $this->translator, $route, $query); ?>
+    </div>
+</form>
