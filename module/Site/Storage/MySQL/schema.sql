@@ -58,7 +58,17 @@ CREATE TABLE velveto_facilitiy_items (
     `icon` varchar(255) NOT NULL,
     `front` SMALLINT(1) NOT NULL COMMENT 'Whether item must be front or not',
     `category_id` INT NOT NULL,
-    `name` varchar(255)
+
+    FOREIGN KEY (category_id) REFERENCES velveto_facilitiy_categories(id) ON DELETE CASCADE
+);
+
+CREATE TABLE velveto_facilitiy_items_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255),
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_hotels_photos (
