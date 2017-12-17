@@ -19,7 +19,7 @@ final class Grid extends AbstractCrmController
         return $this->view->render('facility/index', array(
             'categories' => $service->getCategories($this->getCurrentLangId()),
             'categoryId' => $categoryId,
-            'items' => $service->getItems($categoryId)
+            'items' => $service->getItems($this->getCurrentLangId(), $categoryId)
         ));
     }
 

@@ -19,7 +19,7 @@ final class Item extends AbstractCrmController
         $service = $this->getModuleService('facilitiyService');
         $service->saveItem($data);
 
-        $this->flashBag->set('success', $data['id'] ? 'The item has been updated successfully' : 'The item has been added successfully');
+        $this->flashBag->set('success', $data['item']['id'] ? 'The item has been updated successfully' : 'The item has been added successfully');
         return 1;
     }
 
@@ -55,7 +55,7 @@ final class Item extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $item = $this->getModuleService('facilitiyService')->getItemById($id);
+        $item = $this->getModuleService('facilitiyService')->getItemById($id, $this->getCurrentLangId());
 
         if ($item) {
             return $this->createForm($item);

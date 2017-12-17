@@ -1,48 +1,79 @@
 <?php
 
 use Krystal\Form\Element;
+use Site\Service\LanguageService;
 
 ?>
 
 <form class="form-horizontal" action="<?= $this->url('Site:Facility:Item@saveAction'); ?>">
-  <fieldset>
-    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($item['id'] ? 'Edit the item' : 'Add new item'); ?></legend>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#dictionary" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Item'); ?></a></li>
+        <li role="presentation"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
 
-    <?= Element::hidden('id', $item['id']); ?>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="dictionary" role="tabpanel">
+            <div class="well">
+                <?php $this->loadPartial('language-tabs'); ?>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::text('name', $item['name'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
+                <div class="tab-content">
+                    <?php foreach ($languages as $index => $language): ?>
+                    <div class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>" id="<?php printf('language-%s', $language['id']); ?>" role="tabpanel">
+                        <?php $entity = LanguageService::findByLangId($language['id'], $item); ?>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Icon'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::text('icon', $item['icon'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Front'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::checkbox('front', $item['front']); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Category'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::select('category_id', $categories, $item['category_id'], array('class' => 'form-control')); ?>
-      </div>
-    </div>
+                        <?= Element::hidden(sprintf('translation[%s][id]', $language['id']), $entity['id']); ?>
+                        <?= Element::hidden(sprintf('translation[%s][lang_id]', $language['id']), $language['id']); ?>
 
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
-        <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
-      </div>
+                        <?php $this->loadPartial('language-name', ['language' => $language]); ?>
+
+                        <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the category' : 'Add new category'); ?></legend>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text(sprintf('translation[%s][name]', $language['id']), $entity['name'], array('class' => 'form-control')); ?>
+                          </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="configuration" role="tabpanel">
+            <div class="well">
+                <?= Element::hidden('item[id]', $entity['id']); ?>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><? $this->show('Icon'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::text('item[icon]', $entity['icon'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><? $this->show('Front'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::checkbox('item[front]', $entity['front']); ?>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><? $this->show('Category'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::select('item[category_id]', $categories, $entity['category_id'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+            <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
+          </div>
+        </div>
+        
     </div>
-  </fieldset>
 </form>
+
