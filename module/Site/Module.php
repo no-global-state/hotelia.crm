@@ -10,6 +10,7 @@ use Site\Service\FacilitiyService;
 use Site\Service\PhotoService;
 use Site\Service\RoomGalleryService;
 use Site\Service\RoomTypeService;
+use Site\Service\HotelService;
 
 final class Module extends AbstractModule
 {
@@ -123,6 +124,10 @@ final class Module extends AbstractModule
             'roomTypeService' => new RoomTypeService(
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper'),
                 $this->createMapper('\Site\Storage\MySQL\RoomTypePriceMapper')
+            ),
+
+            'hotelService' => new HotelService(
+                $this->createMapper('\Site\Storage\MySQL\HotelMapper')
             ),
 
             'roomGalleryService' => $this->createRoomGalleryService()
