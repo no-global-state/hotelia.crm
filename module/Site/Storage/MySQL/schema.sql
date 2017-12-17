@@ -166,9 +166,8 @@ CREATE TABLE velveto_room_services (
     `comment` TEXT
 );
 
-DROP TABLE IF EXISTS velveto_hotels;
 CREATE TABLE velveto_hotels (
-    `id` INT DEFAULT 1 PRIMARY KEY,
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `phone` varchar(255) NOT NULL,
     `currency` varchar(30) NOT NULL COMMENT 'Default hotel currency',
     `start_price` FLOAT NOT NULL,
@@ -180,7 +179,7 @@ CREATE TABLE velveto_hotels (
 );
 
 CREATE TABLE velveto_hotels_translation (
-    `id` INT,
+    `id` INT NOT NULL,
     `lang_id` INT NOT NULL,
     `city` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL,
