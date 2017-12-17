@@ -61,12 +61,12 @@ final class FacilitiyService
             $categories = $this->categoryMapper->fetchAll($langId);
 
             foreach ($categories as &$category) {
-                $category['items'] = $this->itemMapper->fetchAll($category['id'], $hotelId);
+                $category['items'] = $this->itemMapper->fetchAll($langId, $category['id'], $hotelId);
             }
 
             return $categories;
         } else {
-            return $this->itemMapper->fetchAll(null, $hotelId);
+            return $this->itemMapper->fetchAll($langId, null, $hotelId);
         }
     }
 
