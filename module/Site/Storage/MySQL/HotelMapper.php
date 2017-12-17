@@ -60,21 +60,16 @@ final class HotelMapper extends AbstractMapper
     /**
      * Fetch all hotels
      * 
+     * @param int $langId
      * @return array
      */
-    public function fetchAll() : array
+    public function fetchAll(int $langId) : array
     {
         return $this->createEntitySelect($this->getColumns())
+                    // Language ID filter
+                    ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $langId)
                     ->orderBy($this->getPk())
                     ->desc()
-                    ->asManyToMany(
-                        'facilities', 
-                        FacilitiyItemMapper::getJunctionTableName(), 
-                        self::PARAM_JUNCTION_MASTER_COLUMN, 
-                        FacilitiyItemMapper::getTableName(), 
-                        'id', 
-                        'name' // Columns to be selected in Service table
-                    )
                     ->queryAll();
     }
 }

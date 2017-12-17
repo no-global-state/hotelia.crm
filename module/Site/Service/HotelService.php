@@ -39,11 +39,12 @@ final class HotelService
     /**
      * Fetch all hotels
      * 
+     * @param int $langId Language ID filter
      * @return array
      */
-    public function fetchAll() : array
+    public function fetchAll(int $langId) : array
     {
-        return $this->hotelMapper->fetchAll();
+        return $this->hotelMapper->fetchAll($langId);
     }
 
     /**
