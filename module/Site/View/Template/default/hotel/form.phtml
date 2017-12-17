@@ -118,7 +118,7 @@ use Krystal\Grid\Grid;
         <div class="tab-pane fade" id="facilities">
             <?php foreach ($checklist as $category): ?>
             <div class="form-group">
-              <label class="col-lg-2 control-label"><? $this->show($category['name']); ?></label>
+              <label class="col-lg-2 control-label"><? $this->show($category['name']); ?> <small class="text-muted">(<?= $category['item_count']; ?>)</small></label>
               <div class="col-lg-10">
                 <?php foreach ($category['items'] as $item): ?>
                 <div class="radio">
