@@ -2,7 +2,9 @@
 
 namespace Site\Storage\MySQL;
 
-final class HotelMapper extends AbstractMapper
+use Krystal\Db\Filter\FilterableServiceInterface;
+
+final class HotelMapper extends AbstractMapper implements FilterableServiceInterface
 {
     /**
      * {@inheritDoc}
@@ -55,6 +57,31 @@ final class HotelMapper extends AbstractMapper
     public function fetchById(int $id, int $langId = 0) : array
     {
         return $this->findEntity($this->getColumns(), $id, $langId);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array())
+    {
+        $db = $this->createEntitySelect($this->getColumns())
+                   // Language ID constraint
+                   ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $parameters['lang_id'])
+                   ->andWhereLike('name', '%'.$input['name'].'%', true)
+                   ->andWhereLike('city', '%'.$input['city'].'%', true)
+                   ->andWhereLike('address', '%'.$input['address'].'%', true)
+                   ->andWhereLike('phone', '%'.$input['phone'].'%', true)
+                   ->andWhereLike('website', '%'.$input['website'].'%', true)
+                   ->andWhereEquals('rate', $input['rate'], true);
+
+        $db->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
+
+        if ($desc) {
+            $db->desc();
+        }
+
+        return $db->paginate($page, $itemsPerPage)
+                  ->queryAll();
     }
 
     /**
