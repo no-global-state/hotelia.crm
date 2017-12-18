@@ -107,8 +107,10 @@ CREATE TABLE velveto_users (
 
 CREATE TABLE velveto_floor (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
-    `name` varchar(255) NULL
+    `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
+    `name` varchar(255) NULL,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_floor_room (
