@@ -76,9 +76,11 @@ CREATE TABLE velveto_facilitiy_items_translation (
 
 CREATE TABLE velveto_hotels_photos (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1,
+    `hotel_id` INT NOT NULL,
     `file` varchar(30) NOT NULL COMMENT 'Base name of photo file',
-    `order` INT NOT NULL COMMENT 'Sorting order'
+    `order` INT NOT NULL COMMENT 'Sorting order',
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_hotels_transactions (
