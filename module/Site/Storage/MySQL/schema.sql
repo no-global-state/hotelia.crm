@@ -159,8 +159,10 @@ CREATE TABLE velveto_floor_room_gallery (
 
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
-    `name` varchar(255) NOT NULL
+    `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_room_inventory (
