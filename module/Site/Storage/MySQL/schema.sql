@@ -171,7 +171,10 @@ CREATE TABLE velveto_room_inventory (
     `inventory_id` INT NOT NULL COMMENT 'Attached inventory ID',
     `code` varchar(255) NOT NULL COMMENT 'Serial number or code',
     `qty` INT NOT NULL COMMENT 'Quantity',
-    `comment` TEXT
+    `comment` TEXT,
+
+    FOREIGN KEY (inventory_id) REFERENCES velveto_inventory(id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_room_services (
