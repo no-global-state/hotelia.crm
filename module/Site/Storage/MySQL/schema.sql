@@ -152,7 +152,9 @@ CREATE TABLE velveto_floor_room_gallery (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_id` INT NOT NULL COMMENT 'Attahced Room ID',
     `file` varchar(255) COMMENT 'Photo file path',
-    `order` INT COMMENT 'Sorting order'
+    `order` INT COMMENT 'Sorting order',
+
+    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_inventory (
