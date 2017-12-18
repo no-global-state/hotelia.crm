@@ -213,11 +213,11 @@ CREATE TABLE velveto_hotels_translation (
     FOREIGN KEY (id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
-DROP TABLE IF EXISTS velveto_reservation;
 CREATE TABLE velveto_reservation (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
+    `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
 	`room_id` INT NOT NULL,
+    `price_group_id` INT COMMENT 'Attached price group ID',
 	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
 	`gender` varchar(1) NOT NULL,
 	`country` varchar(2) NOT NULL,
@@ -225,8 +225,8 @@ CREATE TABLE velveto_reservation (
     `state` SMALLINT(1) NOT NULL COMMENT 'Reservation state code',
     `purpose` SMALLINT(1) NOT NULL COMMENT 'Reservation purpose code',
     `payment_type` SMALLINT(1) NOT NULL COMMENT 'Payment type code',
-    `legal_status ` SMALLINT(1) NOT NULL COMMENT 'Legal status code',
-    `phone` varchar(250) TEXT NOT NULL,
+    `legal_status` SMALLINT(1) NOT NULL COMMENT 'Legal status code',
+    `phone` varchar(250) NOT NULL,
     `email` varchar(100) NOT NULL,
     `passport` TEXT NOT NULL COMMENT 'Passport data',
     `discount` FLOAT NOT NULL COMMENT 'Discount percentage',
@@ -234,11 +234,13 @@ CREATE TABLE velveto_reservation (
     `tax` float NOT NULL COMMENT 'Fixed tax',
     `price` float NOT NULL COMMENT 'Total reservation price',
 
-	/* Date */
+    /* Date */
 	`arrival` DATE NOT NULL,
 	`departure` DATE NOT NULL,
 
-    `price_group_id` INT COMMENT 'Attached price group ID'
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_reservation_services (
