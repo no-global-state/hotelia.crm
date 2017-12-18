@@ -91,7 +91,9 @@ CREATE TABLE velveto_hotels_transactions (
     `payment_system` varchar(30) NOT NULL,
     `amount` FLOAT NOT NULL,
     `currency` varchar(20) NOT NULL,
-    `comment` TEXT NOT NULL
+    `comment` TEXT NOT NULL,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_users (
