@@ -8,23 +8,15 @@ use Krystal\Db\Filter\InputDecorator;
 final class Region extends AbstractCrmController
 {
     /**
-     * Creates region mapper
-     * 
-     * @return \Site\Storage\MySQL\RegionMapper
-     */
-    private function createRegionMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\RegionMapper');
-    }
-
-    /**
      * Renders list of regions
      * 
      * @return string
      */
     public function indexAction()
     {
-        return $this->createForm(new InputDecorator());
+        return $this->view->render('region/index', [
+            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId())
+        ]);
     }
 
     /**
@@ -33,11 +25,10 @@ final class Region extends AbstractCrmController
      * @param mixed $entity
      * @return string
      */
-    private function createForm($entity)
+    private function createForm($region)
     {
-        return $this->view->render('region/index', [
-            'regions' => $this->createRegionMapper()->fetchAll(),
-            'entity' => $entity
+        return $this->view->render('region/form', [
+            'region' => $region
         ]);
     }
 
@@ -59,7 +50,7 @@ final class Region extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $region = $this->createRegionMapper()->findByPk($id);
+        $region = $this->getModuleService('regionService')->fetchById($id, $this->getCurrentLangId());
 
         if ($region) {
             return $this->createForm($region);
@@ -76,9 +67,9 @@ final class Region extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
-        $this->createRegionMapper()->persist($data);
+        $this->getModuleService('regionService')->save($data);
 
-        $this->flashBag->set('success', $data['id'] ? 'The region has been updated successfully' : 'The region has been added successfully');
+        $this->flashBag->set('success', $data['region']['id'] ? 'The region has been updated successfully' : 'The region has been added successfully');
         return 1;
     }
 
@@ -90,7 +81,8 @@ final class Region extends AbstractCrmController
      */
     public function deleteAction(int $id)
     {
-        $this->createRegionMapper()->deleteByPk($id);
+        $regionService = $this->getModuleService('regionService');
+        $regionService->deleteById($id);
 
         $this->flashBag->set('danger', 'The region has been deleted successfully');
         $this->response->redirectToPreviousPage();
