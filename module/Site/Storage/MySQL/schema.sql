@@ -9,8 +9,16 @@ CREATE TABLE velveto_price_groups (
 
 CREATE TABLE velveto_regions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `name` varchar(255) NOT NULL COMMENT 'Region name',
     `order` INT NOT NULL COMMENT 'Region sorting order'
+);
+
+CREATE TABLE velveto_regions_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255),
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_reviews_types (
