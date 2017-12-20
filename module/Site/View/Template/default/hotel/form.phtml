@@ -177,7 +177,17 @@ use Site\Service\LanguageService;;
                             return Element::image($row['file'], ['class' => 'img-responsive']);
                         }
                     ],
-                    ['column' => 'order'],
+
+                    [
+                        'column' => 'cover',
+                        'value' => function($row){
+                            return Element::radio('cover', $row['id'], (bool) $row['cover'], ['class' => 'form-control']);
+                        }
+                    ],
+
+                    [
+                        'column' => 'order'
+                    ]
                 ],
 
                 'actions' => [
