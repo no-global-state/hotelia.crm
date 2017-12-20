@@ -6,6 +6,7 @@ use Site\Module;
 use Site\Storage\MySQL\PhotoMapper;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Application\Model\AbstractService;
+use Krystal\Stdlib\ArrayUtils;
 
 final class PhotoService extends AbstractService
 {
@@ -139,6 +140,18 @@ final class PhotoService extends AbstractService
         $row['file'] = $this->createImagePath($row, $size);
 
         return $row;
+    }
+
+    /**
+     * Fetch all photos
+     * 
+     * @param string $hotelId
+     * @param string $size
+     * @return array
+     */
+    public function fetchList($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
+    {
+        return ArrayUtils::arrayList($this->fetchAll($hotelId, $size), 'id', 'file');
     }
 
     /**
