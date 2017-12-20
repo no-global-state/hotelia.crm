@@ -91,6 +91,14 @@ CREATE TABLE velveto_hotels_photos (
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_hotels_photos_covers (
+    `master_id` INT NOT NULL COMMENT 'Hotel ID',
+    `slave_id` INT NOT NULL COMMENT 'Photo ID',
+
+    FOREIGN KEY (master_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_hotels_photos(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_hotels_transactions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
