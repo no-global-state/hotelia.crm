@@ -15,6 +15,18 @@ final class PhotoMapper extends AbstractMapper
     }
 
     /**
+     * Updates a cover
+     * 
+     * @param int $hotelId
+     * @param int $photoId
+     * @return boolean
+     */
+    public function updateCover(int $hotelId, int $photoId)
+    {
+        return $this->syncWithJunction(PhotoCoverMapper::getTableName(), $hotelId, [$photoId]);
+    }
+
+    /**
      * Fetch all photos
      * 
      * @param string $hotelId

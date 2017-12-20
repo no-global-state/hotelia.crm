@@ -41,6 +41,18 @@ final class PhotoService extends AbstractService
     }
 
     /**
+     * Updates a cover
+     * 
+     * @param int $hotelId
+     * @param int $photoId
+     * @return boolean
+     */
+    public function updateCover(int $hotelId, int $photoId) : bool
+    {
+        return $this->photoMapper->updateCover($hotelId, $photoId);
+    }
+
+    /**
      * Updates a photo
      * 
      * @param array $input
