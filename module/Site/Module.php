@@ -11,6 +11,7 @@ use Site\Service\PhotoService;
 use Site\Service\RoomGalleryService;
 use Site\Service\RoomTypeService;
 use Site\Service\HotelService;
+use Site\Service\RegionService;
 
 final class Module extends AbstractModule
 {
@@ -130,7 +131,11 @@ final class Module extends AbstractModule
                 $this->createMapper('\Site\Storage\MySQL\HotelMapper')
             ),
 
-            'roomGalleryService' => $this->createRoomGalleryService()
+            'roomGalleryService' => $this->createRoomGalleryService(),
+
+            'regionService' => new RegionService(
+                $this->createMapper('\Site\Storage\MySQL\RegionMapper')
+            )
         );
     }
 }
