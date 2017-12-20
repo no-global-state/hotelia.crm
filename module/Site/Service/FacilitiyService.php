@@ -162,6 +162,18 @@ final class FacilitiyService
     }
 
     /**
+     * Find all by hotel ID
+     * 
+     * @param int $hotelId
+     * @param int $langId
+     * @return array
+     */
+    public function findAllByHotelId(int $hotelId, int $langId) : array
+    {
+        return $this->itemMapper->fetchAll($langId, null, $hotelId);
+    }
+
+    /**
      * Returns a collection of categories
      * 
      * @param int $langId
