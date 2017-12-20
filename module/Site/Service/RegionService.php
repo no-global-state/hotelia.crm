@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\RegionMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class RegionService
 {
@@ -33,6 +34,17 @@ final class RegionService
     public function deleteById(int $id) : bool
     {
         return $this->regionMapper->deleteByPk($id);
+    }
+
+    /**
+     * Fetch all region
+     * 
+     * @param int $langId Language ID filter
+     * @return array
+     */
+    public function fetchList(int $langId)
+    {
+        return ArrayUtils::arrayList($this->fetchAll($langId), 'id', 'name');
     }
 
     /**
