@@ -3,6 +3,7 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Filter\FilterableServiceInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class HotelMapper extends AbstractMapper implements FilterableServiceInterface
 {
@@ -92,7 +93,25 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      */
     public function fetchAll(int $langId) : array
     {
-        return $this->createEntitySelect($this->getColumns())
+        $columns = array_merge($this->getColumns(), [
+            PhotoMapper::getFullColumnName('file') => 'cover'
+        ]);
+
+        return $this->createEntitySelect($columns)
+                    // Photo cover relation
+                    ->leftJoin(PhotoCoverMapper::getTableName())
+                    ->on()
+                    ->equals(
+                        self::getFullColumnName('id'),
+                        PhotoCoverMapper::getRawColumn('master_id')
+                    )
+                    // Photo relation
+                    ->leftJoin(PhotoMapper::getTableName())
+                    ->on()
+                    ->equals(
+                        PhotoMapper::getFullColumnName('id'),
+                        PhotoCoverMapper::getRawColumn('slave_id')
+                    )
                     // Language ID filter
                     ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $langId)
                     ->orderBy($this->getPk())
