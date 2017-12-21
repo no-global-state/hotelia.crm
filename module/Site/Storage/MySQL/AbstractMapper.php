@@ -125,7 +125,7 @@ abstract class AbstractMapper extends CoreMapper
         $db = $this->createEntitySelect($columns)
                    ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id);
 
-        if ($langId != 0) {
+        if ($langId == 0) {
             return $db->queryAll();
         } else {
             return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $langId)
