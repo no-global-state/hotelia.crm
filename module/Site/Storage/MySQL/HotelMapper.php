@@ -94,6 +94,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     public function fetchAll(int $langId) : array
     {
         $columns = array_merge($this->getColumns(), [
+            PhotoMapper::getFullColumnName('id') => 'cover_id',
             PhotoMapper::getFullColumnName('file') => 'cover'
         ]);
 
