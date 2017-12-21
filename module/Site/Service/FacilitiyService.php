@@ -48,6 +48,19 @@ final class FacilitiyService
     }
 
     /**
+     * Returns a collection of items
+     * 
+     * @param int $hotelId
+     * @param int $langId
+     * @return array
+     */
+    public function getItemList(int $hotelId, int $langId) : array
+    {
+        $items = $this->itemMapper->fetchAll($langId, null, $hotelId);
+        return ArrayUtils::arrayList($items, 'id', 'name');
+    }
+
+    /**
      * Returns collection of categories and their attached items
      * 
      * @param int $langId
