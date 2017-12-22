@@ -11,6 +11,16 @@ class ReservationService
     const PARAM_TIME_FORMAT = 'Y-m-d';
 
     /**
+     * Returns today format
+     * 
+     * @return string
+     */
+    public static function getToday() : string
+    {
+        return date(self::PARAM_TIME_FORMAT);
+    }
+
+    /**
      * Returns random color
      * 
      * @return array
