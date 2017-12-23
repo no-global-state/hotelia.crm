@@ -136,25 +136,31 @@ $(function(){
             // Clear all previous messages and added classes
             this.resetAll();
 
-            // if its not JSON, but "1" then we'd assume success
-            if (response == "1") {
-                // Since we might have a flash messenger, we'd simply reload current page
-                window.location.reload();
-            } else {
-                // Otherwise, try to handle JSON data
-                try {
-                    var data = $.parseJSON(response);
+            // Otherwise, try to handle JSON data
+            try {
+                var data = $.parseJSON(response);
 
-                    for (var name in data){
-                        var message = data[name];
-                        this.showErrorOn(name, message);
-                    }
-
-                } catch(e) {
-                    // Otherwise we'd assume that something went wrong
-                    $("#errors-modal .modal-body").html(response);
-                    $("#errors-modal").modal('show');
+                // If explicit redirect URL is provided, then redirect to it
+                if (data.successUrl) {
+                    window.location = data.successUrl;
+                    return;
                 }
+
+                for (var name in data){
+                    var message = data[name];
+                    this.showErrorOn(name, message);
+                }
+
+            } catch(e) {
+                // if its not JSON, but "1" then we'd assume success
+                if (response == "1") {
+                    // Since we might have a flash messenger, we'd simply reload current page
+                    window.location.reload();
+                }
+
+                // Otherwise we'd assume that something went wrong
+                $("#errors-modal .modal-body").html(response);
+                $("#errors-modal").modal('show');
             }
         }
     };
