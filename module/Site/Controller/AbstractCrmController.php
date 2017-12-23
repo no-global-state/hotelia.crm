@@ -167,6 +167,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'locale' => $this->appConfig->getLanguage(),
             'currency' => $hotel['currency'],
+            'active' => (bool) $hotel['active'],
             'appName' => $this->paramBag->get('appName'),
             'languages' => $this->createMapper('\Site\Storage\MySQL\LanguageMapper')->fetchAll(),
             'code' => $code
