@@ -58,6 +58,19 @@ use Krystal\Grid\Grid;
                     'type' => 'text',
                     'filter' => true
                 ],
+
+                [
+                    'column' => 'active',
+                    'type' => 'select',
+                    'translateable' => true,
+                    'filter' => $this->translateArray([
+                        '0' => 'No',
+                        '1' => 'Yes'
+                    ]),
+                    'value' => function($row){
+                        return $row['active'] ? 'Yes' : 'No';
+                    }
+                ],
             ]
         ], $this->translator, $route, $query); ?>
     </div>

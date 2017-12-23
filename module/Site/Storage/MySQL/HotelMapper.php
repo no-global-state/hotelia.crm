@@ -74,7 +74,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                    ->andWhereLike('address', '%'.$input['address'].'%', true)
                    ->andWhereLike('phone', '%'.$input['phone'].'%', true)
                    ->andWhereLike('website', '%'.$input['website'].'%', true)
-                   ->andWhereEquals('rate', $input['rate'], true);
+                   ->andWhereEquals('rate', $input['rate'], true)
+                   ->andWhereEquals('active', $input['active'], true);
 
         $db->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
 
