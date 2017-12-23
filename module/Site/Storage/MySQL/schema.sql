@@ -214,7 +214,8 @@ CREATE TABLE velveto_hotels (
     `discount` FLOAT COMMENT 'Discount if available',
     `daily_tax` FLOAT COMMENT 'Daily tax for living',
     `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
-    `email` varchar(255) NOT NULL COMMENT 'Hotel email'
+    `email` varchar(255) NOT NULL COMMENT 'Hotel email',
+    `active` BOOLEAN NOT NULL COMMENT 'Whether this hotel must be visible or not'
 );
 
 CREATE TABLE velveto_hotels_translation (
