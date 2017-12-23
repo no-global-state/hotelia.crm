@@ -9,7 +9,10 @@ use Site\Storage\UserMapperInterface;
 
 class UserService implements UserAuthServiceInterface
 {
+    /* Role constants */
     const USER_ROLE_GUEST = '0';
+    const USER_ROLE_USER = '1';
+    const USER_ROLE_ADMIN = '2';
 
     /**
      * Authorization manager
