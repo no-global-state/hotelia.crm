@@ -116,6 +116,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                     )
                     // Language ID filter
                     ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $langId)
+                    // Select only active ones
+                    ->andWhereEquals(self::getFullColumnName('active'), '1')
                     ->orderBy($this->getPk())
                     ->desc()
                     ->queryAll();
