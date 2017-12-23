@@ -1,5 +1,22 @@
 
 $(function(){
+    
+    // Buttons that alter form action
+    $("[data-form-action]").click(function(event){
+        event.preventDefault();
+
+        var $self = $(this);
+        var $form = $self.closest('form');
+        
+        var action = $self.data('form-action');
+        var method = $self.data('form-method');
+
+        $form.attr('action', action);
+        $form.attr('method', method);
+
+        $form.submit();
+    });
+
     // Dynamic tooltip
     $('body').tooltip({
         selector: "[data-tooltip=tooltip]",
