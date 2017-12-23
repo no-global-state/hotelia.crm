@@ -7,6 +7,26 @@ use Krystal\Db\Filter\FilterInvoker;
 final class Property extends AbstractCrmController
 {
     /**
+     * Update propery settings
+     * 
+     * @return void
+     */
+    public function tweakAction() : void
+    {
+        $query = $this->request->getPost();
+        $service = $this->getModuleService('hotelService');
+
+        if (isset($query['active'])) {
+            $service->updateSettings([
+                'active' => $query['active']
+            ]);
+        }
+
+        $this->flashBag->set('success', 'Settings have been updated successfully');
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Render all properties
      * 
      * @return string

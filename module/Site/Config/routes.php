@@ -7,6 +7,10 @@ return [
     '/crm/property/(:var)' => [
         'controller' => 'Property@indexAction'
     ],
+    
+    '/crm/property/do/tweak' => [
+        'controller' => 'Property@tweakAction'
+    ],
 
     // Price groups
     '/crm/price-groups' => [
