@@ -1,6 +1,7 @@
 <?php
 
 use Krystal\Grid\Grid;
+use Krystal\Form\Element;
 
 ?>
 
@@ -8,7 +9,10 @@ use Krystal\Grid\Grid;
 
 
 <form action="<?= $route; ?>">
-    <p><button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button></p>
+    <p>
+        <button class="btn btn-primary" data-form-method="GET" data-form-action="<?= $route; ?>"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+        <button class="btn btn-success" data-form-method="POST" data-form-action="<?= $this->url('Site:Property@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-disk"></i> <? $this->show('Save'); ?></button>
+    </p>
 
     <div class="table-responsive">
         <?= Grid::render($data, [
@@ -68,7 +72,7 @@ use Krystal\Grid\Grid;
                         '1' => 'Yes'
                     ]),
                     'value' => function($row){
-                        return $row['active'] ? 'Yes' : 'No';
+                        return Element::checkbox(sprintf('active[%s]', $row['id']), $row['active'], ['class' => 'form-control']);
                     }
                 ],
             ]
