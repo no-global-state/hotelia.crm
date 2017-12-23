@@ -24,6 +24,17 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     }
 
     /**
+     * Update settings
+     * 
+     * @param array $settings
+     * @return boolean
+     */
+    public function updateSettings(array $settings) : bool
+    {
+        return $this->updateColumns($settings, ['active']);
+    }
+
+    /**
      * Returns shared columns to be selected
      * 
      * @return array

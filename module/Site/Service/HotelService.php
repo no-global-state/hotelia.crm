@@ -26,6 +26,17 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Update settings
+     * 
+     * @param array $settings
+     * @return boolean
+     */
+    public function updateSettings($settings) : bool
+    {
+        return $this->hotelMapper->updateSettings($settings);
+    }
+
+    /**
      * Returns pagination object
      * 
      * @return \Krystal\Paginate\Paginator
