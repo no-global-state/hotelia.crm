@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Krystal\Validate\Pattern;
+use Site\Service\UserService;
 
 final class Auth extends AbstractCrmController
 {
@@ -71,18 +72,25 @@ final class Auth extends AbstractCrmController
         ));
 
         if ($formValidator->isValid()) {
-
             // Grab request data
             $email = $this->request->getPost('email');
             $password = $this->request->getPost('password');
             $remember = (bool) $this->request->getPost('remember');
 
             if ($this->getAuthService()->authenticate($email, $password, $remember)) {
+                // Special case for admin
+                if ($this->getAuthService()->getRole() == UserService::USER_ROLE_ADMIN) {
+                    return json_encode([
+                        'successUrl' => $this->createUrl('Site:Property@indexAction', [null])
+                    ]);
+                }
+
                 return '1';
             } else {
                 // Return raw string indicating failure
                 return $this->translator->translate('Invalid email or password');
             }
+
         } else {
             return $formValidator->getErrors();
         }

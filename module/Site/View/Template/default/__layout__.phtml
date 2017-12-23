@@ -1,6 +1,7 @@
 <?php
 
 use Krystal\Date\TimeHelper;
+use Site\Service\UserService;
 
 ?>
 
@@ -33,6 +34,8 @@ use Krystal\Date\TimeHelper;
         <div id="navbar" class="collapse navbar-collapse">
           <?php if ($isLoggedIn): ?>
           <ul class="nav navbar-nav">
+
+            <?php if ($role != UserService::USER_ROLE_ADMIN): ?>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reservation'); ?> <span class="caret"></span></a>
               <ul class="dropdown-menu" role="menu">
@@ -64,6 +67,7 @@ use Krystal\Date\TimeHelper;
                 <li><a href="<?= $this->url('Site:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></a></li>
               </ul>
             </li>
+            <?php else: ?>
 
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Administration'); ?> <span class="caret"></span></a>
@@ -76,6 +80,8 @@ use Krystal\Date\TimeHelper;
                 <li><a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?></a></li>
               </ul>
             </li>
+
+            <?php endif; ?>
           </ul>
           
           <ul class="nav navbar-nav navbar-right">
