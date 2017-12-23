@@ -55,7 +55,7 @@ final class Item extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $item = $this->getModuleService('facilitiyService')->getItemById($id, $this->getCurrentLangId());
+        $item = $this->getModuleService('facilitiyService')->getItemById($id);
 
         if ($item) {
             return $this->createForm($item);

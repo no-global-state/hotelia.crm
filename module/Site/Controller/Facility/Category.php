@@ -54,7 +54,7 @@ final class Category extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $category = $this->getModuleService('facilitiyService')->getCategoryById($id, $this->getCurrentLangId());
+        $category = $this->getModuleService('facilitiyService')->getCategoryById($id);
 
         if ($category) {
             return $this->createForm($category);

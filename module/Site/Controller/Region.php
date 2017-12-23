@@ -50,7 +50,7 @@ final class Region extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $region = $this->getModuleService('regionService')->fetchById($id, $this->getCurrentLangId());
+        $region = $this->getModuleService('regionService')->fetchById($id);
 
         if ($region) {
             return $this->createForm($region);
