@@ -4,6 +4,13 @@ use Krystal\Form\Element;
 
 ?>
 
+<?php if (empty($rooms)): ?>
+
+<p class="text-center">
+    <span class="text-danger"><?= $this->show('Error'); ?></span>: <? $this->show('In order to do reservations, you must create at least one room!'); ?>
+</p>
+
+<?php else: ?>
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
   <fieldset>
 	<h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
@@ -197,3 +204,5 @@ use Krystal\Form\Element;
     </div>
   </fieldset>
 </form>
+
+<?php endif; ?>
