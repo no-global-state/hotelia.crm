@@ -206,7 +206,9 @@ CREATE TABLE velveto_room_services (
     `name` varchar(255) NOT NULL,
     `price` FLOAT NOT NULL,
     `unit` varchar(3) NOT NULL,
-    `comment` TEXT
+    `comment` TEXT,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_hotels (
