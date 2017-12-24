@@ -81,19 +81,18 @@ return [
     // Reviews
     '/crm/reviews' => [
         'controller' => 'Review:Review@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/reviews/edit/(:var)' => [
         'controller' => 'Review:Review@editAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => [UserService::USER_ROLE_GUEST]
     ],
     '/crm/reviews/delete/(:var)' => [
         'controller' => 'Review:Review@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => [UserService::USER_ROLE_GUEST]
     ],
     '/crm/reviews/save' => [
         'controller' => 'Review:Review@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => [UserService::USER_ROLE_GUEST]
     ],
     
     // Review types
