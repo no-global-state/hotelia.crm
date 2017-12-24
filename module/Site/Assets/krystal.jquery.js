@@ -133,6 +133,13 @@ $(function(){
          * @return void
          */
         handleAll : function(response){
+            // if its not JSON, but "1" then we'd assume success
+            if (response == "1") {
+                // Since we might have a flash messenger, we'd simply reload current page
+                window.location.reload();
+                return;
+            }
+
             // Clear all previous messages and added classes
             this.resetAll();
 
@@ -152,11 +159,6 @@ $(function(){
                 }
 
             } catch(e) {
-                // if its not JSON, but "1" then we'd assume success
-                if (response == "1") {
-                    // Since we might have a flash messenger, we'd simply reload current page
-                    window.location.reload();
-                }
 
                 // Otherwise we'd assume that something went wrong
                 $("#errors-modal .modal-body").html(response);
@@ -187,7 +189,7 @@ $(function(){
     });
 
     // For forms that send data
-    $("button[type='submit']").click(function(event){
+    $("[type='submit']").click(function(event){
         event.preventDefault();
 
         // Find its parent form
