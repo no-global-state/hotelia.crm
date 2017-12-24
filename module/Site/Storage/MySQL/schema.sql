@@ -29,11 +29,15 @@ CREATE TABLE velveto_reviews_types (
 
 CREATE TABLE velveto_reviews (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `language_id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `hotel_id` INT NOT NULL,
     `date` TIMESTAMP NOT NULL,
     `title` varchar(255) NOT NULL COMMENT 'Review title',
     `review` TEXT COMMENT 'Review itself',
-    `rating` SMALLINT NOT NULL COMMENT 'Summary rating'
+    `rating` SMALLINT NOT NULL COMMENT 'Summary rating',
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_languages (
