@@ -268,5 +268,8 @@ CREATE TABLE velveto_reservation (
 
 CREATE TABLE velveto_reservation_services (
     `master_id` INT NOT NULL COMMENT 'Reservation ID',
-    `slave_id` INT NOT NULL COMMENT 'Service ID'
+    `slave_id` INT NOT NULL COMMENT 'Service ID',
+
+    FOREIGN KEY (master_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_room_services(id) ON DELETE CASCADE
 );
