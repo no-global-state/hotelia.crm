@@ -35,6 +35,17 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
     }
 
     /**
+     * Returns data appending current hotel ID
+     * 
+     * @param array $data
+     * @return array
+     */
+    final protected function getWithHotelId(array $data) : array
+    {
+        return array_merge($data, ['hotel_id' => $this->getHotelId()]);
+    }
+
+    /**
      * Returns current hotel ID
      * 
      * @return integer
