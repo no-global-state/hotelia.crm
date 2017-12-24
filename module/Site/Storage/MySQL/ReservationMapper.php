@@ -108,9 +108,10 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      * Find reservations
      * 
      * @param string $type Optional room type filter
+     * @param int $hotelId
      * @return array
      */
-    public function findReservations($type = null)
+    public function findReservations(int $hotelId, $type = null)
     {
         // Columns to be selected
         $columns = array(
@@ -137,16 +138,18 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->equals(
                             RoomMapper::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
-                        );
+                        )
+                        // Hotel ID constraint
+                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId);
 
         // If type is provided, the filter by its ID
         if ($type != null) {
-            $db->whereEquals(RoomTypeMapper::getFullColumnName('id'), $type);
+            $db->andWhereEquals(RoomTypeMapper::getFullColumnName('id'), $type);
         }
 
         // Sort by name
         return $db->orderBy(RoomMapper::getFullColumnName('name'))
-                   ->queryAll();
+                  ->queryAll();
     }
 
     /**
