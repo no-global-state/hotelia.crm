@@ -28,7 +28,7 @@ final class Hotel extends AbstractCrmController
         $data = $this->request->getPost();
 
         // Facilities
-        $ids = array_keys($this->request->getPost('checked'));
+        $ids = array_keys($this->request->getPost('checked', []));
         $this->getModuleService('facilitiyService')->updateRelation($this->getHotelId(), $ids);
 
         if (isset($data['cover'])) {
