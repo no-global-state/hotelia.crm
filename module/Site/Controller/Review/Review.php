@@ -25,7 +25,7 @@ final class Review extends AbstractCrmController
     public function indexAction() : string
     {
         return $this->view->render('review/index', [
-            'reviews' => $this->getReviewMapper()->fetchAll()
+            'reviews' => $this->getReviewMapper()->fetchAll($this->getHotelId())
         ]);
     }
 
