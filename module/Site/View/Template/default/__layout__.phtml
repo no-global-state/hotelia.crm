@@ -28,7 +28,7 @@ use Site\Service\UserService;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="<?= $this->url(UserService::USER_ROLE_ADMIN ? 'Site:Property@indexAction' : 'Site:Crm@indexAction', null); ?>"><?= $appName; ?></a>
+          <a class="navbar-brand" href="<?= $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@indexAction' : 'Site:Crm@indexAction', null); ?>"><?= $appName; ?></a>
         </div>
         
         <div id="navbar" class="collapse navbar-collapse">
