@@ -59,6 +59,16 @@ class UserService implements UserAuthServiceInterface
     }
 
     /**
+     * Returns current hotel ID
+     * 
+     * @return int
+     */
+    public function getHotelId() : int
+    {
+        return $this->authManager->getData('hotel_id');
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getId()
@@ -126,6 +136,7 @@ class UserService implements UserAuthServiceInterface
         if (!empty($user)) {
             $this->authManager->storeId($user['id'])
                               ->storeRole($user['role'])
+                              ->storeData('hotel_id', $user['hotel_id'])
                               ->login($login, $password, $remember);
             return true;
         }

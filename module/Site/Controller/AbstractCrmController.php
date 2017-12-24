@@ -41,7 +41,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
      */
     protected function getHotelId()
     {
-        return 1;
+        return $this->getModuleService('userService')->getHotelId();
     }
 
     /**
