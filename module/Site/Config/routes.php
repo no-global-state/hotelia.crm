@@ -5,28 +5,34 @@ use Site\Service\UserService;
 return [
     // Property
     '/crm/property/(:var)' => [
-        'controller' => 'Property@indexAction'
+        'controller' => 'Property@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/crm/property/do/tweak' => [
-        'controller' => 'Property@tweakAction'
+        'controller' => 'Property@tweakAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     // Price groups
     '/crm/price-groups' => [
-        'controller' => 'PriceGroup@indexAction'
+        'controller' => 'PriceGroup@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/price-groups/edit/(:var)' => [
-        'controller' => 'PriceGroup@editAction'
+        'controller' => 'PriceGroup@editAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/price-groups/delete/(:var)' => [
-        'controller' => 'PriceGroup@deleteAction'
+        'controller' => 'PriceGroup@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/price-groups/save' => [
-        'controller' => 'PriceGroup@saveAction'
+        'controller' => 'PriceGroup@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     // Room gallery
@@ -52,50 +58,63 @@ return [
 
     // Regions
     '/crm/regions' => [
-        'controller' => 'Region@indexAction'
+        'controller' => 'Region@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/regions/edit/(:var)' => [
-        'controller' => 'Region@editAction'
+        'controller' => 'Region@editAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/regions/delete/(:var)' => [
-        'controller' => 'Region@deleteAction'
+        'controller' => 'Region@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/regions/add' => [
-        'controller' => 'Region@addAction'
+        'controller' => 'Region@addAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/regions/save' => [
-        'controller' => 'Region@saveAction'
+        'controller' => 'Region@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     // Reviews
     '/crm/reviews' => [
-        'controller' => 'Review:Review@indexAction'
+        'controller' => 'Review:Review@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/reviews/edit/(:var)' => [
-        'controller' => 'Review:Review@editAction'
+        'controller' => 'Review:Review@editAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/reviews/delete/(:var)' => [
-        'controller' => 'Review:Review@deleteAction'
+        'controller' => 'Review:Review@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     '/crm/reviews/save' => [
-        'controller' => 'Review:Review@saveAction'
+        'controller' => 'Review:Review@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     // Review types
     '/crm/review-type' => [
-        'controller' => 'Review:ReviewType@indexAction'
+        'controller' => 'Review:ReviewType@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/review-type/edit/(:var)' => [
-        'controller' => 'Review:ReviewType@editAction'
+        'controller' => 'Review:ReviewType@editAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/review-type/delete/(:var)' => [
-        'controller' => 'Review:ReviewType@deleteAction'
+        'controller' => 'Review:ReviewType@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/crm/review-type/save' => [
-        'controller' => 'Review:ReviewType@saveAction'
+        'controller' => 'Review:ReviewType@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/crm/feedback' => [
@@ -120,21 +139,23 @@ return [
     ],
     
     '/crm/languages' => [
-        'controller' => 'Language@indexAction'
+        'controller' => 'Language@indexAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/crm/languages/save' => [
         'controller' => 'Language@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/languages/edit/(:var)' => [
-        'controller' => 'Language@editAction'
+        'controller' => 'Language@editAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/crm/languages/delete/(:var)' => [
         'controller' => 'Language@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     '/payment' => [
@@ -210,7 +231,7 @@ return [
 
     '/crm/facility/category/save' => [
         'controller' => 'Facility:Category@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/facility/category/edit/(:var)' => [
@@ -219,7 +240,7 @@ return [
 
     '/crm/facility/category/delete/(:var)' => [
         'controller' => 'Facility:Category@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     // Item
@@ -229,7 +250,7 @@ return [
 
     '/crm/facility/item/save' => [
         'controller' => 'Facility:Item@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/facility/item/edit/(:var)' => [
@@ -238,7 +259,7 @@ return [
 
     '/crm/facility/item/delete/(:var)' => [
         'controller' => 'Facility:Item@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
     '/crm/transaction/index/(:var)' => [
@@ -424,7 +445,7 @@ return [
 
     '/crm/architecture/floor/save' => [
         'controller' => 'Architecture:Floor@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
+        'disallow' => [UserService::USER_ROLE_GUEST]
     ],
 
     '/crm/architecture/floor/edit/(:var)' => [
