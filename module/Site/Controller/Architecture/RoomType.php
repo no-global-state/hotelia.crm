@@ -31,7 +31,7 @@ final class RoomType extends AbstractCrmController
         return $this->view->render('architecture/room-type', array(
             'entity' => $entity,
             'id' => $entity['id'],
-            'types' => $service->fetchAll(),
+            'types' => $service->fetchAll($this->getHotelId()),
             'priceGroups' => $priceGroups
         ));
     }

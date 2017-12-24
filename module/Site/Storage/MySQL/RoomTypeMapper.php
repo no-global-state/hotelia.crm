@@ -13,15 +13,18 @@ final class RoomTypeMapper extends AbstractMapper
     }
 
     /**
-     * Fetch all rooms types
+     * Fetch all entities
      * 
+     * @param int $hotelId
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll(int $hotelId) : array
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
-                        ->orderBy('id')
+                        // Hotel ID constraint
+                        ->whereEquals('hotel_id', $hotelId)
+                        ->orderBy($this->getPk())
                         ->desc()
                         ->queryAll();
     }

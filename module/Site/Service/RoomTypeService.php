@@ -71,11 +71,12 @@ final class RoomTypeService
     /**
      * Fetch all room types
      * 
+     * @param int $hotelId
      * @return array
      */
-    public function fetchAll()
+    public function fetchAll(int $hotelId) : array
     {
-        return $this->roomTypeMapper->fetchAll();
+        return $this->roomTypeMapper->fetchAll($hotelId);
     }
 
     /**
