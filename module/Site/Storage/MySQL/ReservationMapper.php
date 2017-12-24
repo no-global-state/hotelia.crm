@@ -140,7 +140,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                             RoomTypeMapper::getRawColumn('id')
                         )
                         // Hotel ID constraint
-                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId);
+                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId);
 
         // If type is provided, the filter by its ID
         if ($type != null) {
