@@ -13,7 +13,7 @@ final class Hotel extends AbstractCrmController
     {
         return $this->view->render('hotel/form', [
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),
-            'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId()),
+            'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
             'photos' => $this->getModuleService('photoService')->fetchAll($this->getHotelId())
         ]);
     }

@@ -108,16 +108,16 @@ final class FacilitiyItemMapper extends AbstractMapper
                             self::getFullColumnName('slave_id', self::getJunctionTableName()),
                             self::getRawColumn('id')
                        )
+                       ->rawAnd()
+                       ->equals(
+                            self::getFullColumnName('master_id', self::getJunctionTableName()),
+                            $hotelId
+                       )
                        // Language ID filter
                        ->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
 
         if ($categoryId !== null) {
             $db->andWhereEquals(self::getFullColumnName('category_id'), $categoryId);
-        }
-
-        // Optional hotel ID filter
-        if ($hotelId !== null) {
-            $db->andWhereEquals(self::getFullColumnName('master_id', self::getJunctionTableName()), $hotelId);
         }
 
         if ($front === true) {
