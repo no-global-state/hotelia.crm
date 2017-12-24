@@ -3,6 +3,19 @@
 use Site\Service\UserService;
 
 return [
+    // API
+    '/api/all/(:var)' => [
+        'controller' => 'Api@all'
+    ],
+    
+    '/api/detail/(:var)' => [
+        'controller' => 'Api@details'
+    ],
+
+    '/api/register' => [
+        'controller' => 'Api@register'
+    ],
+
     // Property
     '/crm/property/(:var)' => [
         'controller' => 'Property@indexAction',
