@@ -102,6 +102,7 @@ final class RoomInventory extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
+
         $this->createRoomInventoryMapper()->persist($data);
 
         $this->flashBag->set('success', $data['id'] ? 'The inventory has been updated successfully' : 'The inventory has been added successfully');

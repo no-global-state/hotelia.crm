@@ -72,6 +72,8 @@ final class Room extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
+        $data = $this->getWithHotelId($data);
+
         $this->createRoomMapper()->persist($data);
 
         $this->flashBag->set('success', $data['id'] ? 'The room has been updated successfully' : 'The room has been added successfully');

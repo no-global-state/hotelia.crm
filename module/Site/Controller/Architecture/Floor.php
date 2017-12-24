@@ -72,6 +72,8 @@ final class Floor extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
+        $data = $this->getWithHotelId($data);
+
         $this->createFloorMapper()->persist($data);
 
         $this->flashBag->set('success', $data['id'] ? 'The floor has been updated successfully' : 'The floor has been added successfully');

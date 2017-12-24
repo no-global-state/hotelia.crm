@@ -83,6 +83,8 @@ final class Service extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
+        $data = $this->getWithHotelId($data);
+
         $this->createServiceMapper()->persist($data);
 
         $this->flashBag->set('success', $data['id'] ? 'The service has been updated successfully' : 'The service has been added successfully');

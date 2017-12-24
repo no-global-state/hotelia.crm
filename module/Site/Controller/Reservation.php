@@ -361,6 +361,7 @@ class Reservation extends AbstractCrmController
         ]);
 
         if ($formValidator->isValid()) {
+            $data = $this->getWithHotelId($data);
 
             if (!empty($data['id'])) {
                 $mapper->update($data);

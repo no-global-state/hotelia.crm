@@ -78,6 +78,7 @@ final class Inventory extends AbstractCrmController
         ));
 
         if ($formValidator->isValid()) {
+            $data = $this->getWithHotelId($data);
             $this->createInventoryMapper()->persist($data);
 
             $this->flashBag->set('success', $data['id'] ? 'The inventory has been updated successfully' : 'The inventory has been added successfully');

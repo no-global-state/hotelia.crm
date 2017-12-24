@@ -57,6 +57,7 @@ final class RoomType extends AbstractCrmController
         $data = $this->request->getPost();
         $service = $this->getModuleService('roomTypeService');
 
+        $data = $this->getWithHotelId($data);
         !$data['id'] ? $service->add($data) : $service->update($data);
 
         $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
