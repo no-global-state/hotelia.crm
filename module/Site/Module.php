@@ -99,8 +99,9 @@ final class Module extends AbstractModule
     public function getServiceProviders()
     {
         $authManager = $this->getServiceLocator()->get('authManager');
+        $userMapper = $this->createMapper('\Site\Storage\MySQL\UserMapper');
 
-        $userService = new UserService($authManager, $this->createMapper('\Site\Storage\MySQL\UserMapper'));
+        $userService = new UserService($authManager, $userMapper);
         $authManager->setAuthService($userService);
 
         return array(
@@ -128,7 +129,8 @@ final class Module extends AbstractModule
             ),
 
             'hotelService' => new HotelService(
-                $this->createMapper('\Site\Storage\MySQL\HotelMapper')
+                $this->createMapper('\Site\Storage\MySQL\HotelMapper'),
+                $userMapper
             ),
 
             'roomGalleryService' => $this->createRoomGalleryService(),

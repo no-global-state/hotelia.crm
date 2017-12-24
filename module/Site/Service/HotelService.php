@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\HotelMapper;
+use Site\Storage\MySQL\UserMapper;
 use Krystal\Db\Filter\FilterableServiceInterface;
 
 final class HotelService implements FilterableServiceInterface
@@ -18,11 +19,42 @@ final class HotelService implements FilterableServiceInterface
      * State initialization
      * 
      * @param \Site\Storage\MySQL\HotelMapper $hotelMapper
+     * @param \Site\Storage\MySQL\UserMapper $userMapper
      * @return void
      */
-    public function __construct(HotelMapper $hotelMapper)
+    public function __construct(HotelMapper $hotelMapper, UserMapper $userMapper)
     {
         $this->hotelMapper = $hotelMapper;
+        $this->userMapper = $userMapper;
+    }
+
+    /**
+     * Registers a new hotel
+     * Required keys: email, phone, name, login, password
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function register(array $data) : bool
+    {
+        // Insert basic data
+        $this->hotelMapper->persist([
+            'phone' => $data['phone'],
+            'email' => $data['email'],
+            'active' => 0
+        ]);
+
+        // Insert relational data for user
+        $this->userMapper->persist([
+            'hotel_id' => $this->hotelMapper->getMaxId(),
+            'email' => $data['email'],
+            'name' => $data['name'],
+            'role' => UserService::USER_ROLE_USER,
+            'login' => $data['login'],
+            'password' => sha1($data['password'])
+        ]);
+
+        return true;
     }
 
     /**
