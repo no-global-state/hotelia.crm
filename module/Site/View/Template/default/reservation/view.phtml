@@ -6,6 +6,7 @@ use Site\Collection\PurposeCollection;
 use Site\Collection\PaymentTypeCollection;
 use Site\Collection\ReservationCollection;
 use Site\Collection\StatusCollection;
+use Site\Collection\SourceCollection;
 use Krystal\Grid\ListView;
 
 ?>
@@ -35,6 +36,13 @@ use Krystal\Grid\ListView;
                     'translate' => true,
                     'value' => function($column, $value){
                         return (new StatusCollection())->findByKey($value);
+                    }
+                ],
+                [
+                    'column' => 'source',
+                    'translate' => true,
+                    'value' => function($column, $value){
+                        return (new SourceCollection())->findByKey($value);
                     }
                 ],
                 [

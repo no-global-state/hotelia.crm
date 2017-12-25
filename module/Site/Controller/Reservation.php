@@ -14,6 +14,7 @@ use Site\Collection\PaymentTypeCollection;
 use Site\Collection\LegalStatusCollection;
 use Site\Collection\StatusCollection;
 use Site\Collection\DaysCollection;
+use Site\Collection\SourceCollection;
 use Site\Service\ReservationService;
 
 class Reservation extends AbstractCrmController
@@ -55,6 +56,7 @@ class Reservation extends AbstractCrmController
             'paymentTypes' => (new PaymentTypeCollection)->getAll(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
             'statuses' => (new StatusCollection)->getAll(),
+            'sources' => (new SourceCollection())->getAll(),
             'genders' => array(
                 'M' => 'Male',
                 'F' => 'Female'

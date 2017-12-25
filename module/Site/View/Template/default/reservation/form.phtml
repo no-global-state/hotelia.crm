@@ -132,6 +132,13 @@ use Krystal\Form\Element;
                 <?= Element::select('state', $this->translateArray($states), $client['state'], array('class' => 'form-control')); ?>
               </div>
             </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Source'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('source', $this->translateArray($sources), $client['source'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
         </div>
 
         <div class="col-lg-6">
