@@ -20,9 +20,9 @@ use Krystal\Form\Element;
             </thead>
 
             <tbody>
-                <?php foreach ($services as $service): ?>
+                <?php foreach ($services as $index => $service): ?>
                 <tr class="<?= $service['id'] == $id ? 'success' : null; ?>">
-                    <td><?= $service['id']; ?></td>
+                    <td><?= $index + 1; ?></td>
                     <td><?= $service['name']; ?></td>
                     <td><?= number_format($service['price']), PHP_EOL, $currency; ?></td>
                     <td><?php $this->show($unitCollection->findByKey($service['unit'])); ?></td>

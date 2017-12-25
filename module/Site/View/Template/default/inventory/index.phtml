@@ -18,9 +18,9 @@ use Krystal\Form\Element;
             </thead>
 
             <tbody>
-                <?php foreach ($inventories as $inventory): ?>
+                <?php foreach ($inventories as $index => $inventory): ?>
                 <tr class="<?= $inventory['id'] == $id ? 'success' : null; ?>">
-                    <td><?= $inventory['id']; ?></td>
+                    <td><?= $index + 1; ?></td>
                     <td><?= $inventory['name']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Inventory@editAction', $inventory['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>

@@ -14,9 +14,9 @@
         </thead>
 
         <tbody>
-            <?php foreach ($reviews as $review): ?>
+            <?php foreach ($reviews as $index => $review): ?>
             <tr>
-                <td><?= $review['id']; ?></td>
+                <td><?= $index + 1; ?></td>
                 <td><?= $review['title']; ?></td>
                 <td><?= $review['date']; ?></td>
                 <td><?= $review['review']; ?></td>

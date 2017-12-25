@@ -22,9 +22,9 @@
             </thead>
 
             <tbody>
-                <?php foreach ($rooms as $room): ?>
+                <?php foreach ($rooms as $index => $room): ?>
                 <tr>
-                    <td><?php echo $room['id']; ?></td>
+                    <td><?php echo $index + 1; ?></td>
                     <td><?php echo $room['name']; ?></td>
                     <td><?php echo $room['type']; ?></td>
                     <td><?php echo $room['square']; ?></td>
@@ -58,9 +58,9 @@
             </thead>
 
             <tbody>
-                <?php foreach ($floors as $floor): ?>
+                <?php foreach ($floors as $index => $floor): ?>
                 <tr class="<?php echo $floorId == $floor['id'] ? 'success' : null; ?>">
-                    <td><?php echo $floor['id']; ?></td>
+                    <td><?php echo $index + 1; ?></td>
                     <td><a href="<?php echo $this->url('Site:Architecture:Grid@floorAction', $floor['id']); ?>"><?php echo $floor['name']; ?></a></td>
                     <td><?php echo $floor['room_count']; ?></td>
                     <td>

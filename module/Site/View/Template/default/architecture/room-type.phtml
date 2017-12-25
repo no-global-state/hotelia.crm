@@ -19,9 +19,9 @@ use Krystal\Form\Element;
             </thead>
 
             <tbody>
-                <?php foreach ($types as $type): ?>
+                <?php foreach ($types as $index => $type): ?>
                 <tr class="<?= $type['id'] == $id ? 'success' : null; ?>">
-                    <td><?= $type['id']; ?></td>
+                    <td><?= $index + 1; ?></td>
                     <td><?= $type['type']; ?></td>
                     <td>
                         <?php foreach ($type['prices'] as $price): ?>
