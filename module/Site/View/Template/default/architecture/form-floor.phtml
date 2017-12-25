@@ -13,7 +13,7 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
       <div class="col-lg-10">
-        <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+        <?= Element::text('name', $entity['name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type name or number of the floor'))); ?>
       </div>
     </div>
 
