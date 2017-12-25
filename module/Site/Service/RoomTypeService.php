@@ -76,7 +76,13 @@ final class RoomTypeService
      */
     public function fetchAll(int $hotelId) : array
     {
-        return $this->roomTypeMapper->fetchAll($hotelId);
+        $rows = $this->roomTypeMapper->fetchAll($hotelId);
+
+        foreach ($rows as &$row) {
+            $row['prices'] = $this->findPricesByRoomTypeId($row['id']);
+        }
+
+        return $rows;
     }
 
     /**
