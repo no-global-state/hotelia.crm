@@ -52,6 +52,12 @@ $(function(){
             var $arrival = $("[name='arrival']");
             var $departure = $("[name='departure']");
             var $discount = $("[name='discount']");
+            var $room = $("[name='room_id']");
+
+            // Stop if no room selection available
+            if ($room.length == 0){
+                return false;
+            }
 
             // Currently selected
             var $group = $("[name='price_group_id']").find(':selected');
@@ -60,7 +66,7 @@ $(function(){
             var a = moment($arrival.val());
             var b = moment($departure.val());
             var days = Math.abs(a.diff(b, 'days')); // Days difference
-            var price = $("[name='room_id']").find(':selected').data('price-group')[$("[name='price_group_id']").val()];
+            var price = $room.find(':selected').data('price-group')[$("[name='price_group_id']").val()];
             var discount = $discount.val();
             var totalPrice = (days * price); // Number
 
