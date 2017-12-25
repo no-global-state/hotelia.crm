@@ -22,7 +22,7 @@ final class Api extends AbstractCrmController
     {
         if ($this->request->hasPost('email', 'phone', 'name', 'login', 'password')) {
             $hotelService = $this->getModuleService('hotelService');
-            $hotelService->register($data);
+            $hotelService->register($this->request->getPost());
 
             return 1;
         } else {
