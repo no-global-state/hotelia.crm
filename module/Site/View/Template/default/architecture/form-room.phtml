@@ -41,7 +41,7 @@ use Krystal\Form\Element;
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Square'); ?></label>
       <div class="col-lg-10">
-        <?= Element::number('square', $entity['square'], array('class' => 'form-control', 'min' => 0, 'step' => '0.01', 'placeholder' => $this->translate('Square of the room'))); ?>
+        <?= Element::number('square', $entity['square'], array('class' => 'form-control', 'min' => 0, 'step' => 'any', 'placeholder' => $this->translate('Square of the room'))); ?>
       </div>
     </div>
 
