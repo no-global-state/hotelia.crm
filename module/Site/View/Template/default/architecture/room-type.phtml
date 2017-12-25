@@ -13,6 +13,7 @@ use Krystal\Form\Element;
                 <tr>
                     <th>#</th>
                     <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Prices'); ?></th>
                     <th><?php $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -22,6 +23,11 @@ use Krystal\Form\Element;
                 <tr class="<?= $type['id'] == $id ? 'success' : null; ?>">
                     <td><?= $type['id']; ?></td>
                     <td><?= $type['type']; ?></td>
+                    <td>
+                        <?php foreach ($type['prices'] as $price): ?>
+                        <p><?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?></p>
+                        <?php endforeach; ?>
+                    </td>
                     <td>
                         <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
