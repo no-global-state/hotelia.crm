@@ -47,7 +47,7 @@
           <?php foreach($stat as $name => $value): ?>
           <a href="#" class="list-group-item">
             <h4 class="list-group-item-heading"><? $this->show($name); ?></h4>
-            <p class="list-group-item-text"><b><?= $value; ?></b></span></p>
+            <p class="list-group-item-text"><b><?= (int) $value; ?></b></span></p>
           </a>
           <?php endforeach; ?>
         </div>
