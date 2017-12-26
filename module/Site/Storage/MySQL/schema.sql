@@ -1,4 +1,13 @@
 
+CREATE TABLE velveto_discounts (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
+    `name` varchar(255) NOT NULL COMMENT 'Discount name',
+    `percentage` FLOAT NOT NULL,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_price_groups (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL COMMENT 'Price Group Name',
