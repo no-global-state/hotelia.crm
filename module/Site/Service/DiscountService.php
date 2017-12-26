@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\DiscountMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class DiscountService
 {
@@ -55,6 +56,17 @@ final class DiscountService
     public function fetchById(int $id) : array
     {
         return $this->discountMapper->findByPk($id);
+    }
+
+    /**
+     * Fetch discounts as a list
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchList(int $hotelId) : array
+    {
+        return ArrayUtils::arrayList($this->fetchAll($hotelId), 'percentage', 'name');
     }
 
     /**
