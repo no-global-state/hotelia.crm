@@ -12,6 +12,7 @@ use Site\Service\RoomGalleryService;
 use Site\Service\RoomTypeService;
 use Site\Service\HotelService;
 use Site\Service\RegionService;
+use Site\Service\DiscountService;
 
 final class Module extends AbstractModule
 {
@@ -137,6 +138,10 @@ final class Module extends AbstractModule
 
             'regionService' => new RegionService(
                 $this->createMapper('\Site\Storage\MySQL\RegionMapper')
+            ),
+
+            'discountService' => new DiscountService(
+                $this->createMapper('\Site\Storage\MySQL\DiscountMapper')
             )
         );
     }
