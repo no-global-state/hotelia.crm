@@ -1,0 +1,71 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?> <small>(<?= count($discounts); ?>)</small></h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Percentage'); ?> %</th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($discounts as $index => $discount): ?>
+                <tr class="<?= $discount['id'] == $entity['id'] ? 'success' : null; ?>">
+                    <td><?= $index + 1; ?></td>
+                    <td><?= $discount['name']; ?></td>
+                    <td><?= $discount['percentage']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Discount@editAction', $discount['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a href="<?= $this->url('Site:Discount@deleteAction', $discount['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <form class="form-horizontal" action="<?= $this->url('Site:Discount@saveAction'); ?>">
+          <fieldset>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add a discount' : 'Edit the discount'); ?></legend>
+
+            <?= Element::hidden('id', $entity['id']); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('name', $entity['name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type discount name. For example - winter discount'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Percentage'); ?> %</label>
+              <div class="col-lg-10">
+                <?= Element::number('percentage', $entity['percentage'], array('class' => 'form-control', 'step' => 1, 'placeholder' => $this->translate('Discount amount from total price'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+
+                <?php if ($entity['id']): ?>
+                <a href="<?= $this->url('Site:Discount@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+                <?php endif; ?>
+
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
