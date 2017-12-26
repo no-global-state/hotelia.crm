@@ -3,6 +3,26 @@
 use Site\Service\UserService;
 
 return [
+
+    // Discounts
+    '/crm/discount' => [
+        'controller' => 'Discount@indexAction'
+    ],
+    
+    '/crm/discount/save' => [
+        'controller' => 'Discount@saveAction',
+        'disallow' => [UserService::USER_ROLE_GUEST]
+    ],
+
+    '/crm/discount/delete/(:var)' => [
+        'controller' => 'Discount@deleteAction',
+        'disallow' => [UserService::USER_ROLE_GUEST]
+    ],
+    
+    '/crm/discount/edit/(:var)' => [
+        'controller' => 'Discount@editAction'
+    ],
+    
     // API
     '/api/all/(:var)' => [
         'controller' => 'Api@all'
