@@ -1,5 +1,32 @@
 
 $(function(){
+
+    // Discount handler in reservation form
+    $("[data-input='discount']").change(function(){
+        var value = $(this).val();
+        var $discount = $("[name='discount']");
+        var $group = $("[data-group='discount']"); // Discount div
+
+        // No discount
+        if (value == 0){
+            $discount.val(value);
+            $group.hide();
+        }
+
+        // Custom discount
+        if (value == ""){
+            $group.show();
+        }
+
+        if (value != "" && value != "0"){
+            $group.hide();
+            $discount.val(value);
+        }
+
+        // Trigget change to reflect updates
+        $discount.trigger('change');
+        
+    }).trigger('change');
     
     // Buttons that alter form action
     $("[data-form-action]").click(function(event){
