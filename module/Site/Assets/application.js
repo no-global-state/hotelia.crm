@@ -113,6 +113,7 @@ $(function(){
             $("[data-count='days']").text(days);
             $("[data-count='currency']").text($group.data('price-group-currency'));
             $("[data-count='price']").text(totalPrice.toLocaleString());
+            $("[data-count='discount']").text(discount);
 
             // Inputs
             $("[name='tax']").val(dailyTax);
