@@ -48,11 +48,22 @@ use Krystal\Form\Element;
                 <?php foreach ($legalStatuses as $id => $name): ?>
                 <div class="radio">
                   <label>
-                    <?= Element::radio('legal_status', $id, $client['legal_status'] == $id); ?> <? $this->show($name); ?>
+                    <?= Element::radio('legal_status', $id, $client['legal_status'] == $id, ['data-legal-status' => $id]); ?> <? $this->show($name); ?>
                   </label>
                 </div>
                 <?php endforeach; ?>
               </div>
+            </div>
+
+            <div data-group="legal" class="hidden">
+                <h3 class="text-muted"><i class="glyphicon glyphicon-export"></i> <? $this->show('Legal data'); ?></h3>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><? $this->show('Company'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::text('company', $client['company'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
             </div>
         </div>
         
