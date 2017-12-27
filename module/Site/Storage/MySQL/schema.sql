@@ -1,4 +1,10 @@
 
+CREATE TABLE velveto_payment_systems (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL COMMENT 'Soring order',
+    `name` varchar(255) NOT NULL
+);
+
 CREATE TABLE velveto_discounts (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
