@@ -126,7 +126,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><? $this->show('Payment Type'); ?></label>
               <div class="col-lg-10">
-                <?= Element::select('payment_type', $this->translateArray($paymentTypes), $client['payment_type'], array('class' => 'form-control')); ?>
+                <?= Element::select('payment_system_id', $paymentSystems, $client['payment_system_id'], array('class' => 'form-control')); ?>
               </div>
             </div>
             

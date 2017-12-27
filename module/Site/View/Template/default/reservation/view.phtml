@@ -3,7 +3,6 @@
 use Krystal\Iso\ISO3166\Country;
 use Site\Collection\LegalStatusCollection;
 use Site\Collection\PurposeCollection;
-use Site\Collection\PaymentTypeCollection;
 use Site\Collection\ReservationCollection;
 use Site\Collection\StatusCollection;
 use Site\Collection\SourceCollection;
@@ -80,14 +79,7 @@ use Krystal\Grid\ListView;
                         return (new PurposeCollection())->findByKey($value);
                     }
                 ],
-                [
-                    'column' => 'payment_type',
-                    'translate' => true,
-                    'value' => function($column, $value){
-                        return (new PaymentTypeCollection())->findByKey($value);
-                    }
-                ],
-
+                ['column' => 'payment_system'],
                 [
                     'column' => 'state',
                     'title' => 'Reservation state',

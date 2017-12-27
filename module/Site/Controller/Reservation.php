@@ -72,7 +72,7 @@ class Reservation extends AbstractCrmController
             'countries' => (new Country())->getAll(),
             'states' => (new ReservationCollection)->getAll(),
             'purposes' => (new PurposeCollection)->getAll(),
-            'paymentTypes' => (new PaymentTypeCollection)->getAll(),
+            'paymentSystems' => $this->getModuleService('paymentSystemService')->fetchList(),
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
             'statuses' => (new StatusCollection)->getAll(),
             'sources' => (new SourceCollection())->getAll(),
