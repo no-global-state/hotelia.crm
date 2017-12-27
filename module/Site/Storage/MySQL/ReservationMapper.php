@@ -40,6 +40,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('id'),
             self::getFullColumnName('hotel_id'),
             self::getFullColumnName('room_id'),
+            self::getFullColumnName('payment_system_id'),
+            self::getFullColumnName('price_group_id'),
             self::getFullColumnName('full_name'),
             self::getFullColumnName('gender'),
             self::getFullColumnName('country'),
@@ -51,7 +53,6 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('state'),
             self::getFullColumnName('source'),
             self::getFullColumnName('purpose'),
-            self::getFullColumnName('payment_type'),
             self::getFullColumnName('legal_status'),
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure'),
@@ -60,7 +61,6 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::getFullColumnName('company'),
             self::getFullColumnName('tax'),
             self::getFullColumnName('price'),
-            self::getFullColumnName('price_group_id'),
             RoomMapper::getFullColumnName('name') => 'room'
         );
     }
@@ -212,7 +212,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     private function findByConstraint(Closure $visitor)
     {
         $columns = array_merge($this->getSharedColumns(), array(
-            PriceGroupMapper::getFullColumnName('currency')
+            PriceGroupMapper::getFullColumnName('currency'),
+            PaymentSystemMapper::getFullColumnName('name') => 'payment_system'
         ));
 
         $db = $this->db->select($columns)
@@ -237,6 +238,13 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->equals(
                             PriceGroupMapper::getFullColumnName('id'),
                             self::getRawColumn('price_group_id')
+                        )
+                        // Payment system relation
+                        ->leftJoin(PaymentSystemMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            PaymentSystemMapper::getFullColumnName('id'),
+                            self::getRawColumn('payment_system_id')
                         );
 
                         // Apply by reference

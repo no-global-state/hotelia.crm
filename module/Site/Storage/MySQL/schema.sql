@@ -256,6 +256,7 @@ CREATE TABLE velveto_reservation (
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
 	`room_id` INT NOT NULL,
     `price_group_id` INT COMMENT 'Attached price group ID',
+    `payment_system_id` INT NOT NULL COMMENT 'Payment system attached ID',
 	`full_name` varchar(255) NOT NULL COMMENT 'First, last, middle names',
 	`gender` varchar(1) NOT NULL,
 	`country` varchar(2) NOT NULL,
@@ -263,7 +264,6 @@ CREATE TABLE velveto_reservation (
     `state` SMALLINT(1) NOT NULL COMMENT 'Reservation state code',
     `purpose` SMALLINT(1) NOT NULL COMMENT 'Reservation purpose code',
     `source` SMALLINT(1) NOT NULL COMMENT 'Source code',
-    `payment_type` SMALLINT(1) NOT NULL COMMENT 'Payment type code',
     `legal_status` SMALLINT(1) NOT NULL COMMENT 'Legal status code',
     `phone` varchar(250) NOT NULL,
     `email` varchar(100) NOT NULL,
@@ -279,6 +279,7 @@ CREATE TABLE velveto_reservation (
 	`departure` DATE NOT NULL,
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (payment_system_id) REFERENCES velveto_payment_systems(id) ON DELETE CASCADE,
     FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE,
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
