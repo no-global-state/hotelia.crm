@@ -3,7 +3,23 @@
 use Site\Service\UserService;
 
 return [
+    // Payment system
+    '/crm/payment-system' => [
+        'controller' => 'PaymentSystem@indexAction'
+    ],
 
+    '/crm/payment-system/save' => [
+        'controller' => 'PaymentSystem@saveAction'
+    ],
+
+    '/crm/payment-system/delete/(:var)' => [
+        'controller' => 'PaymentSystem@deleteAction'
+    ],
+
+    '/crm/payment-system/edit/(:var)' => [
+        'controller' => 'PaymentSystem@editAction'
+    ],
+    
     // Discounts
     '/crm/discount' => [
         'controller' => 'Discount@indexAction'
