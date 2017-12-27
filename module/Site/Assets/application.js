@@ -1,6 +1,23 @@
 
 $(function(){
 
+    // Legal status on reservation form
+    $("[data-legal-status]").bind('change', function(){
+        var type = $(this).val();
+        var checked = $(this).is(':checked');
+        var hiddenClass = 'hidden';
+        var $group = $("[data-group='legal']");
+
+        if (checked && type == 2) {
+            // Show
+            $group.removeClass(hiddenClass);
+        } else {
+            // Hide
+            $group.addClass(hiddenClass);
+        }
+
+    }).trigger('change');
+
     // Discount handler in reservation form
     $("[data-input='discount']").change(function(){
         var value = $(this).val();
