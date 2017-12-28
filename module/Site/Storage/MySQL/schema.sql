@@ -139,6 +139,7 @@ CREATE TABLE velveto_users (
     `login` varchar(255) NOT NULL,
     `password` varchar(100) NOT NULL,
     `role` varchar(1) NOT NULL,
+    `wizard_finished` BOOLEAN DEFAULT 0 COMMENT 'Whether wizard has been finished'
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
