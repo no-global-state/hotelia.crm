@@ -124,6 +124,23 @@ use Krystal\Form\Element;
                             <h3><? $this->show('Step'); ?> 3</h3>
                             <p><? $this->show('Upload photos'); ?></p>
 
+                            <p><a href="#" class="btn btn-primary" data-button="file-add"><? $this->show('Add a photo'); ?></a></p>
+
+                            <section class="image-wrapper">
+                                <div class="fileinput fileinput-new hidden" data-provides="fileinput">
+                                  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                  <div>
+                                    <span class="btn btn-default btn-file">
+                                        <span class="fileinput-new"><? $this->show('Select image'); ?></span>
+                                        <span class="fileinput-exists"><? $this->show('Change'); ?></span>
+                                        <input type="file" name="files[]" accept="image/*" />
+                                    </span>
+
+                                    <a href="#" class="btn btn-default fileinput-exists" data-button="fileinput-remove" data-dismiss="fileinput"><? $this->show('Remove'); ?></a>
+                                  </div>
+                                </div>
+                            </section>
+
                             <ul class="list-inline pull-right">
                                 <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
                                 <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>

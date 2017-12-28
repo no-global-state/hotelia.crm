@@ -29,4 +29,19 @@ $(function() {
         var $active = $('.wizard .nav-tabs li.active');
         prevTab($active);
     });
+
+    // Button click
+	$("[data-button='file-add']").click(function(event){
+        event.preventDefault();
+
+		var $wrapper = $(".image-wrapper");
+		var $thumb = $wrapper.find('.fileinput');
+		var $clone = $thumb.first().clone().removeClass('hidden');
+
+		$wrapper.append($clone);
+    });
+
+    $(document).on('click', "[data-button='fileinput-remove']", function(){
+        $(this).parent().parent().remove();
+    });
 });

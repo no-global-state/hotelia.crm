@@ -11,6 +11,14 @@ final class Wizard extends AbstractCrmController
      */
     private function saveAction()
     {
+        // Optional photo upload
+        if ($this->request->hasFiles('files')) {
+            $files = $this->request->getFiles('files');
+
+            // Start batch uploading
+            $this->getModuleService('photoService')->batchUpload($this->getHotelId(), $files);
+        }
+
         $data = $this->request->getPost();
 
         // Update checklist if provided
