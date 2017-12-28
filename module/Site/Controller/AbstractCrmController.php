@@ -153,6 +153,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         // Append required assets
         $this->view->getPluginBag()->appendStylesheets(array(
             '@Site/bootstrap/css/bootstrap.min.css',
+            '@Site/jasny-bootstrap/css/jasny-bootstrap.min.css',
             '@Site/styles.css'
         ));
 
@@ -161,6 +162,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
                    ->appendScripts(array(
                         '@Site/jquery.min.js',
                         '@Site/bootstrap/js/bootstrap.min.js',
+                        '@Site/jasny-bootstrap/js/jasny-bootstrap.min.js',
                         '@Site/krystal.jquery.js',
                    ))
                    // This one will always be last
