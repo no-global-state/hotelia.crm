@@ -156,7 +156,13 @@ class Reservation extends AbstractCrmController
                 $departure = $this->request->getPost('departure');
 
                 // Free rooms
-                $rooms = $service->findFreeRooms($this->getHotelId(), $arrival, $departure, $this->request->getPost('types', []));
+                $rooms = $service->findFreeRooms(
+                    $this->getHotelId(), 
+                    $arrival, 
+                    $departure, 
+                    $this->request->getPost('types', []),
+                    $this->request->getPost('inventories', [])
+                );
 
                 return $this->view->disableLayout()->render('reservation/find-results', [
                     'rooms' => $rooms,
@@ -175,7 +181,8 @@ class Reservation extends AbstractCrmController
 
             return $this->view->render('reservation/find', [
                 'client' => new InputDecorator(),
-                'roomTypes' => $service->getRoomTypes($this->getHotelId())
+                'roomTypes' => $service->getRoomTypes($this->getHotelId()),
+                'inventories' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\InventoryMapper')->fetchAll($this->getHotelId()), 'id', 'name')
             ]);
         }
     }

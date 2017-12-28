@@ -22,6 +22,15 @@ use Krystal\Form\Element;
       </div>
     </div>
 
+    <?php if (!empty($inventories)): ?>
+    <div class="form-group">
+      <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Inventory'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('inventories[]', $inventories, null, array('class' => 'form-control', 'data-placeholder' => ' ', 'multiple' => true)); ?>
+      </div>
+    </div>
+    <?php endif; ?>
+
     <div class="form-group">
       <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
       <div class="col-lg-10">
