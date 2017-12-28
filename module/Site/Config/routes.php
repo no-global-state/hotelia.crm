@@ -3,6 +3,12 @@
 use Site\Service\UserService;
 
 return [
+
+    // Wizard
+    '/crm/wizard' => [
+        'controller' => 'Wizard@indexAction'
+    ],
+
     // Payment system
     '/crm/payment-system' => [
         'controller' => 'PaymentSystem@indexAction'

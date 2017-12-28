@@ -1,0 +1,149 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<div class="row">
+    <section>
+        <div class="wizard">
+            <div class="wizard-inner">
+                <div class="connecting-line"></div>
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="<? $this->show('Step'); ?> 1">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-folder-open"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="<? $this->show('Step'); ?> 2">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-pencil"></i>
+                            </span>
+                        </a>
+                    </li>
+                    <li role="presentation" class="disabled">
+                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="<? $this->show('Step'); ?> 3">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-picture"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="<? $this->show('Complete'); ?>">
+                            <span class="round-tab">
+                                <i class="glyphicon glyphicon-ok"></i>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="container">
+                <form role="form" class="form-horizontal" method="POST">
+                    <div class="tab-content">
+                        <div class="tab-pane active" role="tabpanel" id="step1">
+                          <div class="container-fluid">
+                              <h3><? $this->show('Step'); ?> 1</h3>
+
+                              <legend><? $this->show('Please provide basic data of your object'); ?></legend>
+
+                              <?= Element::hidden(sprintf('translation[%s][id]', $languageId), $hotelId); ?>
+                              <?= Element::hidden(sprintf('translation[%s][lang_id]', $languageId), $languageId); ?>
+                              <?= Element::hidden('hotel[id]', $hotelId); ?>
+
+                              <fieldset>
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('City'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::text(sprintf('translation[%s][city]', $languageId), null, ['class' => 'form-control']); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><?= $this->show('Address'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::textarea(sprintf('translation[%s][address]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full address')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::text('hotel[phone]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full phone number with code')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><?= $this->show('Description'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Amount of floors'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::number('floor_count', null, ['step' => 1, 'min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Type amount of floors')]); ?>
+                                  </div>
+                                </div>
+                              </fieldset>
+
+                              <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Next'); ?></button></li>
+                              </ul>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                            <h3><?= $this->show('Step'); ?> 2</h3>
+                            <p><? $this->show('Сhoice facilites'); ?></p>
+
+                            <? $this->loadPartial('facilities', [
+                                'checklist' => $checklist
+                            ]); ?>
+
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <h3><? $this->show('Step'); ?> 3</h3>
+                            <p><? $this->show('Upload photos'); ?></p>
+
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                                <li><button type="button" class="btn btn-primary btn-info-full next-step"><? $this->show('Save and continue'); ?></button></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="complete">
+                            <h3><? $this->show('Success'); ?></h3>
+                            <p><? $this->show('You have successfully completed all steps'); ?></p>
+
+                            <ul class="list-inline pull-right">
+                                <li><button type="submit" class="btn btn-success btn-info-full next-step"><? $this->show('Start working'); ?></button></li>
+                            </ul>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
