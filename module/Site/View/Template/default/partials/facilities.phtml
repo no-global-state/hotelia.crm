@@ -1,0 +1,21 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<?php foreach ($checklist as $category): ?>
+<div class="form-group">
+  <label class="col-lg-2 control-label"><? $this->show($category['name']); ?> <small class="text-muted">(<?= $category['item_count']; ?>)</small></label>
+  <div class="col-lg-10">
+    <?php foreach ($category['items'] as $item): ?>
+    <div class="radio">
+      <label>
+        <?= Element::checkbox(sprintf('checked[%s]', $item['id']), (bool) $item['checked'], array(), false); ?>
+        <? $this->show($item['name']); ?>
+      </label>
+    </div>
+    <?php endforeach; ?>
+  </div>
+</div>
+<?php endforeach; ?>
