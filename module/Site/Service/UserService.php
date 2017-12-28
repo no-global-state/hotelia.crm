@@ -42,6 +42,17 @@ class UserService implements UserAuthServiceInterface
     }
 
     /**
+     * Checks whether wizard is finished
+     * 
+     * @param int $userId
+     * @return boolean
+     */
+    public function isWizardFinished(int $userId) : bool
+    {
+        return $this->userMapper->isWizardFinished($userId);
+    }
+
+    /**
      * Makes wizard as finished
      * 
      * @param int $userId
