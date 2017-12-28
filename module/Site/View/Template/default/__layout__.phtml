@@ -184,6 +184,28 @@ use Site\Service\UserService;
         </div><!-- /.modal-dialog -->  
     </div>
 
+    <!-- Modal -->
+    <div id="removeConfirmationModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title"><? $this->show('Confirm'); ?></h4>
+          </div>
+
+          <div class="modal-body">
+            <p><? $this->show('Are you sure you want to remove this element permamently?'); ?></p>
+          </div>
+
+          <div class="modal-footer">
+            <a class="btn btn-danger" href="#" data-button="confirm-removal"><? $this->show('Yes'); ?></a>
+            <a class="btn btn-default" data-dismiss="modal"><? $this->show('No'); ?></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
     <script src="<?php echo $script; ?>"></script>
     <?php endforeach;?>

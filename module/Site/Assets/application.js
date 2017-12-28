@@ -1,6 +1,23 @@
 
 $(function(){
 
+    // Removal buttons
+    $('[data-button="delete"]').click(function(event){
+        event.preventDefault();
+
+        var url = $(this).attr('href');
+        var $self = $(this);
+        var $modal = $('#removeConfirmationModal');
+
+        // Then show the modal box
+        $modal.modal();
+
+        // Then every time attach the click listener
+        $("[data-button='confirm-removal']").off('click').click(function(event){
+            $(this).attr('href', url);
+        });
+    });
+
     // Legal status on reservation form
     $("[data-legal-status]").bind('change', function(){
         var type = $(this).val();
