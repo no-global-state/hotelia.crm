@@ -22,9 +22,10 @@ final class RoomMapper extends AbstractMapper
      * @param string $arrival
      * @param string $departure
      * @param array $typeIds Optional type ID filters
-     * @return string
+     * @param array $inventoryIds Inventory ID filters
+     * @return array
      */
-    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array())
+    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
     {
         // Columns to be selected
         $columns = array(
@@ -39,7 +40,7 @@ final class RoomMapper extends AbstractMapper
             FloorMapper::getFullColumnName('name') => 'floor'
         );
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         // Room type mapper
                         ->leftJoin(RoomTypeMapper::getTableName())
@@ -55,13 +56,27 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('floor_id'),
                             FloorMapper::getRawColumn('id')
                         )
+                        // Room inventory relation
+                        ->leftJoin(RoomInventoryMapper::getTableName())
+                        ->on()
+                        ->equals(
+                            RoomInventoryMapper::getFullColumnName('room_id'),
+                            self::getRawColumn('id')
+                        )
                         ->whereEquals('1', '1')
                         ->andWhereNotIn(self::getFullColumnName('id'), new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
                         ->andWhereIn('type_id', $typeIds) // Will not be appended if $typeIds is empty
-                        ->andWhereEquals(self::getFullColumnName('hotel_id'), $hotelId)
-                        // Sort by floor names
-                        ->orderBy(FloorMapper::getFullColumnName('name'))
-                        ->queryAll();
+                        ->andWhereIn(RoomInventoryMapper::getFullColumnName('inventory_id'), $inventoryIds) // Will not be appended if $inventoryIds is empty
+                        ->andWhereEquals(self::getFullColumnName('hotel_id'), $hotelId);
+
+        // Ensure all values are matched if provided
+        if (!empty($inventoryIds)) {
+            $db->having('COUNT', RoomInventoryMapper::getFullColumnName('inventory_id'), '=', count($inventoryIds));
+        }
+
+        // Sort by floor names
+        return $db->orderBy(FloorMapper::getFullColumnName('name'))
+                  ->queryAll();
     }
 
     /**

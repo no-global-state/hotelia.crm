@@ -80,11 +80,12 @@ class ArchitectureService
      * @param string $arrival
      * @param string $departure
      * @param array $typeIds Optional type ID filters
-     * @return string
+     * @param array $inventoryIds
+     * @return array
      */
-    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array())
+    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
     {
-        return $this->roomMapper->findFreeRooms($hotelId, $arrival, $departure, $typeIds);
+        return $this->roomMapper->findFreeRooms($hotelId, $arrival, $departure, $typeIds, $inventoryIds);
     }
 
     /**
