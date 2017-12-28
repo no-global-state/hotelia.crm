@@ -41,6 +41,34 @@ final class PhotoService extends AbstractService
     }
 
     /**
+     * Batch upload
+     * 
+     * @param int $hotelId
+     * @param array $files
+     * @return boolean
+     */
+    public function batchUpload(int $hotelId, array $files) : bool
+    {
+        $this->filterFileInput($files);
+
+        foreach ($files as $file) {
+            // Persists
+            $this->photoMapper->persist([
+                'hotel_id' => $hotelId,
+                'file' => $file->getName()
+            ]);
+
+            // Last id
+            $id = $this->photoMapper->getMaxId();
+
+            // Upload the image
+            $this->imageManager->upload($id, [$file]);
+        }
+
+        return true;
+    }
+
+    /**
      * Updates a cover
      * 
      * @param int $hotelId
