@@ -32,8 +32,11 @@ final class Wizard extends AbstractCrmController
 
         unset($data['floor_count']);
 
-        $service = $this->getModuleService('hotelService');
-        $service->save($data);
+        // Save hotel data
+        $this->getModuleService('hotelService')->save($data);
+
+        // Mark wizard as finished
+        $this->getModuleService('userService')->markWizardAsFinished($this->getUserId());
     }
 
     /**
