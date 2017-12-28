@@ -15,6 +15,19 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * Makes wizard as finished
+     * 
+     * @param int $userId
+     * @return boolean
+     */
+    public function markWizardAsFinished(int $userId)
+    {
+        return $this->db->update(self::getTableName(), ['wizard_finished' => 1])
+                        ->whereEquals('id', $userId)
+                        ->execute();
+    }
+
+    /**
      * Fetches by credentials
      * 
      * @param string $login
