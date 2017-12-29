@@ -14,6 +14,7 @@ namespace Site\Controller\Architecture;
 use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Validate\Pattern;
 
 final class RoomType extends AbstractCrmController
 {
@@ -50,18 +51,32 @@ final class RoomType extends AbstractCrmController
     /**
      * Persists room type
      * 
-     * @return integer
+     * @return mixed
      */
-    public function saveAction() : int
+    public function saveAction()
     {
         $data = $this->request->getPost();
-        $service = $this->getModuleService('roomTypeService');
-
         $data = $this->getWithHotelId($data);
-        !$data['id'] ? $service->add($data) : $service->update($data);
 
-        $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
-        return 1;
+        $formValidator = $this->createValidator([
+            'input' => [
+                'source' => $data,
+                'definition' => [
+                    'type' => new Pattern\Name
+                ]
+            ]
+        ]);
+
+        if ($formValidator->isValid()) {
+            $service = $this->getModuleService('roomTypeService');
+            !$data['id'] ? $service->add($data) : $service->update($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
+            return 1;
+        
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 
     /**
