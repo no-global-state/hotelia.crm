@@ -243,6 +243,7 @@ CREATE TABLE velveto_room_services (
 
 CREATE TABLE velveto_hotels (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `type_id` INT NOT NULL COMMENT 'Type ID',
     `phone` varchar(255) NOT NULL,
     `currency` varchar(30) NOT NULL COMMENT 'Default hotel currency',
     `start_price` FLOAT NOT NULL,

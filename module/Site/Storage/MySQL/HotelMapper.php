@@ -43,6 +43,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     {
         return [
             self::getFullColumnName('id'),
+            self::getFullColumnName('type_id'),
             self::getFullColumnName('phone'),
             self::getFullColumnName('currency'),
             self::getFullColumnName('start_price'),
