@@ -106,13 +106,6 @@ use Site\Service\LanguageService;;
                     </div>
 
                     <div class="form-group">
-                      <label class="col-lg-2 control-label"><? $this->show('Daily tax'); ?></label>
-                      <div class="col-lg-10">
-                        <?= Element::number('hotel[daily_tax]', $entity['daily_tax'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Daily tax for living'))); ?>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
                       <div class="col-lg-10">
                         <?= Element::text('hotel[website]', $entity['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site'))); ?>
