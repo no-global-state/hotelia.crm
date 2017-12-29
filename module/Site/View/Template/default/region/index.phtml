@@ -25,7 +25,7 @@ use Krystal\Form\Element;
                 <td><?= $region['order']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:Region@editAction', $region['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="<?= $this->url('Site:Region@deleteAction', $region['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:Region@deleteAction', $region['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>

@@ -30,7 +30,7 @@ use Krystal\Form\Element;
                     </td>
                     <td>
                         <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

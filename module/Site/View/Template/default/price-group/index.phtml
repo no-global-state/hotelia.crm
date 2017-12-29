@@ -30,7 +30,7 @@ use Krystal\Form\Element;
                     <td><?= $priceGroup['daily_tax']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:PriceGroup@editAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:PriceGroup@deleteAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:PriceGroup@deleteAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

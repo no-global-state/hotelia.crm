@@ -23,7 +23,7 @@
                 <td><?= $review['rating']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:Review:Review@editAction', $review['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a href="<?= $this->url('Site:Review:Review@deleteAction', $review['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:Review:Review@deleteAction', $review['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
             </tr>
             <?php endforeach; ?>

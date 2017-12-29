@@ -30,7 +30,7 @@ use Krystal\Form\Element;
                     <td><?= $inventory['comment']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Architecture:RoomInventory@editAction', $roomId, $inventory['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:Architecture:RoomInventory@deleteAction', $roomId, $inventory['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomInventory@deleteAction', $roomId, $inventory['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

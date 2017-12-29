@@ -24,7 +24,7 @@ use Krystal\Form\Element;
                     <td><?= $inventory['name']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Inventory@editAction', $inventory['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:Inventory@deleteAction', $inventory['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:Inventory@deleteAction', $inventory['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

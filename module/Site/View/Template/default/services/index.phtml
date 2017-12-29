@@ -28,7 +28,7 @@ use Krystal\Form\Element;
                     <td><?php $this->show($unitCollection->findByKey($service['unit'])); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Service@editAction', $service['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:Service@deleteAction', $service['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:Service@deleteAction', $service['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
