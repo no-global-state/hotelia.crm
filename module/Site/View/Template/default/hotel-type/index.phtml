@@ -1,0 +1,30 @@
+<h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Hotel types'); ?> <small>(<?= count($hotelTypes); ?>)</small></h2>
+
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('Site:HotelType@addAction'); ?>"><? $this->show('Add hotel type'); ?></a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?php $this->show('Name'); ?></th>
+                <th><?php $this->show('Actions'); ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($hotelTypes as $index => $hotelType): ?>
+            <tr>
+                <td><?= $index + 1; ?></td>
+                <td><?= $hotelType['name']; ?></td>
+                <td>
+                    <a href="<?= $this->url('Site:HotelType@editAction', $hotelType['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:HotelType@deleteAction', $hotelType['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
