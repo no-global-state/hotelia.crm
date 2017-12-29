@@ -80,14 +80,28 @@ final class Service extends AbstractCrmController
      * 
      * @return string
      */
-    public function saveAction() : int
+    public function saveAction()
     {
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
-        $this->createServiceMapper()->persist($data);
+        $formValidator = $this->createValidator([
+            'input' => [
+                'source' => $data,
+                'definition' => [
+                    'name' => new Pattern\Name,
+                    'price' => new Pattern\Price
+                ]
+            ]
+        ]);
 
-        $this->flashBag->set('success', $data['id'] ? 'The service has been updated successfully' : 'The service has been added successfully');
-        return 1;
+        if ($formValidator->isValid()) {
+            $this->createServiceMapper()->persist($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'The service has been updated successfully' : 'The service has been added successfully');
+            return 1;
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 }
