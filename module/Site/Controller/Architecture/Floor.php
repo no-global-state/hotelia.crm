@@ -13,6 +13,7 @@ namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
+use Krystal\Validate\Pattern;
 
 final class Floor extends AbstractCrmController
 {
@@ -67,17 +68,30 @@ final class Floor extends AbstractCrmController
     /**
      * Saves a floor
      * 
-     * @return int
+     * @return mixed
      */
-    public function saveAction() : int
+    public function saveAction()
     {
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
-        $this->createFloorMapper()->persist($data);
+        $formValidator = $this->createValidator([
+            'input' => [
+                'source' => $data,
+                'definition' => [
+                    'name' => new Pattern\Name()
+                ]
+            ]
+        ]);
 
-        $this->flashBag->set('success', $data['id'] ? 'The floor has been updated successfully' : 'The floor has been added successfully');
-        return 1;
+        if ($formValidator->isValid()) {
+            $this->createFloorMapper()->persist($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'The floor has been updated successfully' : 'The floor has been added successfully');
+            return 1;
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 
     /**
