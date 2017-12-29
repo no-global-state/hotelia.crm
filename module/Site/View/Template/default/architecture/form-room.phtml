@@ -4,6 +4,14 @@ use Krystal\Form\Element;
 
 ?>
 
+<?php if (empty($roomTypes)): ?>
+<h3><b class="text-danger"><? $this->show('Error'); ?>:</b> <? $this->show('You can not add a room until you create at least one room type!'); ?></h3>
+
+<?php elseif (empty($floors)): ?>
+<h3><b class="text-danger"><? $this->show('Error'); ?>:</b> <? $this->show('You can not add a room until you create at least one floor!'); ?></h3>
+
+<?php else: ?>
+
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:Room@saveAction'); ?>">
   <fieldset>
     <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the room' : 'Add a room'); ?></legend>
@@ -81,3 +89,5 @@ use Krystal\Form\Element;
     </div>
   </fieldset>
 </form>
+
+<?php endif; ?>
