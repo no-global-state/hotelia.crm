@@ -67,6 +67,7 @@ final class Inventory extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
+        $data = $this->getWithHotelId($data);
 
         $formValidator = $this->createValidator(array(
             'input' => array(
