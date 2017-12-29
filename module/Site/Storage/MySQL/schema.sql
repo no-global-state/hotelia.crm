@@ -1,4 +1,18 @@
 
+CREATE TABLE velveto_hotel_types (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL COMMENT 'Soring order'
+);
+
+CREATE TABLE velveto_hotel_types_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_hotel_types(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_payment_systems (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL COMMENT 'Soring order',
