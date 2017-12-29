@@ -78,6 +78,13 @@ use Site\Service\LanguageService;;
                     <?php $entity = $entity instanceof \ArrayAccess ? $hotel[0] : $entity; ?>
 
                     <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::select('hotel[type_id]', $hotelTypes, $entity['type_id'], ['class' => 'form-control']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
                       <div class="col-lg-10">
                         <?= Element::text('hotel[phone]', $entity['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>

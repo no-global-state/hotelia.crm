@@ -57,7 +57,8 @@ final class Wizard extends AbstractCrmController
             return $this->view->render('wizard/index', [
                 'languageId' => $this->getCurrentLangId(),
                 'hotelId' => $this->getHotelId(),
-                'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId())
+                'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
+                'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId())
             ]);
         }
     }

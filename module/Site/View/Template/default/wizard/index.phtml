@@ -58,6 +58,13 @@ use Krystal\Form\Element;
 
                               <fieldset>
                                 <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::select('hotel[type_id]', $hotelTypes, null, ['class' => 'form-control']); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
                                   <div class="col-lg-10">
                                     <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
