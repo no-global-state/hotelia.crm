@@ -16,6 +16,7 @@ use Site\Collection\CleaningCollection;
 use Site\Collection\RoomQualityCollection;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Db\Filter\InputDecorator;
+use Krystal\Validate\Pattern;
 
 final class Room extends AbstractCrmController
 {
@@ -67,17 +68,31 @@ final class Room extends AbstractCrmController
     /**
      * Saves a room
      * 
-     * @return int
+     * @return mixed
      */
-    public function saveAction() : int
+    public function saveAction()
     {
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
-        $this->createRoomMapper()->persist($data);
+        $formValidator = $this->createValidator([
+            'input' => [
+                'source' => $data,
+                'definition' => [
+                    'name' => new Pattern\Name()
+                ]
+            ]
+        ]);
 
-        $this->flashBag->set('success', $data['id'] ? 'The room has been updated successfully' : 'The room has been added successfully');
-        return 1;
+        if ($formValidator->isValid()) {
+            $this->createRoomMapper()->persist($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'The room has been updated successfully' : 'The room has been added successfully');
+            return 1;
+
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 
     /**
