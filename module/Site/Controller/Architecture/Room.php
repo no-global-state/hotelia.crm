@@ -75,11 +75,28 @@ final class Room extends AbstractCrmController
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
+        $this->formAttribute->setNewAttributes($data);
+
+        // Whether name checking needs to be done
+        $nameExists = $this->getModuleService('architectureService')->roomNameExists($data['name']);
+        $hasChanged = $this->formAttribute->hasChanged('name') ? $nameExists : false;
+
         $formValidator = $this->createValidator([
             'input' => [
                 'source' => $data,
                 'definition' => [
-                    'name' => new Pattern\Name()
+                    'name' => [
+                        'required' => true,
+                        'rules' => [
+                            'NotEmpty' => [
+                                'message' => 'Name can not be blank'
+                            ],
+                            'Unique' => [
+                                'message' => 'Provided room name already exists. Please use another name',
+                                'value' => $data['id'] ? $hasChanged : $nameExists,
+                            ]
+                        ]
+                    ]
                 ]
             ]
         ]);
@@ -116,6 +133,9 @@ final class Room extends AbstractCrmController
         $room = $this->createRoomMapper()->findByPk($id);
 
         if (!empty($room)) {
+            // Save the old name
+            $this->formAttribute->setOldAttribute('name', $room['name']);
+
             return $this->createForm($room);
         } else {
             return false;
