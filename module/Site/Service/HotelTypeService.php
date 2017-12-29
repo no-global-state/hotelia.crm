@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\HotelTypeMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class HotelTypeService
 {
@@ -33,6 +34,17 @@ final class HotelTypeService
     public function deleteById(int $id)
     {
         return $this->hotelTypeMapper->deleteByPk($id);
+    }
+
+    /**
+     * Fetch hotel type services
+     * 
+     * @param int $langId
+     * @return array
+     */
+    public function fetchList(int $langId) : array
+    {
+        return ArrayUtils::arrayList($this->fetchAll($langId), 'id', 'name');
     }
 
     /**
