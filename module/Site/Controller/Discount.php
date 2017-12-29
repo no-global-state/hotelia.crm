@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Krystal\Db\Filter\InputDecorator;
+use Krystal\Validate\Pattern;
 
 final class Discount extends AbstractCrmController
 {
@@ -72,10 +73,24 @@ final class Discount extends AbstractCrmController
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
-        $service = $this->getModuleService('discountService');
-        $service->save($data);
+        $formValidator = $this->createValidator(array(
+            'input' => array(
+                'source' => $data,
+                'definition' => array(
+                    'name' => new Pattern\Name,
+                    'percentage' => new Pattern\Percentage
+                )
+            )
+        ));
 
-        $this->flashBag->set('success', $data['id'] ? 'Discount has been updated successfully' : 'Discount has been added successfully');
-        return 1;
+        if ($formValidator->isValid()) {
+            $service = $this->getModuleService('discountService');
+            $service->save($data);
+
+            $this->flashBag->set('success', $data['id'] ? 'Discount has been updated successfully' : 'Discount has been added successfully');
+            return 1;
+        } else {
+            return $formValidator->getErrors();
+        }
     }
 }

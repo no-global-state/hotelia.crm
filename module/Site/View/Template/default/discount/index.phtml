@@ -51,7 +51,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Percentage'); ?> %</label>
               <div class="col-lg-10">
-                <?= Element::number('percentage', $entity['percentage'], array('class' => 'form-control', 'step' => 1, 'placeholder' => $this->translate('Discount amount from total price'))); ?>
+                <?= Element::number('percentage', $entity['percentage'], array('class' => 'form-control', 'step' => 1, 'min' => 1, 'max' => 100, 'placeholder' => $this->translate('Discount amount from total price'))); ?>
               </div>
             </div>
 
