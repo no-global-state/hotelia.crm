@@ -47,6 +47,17 @@ class ArchitectureService
     }
 
     /**
+     * Checks whether room name exists
+     * 
+     * @param string $name
+     * @return boolean
+     */
+    public function roomNameExists(string $name) : bool
+    {
+        return $this->roomMapper->nameExists($name);
+    }
+
+    /**
      * Gets room data by its associated ID
      * 
      * @param string $id Room ID

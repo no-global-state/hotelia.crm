@@ -16,6 +16,17 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Checks whether room name exists
+     * 
+     * @param string $name
+     * @return boolean
+     */
+    public function nameExists(string $name) : bool
+    {
+        return $this->valueExists('name', $name);
+    }
+
+    /**
      * Finds free available rooms based on date range and attached hotel ID
      * 
      * @param integer $hotelId
