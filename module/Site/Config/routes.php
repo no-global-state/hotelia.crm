@@ -3,6 +3,26 @@
 use Site\Service\UserService;
 
 return [
+    // Hotel types
+    '/crm/hotel-type' => [
+        'controller' => 'HotelType@indexAction'
+    ],
+
+    '/crm/hotel-type/add' => [
+        'controller' => 'HotelType@addAction'
+    ],
+
+    '/crm/hotel-type/edit/(:var)' => [
+        'controller' => 'HotelType@editAction'
+    ],
+
+    '/crm/hotel-type/delete/(:var)' => [
+        'controller' => 'HotelType@deleteAction'
+    ],
+
+    '/crm/hotel-type/save' => [
+        'controller' => 'HotelType@saveAction'
+    ],
 
     // Wizard
     '/crm/wizard' => [
