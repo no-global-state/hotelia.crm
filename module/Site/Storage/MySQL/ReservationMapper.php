@@ -255,7 +255,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
             self::PARAM_COLUMN_ATTACHED, 
             self::getJunctionTableName(), 
             self::PARAM_JUNCTION_MASTER_COLUMN, 
-            RoomServiceMapper::getTableName(), 
+            ServiceMapper::getTableName(), 
             'id', 
             '*' // Columns to be selected in Service table
         );
