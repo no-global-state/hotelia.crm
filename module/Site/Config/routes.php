@@ -3,6 +3,11 @@
 use Site\Service\UserService;
 
 return [
+    // User settings
+    '/user/change-password' => [
+        'controller' => 'Settings@changePasswordAction'
+    ],
+
     // Hotel types
     '/crm/hotel-type' => [
         'controller' => 'HotelType@indexAction'
