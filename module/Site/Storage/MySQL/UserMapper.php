@@ -77,7 +77,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
-                        ->whereEquals('email', $login)
+                        ->whereEquals('login', $login)
                         ->andWhereEquals('password', $password)
                         ->query();
     }
