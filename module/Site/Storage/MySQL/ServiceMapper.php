@@ -2,14 +2,14 @@
 
 namespace Site\Storage\MySQL;
 
-final class RoomServiceMapper extends AbstractMapper
+final class ServiceMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('velveto_room_services');
+        return self::getWithPrefix('velveto_services');
     }
 
     /**

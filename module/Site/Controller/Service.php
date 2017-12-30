@@ -15,7 +15,7 @@ final class Service extends AbstractCrmController
      */
     private function createServiceMapper()
     {
-        return $this->createMapper('\Site\Storage\MySQL\RoomServiceMapper');
+        return $this->createMapper('\Site\Storage\MySQL\ServiceMapper');
     }
 
     /**

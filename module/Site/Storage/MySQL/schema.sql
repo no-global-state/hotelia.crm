@@ -230,7 +230,7 @@ CREATE TABLE velveto_room_inventory (
     FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_room_services (
+CREATE TABLE velveto_services (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NOT NULL,
@@ -306,5 +306,5 @@ CREATE TABLE velveto_reservation_services (
     `slave_id` INT NOT NULL COMMENT 'Service ID',
 
     FOREIGN KEY (master_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE,
-    FOREIGN KEY (slave_id) REFERENCES velveto_room_services(id) ON DELETE CASCADE
+    FOREIGN KEY (slave_id) REFERENCES velveto_services(id) ON DELETE CASCADE
 );
