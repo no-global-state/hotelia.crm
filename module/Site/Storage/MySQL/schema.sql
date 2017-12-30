@@ -251,7 +251,9 @@ CREATE TABLE velveto_hotels (
     `discount` FLOAT COMMENT 'Discount if available',
     `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
     `email` varchar(255) NOT NULL COMMENT 'Hotel email',
-    `active` BOOLEAN NOT NULL COMMENT 'Whether this hotel must be visible or not'
+    `active` BOOLEAN NOT NULL COMMENT 'Whether this hotel must be visible or not',
+    `lat` DECIMAL(10, 8),
+    `lng` DECIMAL(11, 8)
 );
 
 CREATE TABLE velveto_hotels_translation (
