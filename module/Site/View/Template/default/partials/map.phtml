@@ -1,0 +1,20 @@
+<?php
+
+use Krystal\Form\Element;
+
+// Override if present
+if (isset($lat, $lng)){
+    $_ENV['map']['lat'] = (float) $lat;
+    $_ENV['map']['lng'] = (float) $lng;
+}
+
+?>
+
+<script>
+    var config = <?= json_encode($_ENV['map']); ?>
+</script>
+
+<?= Element::hidden('hotel[lat]', $_ENV['map']['lat']); ?>
+<?= Element::hidden('hotel[lng]', $_ENV['map']['lng']); ?>
+
+<div id="map"></div>

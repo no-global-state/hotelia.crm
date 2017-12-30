@@ -75,6 +75,14 @@ return array(
         'view' => array(
             'theme' => 'default',
 			'plugins' => array(
+                // Map
+                'map' => [
+                    'scripts' => [
+                        sprintf('https://maps.googleapis.com/maps/api/js?key=%s', $_ENV['map']['apiKey']),
+						'@Site/map.js',
+                    ]
+                ],
+
 				// Datetime picker
 				'datetimepicker' => array(
 					'scripts' => array(
