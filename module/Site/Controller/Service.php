@@ -9,16 +9,6 @@ use Site\Collection\UnitCollection;
 final class Service extends AbstractCrmController
 {
     /**
-     * Create service mapper
-     * 
-     * @return \Site\Storage\MySQL\RoomServiceMapper
-     */
-    private function createServiceMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\ServiceMapper');
-    }
-
-    /**
      * Creates the grid
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
@@ -27,7 +17,7 @@ final class Service extends AbstractCrmController
     private function createGrid($entity) : string
     {
         return $this->view->render('services/index', array(
-            'services' => $this->createServiceMapper()->fetchAll($this->getHotelId()),
+            'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
             'entity' => $entity,
             'id' => $entity['id'],
             'unitCollection' => new UnitCollection
@@ -52,7 +42,7 @@ final class Service extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $entity = $this->createServiceMapper()->findByPk($id);
+        $entity = $this->getModuleService('serviceManager')->fetchById($id);
 
         if ($entity) {
             return $this->createGrid($entity);
@@ -62,14 +52,14 @@ final class Service extends AbstractCrmController
     }
 
     /**
-     * Deletes a service
+     * Deletes a service by its id
      * 
      * @param int $id Service ID 
      * @return string
      */
-    public function deleteAction($id) : void
+    public function deleteAction(int $id) : void
     {
-        $this->createServiceMapper()->deleteByPk($id);
+        $this->getModuleService('serviceManager')->deleteById($id);
 
         $this->flashBag->set('danger', 'The service has been deleted successfully');
         $this->response->redirectToPreviousPage();
@@ -96,7 +86,7 @@ final class Service extends AbstractCrmController
         ]);
 
         if ($formValidator->isValid()) {
-            $this->createServiceMapper()->persist($data);
+            $this->getModuleService('serviceManager')->save($data);
 
             $this->flashBag->set('success', $data['id'] ? 'The service has been updated successfully' : 'The service has been added successfully');
             return 1;

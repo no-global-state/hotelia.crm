@@ -58,7 +58,7 @@ class Reservation extends AbstractCrmController
             'arrival' => $arrival,
             'departure' => $departure,
             'client' => $client,
-            'services' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomServiceMapper')->fetchAll($this->getHotelId()), 'id', 'name'),
+            'services' => $this->getModuleService('serviceManager')->fetchList($this->getHotelId()),
 
             // Price groups
             'priceGroupList' => ArrayUtils::arrayList($priceGroups, 'id', 'name'),
