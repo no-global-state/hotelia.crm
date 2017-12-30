@@ -15,6 +15,7 @@ use Site\Service\RegionService;
 use Site\Service\DiscountService;
 use Site\Service\PaymentSystemService;
 use Site\Service\HotelTypeService;
+use Site\Service\ServiceManager;
 
 final class Module extends AbstractModule
 {
@@ -152,6 +153,10 @@ final class Module extends AbstractModule
 
             'hotelTypeService' => new HotelTypeService(
                 $this->createMapper('\Site\Storage\MySQL\HotelTypeMapper')
+            ),
+
+            'serviceManager' => new ServiceManager(
+                $this->createMapper('\Site\Storage\MySQL\ServiceMapper')
             )
         );
     }
