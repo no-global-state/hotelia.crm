@@ -15,6 +15,29 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * {@inheritDoc}
+     */
+    protected function getPk()
+    {
+        return 'id';
+    }
+
+    /**
+     * Updates user password by it associated it
+     * 
+     * @param int $id User id
+     * @param string $password
+     * @return boolean
+     */
+    public function updatePasswordById(int $id, string $password)
+    {
+        return $this->persist([
+            'id' => $id,
+            'password' => $password
+        ]);
+    }
+
+    /**
      * Checks whether wizard is finished
      * 
      * @param int $userId

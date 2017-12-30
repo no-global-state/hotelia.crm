@@ -81,6 +81,16 @@ class UserService implements UserAuthServiceInterface
     }
 
     /**
+     * Returns user name
+     * 
+     * @return string
+     */
+    public function getName() : string
+    {
+        return $this->authManager->getData('name');
+    }
+
+    /**
      * Returns current hotel ID
      * 
      * @return int
@@ -138,6 +148,18 @@ class UserService implements UserAuthServiceInterface
     }
 
     /**
+     * Updates user password by their id
+     * 
+     * @param int $id
+     * @param string $password
+     * @return boolean
+     */
+    public function updatePasswordById(int $id, string $password)
+    {
+        return $this->userMapper->updatePasswordById($id, sha1($password));
+    }
+
+    /**
      * Attempts to authenticate a user
      * 
      * @param string $login
@@ -159,6 +181,7 @@ class UserService implements UserAuthServiceInterface
             $this->authManager->storeId($user['id'])
                               ->storeRole($user['role'])
                               ->storeData('hotel_id', $user['hotel_id'])
+                              ->storeData('name', $user['name'])
                               ->login($login, $password, $remember);
             return true;
         }
