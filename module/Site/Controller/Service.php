@@ -12,15 +12,17 @@ final class Service extends AbstractCrmController
      * Creates the grid
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
+     * @param array $priceGroups
      * @return string
      */
-    private function createGrid($entity) : string
+    private function createGrid($entity, array $priceGroups) : string
     {
         return $this->view->render('services/index', array(
             'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
             'entity' => $entity,
             'id' => $entity['id'],
-            'unitCollection' => new UnitCollection
+            'unitCollection' => new UnitCollection,
+            'priceGroups' => $priceGroups
         ));
     }
 
@@ -31,7 +33,8 @@ final class Service extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        return $this->createGrid(new InputDecorator());
+        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+        return $this->createGrid(new InputDecorator(), $priceGroups);
     }
 
     /**
@@ -42,10 +45,14 @@ final class Service extends AbstractCrmController
      */
     public function editAction(int $id)
     {
+        $service = $this->getModuleService('serviceManager');
         $entity = $this->getModuleService('serviceManager')->fetchById($id);
 
         if ($entity) {
-            return $this->createGrid($entity);
+            $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+            $priceGroups = array_replace_recursive($priceGroups, $service->findPricesServiceId($id));
+
+            return $this->createGrid($entity, $priceGroups);
         } else {
             return false;
         }
@@ -79,8 +86,7 @@ final class Service extends AbstractCrmController
             'input' => [
                 'source' => $data,
                 'definition' => [
-                    'name' => new Pattern\Name,
-                    'price' => new Pattern\Price
+                    'name' => new Pattern\Name
                 ]
             ]
         ]);
