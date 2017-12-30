@@ -24,7 +24,11 @@ use Krystal\Form\Element;
                 <tr class="<?= $service['id'] == $id ? 'success' : null; ?>">
                     <td><?= $index + 1; ?></td>
                     <td><?= $service['name']; ?></td>
-                    <td><?= number_format($service['price']), PHP_EOL, $currency; ?></td>
+                    <td>
+                        <?php foreach ($service['prices'] as $price): ?>
+                        <p><?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?></p>
+                        <?php endforeach; ?>
+                    </td>
                     <td><?php $this->show($unitCollection->findByKey($service['unit'])); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Service@editAction', $service['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -51,13 +55,6 @@ use Krystal\Form\Element;
             </div>
 
             <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Price'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::number('price', $entity['price'], array('class' => 'form-control', 'step' => '0.01')); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Unit'); ?></label>
               <div class="col-lg-10">
                 <?= Element::select('unit', $this->translateArray($unitCollection->getAll()), $entity['unit'], array('class' => 'form-control')); ?>
@@ -70,6 +67,15 @@ use Krystal\Form\Element;
                 <?= Element::text('comment', $entity['comment'], array('class' => 'form-control')); ?>
               </div>
             </div>
+
+            <?php foreach ($priceGroups as $priceGroup): ?>
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>
+              <div class="col-lg-10">
+                <?= Element::number(sprintf('price_group_ids[%s]', $priceGroup['id']), isset($priceGroup['price']) ? $priceGroup['price'] : null, array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            <?php endforeach; ?>
 
             <div class="form-group">
               <div class="col-lg-10 col-lg-offset-2">
