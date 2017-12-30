@@ -234,11 +234,20 @@ CREATE TABLE velveto_services (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
     `name` varchar(255) NOT NULL,
-    `price` FLOAT NOT NULL,
     `unit` varchar(3) NOT NULL,
     `comment` TEXT,
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+);
+
+CREATE TABLE velveto_service_prices (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `service_id` INT NOT NULL COMMENT 'Service ID',
+    `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
+    `price` FLOAT NOT NULL,
+
+    FOREIGN KEY (service_id) REFERENCES velveto_services(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_hotels (
