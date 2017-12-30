@@ -11,6 +11,9 @@ final class Hotel extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        $this->view->getPluginBag()
+                   ->load('map');
+
         return $this->view->render('hotel/form', [
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),
             'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),

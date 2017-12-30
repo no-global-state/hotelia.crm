@@ -105,6 +105,13 @@ use Krystal\Form\Element;
                                     <?= Element::number('floor_count', null, ['step' => 1, 'min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Type amount of floors')]); ?>
                                   </div>
                                 </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
+                                  <div class="col-lg-10">
+                                    <? $this->loadPartial('map'); ?>
+                                  </div>
+                                </div>
                               </fieldset>
 
                               <ul class="list-inline pull-right">

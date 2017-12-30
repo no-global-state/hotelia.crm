@@ -52,6 +52,7 @@ final class Wizard extends AbstractCrmController
         } else {
             // Append UI handler
             $this->view->getPluginBag()
+                       ->load('map')
                        ->appendLastScript('@Site/wizard.js');
 
             return $this->view->render('wizard/index', [

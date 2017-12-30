@@ -139,6 +139,16 @@ use Site\Service\LanguageService;;
                           <?php endfor; ?>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
+                      <div class="col-lg-10">
+                        <? $this->loadPartial('map', [
+                            'lat' => $entity['lat'],
+                            'lng' => $entity['lng']
+                        ]); ?>
+                      </div>
+                    </div>
                 </fieldset>
             </div>
         </div>
