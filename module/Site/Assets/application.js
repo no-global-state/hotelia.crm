@@ -1,6 +1,15 @@
 
 $(function(){
 
+    // Unit caption handler in reservation services
+    $("[name='slave_id']").change(function(){
+        var $selected = $(this).find(':selected');
+
+        $("[data-unit-caption]").text($selected.data('unit'));
+        $("[name='rate']").val($selected.data('rate'));
+
+    }).trigger('change');
+
     // Removal buttons
     $('[data-button="delete"]').click(function(event){
         event.preventDefault();

@@ -1,0 +1,94 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?> <small>(<?= count($services); ?>)</small></h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Assigned rate'); ?></th>
+                    <th><?php $this->show('Quantity'); ?></th>
+                    <th><?php $this->show('Total price'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <?php foreach ($services as $index => $service): ?>
+                <tr class="<?= $service['id'] == $entity['id'] ? 'success' : null; ?>">
+                    <td><?= $index + 1; ?></td>
+                    <td><?= $service['service']; ?></td>
+                    <td>
+                        <?= sprintf('%s %s / %s', $service['rate'], $currency, $this->translate($unitCollection->findByKey($service['unit']))); ?>
+                    </td>
+                    <td><?= $service['qty']; ?></td>
+                    <td><?= $service['price']; ?> <?= $currency; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:ReservationService@editAction', $service['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:ReservationService@deleteAction', $reservationId, $service['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+
+            <?php if (!empty($services)): ?>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <? $this->show('Total price of ordered services'); ?>: <?= $sum; ?> <?= $currency; ?>
+                    </td>
+                </tr>
+            </tfoot>
+            <?php endif; ?>
+
+        </table>
+    </div>
+
+    <div class="col-lg-6">
+        <form class="form-horizontal" action="<?= $this->url('Site:ReservationService@saveAction'); ?>">
+          <fieldset>
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add a service' : 'Edit the service'); ?></legend>
+
+            <?= Element::hidden('id', $entity['id']); ?>
+            <?= Element::hidden('master_id', $reservationId); ?>
+            <?= Element::hidden('rate', $entity['rate']); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Service'); ?></label>
+              <div class="col-lg-10">
+                <select name="slave_id" class="form-control">
+                    <?php foreach ($types as $type): ?>
+                    <?= Element::option($type['id'], $type['service'], [
+                        'selected' => $type['id'] == $entity['slave_id'], 
+                        'data-rate' => $type['rate'], 
+                        'data-unit' => $this->translate($unitCollection->findByKey($type['unit']))
+                    ]); ?>
+                    <?php endforeach; ?>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Quantity'); ?> <small>(<span class="text-muted" data-unit-caption=""></span>)</small></label>
+              <div class="col-lg-10">
+                <?= Element::text('qty', $entity['qty'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+                <a href="<?= $this->url('Site:ReservationService@indexAction', $reservationId); ?>" class="btn btn-danger"><?php $this->show('Back'); ?></a>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+    </div>
+</div>
