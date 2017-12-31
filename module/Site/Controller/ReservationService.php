@@ -20,6 +20,7 @@ final class ReservationService extends AbstractCrmController
         $services = $reservationServiceManager->findAllByReservationId($id);
 
         return $this->view->render('reservation/services', [
+            'fullName' => $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findFullNameById($id),
             'reservationId' => $id,
             'currency' => $reservationServiceManager->findCurrencyByReservationId($id),
             'services' => $services['services'],
