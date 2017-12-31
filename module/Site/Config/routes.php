@@ -397,6 +397,23 @@ return [
     '/crm/reservation/find' => [
         'controller' => 'Reservation@findAction'
     ],
+
+    // Reservation services
+    '/crm/reservation/services/(:var)' => [
+        'controller' => 'ReservationService@indexAction'
+    ],
+    
+    '/crm/reservation/services/do/save' => [
+        'controller' => 'ReservationService@saveAction'
+    ],
+    
+    '/crm/reservation/services/do/edit/(:var)' => [
+        'controller' => 'ReservationService@editAction'
+    ],
+
+    '/crm/reservation/services/do/delete/reservation/(:var)/(:var)' => [
+        'controller' => 'ReservationService@deleteAction'
+    ],
     
     '/crm/reservation/table/taken/(:var)' => [
         'controller' => 'Reservation@viewTakenAction'
