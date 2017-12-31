@@ -311,8 +311,12 @@ CREATE TABLE velveto_reservation (
 );
 
 CREATE TABLE velveto_reservation_services (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `master_id` INT NOT NULL COMMENT 'Reservation ID',
     `slave_id` INT NOT NULL COMMENT 'Service ID',
+    `qty` FLOAT NOT NULL COMMENT 'Quantity',
+    `rate` FLOAT COMMENT 'Per unit rate',
+    `price` FLOAT COMMENT 'Total price',
 
     FOREIGN KEY (master_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE,
     FOREIGN KEY (slave_id) REFERENCES velveto_services(id) ON DELETE CASCADE
