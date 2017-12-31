@@ -66,6 +66,17 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Finds full name of reservation ID
+     * 
+     * @param int $id Reservation ID
+     * @return string
+     */
+    public function findFullNameById(int $id) : string
+    {
+        return $this->findColumnByPk($id, 'full_name');
+    }
+
+    /**
      * Gets sum count (price, tax, id) based on period
      * 
      * @param array $values
