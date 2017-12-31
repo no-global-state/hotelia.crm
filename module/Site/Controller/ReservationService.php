@@ -3,7 +3,6 @@
 namespace Site\Controller;
 
 use Krystal\Db\Filter\InputDecorator;
-use Krystal\Stdlib\ArrayUtils;
 use Site\Collection\UnitCollection;
 
 final class ReservationService extends AbstractCrmController
@@ -11,22 +10,21 @@ final class ReservationService extends AbstractCrmController
     /**
      * Creates and renders grid
      * 
+     * @param int $id
      * @param mixed $entity
      * @return string
      */
-    private function createGrid($id, $entity) : string
+    private function createGrid(int $id, $entity) : string
     {
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationServiceMapper');
-        $services = $mapper->findAllByReservationId($id);
-
-        $sum = ArrayUtils::columnSum($services, ['price']);
+        $reservationServiceManager = $this->getModuleService('reservationServiceManager');
+        $services = $reservationServiceManager->findAllByReservationId($id);
 
         return $this->view->render('reservation/services', [
             'reservationId' => $id,
-            'currency' => $mapper->findCurrencyByReservationId($id),
-            'services' => $services,
-            'sum' => $sum['price'],
-            'types' => $mapper->findOptionsByReservationId($id),
+            'currency' => $reservationServiceManager->findCurrencyByReservationId($id),
+            'services' => $services['services'],
+            'sum' => $services['sum'],
+            'types' => $reservationServiceManager->findOptionsByReservationId($id),
             'entity' => $entity,
             'unitCollection' => new UnitCollection()
         ]);
@@ -52,8 +50,8 @@ final class ReservationService extends AbstractCrmController
      */
     public function deleteAction(int $reservationId, int $id) : void
     {
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationServiceMapper');
-        $mapper->deleteByPk($id);
+        $reservationServiceManager = $this->getModuleService('reservationServiceManager');
+        $reservationServiceManager->deleteById($id);
 
         $this->flashBag->set('danger', 'Reservation service has been deleted successfully');
         $this->response->redirect($this->createUrl('Site:ReservationService@indexAction', [$reservationId]));
@@ -63,12 +61,11 @@ final class ReservationService extends AbstractCrmController
      * Finds reservation service by its ID
      * 
      * @param int $id Reservation ID
-     * @return string
+     * @return mixed
      */
     public function editAction(int $id)
     {
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationServiceMapper');
-        $entity = $mapper->findByPk($id);
+        $entity = $this->getModuleService('reservationServiceManager')->fetchById($id);
 
         if ($entity) {
             return $this->createGrid($entity['master_id'], $entity);
@@ -84,13 +81,11 @@ final class ReservationService extends AbstractCrmController
      */
     public function saveAction()
     {
+        // Request data
         $data = $this->request->getPost();
 
-        // Append counted price
-        $data['price'] = floatval($data['qty']) * floatval($data['rate']);
-
-        $service = $this->createMapper('\Site\Storage\MySQL\ReservationServiceMapper');
-        $service->persist($data);
+        $reservationServiceManager = $this->getModuleService('reservationServiceManager');
+        $reservationServiceManager->save($data);
 
         $this->flashBag->set('success', $data['id'] ? 'Reservation service has been updated successfully' : 'Reservation service has been added successfully');
         return 1;
