@@ -1,3 +1,15 @@
+<?php
+
+use Site\Service\UserService;
+
+?>
+
+<?php if (!$active && $isLoggedIn && $role != UserService::USER_ROLE_ADMIN): ?>
+<div class="alert alert-dismissible alert-danger">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <strong><? $this->show('Warning'); ?>!</strong> <? $this->show('Your hotel is not visible on the site. Please ask administration to enable it'); ?>
+</div>
+<?php endif; ?>
 
 <div class="row home-row">
     <div class="col-lg-4">
