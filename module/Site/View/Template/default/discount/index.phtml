@@ -4,6 +4,14 @@ use Krystal\Form\Element;
 
 ?>
 
+<? $this->loadPartial('hint', [
+    'lines' => [
+        'Here you can create seasoned discounts',
+        'This can be useful for marketing purposes to attract more customers',
+        'You can use created discounts when making reservations'
+    ]
+]); ?>
+
 <h2 class="page-header"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?> <small>(<?= count($discounts); ?>)</small></h2>
 
 <div class="row">
