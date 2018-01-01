@@ -35,7 +35,7 @@ final class Language extends AbstractCrmController
     {
         $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
 
-        return $this->view->render('languages/index', [
+        return $this->view->render('helpers/languages', [
             'languages' => $languageMapper->fetchAll(),
             'entity' => $entity
         ]);

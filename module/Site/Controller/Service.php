@@ -17,7 +17,7 @@ final class Service extends AbstractCrmController
      */
     private function createGrid($entity, array $priceGroups) : string
     {
-        return $this->view->render('services/index', array(
+        return $this->view->render('helpers/services', array(
             'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
             'entity' => $entity,
             'id' => $entity['id'],

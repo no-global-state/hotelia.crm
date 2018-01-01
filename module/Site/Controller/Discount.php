@@ -15,7 +15,7 @@ final class Discount extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('discount/index', [
+        return $this->view->render('helpers/discount', [
             'discounts' => $this->getModuleService('discountService')->fetchAll($this->getHotelId()),
             'entity' => $entity
         ]);

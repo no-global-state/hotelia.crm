@@ -24,7 +24,7 @@ final class PriceGroup extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('price-group/index', [
+        return $this->view->render('helpers/price-group', [
             'entity' => $entity,
             'priceGroups' => $this->createPriceGroupMapper()->fetchAll()
         ]);

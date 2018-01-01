@@ -23,7 +23,7 @@ final class Transaction extends AbstractCrmController
             'hotel_id' => $this->getHotelId()
         ));
 
-        return $this->view->render('transaction/index', array(
+        return $this->view->render('helpers/transaction', array(
             'route' => $route,
             'query' => $this->request->getQuery(),
             'data' => $data,

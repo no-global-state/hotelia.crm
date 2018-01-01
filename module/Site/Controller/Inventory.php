@@ -25,7 +25,7 @@ final class Inventory extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('inventory/index', array(
+        return $this->view->render('helpers/inventory', array(
             'inventories' => $this->createInventoryMapper()->fetchAll($this->getHotelId()),
             'id' => $entity['id'],
             'entity' => $entity
