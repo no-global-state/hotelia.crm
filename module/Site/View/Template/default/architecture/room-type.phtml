@@ -4,6 +4,13 @@ use Krystal\Form\Element;
 
 ?>
 
+<? $this->loadPartial('hint', [
+    'lines' => [
+        'Add all possible room types and their prices available in your hotel.',
+        'You can then attach created types to rooms to be created.'
+    ]
+]); ?>
+
 <h2 class="page-header"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?> <small>(<?= count($types); ?>)</small></h2>
 
 <div class="row">
