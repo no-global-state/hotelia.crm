@@ -96,7 +96,7 @@ final class ReservationServiceManager
 
         return [
             'services' => $services,
-            'sum' => $sum['price']
+            'sum' => isset($sum['price']) ? $sum['price'] : 0
         ];
     }
 }
