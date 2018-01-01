@@ -26,15 +26,23 @@ class Reservation extends AbstractCrmController
      */
     private function createDiscounts() : array
     {
+        // Grab all available discounts by current hotel ID
+        $discounts = $this->getModuleService('discountService')->fetchList($this->getHotelId());
+
         $defaults = $this->translator->translateArray([
             '0' => $this->translator->translate('No discount'),
             '' => $this->translator->translate('Type manually')
         ]);
 
-        return [
+        $output = [
             $this->translator->translate('Defaults') => $defaults,
-            $this->translator->translate('Discounts') => $this->getModuleService('discountService')->fetchList($this->getHotelId())
         ];
+
+        if (!empty($discounts)) {
+            $output[$this->translator->translate('Discounts')] = $discounts;
+        }
+
+        return $output;
     }
 
     /**
