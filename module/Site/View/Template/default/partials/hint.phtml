@@ -1,0 +1,17 @@
+<div class="alert alert-dismissible alert-info">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <div class="row">
+        <div class="col-lg-1">
+            <h1 class="text-center"><i class="glyphicon glyphicon-question-sign"></i> </h1>
+        </div>
+
+        <div class="col-lg-8">
+            <article class="alert-description">
+                <?php foreach($lines as $line): ?>
+                <? $this->show($line); ?>
+                <br />
+                <?php endforeach; ?>
+            </article>
+        </div>
+    </div>
+</div>
