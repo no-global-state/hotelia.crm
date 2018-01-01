@@ -37,6 +37,10 @@ final class Wizard extends AbstractCrmController
 
         // Mark wizard as finished
         $this->getModuleService('userService')->markWizardAsFinished($this->getUserId());
+
+        return json_encode([
+            'successUrl' => $this->createUrl('Site:Architecture:RoomType@indexAction')
+        ]);
     }
 
     /**
@@ -47,8 +51,7 @@ final class Wizard extends AbstractCrmController
     public function indexAction()
     {
         if ($this->request->isPost()) {
-            $this->saveAction();
-            return 1;
+            return $this->saveAction();
         } else {
             // Append UI handler
             $this->view->getPluginBag()

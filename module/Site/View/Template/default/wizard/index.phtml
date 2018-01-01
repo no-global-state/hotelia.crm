@@ -172,11 +172,18 @@ use Krystal\Form\Element;
                         </div>
 
                         <div class="tab-pane" role="tabpanel" id="complete">
-                            <h3><? $this->show('Success'); ?></h3>
+                            <h3><? $this->show('Thank you!'); ?></h3>
                             <p><? $this->show('You have successfully completed all steps'); ?></p>
 
+                            <p><? $this->show('Remained steps'); ?>:</p>
+
+                            <ul>
+                                <li><? $this->show('Configure room types and their corresponding prices'); ?></li>
+                                <li><? $this->show('Configure architecture'); ?></li>
+                            </ul>
+
                             <ul class="list-inline pull-right">
-                                <li><button type="submit" class="btn btn-success btn-info-full next-step"><? $this->show('Start working'); ?></button></li>
+                                <li><button type="submit" class="btn btn-success btn-info-full next-step"><? $this->show('Configure room types'); ?></button></li>
                             </ul>
                         </div>
 
