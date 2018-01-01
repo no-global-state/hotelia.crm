@@ -11,6 +11,12 @@ use Krystal\Form\Element;
 
 <?php else: ?>
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
+  <div>
+    <? $this->loadPartial('reservation-buttons', [
+        'client' => $client
+    ]); ?>
+  </div>
+  
   <fieldset>
 	<h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
     <br />
@@ -220,8 +226,9 @@ use Krystal\Form\Element;
                     'count' => array()
                 )); ?>
 
-                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-                <a href="#" data-button="back" class="btn btn-info hidden-print"><i class="glyphicon glyphicon-chevron-left"></i> <?php $this->show('Back'); ?></a>
+                <? $this->loadPartial('reservation-buttons', [
+                    'client' => $client
+                ]); ?>
               </div>
             </div>
         </div>
