@@ -100,6 +100,20 @@ use Krystal\Form\Element;
                                 </div>
 
                                 <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Discount'); ?> %</label>
+                                  <div class="col-lg-10">
+                                    <?= Element::number('hotel[discount]', null, ['min' => 1, 'max' => 100, 'class' => 'form-control', 'placeholder' => $this->translate('Minimal discount for customers if you provide')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::text('hotel[website]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)')]); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('Amount of floors'); ?></label>
                                   <div class="col-lg-10">
                                     <?= Element::number('floor_count', null, ['step' => 1, 'min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Type amount of floors')]); ?>
