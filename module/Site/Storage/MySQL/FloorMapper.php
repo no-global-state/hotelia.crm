@@ -13,6 +13,23 @@ final class FloorMapper extends AbstractMapper
     }
 
     /**
+     * Returns last floor ID attached to hotel
+     * 
+     * @param int $hotelId
+     * @return int
+     */
+    public function getLastFloorId(int $hotelId) : int
+    {
+        return $this->db->select($this->getPk())
+                        ->from(static::getTableName())
+                        ->whereEquals('hotel_id', $hotelId)
+                        ->orderBy($this->getPk())
+                        ->desc()
+                        ->limit(1)
+                        ->queryScalar();
+    }
+
+    /**
      * Gets total floor count
      * 
      * @param integer $hotelId
