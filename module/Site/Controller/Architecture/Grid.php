@@ -60,7 +60,7 @@ final class Grid extends AbstractCrmController
         if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
             $id = $this->getFloorIdKeeper()->getLastCategoryId();
         } else {
-            $id = $this->createFloorMapper()->getMaxId();
+            $id = $this->createFloorMapper()->getLastFloorId($this->getHotelId());
         }
 
         return $this->createGrid($id);
