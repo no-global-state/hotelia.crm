@@ -90,13 +90,6 @@ use Site\Service\LanguageService;;
                         <?= Element::text('hotel[phone]', $entity['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
                       </div>
                     </div>
-                    
-                    <div class="form-group">
-                      <label class="col-lg-2 control-label"><? $this->show('Currency'); ?></label>
-                      <div class="col-lg-10">
-                        <?= Element::text('hotel[currency]', $entity['currency'], array('class' => 'form-control', 'placeholder' => $this->translate('Default hotel currency'))); ?>
-                      </div>
-                    </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Start price'); ?></label>
