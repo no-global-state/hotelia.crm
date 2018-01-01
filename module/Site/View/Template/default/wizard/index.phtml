@@ -133,9 +133,18 @@ use Krystal\Form\Element;
                                 <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
                             </ul>
                         </div>
-                        
+
                         <div class="tab-pane" role="tabpanel" id="step3">
                             <h3><? $this->show('Step'); ?> 3</h3>
+                            <div class="alert alert-dismissible alert-info">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                <p>
+                                    <?= $this->translate('Keep in mind! The size of each photo must not be greater than - %s', '700KB'); ?>
+                                    <br /> 
+                                    <?= $this->translate('Recommended size for photos - %s', '850x450'); ?>
+                                </p>
+                            </div>
+
                             <p><? $this->show('Upload photos'); ?></p>
 
                             <p><a href="#" class="btn btn-primary" data-button="file-add"><? $this->show('Add a photo'); ?></a></p>
