@@ -4,6 +4,13 @@ use Krystal\Form\Element;
 
 ?>
 
+<? $this->loadPartial('hint', [
+    'lines' => [
+        'Create all possible extra services your object offers',
+        'Later on, you can attach them to new reservations'
+    ]
+]); ?>
+
 <h2 class="page-header"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?> <small>(<?= count($services); ?>)</small></h2>
 
 <div class="row">
@@ -50,7 +57,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+                <?= Element::text('name', $entity['name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type service name. For example - Transfer or Massage'))); ?>
               </div>
             </div>
 
