@@ -376,7 +376,11 @@ class Reservation extends AbstractCrmController
         $this->formAttribute->setNewAttributes($data);
 
         // Whether arrival checking needs to be done
-        $hasChanged = $this->formAttribute->hasChanged('arrival') ? !$mapper->hasAvailability($data['arrival'], $data['room_id']) : false;
+        if ($data['id']) {
+            $hasChanged = $this->formAttribute->hasChanged('arrival') ? $mapper->hasAvailability($data['arrival'], $data['room_id']) : false;
+        } else {
+            $hasChanged = true;
+        }
 
         $formValidator = $this->createValidator([
             'input' => [
@@ -388,7 +392,7 @@ class Reservation extends AbstractCrmController
                         'rules' => [
                             'Unique' => [
                                 'message' => 'Selected room is already reserved on provided arrival date',
-                                'value' => $hasChanged ? !$mapper->hasAvailability($data['arrival'], $data['room_id']) : false
+                                'value' => $hasChanged ? !$mapper->hasAvailability($data['arrival'], $data['room_id']) : false,
                             ]
                         ]
                     ]
