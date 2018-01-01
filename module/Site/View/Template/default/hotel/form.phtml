@@ -115,7 +115,7 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[website]', $entity['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site'))); ?>
+                        <?= Element::text('hotel[website]', $entity['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)'))); ?>
                       </div>
                     </div>
                     
