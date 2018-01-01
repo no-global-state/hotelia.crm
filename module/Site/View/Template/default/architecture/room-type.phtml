@@ -55,7 +55,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('type', $entity['type'], array('class' => 'form-control')); ?>
+                <?= Element::text('type', $entity['type'], array('class' => 'form-control', 'placeholder' => $this->translate('Name the room type. For example - Lux'))); ?>
               </div>
             </div>
 
