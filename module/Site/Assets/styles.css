@@ -1,4 +1,8 @@
 
+.alert-description {
+  padding-top: 21px;
+}
+
 /* Map */
 #map {
     height: 300px;
