@@ -4,6 +4,13 @@ use Krystal\Form\Element;
 
 ?>
 
+<? $this->loadPartial('hint', [
+    'lines' => [
+        'Create all inventory available in your object.',
+        'Later on, you can attach it to rooms.'
+    ]
+]); ?>
+
 <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Inventories'); ?> <small>(<?= count($inventories); ?>)</small></h2>
 
 <div class="row">
@@ -42,7 +49,7 @@ use Krystal\Form\Element;
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+                <?= Element::text('name', $entity['name'], array('class' => 'form-control', 'placeholder' => $this->translate('For example - Cupboard or Safe'))); ?>
               </div>
             </div>
 
