@@ -127,7 +127,6 @@ use Krystal\Form\Element;
                             <td><? $this->show('Room'); ?></td>
                         </tr>
                     </thead>
-
                     <tbody>
                         <?php foreach ($rooms as $room): ?>
                         <tr>
@@ -170,7 +169,7 @@ use Krystal\Form\Element;
                                     $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
                                 ?>
                                 <td>
-                                    <?php if (ReservationService::isDateInRange($date['date'], $room['arrival'], $room['departure'])): ?>
+                                    <?php if (ReservationService::isDateInRanges($date['date'], $room['reservations']['arrival'], $room['reservations']['departure'])): ?>
                                     <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken" data-background-color="<?= $background; ?>" data-background-hover="<?= $hover; ?>">
                                         <a data-button="view" href="<?= $this->url('Site:Reservation@viewAction', $room['reservation_id']); ?>"></a>
                                     </span>

@@ -206,6 +206,7 @@ class Reservation extends AbstractCrmController
         $type = $this->request->getQuery('type', null);
 
         $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations($this->getHotelId(), $type);
+        $rooms = ReservationService::parseRooms($rooms);
 
         return $this->view->render('reservation/table', array(
             'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
