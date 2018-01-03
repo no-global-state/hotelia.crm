@@ -7,7 +7,7 @@ return [
     // Hotel switch
     '/crm/hotel-switch/(:var)' => [
         'controller' => 'Crm@hotelSwitchAction',
-        'disallow' => [User::USER_ROLE_GUEST, User::USER_ROLE_USER]
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
     // User settings
