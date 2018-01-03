@@ -16,15 +16,17 @@ final class Api extends AbstractCrmController
     /**
      * Registers a new user
      * 
-     * @return int
+     * @return string
      */
-    public function register() : int
+    public function register() : string
     {
         if ($this->request->hasPost('email', 'phone', 'name', 'login', 'password')) {
             $hotelService = $this->getModuleService('hotelService');
-            $hotelService->register($this->request->getPost());
 
-            return 1;
+            return json_encode([
+                'success' => $hotelService->register($this->request->getPost())
+            ]);
+
         } else {
             return 0;
         }
