@@ -23,6 +23,17 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * Checks whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists(string $login) : bool
+    {
+        return $this->valueExists('login', $login);
+    }
+
+    /**
      * Updates user password by it associated it
      * 
      * @param int $id User id
