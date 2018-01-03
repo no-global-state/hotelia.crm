@@ -5,6 +5,19 @@ namespace Site\Controller;
 final class Crm extends AbstractCrmController
 {
     /**
+     * Switches to another hotel
+     * 
+     * @param int $hotelId
+     * @return void
+     */
+    public function hotelSwitchAction(int $hotelId)
+    {
+        $this->becomeAdmin($hotelId);
+
+        return $this->response->redirect($this->createUrl('Site:Crm@indexAction'));
+    }
+
+    /**
      * Shows a home page
      * 
      * @return string

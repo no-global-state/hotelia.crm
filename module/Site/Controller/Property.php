@@ -33,6 +33,8 @@ final class Property extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        $this->stopBeingAdmin();
+
         $service = $this->getModuleService('hotelService');
 
         $route = $this->createUrl('Site:Property@indexAction', [null]);

@@ -62,6 +62,10 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
      */
     protected function getHotelId()
     {
+        if ($this->sessionBag->has('admin_hotel_id')) {
+            return $this->sessionBag->get('admin_hotel_id');
+        }
+
         return $this->getModuleService('userService')->getHotelId();
     }
 
@@ -144,6 +148,29 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
     }
 
     /**
+     * Becomes hotel administrator
+     * 
+     * @param int $hotelId
+     * @return void
+     */
+    protected function becomeAdmin(int $hotelId)
+    {
+        $this->sessionBag->set('admin_hotel_id', $hotelId);
+        $this->sessionBag->set('admin', true);
+    }
+
+    /**
+     * Stops being administrator
+     * 
+     * @return void
+     */
+    protected function stopBeingAdmin()
+    {
+        $this->sessionBag->remove('admin_hotel_id');
+        $this->sessionBag->remove('admin');
+    }
+
+    /**
      * This method automatically gets called when this controller executes
      * 
      * @return void
@@ -194,7 +221,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'active' => (bool) $hotel['active'],
             'appName' => $this->paramBag->get('appName'),
             'languages' => $this->createMapper('\Site\Storage\MySQL\LanguageMapper')->fetchAll(),
-            'code' => $code
+            'code' => $code,
+            'admin' => $this->sessionBag->get('admin'),
         ));
 
         // Define the main layout

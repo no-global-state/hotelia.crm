@@ -75,7 +75,14 @@ use Krystal\Form\Element;
                         return Element::checkbox(sprintf('active[%s]', $row['id']), $row['active'], ['class' => 'form-control']);
                     }
                 ],
+            ],
+
+            'actions' => [
+                'enter' => function($row){
+                    return Element::link($this->translate('Enter this hotel'), $this->url('Site:Crm@hotelSwitchAction', $row['id']), ['class' => 'btn btn-success']);
+                }
             ]
+
         ], $this->translator, $route, $query); ?>
     </div>
 </form>

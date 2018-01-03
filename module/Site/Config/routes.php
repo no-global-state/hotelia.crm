@@ -3,6 +3,12 @@
 use Site\Service\UserService;
 
 return [
+
+    // Hotel switch
+    '/crm/hotel-switch/(:var)' => [
+        'controller' => 'Crm@hotelSwitchAction'
+    ],
+    
     // User settings
     '/user/change-password' => [
         'controller' => 'Settings@changePasswordAction'
