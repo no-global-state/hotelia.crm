@@ -121,13 +121,6 @@ use Krystal\Form\Element;
                                 </div>
 
                                 <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Amount of floors'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::number('floor_count', null, ['step' => 1, 'min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Type amount of floors')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
                                   <div class="col-lg-10">
                                     <? $this->loadPartial('map'); ?>

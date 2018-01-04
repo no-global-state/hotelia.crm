@@ -30,8 +30,6 @@ final class Wizard extends AbstractCrmController
             unset($data['checked']);
         }
 
-        unset($data['floor_count']);
-
         // Save hotel data
         $this->getModuleService('hotelService')->save($data);
 
