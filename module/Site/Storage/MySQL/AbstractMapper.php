@@ -12,11 +12,33 @@ abstract class AbstractMapper extends CoreMapper
     const PARAM_COLUMN_LANG_ID = 'lang_id';
 
     /**
+     * A list of translateable attributes
+     * 
+     * @var array
+     */
+    protected static $translateable = [];
+
+    /**
      * {@inheritDoc}
      */
     protected function getPk()
     {
         return 'id';
+    }
+
+    /**
+     * Returns dynamic attribute
+     * 
+     * @param string $attr
+     * @return string
+     */
+    protected static function getDynamicAttribute(string $attr) : string
+    {
+        if (in_array($attr, static::$translateable)) {
+            return self::getFullColumnName($attr, static::getTranslationTable());
+        } else {
+            return self::getFullColumnName($attr);
+        }
     }
 
     /**
