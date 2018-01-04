@@ -10,6 +10,16 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     /**
      * {@inheritDoc}
      */
+    protected static $translateable = [
+        'name',
+        'city',
+        'address',
+        'lang_id'
+    ];
+
+    /**
+     * {@inheritDoc}
+     */
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_hotels');
@@ -80,16 +90,16 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     {
         $db = $this->createEntitySelect($this->getColumns())
                    // Language ID constraint
-                   ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $parameters['lang_id'])
-                   ->andWhereLike('name', '%'.$input['name'].'%', true)
-                   ->andWhereLike('city', '%'.$input['city'].'%', true)
-                   ->andWhereLike('address', '%'.$input['address'].'%', true)
-                   ->andWhereLike('phone', '%'.$input['phone'].'%', true)
-                   ->andWhereLike('website', '%'.$input['website'].'%', true)
-                   ->andWhereEquals('rate', $input['rate'], true)
-                   ->andWhereEquals('active', $input['active'], true);
+                   ->whereEquals(self::getDynamicAttribute('lang_id'), $parameters['lang_id'])
+                   ->andWhereLike(self::getDynamicAttribute('name'), '%'.$input['name'].'%', true)
+                   ->andWhereLike(self::getDynamicAttribute('city'), '%'.$input['city'].'%', true)
+                   ->andWhereLike(self::getDynamicAttribute('address'), '%'.$input['address'].'%', true)
+                   ->andWhereLike(self::getDynamicAttribute('phone'), '%'.$input['phone'].'%', true)
+                   ->andWhereLike(self::getDynamicAttribute('website'), '%'.$input['website'].'%', true)
+                   ->andWhereEquals(self::getDynamicAttribute('rate'), $input['rate'], true)
+                   ->andWhereEquals(self::getDynamicAttribute('active'), $input['active'], true);
 
-        $db->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
+        $db->orderBy($sortingColumn ? self::getDynamicAttribute($sortingColumn) : self::getDynamicAttribute('id'));
 
         if ($desc) {
             $db->desc();
