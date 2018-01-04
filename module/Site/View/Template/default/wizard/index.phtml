@@ -81,7 +81,7 @@ use Krystal\Form\Element;
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('City'); ?></label>
                                   <div class="col-lg-10">
-                                    <?= Element::text(sprintf('translation[%s][city]', $languageId), null, ['class' => 'form-control']); ?>
+                                    <?= Element::text(sprintf('translation[%s][city]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type your city')]); ?>
                                   </div>
                                 </div>
 
