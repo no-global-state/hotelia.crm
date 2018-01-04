@@ -6,6 +6,10 @@ use Krystal\Form\Element;
 
 <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Regions'); ?> <small>(<?= count($regions); ?>)</small></h2>
 
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('Site:Region@addAction'); ?>"><? $this->show('Add a region'); ?></a>
+</p>
+
 <div class="table-responsive">
     <table class="table table-bordered">
         <thead>
