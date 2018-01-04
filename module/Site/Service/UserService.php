@@ -42,6 +42,17 @@ class UserService implements UserAuthServiceInterface
     }
 
     /**
+     * Checks whether login exists
+     * 
+     * @param string $login
+     * @return boolean
+     */
+    public function loginExists(string $login) : bool
+    {
+        return $this->userMapper->loginExists($login);
+    }
+
+    /**
      * Checks whether wizard is finished
      * 
      * @param int $userId
