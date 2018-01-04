@@ -72,6 +72,13 @@ use Krystal\Form\Element;
                                 </div>
 
                                 <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::select('hotel[region_id]', $regions, null, ['class' => 'form-control']); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('City'); ?></label>
                                   <div class="col-lg-10">
                                     <?= Element::text(sprintf('translation[%s][city]', $languageId), null, ['class' => 'form-control']); ?>

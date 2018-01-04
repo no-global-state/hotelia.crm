@@ -18,7 +18,8 @@ final class Hotel extends AbstractCrmController
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),
             'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
             'photos' => $this->getModuleService('photoService')->fetchAll($this->getHotelId()),
-            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId())
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId())
         ]);
     }
 
