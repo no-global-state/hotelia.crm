@@ -14,6 +14,17 @@ final class Api extends AbstractCrmController
     protected $authActive = false;
 
     /**
+     * Checks whether login is already registered
+     * 
+     * @param string $login
+     * @return int
+     */
+    public function available(string $login) : int
+    {
+        return !$this->getModuleService('userService')->loginExists($login) ? 1 : 0;
+    }
+
+    /**
      * Registers a new user
      * 
      * @return string

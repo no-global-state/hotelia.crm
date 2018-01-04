@@ -76,8 +76,12 @@ return [
     '/crm/discount/edit/(:var)' => [
         'controller' => 'Discount@editAction'
     ],
-    
+
     // API
+    '/api/available/(:var)' => [
+        'controller' => 'Api@available'
+    ],
+
     '/api/all/(:var)' => [
         'controller' => 'Api@all'
     ],
