@@ -34,6 +34,8 @@ final class Auth extends AbstractCrmController
     public function logoutAction()
     {
         $this->getAuthService()->logout();
+        $this->stopBeingAdmin();
+
         $this->response->redirect('/');
     }
 
