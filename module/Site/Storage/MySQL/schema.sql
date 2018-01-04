@@ -253,6 +253,7 @@ CREATE TABLE velveto_service_prices (
 CREATE TABLE velveto_hotels (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type_id` INT NOT NULL COMMENT 'Type ID',
+    `region_id` INT NOT NULL COMMENT 'Attached region ID',
     `phone` varchar(255) NOT NULL,
     `start_price` FLOAT NOT NULL,
     `rate` SMALLINT COMMENT 'Hotel rate',
@@ -261,7 +262,9 @@ CREATE TABLE velveto_hotels (
     `email` varchar(255) NOT NULL COMMENT 'Hotel email',
     `active` BOOLEAN NOT NULL COMMENT 'Whether this hotel must be visible or not',
     `lat` varchar(255),
-    `lng` varchar(255)
+    `lng` varchar(255),
+
+    FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_hotels_translation (
