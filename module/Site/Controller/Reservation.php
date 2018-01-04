@@ -303,7 +303,7 @@ class Reservation extends AbstractCrmController
 
         $this->flashBag->set('danger', 'Selected reservation has been removed successfully');
 
-        return $this->redirectToRoute('Site:Reservation@indexAction');
+        return $this->response->redirect($this->createUrl('Site:Reservation@indexAction', [null]));
     }
 
     /**
