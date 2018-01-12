@@ -19,11 +19,17 @@ final class RoomMapper extends AbstractMapper
      * Checks whether room name exists
      * 
      * @param string $name
+     * @param int $hotelId
      * @return boolean
      */
-    public function nameExists(string $name) : bool
+    public function nameExists(string $name, int $hotelId) : bool
     {
-        return $this->valueExists('name', $name);
+        return (bool) $this->db->select()
+                               ->count('id')
+                               ->from(self::getTableName())
+                               ->whereEquals('name', $name)
+                               ->andWhereEquals('hotel_id', $hotelId)
+                               ->queryScalar();
     }
 
     /**

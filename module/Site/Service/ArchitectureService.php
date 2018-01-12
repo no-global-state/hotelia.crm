@@ -50,11 +50,12 @@ class ArchitectureService
      * Checks whether room name exists
      * 
      * @param string $name
+     * @param int $hotelId
      * @return boolean
      */
-    public function roomNameExists(string $name) : bool
+    public function roomNameExists(string $name, int $hotelId) : bool
     {
-        return $this->roomMapper->nameExists($name);
+        return $this->roomMapper->nameExists($name, $hotelId);
     }
 
     /**
