@@ -78,7 +78,7 @@ final class Room extends AbstractCrmController
         $this->formAttribute->setNewAttributes($data);
 
         // Whether name checking needs to be done
-        $nameExists = $this->getModuleService('architectureService')->roomNameExists($data['name']);
+        $nameExists = $this->getModuleService('architectureService')->roomNameExists($data['name'], $this->getHotelId());
         $hasChanged = $this->formAttribute->hasChanged('name') ? $nameExists : false;
 
         $formValidator = $this->createValidator([
