@@ -44,7 +44,7 @@ final class Site extends AbstractSiteController
         $hotelMapper = $this->createMapper('\Site\Storage\MySQL\HotelMapper');
 
         return $this->view->render('search', [
-            'hotels' => $hotelMapper->fetchAll(),
+            'hotels' => $hotelMapper->fetchAll($this->getCurrentLangId()),
             'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, null)
         ]);
     }
@@ -85,7 +85,7 @@ final class Site extends AbstractSiteController
     {
         return $this->view->render('home', [
             'home' => true,
-            'hotels' => $this->createMapper('\Site\Storage\MySQL\HotelMapper')->fetchAll()
+            'hotels' => $this->createMapper('\Site\Storage\MySQL\HotelMapper')->fetchAll($this->getCurrentLangId())
         ]);
     }
 
