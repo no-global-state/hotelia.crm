@@ -158,12 +158,12 @@ final class PhotoService extends AbstractService
     /**
      * Creates image path URL
      * 
-     * @param int $id
-     * @param string $file
+     * @param mixed $id Image ID
+     * @param mixed $file
      * @param string $size
      * @return string
      */
-    public function createImagePath(int $id, string $file, string $size) : string
+    public function createImagePath($id, $file, string $size) : string
     {
         return sprintf('%s/%s/%s', Module::PARAM_GALLERY_PATH . $id, $size, $file);
     }
