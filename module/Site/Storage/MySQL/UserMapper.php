@@ -3,6 +3,7 @@
 namespace Site\Storage\MySQL;
 
 use Site\Storage\UserMapperInterface;
+use Krystal\Db\Sql\RawBinding;
 
 final class UserMapper extends AbstractMapper implements UserMapperInterface
 {
@@ -89,7 +90,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
         return $this->db->select('*')
                         ->from(self::getTableName())
                         ->whereEquals('login', $login)
-                        ->andWhereEquals('password', $password)
+                        ->andWhereEquals('password', new RawBinding($password))
                         ->query();
     }
 }
