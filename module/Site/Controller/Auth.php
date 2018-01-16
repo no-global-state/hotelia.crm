@@ -36,7 +36,7 @@ final class Auth extends AbstractCrmController
         $this->getAuthService()->logout();
         $this->stopBeingAdmin();
 
-        $this->response->redirect('/');
+        $this->response->redirect($this->createUrl('Site:Auth@indexAction'));
     }
 
     /**
