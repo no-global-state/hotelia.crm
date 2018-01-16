@@ -85,7 +85,7 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
      * @param string $password
      * @return array
      */
-    public function fetchByCredentials($login, $password)
+    public function fetchByCredentials(string $login, string $password)
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
