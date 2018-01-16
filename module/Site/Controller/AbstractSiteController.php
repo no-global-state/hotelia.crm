@@ -18,6 +18,16 @@ abstract class AbstractSiteController extends AbstractController
     }
 
     /**
+     * Returns current language ID
+     * 
+     * @return int
+     */
+    protected function getCurrentLangId() : int
+    {
+        return 1;
+    }
+
+    /**
      * Validates the request
      * 
      * @return void
