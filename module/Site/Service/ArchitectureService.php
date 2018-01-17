@@ -111,7 +111,7 @@ class ArchitectureService
     public function createStat($hotelId)
     {
         $room = $this->roomMapper->fetchStatistic($hotelId);
-        $floorCount = $this->floorMapper->getFloorCount($hotelId);
+        $floorCount = $this->roomMapper->getFloorCount($hotelId);
 
         // Statistic
         return array(

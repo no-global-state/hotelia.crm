@@ -16,6 +16,21 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Gets floor count by associated hotel ID
+     * 
+     * @param int $hotelId
+     * @return int
+     */
+    public function getFloorCount(int $hotelId) : int
+    {
+        return $this->db->select()
+                        ->count(new RawSqlFragment('DISTINCT floor'))
+                        ->from(self::getTableName())
+                        ->whereEquals('hotel_id', $hotelId)
+                        ->queryScalar();
+    }
+
+    /**
      * Checks whether room name exists
      * 
      * @param string $name
@@ -172,7 +187,7 @@ final class RoomMapper extends AbstractMapper
                         // Remove duplicates in case pre-reservation is done
                         ->rawAnd()
                         ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
-                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
+                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
                         ->query();
     }
 
