@@ -26,55 +26,16 @@ final class Grid extends AbstractCrmController
     }
 
     /**
-     * @return \Site\Storage\FloorMapper
-     */
-    private function createFloorMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\FloorMapper');
-    }
-
-    /**
-     * Renders the grid
-     * 
-     * @param string $id Floor ID
-     * @return string
-     */
-    private function createGrid($id)
-    {
-        return $this->view->render('architecture/index', array(
-            'floors' => $this->createFloorMapper()->fetchAll($this->getHotelId()),
-            'floorId' => $id,
-            'rooms' => $this->createRoomMapper()->fetchAll($id),
-            'cleaningCollection' => new CleaningCollection(),
-            'roomQualityCollection' => new RoomQualityCollection()
-        ));
-    }
-
-    /**
      * Render floors and rooms
      * 
      * @return string
      */
     public function indexAction()
     {
-        if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
-            $id = $this->getFloorIdKeeper()->getLastCategoryId();
-        } else {
-            $id = $this->createFloorMapper()->getLastFloorId($this->getHotelId());
-        }
-
-        return $this->createGrid($id);
-    }
-
-    /**
-     * View rooms by associated floor ID
-     * 
-     * @param string $id Floor ID
-     * @return string
-     */
-    public function floorAction($id)
-    {
-        $this->getFloorIdKeeper()->persistLastCategoryId($id);
-        return $this->createGrid($id);
+        return $this->view->render('architecture/index', array(
+            'rooms' => $this->createRoomMapper()->fetchAll($this->getHotelId()),
+            'cleaningCollection' => new CleaningCollection(),
+            'roomQualityCollection' => new RoomQualityCollection()
+        ));
     }
 }

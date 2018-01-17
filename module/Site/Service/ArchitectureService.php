@@ -11,13 +11,6 @@ use DateTime;
 class ArchitectureService
 {
     /**
-     * Any compliant mapper implementing floor mapper
-     * 
-     * @var \Site\Storage\MySQL\FloorMapper
-     */
-    private $floorMapper;
-
-    /**
      * Any compliant mapper implementing room mapper
      * 
      * @var \Site\Storage\MySQL\RoomMapper
@@ -34,14 +27,12 @@ class ArchitectureService
     /**
      * State initialization
      * 
-     * @param \Site\Storage\MySQL\FloorMapper $floorMapper
      * @param \Site\Storage\MySQL\RoomMapper $roomMapper
      * @param \Site\Storage\MySQL\RoomTypeMapper $roomTypeMapper
      * @return void
      */
-    public function __construct(FloorMapper $floorMapper, RoomMapper $roomMapper, RoomTypeMapper $roomTypeMapper)
+    public function __construct(RoomMapper $roomMapper, RoomTypeMapper $roomTypeMapper)
     {
-        $this->floorMapper = $floorMapper;
         $this->roomMapper = $roomMapper;
         $this->roomTypeMapper = $roomTypeMapper;
     }
@@ -101,17 +92,6 @@ class ArchitectureService
     }
 
     /**
-     * Returns a collection of floors
-     * 
-     * @param integer $hotelId
-     * @return array
-     */
-    public function getFloors($hotelId)
-    {
-        return ArrayUtils::arrayList($this->floorMapper->fetchAll($hotelId), 'id', 'name');
-    }
-
-    /**
      * Returns room types
      * 
      * @param integer $hotelId
@@ -149,13 +129,30 @@ class ArchitectureService
      * @param integer $hotelId
      * @return array
      */
-    public function createTable($hotelId)
+    public function createTable(int $hotelId) : array
     {
-        $output = array();
+        // Find all rooms associated with current hotel ID
+        $rooms = $this->roomMapper->fetchAll($hotelId);
 
-        foreach ($this->floorMapper->fetchAll($hotelId) as $floor) {
-            $floor['rooms'] = $this->roomMapper->fetchAll($floor['id']);
-            $output[] = $floor;
+        // Data holders
+        $floors = [];
+        $output = [];
+
+        // Append available floors
+        foreach ($rooms as $room) {
+            $floors[] = $room['floor'];
+        }
+
+        // Remove duplicated floors if any
+        $floors = array_unique($floors);
+
+        // Create relation
+        foreach ($floors as $floor) {
+            foreach ($rooms as $room) {
+                if ($room['floor'] == $floor) {
+                    $output[$floor][] = $room;
+                }
+            }
         }
 
         return $output;
@@ -169,10 +166,10 @@ class ArchitectureService
      */
     public function createRooms($hotelId)
     {
-        $output = array();
+        $output = [];
 
-        foreach ($this->createTable($hotelId) as $row) {
-            $output[$row['name']] = ArrayUtils::arrayList($row['rooms'], 'id', 'name');
+        foreach ($this->createTable($hotelId) as $floor => $room) {
+            $output[$floor] = ArrayUtils::arrayList($room, 'id', 'name');
         }
 
         return $output;

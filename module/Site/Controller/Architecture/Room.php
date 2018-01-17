@@ -36,13 +36,8 @@ final class Room extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        if ($this->getFloorIdKeeper()->hasLastCategoryId()) {
-            $entity['floor_id'] = $this->getFloorIdKeeper()->getLastCategoryId();
-        }
-
         return $this->view->render('architecture/form-room', array(
             'entity' => $entity,
-            'floors' => $this->getModuleService('architectureService')->getFloors($this->getHotelId()),
             'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualities' => (new RoomQualityCollection())->getAll()

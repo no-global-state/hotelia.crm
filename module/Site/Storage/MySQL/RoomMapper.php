@@ -48,13 +48,13 @@ final class RoomMapper extends AbstractMapper
         $columns = array(
             self::getFullColumnName('id'),
             self::getFullColumnName('name'),
+            self::getFullColumnName('floor'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
             self::getFullColumnName('description'),
-            RoomTypeMapper::getFullColumnName('type'),
-            FloorMapper::getFullColumnName('name') => 'floor'
+            RoomTypeMapper::getFullColumnName('type')
         );
 
         $db = $this->db->select($columns)
@@ -65,13 +65,6 @@ final class RoomMapper extends AbstractMapper
                         ->equals(
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
-                        )
-                        // Floor relation
-                        ->leftJoin(FloorMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('floor_id'),
-                            FloorMapper::getRawColumn('id')
                         )
                         // Room inventory relation
                         ->leftJoin(RoomInventoryMapper::getTableName())
@@ -169,13 +162,6 @@ final class RoomMapper extends AbstractMapper
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
-                        // Floor relation
-                        ->innerJoin(FloorMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('floor_id'),
-                            FloorMapper::getRawColumn('id')
-                        )
                         // Reservation relation
                         ->leftJoin(ReservationMapper::getTableName())
                         ->on()
@@ -203,12 +189,12 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('id'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('name'),
+            self::getFullColumnName('floor'),
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
             self::getFullColumnName('description'),
             RoomTypeMapper::getFullColumnName('type'),
-            FloorMapper::getFullColumnName('name') => 'floor'
         );
 
         return $this->db->select($columns)
@@ -219,13 +205,6 @@ final class RoomMapper extends AbstractMapper
                         ->equals(
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
-                        )
-                        // Floor relation
-                        ->leftJoin(FloorMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('floor_id'),
-                            FloorMapper::getRawColumn('id')
                         )
                         ->whereEquals(self::getFullColumnName($this->getPk()), $id)
                         ->query();
@@ -242,15 +221,14 @@ final class RoomMapper extends AbstractMapper
         // Columns to be selected
         $columns = array(
             self::getFullColumnName('id'),
-            self::getFullColumnName('floor_id'),
             self::getFullColumnName('type_id'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('name'),
+            self::getFullColumnName('floor'),
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            RoomTypeMapper::getFullColumnName('type'),
-            FloorMapper::getFullColumnName('name') => 'floor'
+            RoomTypeMapper::getFullColumnName('type')
         );
 
         return $this->db->select($columns)
@@ -262,13 +240,6 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
                         )
-                        // Floor relation
-                        ->leftJoin(FloorMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('floor_id'),
-                            FloorMapper::getRawColumn('id')
-                        )
                         // Filter by Hotel ID
                         ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
                         ->orderBy(array(FloorMapper::getFullColumnName('name')))
@@ -279,18 +250,18 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetch all rooms by associated floor ID
      * 
-     * @param string $floorId
+     * @param int $hotelId
      * @return array
      */
-    public function fetchAll($floorId)
+    public function fetchAll(int $hotelId)
     {
         // Columns to be selected
         $columns = array(
             self::getFullColumnName('id'),
-            self::getFullColumnName('floor_id'),
             self::getFullColumnName('type_id'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('name'),
+            self::getFullColumnName('floor'),
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
@@ -323,7 +294,7 @@ final class RoomMapper extends AbstractMapper
                         // Remove duplicates in case pre-reservation is done
                         ->rawAnd()
                         ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
-                        ->whereEquals('floor_id', $floorId)
+                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
                         ->orderBy('id')
                         ->desc()
                         ->queryAll();
