@@ -256,8 +256,8 @@ final class RoomMapper extends AbstractMapper
                             RoomTypeMapper::getRawColumn('id')
                         )
                         // Filter by Hotel ID
-                        ->whereEquals(FloorMapper::getFullColumnName('hotel_id'), $hotelId)
-                        ->orderBy(array(FloorMapper::getFullColumnName('name')))
+                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
+                        ->orderBy(array(self::getFullColumnName('name')))
                         ->desc()
                         ->queryAll();
     }

@@ -32,13 +32,10 @@ use Site\Collection\CleaningCollection;
         'batch' => true,
         'columns' => [
             [
-                'column' => 'floor_id',
+                'column' => 'floor',
                 'type' => 'select',
                 'sorting' => false,
-                'label' => 'Floor',
-                'value' => function($row){
-                    return $row['floor'];
-                }
+                'label' => 'Floor'
             ],
 
             [
