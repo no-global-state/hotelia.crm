@@ -1,0 +1,38 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Categories'); ?> <small>(<?= count($categories); ?>)</small></h2>
+
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('Site:RoomCategory@addAction'); ?>"><? $this->show('Add a category'); ?></a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?php $this->show('Name'); ?></th>
+                <th><?php $this->show('Order'); ?></th>
+                <th><?php $this->show('Actions'); ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($categories as $category): ?>
+            <tr>
+                <td><?= $category['id']; ?></td>
+                <td><?= $category['name']; ?></td>
+                <td><?= $category['order']; ?></td>
+                <td>
+                    <a href="<?= $this->url('Site:RoomCategory@editAction', $category['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:RoomCategory@deleteAction', $category['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
