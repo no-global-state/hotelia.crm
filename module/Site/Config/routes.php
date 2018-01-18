@@ -502,10 +502,6 @@ return [
         'controller' => 'Architecture:Grid@indexAction'
     ],
 
-    '/crm/architecture/view/(:var)' => [
-        'controller' => 'Architecture:Grid@floorAction'
-    ],
-
     '/crm/architecture/room/add' => [
         'controller' => 'Architecture:Room@addAction'
     ],
@@ -544,24 +540,6 @@ return [
 
     '/crm/architecture/room/(:var)/inventory/delete/(:var)' => [
         'controller' => 'Architecture:RoomInventory@deleteAction'
-    ],
-
-    '/crm/architecture/floor/add' => [
-        'controller' => 'Architecture:Floor@addAction'
-    ],
-
-    '/crm/architecture/floor/save' => [
-        'controller' => 'Architecture:Floor@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST]
-    ],
-
-    '/crm/architecture/floor/edit/(:var)' => [
-        'controller' => 'Architecture:Floor@editAction'
-    ],
-
-    '/crm/architecture/floor/delete/(:var)' => [
-        'controller' => 'Architecture:Floor@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
     '/crm/stat' => [

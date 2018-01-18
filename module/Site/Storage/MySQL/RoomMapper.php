@@ -100,7 +100,7 @@ final class RoomMapper extends AbstractMapper
         }
 
         // Sort by floor names
-        return $db->orderBy(FloorMapper::getFullColumnName('name'))
+        return $db->orderBy(self::getFullColumnName('name'))
                   ->queryAll();
     }
 
