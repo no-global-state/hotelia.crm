@@ -191,9 +191,10 @@ CREATE TABLE velveto_room_categories_translations (
 CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
-    `type` varchar(255) NOT NULL,
+    `category_id` INT NOT NULL COMMENT 'Attached Category ID',
 
-    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_floor_room_type_prices (
