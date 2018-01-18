@@ -33,7 +33,7 @@ final class Grid extends AbstractCrmController
     public function indexAction()
     {
         return $this->view->render('architecture/index', array(
-            'rooms' => $this->createRoomMapper()->fetchAll($this->getHotelId()),
+            'rooms' => $this->createRoomMapper()->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualityCollection' => new RoomQualityCollection()
         ));

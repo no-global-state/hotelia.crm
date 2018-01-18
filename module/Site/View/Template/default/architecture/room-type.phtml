@@ -29,7 +29,7 @@ use Krystal\Form\Element;
                 <?php foreach ($types as $index => $type): ?>
                 <tr class="<?= $type['id'] == $id ? 'success' : null; ?>">
                     <td><?= $index + 1; ?></td>
-                    <td><?= $type['type']; ?></td>
+                    <td><?= $type['name']; ?></td>
                     <td>
                         <?php foreach ($type['prices'] as $price): ?>
                         <p><?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?></p>
@@ -53,9 +53,9 @@ use Krystal\Form\Element;
             <?= Element::hidden('id', $entity['id']); ?>
 
             <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+              <label class="col-lg-2 control-label"><?php $this->show('Type'); ?></label>
               <div class="col-lg-10">
-                <?= Element::text('type', $entity['type'], array('class' => 'form-control', 'placeholder' => $this->translate('Name the room type. For example - Lux'))); ?>
+                <?= Element::select('category_id', $categories, $entity['category_id'], ['class' => 'form-control']); ?>
               </div>
             </div>
 
