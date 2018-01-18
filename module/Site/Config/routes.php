@@ -4,6 +4,27 @@ use Site\Service\UserService;
 
 return [
 
+    // Room category
+    '/crm/room-category' => [
+        'controller' => 'RoomCategory@indexAction'
+    ],
+
+    '/crm/room-category/add' => [
+        'controller' => 'RoomCategory@addAction'
+    ],
+
+    '/crm/room-category/save' => [
+        'controller' => 'RoomCategory@saveAction'
+    ],
+
+    '/crm/room-category/edit/(:var)' => [
+        'controller' => 'RoomCategory@editAction'
+    ],
+    
+    '/crm/room-category/delete/(:var)' => [
+        'controller' => 'RoomCategory@deleteAction'
+    ],
+
     // Hotel switch
     '/crm/hotel-switch/(:var)' => [
         'controller' => 'Crm@hotelSwitchAction',
