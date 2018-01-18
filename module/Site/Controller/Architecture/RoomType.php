@@ -32,7 +32,8 @@ final class RoomType extends AbstractCrmController
         return $this->view->render('architecture/room-type', array(
             'entity' => $entity,
             'id' => $entity['id'],
-            'types' => $service->fetchAll($this->getHotelId()),
+            'types' => $service->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
             'priceGroups' => $priceGroups
         ));
     }
@@ -58,25 +59,11 @@ final class RoomType extends AbstractCrmController
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
-        $formValidator = $this->createValidator([
-            'input' => [
-                'source' => $data,
-                'definition' => [
-                    'type' => new Pattern\Name
-                ]
-            ]
-        ]);
+        $service = $this->getModuleService('roomTypeService');
+        !$data['id'] ? $service->add($data) : $service->update($data);
 
-        if ($formValidator->isValid()) {
-            $service = $this->getModuleService('roomTypeService');
-            !$data['id'] ? $service->add($data) : $service->update($data);
-
-            $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
-            return 1;
-        
-        } else {
-            return $formValidator->getErrors();
-        }
+        $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
+        return 1;
     }
 
     /**

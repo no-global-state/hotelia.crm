@@ -194,10 +194,11 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetch room data by its associated id
      * 
-     * @param string $id Room ID
+     * @param int $id Room ID
+     * @param int $langId
      * @return array
      */
-    public function fetchById($id)
+    public function fetchById(int $id, int $langId)
     {
         // Columns to be selected
         $columns = array(
@@ -209,19 +210,26 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
             self::getFullColumnName('description'),
-            RoomTypeMapper::getFullColumnName('type'),
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
         );
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
                         // Type relation
-                        ->leftJoin(RoomTypeMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('type_id'),
-                            RoomTypeMapper::getRawColumn('id')
-                        )
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            self::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
                         ->whereEquals(self::getFullColumnName($this->getPk()), $id)
+                        // Language ID filter
+                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                         ->query();
     }
 
@@ -265,13 +273,14 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetch all rooms by associated floor ID
      * 
+     * @param int $langId
      * @param int $hotelId
      * @return array
      */
-    public function fetchAll(int $hotelId)
+    public function fetchAll(int $langId, int $hotelId)
     {
         // Columns to be selected
-        $columns = array(
+        $columns = [
             self::getFullColumnName('id'),
             self::getFullColumnName('type_id'),
             self::getFullColumnName('persons'),
@@ -280,7 +289,7 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            RoomTypeMapper::getFullColumnName('type'),
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
             ReservationMapper::getFullColumnName('departure'),
 
             // Availability indicators (virtual columns)
@@ -288,29 +297,33 @@ final class RoomMapper extends AbstractMapper
             new RawSqlFragment('(CURDATE() > departure) AS free'),
             new RawSqlFragment('(CURDATE() = departure) AS leaving_today'),
             new RawSqlFragment('DATEDIFF(departure, CURDATE()) AS left_days'),
-        );
+        ];
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
                         // Type relation
-                        ->leftJoin(RoomTypeMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('type_id'),
-                            RoomTypeMapper::getRawColumn('id')
-                        )
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            self::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
                         // Reservation relation
-                        ->leftJoin(ReservationMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('id'),
-                            ReservationMapper::getRawColumn('room_id')
-                        )
+                        ->leftJoin(ReservationMapper::getTableName(), [
+                            self::getFullColumnName('id') => ReservationMapper::getRawColumn('room_id')
+                        ])
                         // Remove duplicates in case pre-reservation is done
                         ->rawAnd()
                         ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
                         ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
-                        ->orderBy('id')
+                        // Language ID constraint
+                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
+                        ->orderBy(self::getFullColumnName('id'))
                         ->desc()
                         ->queryAll();
     }

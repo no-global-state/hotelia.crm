@@ -94,12 +94,13 @@ class ArchitectureService
     /**
      * Returns room types
      * 
+     * @param int $langId
      * @param integer $hotelId
      * @return array
      */
-    public function getRoomTypes($hotelId)
+    public function getRoomTypes(int $langId, int $hotelId)
     {
-        return ArrayUtils::arrayList($this->roomTypeMapper->fetchAll($hotelId), 'id', 'type');
+        return ArrayUtils::arrayList($this->roomTypeMapper->fetchAll($langId, $hotelId), 'id', 'name');
     }
 
     /**
@@ -126,13 +127,14 @@ class ArchitectureService
     /**
      * Creates table
      * 
+     * @param int $langId
      * @param integer $hotelId
      * @return array
      */
-    public function createTable(int $hotelId) : array
+    public function createTable(int $langId, int $hotelId) : array
     {
         // Find all rooms associated with current hotel ID
-        $rooms = $this->roomMapper->fetchAll($hotelId);
+        $rooms = $this->roomMapper->fetchAll($langId, $hotelId);
 
         // Data holders
         $floors = [];
@@ -161,14 +163,15 @@ class ArchitectureService
     /**
      * Create rooms
      * 
+     * @param int $langId
      * @param integer $hotelId
      * @return array
      */
-    public function createRooms($hotelId)
+    public function createRooms(int $langId, int $hotelId)
     {
         $output = [];
 
-        foreach ($this->createTable($hotelId) as $floor => $room) {
+        foreach ($this->createTable($langId, $hotelId) as $floor => $room) {
             $output[$floor] = ArrayUtils::arrayList($room, 'id', 'name');
         }
 

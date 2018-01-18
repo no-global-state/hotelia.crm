@@ -130,7 +130,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
         $columns = array(
             RoomMapper::getFullColumnName('id'),
             RoomMapper::getFullColumnName('name'),
-            RoomTypeMapper::getFullColumnName('type'),
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
             self::getFullColumnName('arrival'),
             self::getFullColumnName('departure'),
             self::getFullColumnName('id') => 'reservation_id'
@@ -152,6 +152,14 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                             RoomMapper::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
                         )
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
                         // Hotel ID constraint
                         ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId);
 

@@ -38,7 +38,7 @@ final class Room extends AbstractCrmController
     {
         return $this->view->render('architecture/form-room', array(
             'entity' => $entity,
-            'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
+            'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualities' => (new RoomQualityCollection())->getAll()
         ));
@@ -52,7 +52,7 @@ final class Room extends AbstractCrmController
      */
     public function viewAction(int $id)
     {
-        $entity = $this->createRoomMapper()->fetchById($id);
+        $entity = $this->createRoomMapper()->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->disableLayout()->render('architecture/room-view', array(
             'entity' => $entity,

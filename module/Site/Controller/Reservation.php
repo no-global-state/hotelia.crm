@@ -72,7 +72,7 @@ class Reservation extends AbstractCrmController
             'priceGroupList' => ArrayUtils::arrayList($priceGroups, 'id', 'name'),
             'priceGroups' => $priceGroups,
 
-            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
+            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
             'prices' => $this->getModuleService('roomTypeService')->findAllPrices($this->getHotelId()),
             'discounts' => $this->createDiscounts(),
 
@@ -132,7 +132,7 @@ class Reservation extends AbstractCrmController
             'data' => $data,
             'paginator' => $mapper->getPaginator(),
             'countries' => (new Country)->getAll(),
-            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getHotelId()),
+            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
             'showRooms' => $showRooms,
             'reservationCollection' => new ReservationCollection
         ));
@@ -209,13 +209,13 @@ class Reservation extends AbstractCrmController
         $rooms = ReservationService::parseRooms($rooms);
 
         return $this->view->render('reservation/table', array(
-            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getHotelId()),
+            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
             'type' => $type,
             'rooms' => $rooms,
             'periods' => (new DaysCollection())->getAll(),
             'period' => $period,
             'dates' => ReservationService::createPeriodRange($period),
-            'table' => $this->getModuleService('architectureService')->createTable($this->getHotelId())
+            'table' => $this->getModuleService('architectureService')->createTable($this->getCurrentLangId(), $this->getHotelId())
         ));
     }
 
@@ -242,7 +242,7 @@ class Reservation extends AbstractCrmController
      */
     public function viewAction($id)
     {
-        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity

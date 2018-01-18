@@ -71,12 +71,13 @@ final class RoomTypeService
     /**
      * Fetch all room types
      * 
+     * @param int $langId
      * @param int $hotelId
      * @return array
      */
-    public function fetchAll(int $hotelId) : array
+    public function fetchAll(int $langId, int $hotelId) : array
     {
-        $rows = $this->roomTypeMapper->fetchAll($hotelId);
+        $rows = $this->roomTypeMapper->fetchAll($langId, $hotelId);
 
         foreach ($rows as &$row) {
             $row['prices'] = $this->findPricesByRoomTypeId($row['id']);
