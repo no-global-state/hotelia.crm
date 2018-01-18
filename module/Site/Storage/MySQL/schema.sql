@@ -174,6 +174,20 @@ CREATE TABLE velveto_floor_room (
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_room_categories (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL COMMENT 'Sorting order'
+);
+
+CREATE TABLE velveto_room_categories_translations (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL COMMENT 'Room category name',
+
+    FOREIGN KEY (id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
