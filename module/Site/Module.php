@@ -12,6 +12,7 @@ use Site\Service\RoomGalleryService;
 use Site\Service\RoomTypeService;
 use Site\Service\HotelService;
 use Site\Service\RegionService;
+use Site\Service\DistrictService;
 use Site\Service\DiscountService;
 use Site\Service\PaymentSystemService;
 use Site\Service\HotelTypeService;
@@ -167,6 +168,10 @@ final class Module extends AbstractModule
 
             'roomCategoryService' => new RoomCategoryService(
                 $this->createMapper('\Site\Storage\MySQL\RoomCategoryMapper')
+            ),
+
+            'districtService' => new DistrictService(
+                $this->createMapper('\Site\Storage\MySQL\DistrictMapper')
             )
         );
     }
