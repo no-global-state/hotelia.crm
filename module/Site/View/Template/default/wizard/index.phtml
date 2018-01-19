@@ -74,7 +74,22 @@ use Krystal\Form\Element;
                                 <div class="form-group">
                                   <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
                                   <div class="col-lg-10">
-                                    <?= Element::select('hotel[region_id]', $regions, null, ['class' => 'form-control']); ?>
+                                    <?= Element::select('hotel[region_id]', $regions, null, ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
+                                        return [
+                                            'data-region-id' => $key,
+                                        ];
+                                    }); ?>
+                                  </div>
+                                </div>
+
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label"><? $this->show('District'); ?></label>
+                                  <div class="col-lg-10">
+                                    <select name="hotel[district_id]" class="form-control" data-select="district">
+                                    <?php foreach ($districts as $district): ?>
+                                    <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id']]); ?>
+                                    <?php endforeach; ?>
+                                    </select>
                                   </div>
                                 </div>
 
