@@ -4,6 +4,27 @@ use Site\Service\UserService;
 
 return [
 
+    // District
+    '/crm/district' => [
+        'controller' => 'District@indexAction'
+    ],
+
+    '/crm/district/edit/(:var)' => [
+        'controller' => 'District@editAction'
+    ],
+
+    '/crm/district/delete/(:var)' => [
+        'controller' => 'District@deleteAction'
+    ],
+
+    '/crm/district/add' => [
+        'controller' => 'District@addAction'
+    ],
+
+    '/crm/district/save' => [
+        'controller' => 'District@saveAction'
+    ],
+
     // Room category
     '/crm/room-category' => [
         'controller' => 'RoomCategory@indexAction'
