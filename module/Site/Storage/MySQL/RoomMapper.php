@@ -236,10 +236,11 @@ final class RoomMapper extends AbstractMapper
     /**
      * Fetches cleaning data of rooms
      * 
+     * @param int $langId
      * @param integer $hotelId
      * @return array
      */
-    public function fetchCleaning($hotelId)
+    public function fetchCleaning(int $langId, int $hotelId)
     {
         // Columns to be selected
         $columns = array(
@@ -251,7 +252,7 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            RoomTypeMapper::getFullColumnName('type')
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
         );
 
         return $this->db->select($columns)
@@ -263,8 +264,18 @@ final class RoomMapper extends AbstractMapper
                             self::getFullColumnName('type_id'),
                             RoomTypeMapper::getRawColumn('id')
                         )
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
                         // Filter by Hotel ID
                         ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
+                        // Language ID filter
+                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                         ->orderBy(array(self::getFullColumnName('name')))
                         ->desc()
                         ->queryAll();

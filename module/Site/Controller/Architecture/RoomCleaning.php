@@ -24,11 +24,11 @@ final class RoomCleaning extends AbstractCrmController
      */
     public function indexAction()
     {
-        $types = ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll($this->getHotelId()), 'id', 'type');
+        $types = ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll($this->getCurrentLangId(), $this->getHotelId()), 'id', 'name');
 
         return $this->view->render('architecture/room-cleaning', array(
             'types' => $types,
-            'data' => $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchCleaning($this->getHotelId())
+            'data' => $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchCleaning($this->getCurrentLangId(), $this->getHotelId())
         ));
     }
 
