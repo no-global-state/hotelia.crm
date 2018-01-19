@@ -12,7 +12,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      */
     protected static $translateable = [
         'name',
-        'city',
         'address',
         'lang_id'
     ];
@@ -66,7 +65,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             self::getFullColumnName('lat'),
             self::getFullColumnName('lng'),
             HotelTranslationMapper::getFullColumnName('lang_id'),
-            HotelTranslationMapper::getFullColumnName('city'),
             HotelTranslationMapper::getFullColumnName('name'),
             HotelTranslationMapper::getFullColumnName('address'),
             HotelTranslationMapper::getFullColumnName('description')
@@ -94,7 +92,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                    // Language ID constraint
                    ->whereEquals(self::getDynamicAttribute('lang_id'), $parameters['lang_id'])
                    ->andWhereLike(self::getDynamicAttribute('name'), '%'.$input['name'].'%', true)
-                   ->andWhereLike(self::getDynamicAttribute('city'), '%'.$input['city'].'%', true)
                    ->andWhereLike(self::getDynamicAttribute('address'), '%'.$input['address'].'%', true)
                    ->andWhereLike(self::getDynamicAttribute('phone'), '%'.$input['phone'].'%', true)
                    ->andWhereLike(self::getDynamicAttribute('website'), '%'.$input['website'].'%', true)

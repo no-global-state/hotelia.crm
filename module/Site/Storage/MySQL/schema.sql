@@ -295,7 +295,6 @@ CREATE TABLE velveto_hotels (
 CREATE TABLE velveto_hotels_translation (
     `id` INT NOT NULL,
     `lang_id` INT NOT NULL,
-    `city` varchar(255) NOT NULL,
     `name` varchar(255) NOT NULL,
     `address` varchar(255) NOT NULL,
     `description` TEXT NOT NULL,
