@@ -28,7 +28,7 @@ final class Region extends AbstractCrmController
      */
     private function createForm($region)
     {
-        return $this->view->render('region/form', [
+        return $this->view->render('region/region', [
             'region' => $region
         ]);
     }
