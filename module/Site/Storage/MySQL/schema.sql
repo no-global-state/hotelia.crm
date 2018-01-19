@@ -50,6 +50,23 @@ CREATE TABLE velveto_regions_translation (
     FOREIGN KEY (id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_regions_districts (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `region_id` INT NOT NULL COMMENT 'Attached region ID',
+    `order` INT NOT NULL COMMENT 'Disctrict sorting order',
+
+    FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
+);
+
+CREATE TABLE velveto_regions_districts_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255),
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_reviews_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL COMMENT 'Sorting order',
