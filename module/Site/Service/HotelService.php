@@ -16,6 +16,13 @@ final class HotelService implements FilterableServiceInterface
     private $hotelMapper;
 
     /**
+     * Any compliant user mapper
+     * 
+     * @var \Site\Storage\MySQL\UserMapper
+     */
+    private $userMapper;
+
+    /**
      * State initialization
      * 
      * @param \Site\Storage\MySQL\HotelMapper $hotelMapper
