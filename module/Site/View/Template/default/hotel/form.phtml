@@ -42,13 +42,6 @@ use Site\Service\LanguageService;;
                         </div>
 
                         <div class="form-group">
-                          <label class="col-lg-2 control-label"><? $this->show('City'); ?></label>
-                          <div class="col-lg-10">
-                            <?= Element::text(sprintf('translation[%s][city]', $language['id']), $entity['city'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the city name'))); ?>
-                          </div>
-                        </div>
-
-                        <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Address'); ?></label>
                           <div class="col-lg-10">
                             <?= Element::textarea(sprintf('translation[%s][address]', $language['id']), $entity['address'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full address'))); ?>
