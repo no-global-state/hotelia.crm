@@ -15,7 +15,8 @@ final class Region extends AbstractCrmController
     public function indexAction()
     {
         return $this->view->render('region/index', [
-            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId())
+            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
+            'districts' => $this->getModuleService('districtService')->fetchAll($this->getCurrentLangId())
         ]);
     }
 

@@ -4,35 +4,64 @@ use Krystal\Form\Element;
 
 ?>
 
-<h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Regions'); ?> <small>(<?= count($regions); ?>)</small></h2>
+<div class="row">
+    <div class="col-lg-6">
+        <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Regions'); ?> <small>(<?= count($regions); ?>)</small></h2>
+        <p><a class="btn btn-primary" href="<?= $this->url('Site:Region@addAction'); ?>"><? $this->show('Add a region'); ?></a></p>
 
-<p>
-    <a class="btn btn-primary" href="<?= $this->url('Site:Region@addAction'); ?>"><? $this->show('Add a region'); ?></a>
-</p>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Order'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
 
-<div class="table-responsive">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th><?php $this->show('Name'); ?></th>
-                <th><?php $this->show('Order'); ?></th>
-                <th><?php $this->show('Actions'); ?></th>
-            </tr>
-        </thead>
+            <tbody>
+                <?php foreach ($regions as $region): ?>
+                <tr class="<?= $region['id'] == $entity['id'] ? 'success' : null; ?>">
+                    <td><?= $region['id']; ?></td>
+                    <td><?= $region['name']; ?></td>
+                    <td><?= $region['order']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:Region@editAction', $region['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:Region@deleteAction', $region['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="col-lg-6">
+        <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Districts'); ?> <small>(<?= count($districts); ?>)</small></h2>
+        <p><a class="btn btn-primary" href="<?= $this->url('Site:District@addAction'); ?>"><? $this->show('Add a district'); ?></a></p>
+    
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th><?php $this->show('Name'); ?></th>
+                    <th><?php $this->show('Order'); ?></th>
+                    <th><?php $this->show('Actions'); ?></th>
+                </tr>
+            </thead>
 
-        <tbody>
-            <?php foreach ($regions as $region): ?>
-            <tr class="<?= $region['id'] == $entity['id'] ? 'success' : null; ?>">
-                <td><?= $region['id']; ?></td>
-                <td><?= $region['name']; ?></td>
-                <td><?= $region['order']; ?></td>
-                <td>
-                    <a href="<?= $this->url('Site:Region@editAction', $region['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                    <a data-button="delete" href="<?= $this->url('Site:Region@deleteAction', $region['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+            <tbody>
+                <?php foreach ($districts as $district): ?>
+                <tr>
+                    <td><?= $district['id']; ?></td>
+                    <td><?= $district['name']; ?></td>
+                    <td><?= $district['order']; ?></td>
+                    <td>
+                        <a href="<?= $this->url('Site:District@editAction', $district['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <a data-button="delete" href="<?= $this->url('Site:District@deleteAction', $district['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
