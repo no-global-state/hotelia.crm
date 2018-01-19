@@ -16,6 +16,7 @@ final class Region extends AbstractCrmController
     private function createGrid($regionId) : string
     {
         return $this->view->render('region/index', [
+            'regionId' => $regionId,
             'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
             'districts' => $this->getModuleService('districtService')->fetchAll($regionId, $this->getCurrentLangId())
         ]);

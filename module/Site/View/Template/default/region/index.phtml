@@ -21,7 +21,7 @@ use Krystal\Form\Element;
 
             <tbody>
                 <?php foreach ($regions as $region): ?>
-                <tr class="<?= $region['id'] == $entity['id'] ? 'success' : null; ?>">
+                <tr class="<?= $region['id'] == $regionId ? 'success' : null; ?>">
                     <td><?= $region['id']; ?></td>
                     <td><a href="<?= $this->url('Site:Region@districtAction', $region['id']); ?>"><?= $region['name']; ?></a></td>
                     <td><?= $region['order']; ?></td>
