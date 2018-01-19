@@ -50,6 +50,7 @@ final class RoomMapper extends AbstractMapper
     /**
      * Finds free available rooms based on date range and attached hotel ID
      * 
+     * @param integer $langId
      * @param integer $hotelId
      * @param string $arrival
      * @param string $departure
@@ -57,7 +58,7 @@ final class RoomMapper extends AbstractMapper
      * @param array $inventoryIds Inventory ID filters
      * @return array
      */
-    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
+    public function findFreeRooms(int $langId, int $hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
     {
         // Columns to be selected
         $columns = array(
@@ -69,26 +70,29 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
             self::getFullColumnName('description'),
-            RoomTypeMapper::getFullColumnName('type')
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
         );
 
         $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         // Room type mapper
-                        ->leftJoin(RoomTypeMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('type_id'),
-                            RoomTypeMapper::getRawColumn('id')
-                        )
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            self::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
                         // Room inventory relation
-                        ->leftJoin(RoomInventoryMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            RoomInventoryMapper::getFullColumnName('room_id'),
-                            self::getRawColumn('id')
-                        )
-                        ->whereEquals('1', '1')
+                        ->leftJoin(RoomInventoryMapper::getTableName(), [
+                            RoomInventoryMapper::getFullColumnName('room_id') => self::getRawColumn('id')
+                        ])
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Language ID constraint
+                        ->whereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                         ->andWhereNotIn(self::getFullColumnName('id'), new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
                         ->andWhereIn('type_id', $typeIds) // Will not be appended if $typeIds is empty
                         ->andWhereIn(RoomInventoryMapper::getFullColumnName('inventory_id'), $inventoryIds) // Will not be appended if $inventoryIds is empty

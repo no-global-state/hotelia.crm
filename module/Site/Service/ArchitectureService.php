@@ -63,32 +63,34 @@ class ArchitectureService
     /**
      * Find available rooms for next days
      * 
+     * @param int $langId
      * @param string $hotelId Current hotel ID
      * @param string $days Days to add to current date
      * @return array
      */
-    public function findAvailableRooms($hotelId, $days = '+10 day')
+    public function findAvailableRooms(int $langId, int $hotelId, $days = '+10 day')
     {
         $format = 'Y-m-d';
         $today = date($format);
 
         $next = (new DateTime($today))->modify($days)->format($format);
-        return $this->findFreeRooms($hotelId, $today, $next);
+        return $this->findFreeRooms($langId, $hotelId, $today, $next);
     }
 
     /**
      * Finds free available rooms based on date range and attached hotel ID
      * 
-     * @param integer $hotelId
+     * @param int $langId
+     * @param int $hotelId
      * @param string $arrival
      * @param string $departure
      * @param array $typeIds Optional type ID filters
      * @param array $inventoryIds
      * @return array
      */
-    public function findFreeRooms($hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
+    public function findFreeRooms(int $langId, int $hotelId, $arrival, $departure, $typeIds = array(), $inventoryIds = array())
     {
-        return $this->roomMapper->findFreeRooms($hotelId, $arrival, $departure, $typeIds, $inventoryIds);
+        return $this->roomMapper->findFreeRooms($langId, $hotelId, $arrival, $departure, $typeIds, $inventoryIds);
     }
 
     /**
