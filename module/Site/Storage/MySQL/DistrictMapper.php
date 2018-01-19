@@ -51,15 +51,22 @@ final class DistrictMapper extends AbstractMapper
     /**
      * Fetch all districts
      * 
+     * @param int|null $regionId Optional region Id filter
      * @param int $langId Language ID filter
      * @return array
      */
-    public function fetchAll(int $langId) : array
+    public function fetchAll($regionId = null, int $langId) : array
     {
-        return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(DistrictTranslationMapper::getFullColumnName('lang_id'), $langId)
-                    ->orderBy($this->getPk())
-                    ->desc()
-                    ->queryAll();
+        $db =  $this->createEntitySelect($this->getColumns())
+                    ->whereEquals(DistrictTranslationMapper::getFullColumnName('lang_id'), $langId);
+
+        // Optional region ID filter
+        if ($regionId !== null) {
+            $db->andWhereEquals(self::getFullColumnName('region_id'), $regionId);
+        }
+
+        return $db->orderBy($this->getPk())
+                  ->desc()
+                  ->queryAll();
     }
 }

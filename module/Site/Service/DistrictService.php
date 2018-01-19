@@ -40,12 +40,13 @@ final class DistrictService
     /**
      * Fetch all districts
      * 
+     * @param int|null $regionId Optional region Id filter
      * @param int $langId Language ID filter
      * @return array
      */
-    public function fetchAll(int $langId) : array
+    public function fetchAll($regionId = null, int $langId) : array
     {
-        return $this->districtMapper->fetchAll($langId);
+        return $this->districtMapper->fetchAll($regionId, $langId);
     }
 
     /**
