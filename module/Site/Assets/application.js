@@ -247,6 +247,23 @@ $(function(){
     }).hover(function(){
         $(this).css('background', $(this).data('hover-color'));
     });
+
+    // Region change listener
+    $("[data-select='region']").change(function(){
+        // Target option
+        var hiddenClass = 'hidden';
+        var selected = $(this).find(':selected').data('region-id');
+
+        // Hide all options
+        $("[data-select='district']").find('option')
+                                     .addClass(hiddenClass)
+                                     .each(function(){
+                                         if ($(this).data('region-id') == selected) {
+                                            $(this).removeClass(hiddenClass);
+                                         }
+                                     });
+    }).trigger('change');
+
 });
 
 
