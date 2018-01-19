@@ -8,16 +8,38 @@ use Krystal\Db\Filter\InputDecorator;
 final class Region extends AbstractCrmController
 {
     /**
+     * Creates main grid
+     * 
+     * @param int|null $regionId
+     * @return string
+     */
+    private function createGrid($regionId) : string
+    {
+        return $this->view->render('region/index', [
+            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
+            'districts' => $this->getModuleService('districtService')->fetchAll($regionId, $this->getCurrentLangId())
+        ]);
+    }
+
+    /**
      * Renders list of regions
      * 
      * @return string
      */
-    public function indexAction()
+    public function indexAction() : string
     {
-        return $this->view->render('region/index', [
-            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
-            'districts' => $this->getModuleService('districtService')->fetchAll($this->getCurrentLangId())
-        ]);
+        return $this->createGrid(null);
+    }
+
+    /**
+     * List all districts by region id
+     * 
+     * @param int $id Region id
+     * @return string
+     */
+    public function districtAction(int $id) : string
+    {
+        return $this->createGrid($id);
     }
 
     /**

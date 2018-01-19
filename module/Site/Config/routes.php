@@ -194,6 +194,12 @@ return [
         'controller' => 'Region@indexAction',
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
+
+    '/crm/regions/view/(:var)' => [
+        'controller' => 'Region@districtAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+    ],
+
     '/crm/regions/edit/(:var)' => [
         'controller' => 'Region@editAction',
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]

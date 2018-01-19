@@ -23,7 +23,7 @@ use Krystal\Form\Element;
                 <?php foreach ($regions as $region): ?>
                 <tr class="<?= $region['id'] == $entity['id'] ? 'success' : null; ?>">
                     <td><?= $region['id']; ?></td>
-                    <td><?= $region['name']; ?></td>
+                    <td><a href="<?= $this->url('Site:Region@districtAction', $region['id']); ?>"><?= $region['name']; ?></a></td>
                     <td><?= $region['order']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Region@editAction', $region['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -34,7 +34,7 @@ use Krystal\Form\Element;
             </tbody>
         </table>
     </div>
-    
+
     <div class="col-lg-6">
         <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Districts'); ?> <small>(<?= count($districts); ?>)</small></h2>
         <p><a class="btn btn-primary" href="<?= $this->url('Site:District@addAction'); ?>"><? $this->show('Add a district'); ?></a></p>
