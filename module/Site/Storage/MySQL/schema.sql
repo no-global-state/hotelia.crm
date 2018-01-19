@@ -277,6 +277,7 @@ CREATE TABLE velveto_hotels (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type_id` INT NOT NULL COMMENT 'Type ID',
     `region_id` INT NOT NULL COMMENT 'Attached region ID',
+    `district_id` INT NOT NULL COMMENT 'Attached district ID',
     `phone` varchar(255) NOT NULL,
     `start_price` FLOAT NOT NULL,
     `rate` SMALLINT COMMENT 'Hotel rate',
@@ -287,6 +288,7 @@ CREATE TABLE velveto_hotels (
     `lat` varchar(255),
     `lng` varchar(255),
 
+    FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
 
