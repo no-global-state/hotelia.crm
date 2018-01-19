@@ -1,0 +1,72 @@
+<?php
+
+use Site\Service\LanguageService;
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:District@saveAction'); ?>">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#district" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('District'); ?></a></li>
+        <li role="presentation"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="district" role="tabpanel">
+            <div class="well">
+                <?php $this->loadPartial('language-tabs'); ?>
+
+                <div class="tab-content">
+                    <?php foreach ($languages as $index => $language): ?>
+                    <div class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>" id="<?php printf('language-%s', $language['id']); ?>" role="tabpanel">
+                        <?php $entity = LanguageService::findByLangId($language['id'], $district); ?>
+
+                        <?= Element::hidden(sprintf('translation[%s][id]', $language['id']), $entity['id']); ?>
+                        <?= Element::hidden(sprintf('translation[%s][lang_id]', $language['id']), $language['id']); ?>
+
+                        <?php $this->loadPartial('language-name', ['language' => $language]); ?>
+
+                        <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the district' : 'Add new district'); ?></legend>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text(sprintf('translation[%s][name]', $language['id']), $entity['name'], array('class' => 'form-control')); ?>
+                          </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="configuration" role="tabpanel">
+            <div class="well">
+                <?= Element::hidden('district[id]', $entity['id']); ?>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><?php $this->show('Region'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::select('district[region_id]', $regions, $entity['region_id'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::number('district[order]', $entity['order'], array('class' => 'form-control', 'min' => 0)); ?>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+            <?php if ($entity['id']): ?>
+            <a href="<?= $this->url('Site:District@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+            <?php endif; ?>
+          </div>
+        </div>
+    </div>
+</form>
