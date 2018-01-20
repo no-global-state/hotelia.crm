@@ -53,11 +53,12 @@ class ArchitectureService
      * Gets room data by its associated ID
      * 
      * @param string $id Room ID
+     * @param int $langId
      * @return array
      */
-    public function getById($id)
+    public function getById(int $id, int $langId)
     {
-        return $this->roomMapper->fetchById($id);
+        return $this->roomMapper->fetchById($id, $langId);
     }
 
     /**
