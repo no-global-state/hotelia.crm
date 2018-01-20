@@ -1,0 +1,51 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<? $this->loadPartial('hint', [
+    'lines' => [
+        'Add all possible room types and their prices available in your hotel.',
+        'You can then attach created types to rooms to be created.'
+    ]
+]); ?>
+
+<h2 class="page-header"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?> <small>(<?= count($types); ?>)</small></h2>
+
+<p><a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@addAction'); ?>"><? $this->show('Add room type'); ?></a></p>
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><?php $this->show('Name'); ?></th>
+                <th><?php $this->show('Persons'); ?></th>
+                <th><?php $this->show('Prices'); ?></th>
+                <th><?php $this->show('Actions'); ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($types as $index => $type): ?>
+            <tr>
+                <td><?= $index + 1; ?></td>
+                <td><?= $type['name']; ?></td>
+                <td>
+                    <?= str_repeat('<i class="glyphicon glyphicon-user"></i> ', $type['persons']); ?>
+                </td>
+                <td>
+                    <?php foreach ($type['prices'] as $price): ?>
+                    <p><?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?></p>
+                    <?php endforeach; ?>
+                </td>
+                <td>
+                    <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>

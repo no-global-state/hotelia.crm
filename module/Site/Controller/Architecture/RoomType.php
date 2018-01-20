@@ -19,23 +19,20 @@ use Krystal\Validate\Pattern;
 final class RoomType extends AbstractCrmController
 {
     /**
-     * Creates the grid
+     * Creates room type form
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $entity
      * @param array $priceGroups
      * @return string
      */
-    private function createGrid($entity, array $priceGroups) : string
+    private function createForm($entity, array $priceGroups) : string
     {
-        $service = $this->getModuleService('roomTypeService');
-
-        return $this->view->render('architecture/room-type', array(
+        return $this->view->render('room-type/form', [
             'entity' => $entity,
-            'id' => $entity['id'],
-            'types' => $service->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
             'priceGroups' => $priceGroups
-        ));
+        ]);
     }
 
     /**
@@ -45,8 +42,10 @@ final class RoomType extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
-        return $this->createGrid(new InputDecorator(), $priceGroups);
+        return $this->view->render('room-type/index', array(
+            'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
+        ));
     }
 
     /**
@@ -67,6 +66,17 @@ final class RoomType extends AbstractCrmController
     }
 
     /**
+     * Renders adding form
+     * 
+     * @return string
+     */
+    public function addAction()
+    {
+        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+        return $this->createForm(new InputDecorator(), $priceGroups);
+    }
+
+    /**
      * Edits the room type by its ID
      * 
      * @param int $id Room type ID
@@ -81,7 +91,7 @@ final class RoomType extends AbstractCrmController
             $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
             $priceGroups = array_replace_recursive($priceGroups, $service->findPricesByRoomTypeId($id));
 
-            return $this->createGrid($room, $priceGroups);
+            return $this->createForm($room, $priceGroups);
         } else {
             return false;
         }

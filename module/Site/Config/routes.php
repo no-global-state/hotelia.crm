@@ -532,6 +532,10 @@ return [
         'controller' => 'Architecture:RoomType@indexAction'
     ],
 
+    '/crm/architecture/room-type/add' => [
+        'controller' => 'Architecture:RoomType@addAction'
+    ],
+
     '/crm/architecture/room-type/edit/(:var)' => [
         'controller' => 'Architecture:RoomType@editAction'
     ],
