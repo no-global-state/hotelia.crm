@@ -209,6 +209,7 @@ CREATE TABLE velveto_floor_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
     `category_id` INT NOT NULL COMMENT 'Attached Category ID',
+    `persons` INT NOT COMMENT 'Maximal amount of persons for the room',
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE

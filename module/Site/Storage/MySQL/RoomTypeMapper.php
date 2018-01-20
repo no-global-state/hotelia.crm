@@ -26,6 +26,7 @@ final class RoomTypeMapper extends AbstractMapper
             RoomTypeMapper::getFullColumnName('id'),
             RoomTypeMapper::getFullColumnName('hotel_id'),
             RoomTypeMapper::getFullColumnName('category_id'),
+            RoomTypeMapper::getFullColumnName('persons'),
             RoomCategoryTranslationMapper::getFullColumnName('name')
         ];
 
