@@ -44,17 +44,19 @@ final class RoomTypeMapper extends AbstractMapper
      * 
      * @param string $arrival
      * @param string $departure
+     * @param int $priceGroupId Price group ID filter
      * @param int $langId
      * @param int $hotelId
      * @return array
      */
-    public function findAvailableTypes(string $arrival, string $departure, int $langId, int $hotelId) : array
+    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId) : array
     {
         // Columns to be selected
         $columns = [
             RoomCategoryTranslationMapper::getFullColumnName('name'),
             self::getFullColumnName('persons'),
             RoomTypeTranslationMapper::getFullColumnName('description'),
+            RoomTypePriceMapper::getFullColumnName('price'),
             new RawSqlFragment(sprintf('(COUNT(%s) - COUNT(%s)) AS free_count', 
                 RoomMapper::getFullColumnName('type_id'), 
                 ReservationMapper::getFullColumnName('id')
@@ -91,13 +93,19 @@ final class RoomTypeMapper extends AbstractMapper
                             self::getFullColumnName('id') => RoomTypeTranslationMapper::getRawColumn('id'),
                             RoomTypeTranslationMapper::getFullColumnName('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
                        ])
+                       // Room type price relation
+                       ->leftJoin(RoomTypePriceMapper::getTableName(), [
+                            RoomTypePriceMapper::getFullColumnName('room_type_id') => RoomTypeMapper::getRawColumn('id')
+                       ])
                        // Constraints
                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
+                       ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), $priceGroupId)
                        ->groupBy([
                             RoomCategoryTranslationMapper::getFullColumnName('name'),
                             self::getFullColumnName('persons'),
                             RoomTypeTranslationMapper::getFullColumnName('description'),
+                            RoomTypePriceMapper::getFullColumnName('price'),
                        ]);
 
         return $db->queryAll();
