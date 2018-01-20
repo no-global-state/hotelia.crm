@@ -39,6 +39,20 @@ final class RoomTypeService
     }
 
     /**
+     * Find available room types based on dates
+     * 
+     * @param string $arrival
+     * @param string $departure
+     * @param int $langId
+     * @param int $hotelId
+     * @return array
+     */
+    public function findAvailableTypes(string $arrival, string $departure, int $langId, int $hotelId) : array
+    {
+        return $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $langId, $hotelId);
+    }
+
+    /**
      * Fetch all room prices
      * 
      * @param int $hotelId
