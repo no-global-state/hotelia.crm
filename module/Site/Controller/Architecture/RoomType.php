@@ -21,14 +21,14 @@ final class RoomType extends AbstractCrmController
     /**
      * Creates room type form
      * 
-     * @param \Krystal\Db\Filter\InputDecorator|array $entity
+     * @param \Krystal\Db\Filter\InputDecorator|array $type
      * @param array $priceGroups
      * @return string
      */
-    private function createForm($entity, array $priceGroups) : string
+    private function createForm($type, array $priceGroups) : string
     {
         return $this->view->render('room-type/form', [
-            'entity' => $entity,
+            'type' => $type,
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
             'priceGroups' => $priceGroups
@@ -56,12 +56,12 @@ final class RoomType extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
-        $data = $this->getWithHotelId($data);
+        $data['type'] = $this->getWithHotelId($data['type']);
 
         $service = $this->getModuleService('roomTypeService');
-        !$data['id'] ? $service->add($data) : $service->update($data);
+        !$data['type']['id'] ? $service->add($data) : $service->update($data);
 
-        $this->flashBag->set('success', $data['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
+        $this->flashBag->set('success', $data['type']['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
         return 1;
     }
 
@@ -85,13 +85,13 @@ final class RoomType extends AbstractCrmController
     public function editAction(int $id)
     {
         $service = $this->getModuleService('roomTypeService');
-        $room = $service->findById($id);
+        $type = $service->findById($id);
 
-        if (!empty($room)) {
+        if (!empty($type)) {
             $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
             $priceGroups = array_replace_recursive($priceGroups, $service->findPricesByRoomTypeId($id));
 
-            return $this->createForm($room, $priceGroups);
+            return $this->createForm($type, $priceGroups);
         } else {
             return false;
         }

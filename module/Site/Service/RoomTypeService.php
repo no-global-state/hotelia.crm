@@ -90,11 +90,12 @@ final class RoomTypeService
      * Finds room type info by its id
      * 
      * @param int $id Room type id
+     * @param int $langId
      * @return mixed
      */
-    public function findById(int $id)
+    public function findById(int $id, int $langId = 0)
     {
-        return $this->roomTypeMapper->findByPk($id);
+        return $this->roomTypeMapper->fetchById($id, $langId);
     }
 
     /**
@@ -122,7 +123,7 @@ final class RoomTypeService
         // No need to insert IDs
         unset($input[self::PARAM_PRICE_GROUP_IDS]);
 
-        $this->roomTypeMapper->persist($input);
+        $this->roomTypeMapper->saveEntity($input['type'], $input['translation']);
 
         return $priceGroupIds;
     }
@@ -136,7 +137,7 @@ final class RoomTypeService
     public function update(array $input)
     {
         $priceGroupIds = $this->save($input);
-        $this->roomTypePriceMapper->save($input['id'], $priceGroupIds);
+        $this->roomTypePriceMapper->save($input['type']['id'], $priceGroupIds);
 
         return true;
     }

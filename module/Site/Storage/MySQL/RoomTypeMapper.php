@@ -13,6 +13,43 @@ final class RoomTypeMapper extends AbstractMapper
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getTranslationTable()
+    {
+        return RoomTypeTranslationMapper::getTableName();
+    }
+
+    /**
+     * Returns shared columns
+     * 
+     * @return array
+     */
+    private function getColumns() : array
+    {
+        return [
+            self::getFullColumnName('id'),
+            RoomTypeTranslationMapper::getFullColumnName('lang_id'),
+            self::getFullColumnName('hotel_id'),
+            self::getFullColumnName('category_id'),
+            self::getFullColumnName('persons'),
+            RoomTypeTranslationMapper::getFullColumnName('description'),
+        ];
+    }
+
+    /**
+     * Fetch region by its ID
+     * 
+     * @param int $id Room type id
+     * @param int $langId Language ID filter
+     * @return array
+     */
+    public function fetchById(int $id, int $langId = 0)
+    {
+        return $this->findEntity($this->getColumns(), $id, $langId);
+    }
+
+    /**
      * Fetch all entities
      * 
      * @param int $langId
@@ -22,13 +59,9 @@ final class RoomTypeMapper extends AbstractMapper
     public function fetchAll(int $langId, int $hotelId) : array
     {
         // Columns to be selected
-        $columns = [
-            RoomTypeMapper::getFullColumnName('id'),
-            RoomTypeMapper::getFullColumnName('hotel_id'),
-            RoomTypeMapper::getFullColumnName('category_id'),
-            RoomTypeMapper::getFullColumnName('persons'),
+        $columns = array_merge($this->getColumns(), [
             RoomCategoryTranslationMapper::getFullColumnName('name')
-        ];
+        ]);
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
@@ -38,7 +71,12 @@ final class RoomTypeMapper extends AbstractMapper
                         ])
                         // Room category translation relation
                         ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
-                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id'),
+                        ])
+                        // Translation relation
+                        ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
+                            self::getFullColumnName(self::PARAM_COLUMN_ID) => RoomTypeTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID),
+                            RoomTypeTranslationMapper::getFullColumnName('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
                         ])
                         // Hotel ID constraint
                         ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
