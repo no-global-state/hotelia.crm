@@ -84,6 +84,19 @@ final class RoomTypeService
     }
 
     /**
+     * Returns room types as a list
+     * 
+     * @param int $langId
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchList(int $langId, int $hotelId) : array
+    {
+        $rows = $this->roomTypeMapper->fetchAll($langId, $hotelId);
+        return ArrayUtils::arrayList($rows, 'id', 'name');
+    }
+
+    /**
      * Fetch all room types
      * 
      * @param int $langId
