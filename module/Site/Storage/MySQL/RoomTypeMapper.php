@@ -57,6 +57,7 @@ final class RoomTypeMapper extends AbstractMapper
             self::getFullColumnName('persons'),
             RoomTypeTranslationMapper::getFullColumnName('description'),
             RoomTypePriceMapper::getFullColumnName('price'),
+            PriceGroupMapper::getFullColumnName('currency'),
             new RawSqlFragment(sprintf('(COUNT(%s) - COUNT(%s)) AS free_count', 
                 RoomMapper::getFullColumnName('type_id'), 
                 ReservationMapper::getFullColumnName('id')
@@ -97,6 +98,10 @@ final class RoomTypeMapper extends AbstractMapper
                        ->leftJoin(RoomTypePriceMapper::getTableName(), [
                             RoomTypePriceMapper::getFullColumnName('room_type_id') => RoomTypeMapper::getRawColumn('id')
                        ])
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            RoomTypePriceMapper::getFullColumnName('price_group_id') => PriceGroupMapper::getRawColumn('id')
+                       ])
                        // Constraints
                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
@@ -106,6 +111,7 @@ final class RoomTypeMapper extends AbstractMapper
                             self::getFullColumnName('persons'),
                             RoomTypeTranslationMapper::getFullColumnName('description'),
                             RoomTypePriceMapper::getFullColumnName('price'),
+                            PriceGroupMapper::getFullColumnName('currency'),
                        ]);
 
         return $db->queryAll();
