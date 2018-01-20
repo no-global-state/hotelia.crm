@@ -215,6 +215,15 @@ CREATE TABLE velveto_floor_room_types (
     FOREIGN KEY (category_id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_floor_room_types_translations (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL COMMENT 'Attached language ID',
+    `description` TEXT NOT NULL,
+
+    FOREIGN KEY (id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_floor_room_type_prices (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_type_id` INT NOT NULL COMMENT 'Room type ID',
