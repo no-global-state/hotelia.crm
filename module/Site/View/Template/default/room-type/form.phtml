@@ -1,43 +1,79 @@
 <?php
 
 use Krystal\Form\Element;
+use Site\Service\LanguageService;
 
 ?>
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomType@saveAction'); ?>">
-  <fieldset>
-    <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#category" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Category'); ?></a></li>
+        <li role="presentation"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
 
-    <?= Element::hidden('id', $entity['id']); ?>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="category" role="tabpanel">
+            <div class="well">
+                <?php $this->loadPartial('language-tabs'); ?>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><?php $this->show('Type'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::select('category_id', $categories, $entity['category_id'], ['class' => 'form-control']); ?>
-      </div>
+                <div class="tab-content">
+                    <?php foreach ($languages as $index => $language): ?>
+                    <div class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>" id="<?php printf('language-%s', $language['id']); ?>" role="tabpanel">
+                        <?php $entity = LanguageService::findByLangId($language['id'], $type); ?>
+
+                        <?= Element::hidden(sprintf('translation[%s][id]', $language['id']), $entity['id']); ?>
+                        <?= Element::hidden(sprintf('translation[%s][lang_id]', $language['id']), $language['id']); ?>
+
+                        <?php $this->loadPartial('language-name', ['language' => $language]); ?>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::textarea(sprintf('translation[%s][description]', $language['id']), $entity['description'], ['rows' => 7, 'class' => 'form-control', 'placeholder' => $this->translate('Describe the type of the room')]); ?>
+                          </div>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade in" id="configuration" role="tabpanel">
+          <div class="well">
+            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
+
+            <?= Element::hidden('type[id]', $entity['id']); ?>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Type'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('type[category_id]', $categories, $entity['category_id'], ['class' => 'form-control']); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Persons'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::number('type[persons]', $entity['persons'], ['min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Maximal capacity')]); ?>
+              </div>
+            </div>
+
+            <?php foreach ($priceGroups as $priceGroup): ?>
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>
+              <div class="col-lg-10">
+                <?= Element::number(sprintf('price_group_ids[%s]', $priceGroup['id']), isset($priceGroup['price']) ? $priceGroup['price'] : null, array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
     </div>
 
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><?php $this->show('Persons'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::number('persons', $entity['persons'], ['min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Maximal capacity')]); ?>
-      </div>
-    </div>
-
-    <?php foreach ($priceGroups as $priceGroup): ?>
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>
-      <div class="col-lg-10">
-        <?= Element::number(sprintf('price_group_ids[%s]', $priceGroup['id']), isset($priceGroup['price']) ? $priceGroup['price'] : null, array('class' => 'form-control')); ?>
-      </div>
-    </div>
-    <?php endforeach; ?>
-    
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
         <a href="<?= $this->url($entity['id'] ? 'Site:Architecture:RoomType@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
       </div>
     </div>
-  </fieldset>
 </form>
