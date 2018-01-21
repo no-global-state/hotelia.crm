@@ -54,7 +54,7 @@ final class FacilitiyService
      * @param int $langId
      * @return array
      */
-    public function getItemList(int $hotelId, int $langId) : array
+    public function getItemList($hotelId, int $langId) : array
     {
         $items = $this->itemMapper->fetchAll($langId, null, $hotelId);
         return ArrayUtils::arrayList($items, 'id', 'name');
