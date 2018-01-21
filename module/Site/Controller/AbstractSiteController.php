@@ -8,6 +8,16 @@ use Krystal\Validate\Renderer;
 abstract class AbstractSiteController extends AbstractController
 {
     /**
+     * Returns current price group ID
+     * 
+     * @return int
+     */
+    protected function getPriceGroupId() : int
+    {
+        return 1;
+    }
+
+    /**
      * Returns current hotel ID
      * 
      * @return integer
