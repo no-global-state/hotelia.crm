@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Site\Service\PhotoService;
+use Site\Service\ReservationService;
 
 final class Site extends AbstractSiteController
 {
@@ -26,7 +27,7 @@ final class Site extends AbstractSiteController
      */
     public function bookAction($hotelId)
     {
-        $room = $this->getModuleService('architectureService')->getById(29);
+        $room = $this->getModuleService('architectureService')->getById(29, $this->getCurrentLangId());
 
         return $this->view->render('book', [
             'hotelId' => $hotelId,
@@ -52,17 +53,35 @@ final class Site extends AbstractSiteController
     /**
      * Renders hotel information
      * 
-     * @param string $id Hotel id
      * @return string
      */
-    public function hotelAction($id)
+    public function hotelAction()
     {
-        $hotelMapper = $this->createMapper('\Site\Storage\MySQL\HotelMapper');
-        $hotel = $hotelMapper->findByPk($id);
+        // Hotel ID is a must
+        if (!$this->request->hasQuery('id')) {
+            return false;
+        }
 
+        // Request variables
+        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
+        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
+        $id = $this->request->getQuery('id'); // Hotel ID
+
+        $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId());
         $photoService = $this->getModuleService('photoService');
+        $roomTypeService = $this->getModuleService('roomTypeService');
+
+        $rooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id);
+        $types = $roomTypeService->fetchList($id, $this->getCurrentLangId());
 
         return $this->view->render('hotel', [
+            // Renders variables
+            'type' => $this->request->getQuery('type'),
+            'arrival' => $arrival,
+            'departure' => $departure,
+
+            'rooms' => $rooms,
+            'types' => $types,
             'hotel' => $hotel,
             'id' => $id,
             'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, $this->getHotelId()),
@@ -70,9 +89,7 @@ final class Site extends AbstractSiteController
             'images' => [
                 'large' => $photoService->fetchAll($this->getHotelId(), PhotoService::PARAM_IMAGE_SIZE_LARGE),
                 'small' => $photoService->fetchAll($this->getHotelId(), PhotoService::PARAM_IMAGE_SIZE_SMALL)
-            ],
-
-            'rooms' => $this->getModuleService('architectureService')->findAvailableRooms($this->getHotelId())
+            ]
         ]);
     }
 
