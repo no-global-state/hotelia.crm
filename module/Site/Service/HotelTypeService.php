@@ -37,6 +37,17 @@ final class HotelTypeService
     }
 
     /**
+     * Fetch all hotel types with their corresponding hotel count
+     * 
+     * @param int $langId Language ID filter
+     * @return array
+     */
+    public function fetchAllWithCount(int $langId) : array
+    {
+        return $this->hotelTypeMapper->fetchAllWithCount($langId);
+    }
+
+    /**
      * Fetch hotel type services
      * 
      * @param int $langId

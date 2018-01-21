@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class HotelTypeMapper extends AbstractMapper
 {
     /**
@@ -33,6 +35,41 @@ final class HotelTypeMapper extends AbstractMapper
             HotelTypeTranslationMapper::getFullColumnName('name'),
             HotelTypeTranslationMapper::getFullColumnName('lang_id'),
         ];
+    }
+
+    /**
+     * Fetch all hotel types with their corresponding hotel count
+     * 
+     * @param int $langId Language ID filter
+     * @return array
+     */
+    public function fetchAllWithCount(int $langId) : array
+    {
+        $langId = (int) $langId;
+
+        // Columns to be selected
+        $columns = [
+            self::getFullColumnName('id'),
+            HotelTypeTranslationMapper::getFullColumnName('name')
+        ];
+
+        $db = $this->db->select($columns)
+                       ->count(HotelMapper::getFullColumnName('id'), 'count')
+                       ->from(self::getTableName())
+                       // Translate relation
+                       ->leftJoin(HotelTypeTranslationMapper::getTableName(), [
+                            HotelTypeTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
+                       ])
+                       // Hotel relation
+                       ->leftJoin(HotelMapper::getTableName(), [
+                            HotelMapper::getFullColumnName('type_id') => self::getRawColumn('id'),
+                            HotelMapper::getFullColumnName('active') => new RawSqlFragment(1)
+                       ])
+                       // Language ID constraint
+                       ->whereEquals(HotelTypeTranslationMapper::getFullColumnName('lang_id'), new RawSqlFragment($langId))
+                       ->groupBy($columns);
+
+        return $db->queryAll();
     }
 
     /**
