@@ -208,7 +208,9 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
             PriceGroupMapper::getFullColumnName('currency'),
-            HotelTypeTranslationMapper::getFullColumnName('name') => 'type'
+            HotelTypeTranslationMapper::getFullColumnName('name') => 'type',
+            RegionTranslationMapper::getFullColumnName('name') => 'region',
+            DistrictTranslationMapper::getFullColumnName('name') => 'district',
         ]);
 
         $db = $this->db->select($columns)
@@ -238,6 +240,24 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        // Price group relation
                        ->leftJoin(PriceGroupMapper::getTableName(), [
                             PriceGroupMapper::getFullColumnName('id') => RoomTypePriceMapper::getRawColumn('price_group_id')
+                       ])
+                       // Region relation
+                       ->leftJoin(RegionMapper::getTableName(), [
+                            RegionMapper::getFullColumnName('id') => self::getRawColumn('region_id')
+                       ])
+                       // Region translation relation
+                       ->leftJoin(RegionTranslationMapper::getTableName(), [
+                            RegionTranslationMapper::getFullColumnName('id') => RegionMapper::getRawColumn('id'),
+                            RegionTranslationMapper::getFullColumnName('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+                       ])
+                       // District relation
+                       ->leftJoin(DistrictMapper::getTableName(), [
+                            DistrictMapper::getFullColumnName('id') => self::getRawColumn('district_id')
+                       ])
+                       // District translation
+                       ->leftJoin(DistrictTranslationMapper::getTableName(), [
+                            DistrictTranslationMapper::getFullColumnName('id') => DistrictMapper::getRawColumn('id'),
+                            DistrictTranslationMapper::getFullColumnName('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
                        ])
                        // Constraints
                        ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id)
