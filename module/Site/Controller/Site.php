@@ -87,7 +87,8 @@ final class Site extends AbstractSiteController
         $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
         $id = $this->request->getQuery('id'); // Hotel ID
 
-        $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId());
+        $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId(), $this->getPriceGroupId());
+
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
