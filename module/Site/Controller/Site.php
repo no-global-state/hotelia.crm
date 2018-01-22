@@ -42,11 +42,31 @@ final class Site extends AbstractSiteController
      */
     public function searchAction()
     {
-        $hotelMapper = $this->createMapper('\Site\Storage\MySQL\HotelMapper');
+        // Request variables
+        $regionId = $this->request->getQuery('region_id');
+        $typeIds = $this->request->getQuery('type', []);
+        $facilityIds = $this->request->getQuery('facility', []);
+        $arrival = $this->request->getQuery('arrival');
+        $departure = $this->request->getQuery('departure');
+        $rate = $this->request->getQuery('rate', 0);
+        $priceStart = $this->request->getQuery('price-start', 10);
+        $priceStop = $this->request->getQuery('price-stop', 100);
 
         return $this->view->render('search', [
-            'hotels' => $hotelMapper->fetchAll($this->getCurrentLangId()),
-            'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, null)
+            // Request variables
+            'regionId' => $regionId,
+            'typeIds' => $typeIds,
+            'facilityIds' => $facilityIds,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'rate' => $rate,
+            'priceStart' => $priceStart,
+            'priceStop' => $priceStop,
+
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
+            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery()),
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
+            'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getCurrentLangId(), true)
         ]);
     }
 
