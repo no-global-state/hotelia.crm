@@ -163,7 +163,7 @@ final class PhotoService extends AbstractService
      * @param string $size
      * @return string
      */
-    public function createImagePath($id, $file, string $size) : string
+    public static function createImagePath($id, $file, string $size) : string
     {
         return sprintf('%s/%s/%s', Module::PARAM_GALLERY_PATH . $id, $size, $file);
     }
@@ -178,7 +178,7 @@ final class PhotoService extends AbstractService
     public function fetchById($id, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
         $row = $this->photoMapper->findByPk($id);
-        $row['file'] = $this->createImagePath($row['id'], $row['file'], $size);
+        $row['file'] = self::createImagePath($row['id'], $row['file'], $size);
 
         return $row;
     }
@@ -207,7 +207,7 @@ final class PhotoService extends AbstractService
         $rows = $this->photoMapper->fetchAll($hotelId);
 
         foreach ($rows as &$row) {
-            $row['file'] = $this->createImagePath($row['id'], $row['file'], $size);
+            $row['file'] = self::createImagePath($row['id'], $row['file'], $size);
         }
 
         return $rows;
