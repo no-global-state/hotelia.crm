@@ -46,11 +46,12 @@ final class RoomTypeService
      * @param int $priceGroupId Price group ID filter
      * @param int $langId
      * @param int $hotelId
+     * @param mixed $typeId Optional type id filter
      * @return array
      */
-    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId) : array
+    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId, $typeId = null) : array
     {
-        return $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId);
+        return $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId, $typeId);
     }
 
     /**

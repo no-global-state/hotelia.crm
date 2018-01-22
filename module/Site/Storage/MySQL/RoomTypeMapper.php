@@ -47,9 +47,10 @@ final class RoomTypeMapper extends AbstractMapper
      * @param int $priceGroupId Price group ID filter
      * @param int $langId
      * @param int $hotelId
+     * @param mixed $typeId Optional type id filter
      * @return array
      */
-    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId) : array
+    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId, $typeId = null) : array
     {
         // Shared columns
         $columns = [
@@ -67,7 +68,7 @@ final class RoomTypeMapper extends AbstractMapper
                 ReservationMapper::getFullColumnName('id')
             ))
         ]);
-        
+
         $db = $this->db->select($select)
                        ->from(RoomMapper::getTableName())
                        // Reservation relation
@@ -110,6 +111,7 @@ final class RoomTypeMapper extends AbstractMapper
                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                        ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), $priceGroupId)
+                       ->andWhereEquals(RoomMapper::getFullColumnName('type_id'), $typeId, true)
                        ->groupBy($columns);
 
         return $db->queryAll();
