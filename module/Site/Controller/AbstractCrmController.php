@@ -188,6 +188,10 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
                    // This one will always be last
                    ->appendLastScript('@Site/application.js');
 
+        // Load FA
+        $this->view->getPluginBag()
+                   ->load('font-awesome');
+
         $hotel = $this->getHotelData();
 
         // Language loading
