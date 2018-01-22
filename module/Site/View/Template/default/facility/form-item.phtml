@@ -43,6 +43,7 @@ use Site\Service\LanguageService;
         <div class="tab-pane fade" id="configuration" role="tabpanel">
             <div class="well">
                 <?= Element::hidden('item[id]', $entity['id']); ?>
+                <? $entity = LanguageService::normalizeEntity($entity); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Icon'); ?></label>
