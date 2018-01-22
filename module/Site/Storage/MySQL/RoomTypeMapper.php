@@ -51,20 +51,24 @@ final class RoomTypeMapper extends AbstractMapper
      */
     public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId) : array
     {
-        // Columns to be selected
+        // Shared columns
         $columns = [
             RoomCategoryTranslationMapper::getFullColumnName('name'),
             self::getFullColumnName('persons'),
             RoomTypeTranslationMapper::getFullColumnName('description'),
             RoomTypePriceMapper::getFullColumnName('price'),
             PriceGroupMapper::getFullColumnName('currency'),
+        ];
+
+        // To be selected
+        $select = array_merge($columns, [
             new RawSqlFragment(sprintf('(COUNT(%s) - COUNT(%s)) AS free_count', 
                 RoomMapper::getFullColumnName('type_id'), 
                 ReservationMapper::getFullColumnName('id')
             ))
-        ];
-
-        $db = $this->db->select($columns)
+        ]);
+        
+        $db = $this->db->select($select)
                        ->from(RoomMapper::getTableName())
                        // Reservation relation
                        ->leftJoin(ReservationMapper::getTableName(), [
@@ -106,13 +110,7 @@ final class RoomTypeMapper extends AbstractMapper
                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                        ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), $priceGroupId)
-                       ->groupBy([
-                            RoomCategoryTranslationMapper::getFullColumnName('name'),
-                            self::getFullColumnName('persons'),
-                            RoomTypeTranslationMapper::getFullColumnName('description'),
-                            RoomTypePriceMapper::getFullColumnName('price'),
-                            PriceGroupMapper::getFullColumnName('currency'),
-                       ]);
+                       ->groupBy($columns);
 
         return $db->queryAll();
     }
