@@ -289,7 +289,6 @@ CREATE TABLE velveto_hotels (
     `region_id` INT NOT NULL COMMENT 'Attached region ID',
     `district_id` INT NOT NULL COMMENT 'Attached district ID',
     `phone` varchar(255) NOT NULL,
-    `start_price` FLOAT NOT NULL,
     `rate` SMALLINT COMMENT 'Hotel rate',
     `discount` FLOAT COMMENT 'Discount if available',
     `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
