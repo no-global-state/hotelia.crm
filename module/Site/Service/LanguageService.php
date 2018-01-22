@@ -3,9 +3,25 @@
 namespace Site\Service;
 
 use Krystal\Db\Filter\InputDecorator;
+use ArrayAccess;
 
 final class LanguageService
 {
+    /**
+     * Normalizes entity
+     * 
+     * @param mixed $entity
+     * @return array
+     */
+    public static function normalizeEntity($entity)
+    {
+        if ($entity['id']) {
+            $entity = $entity instanceof ArrayAccess ? $item[0] : $entity;
+        }
+
+        return $entity;
+    }
+
     /**
      * Finds entity in collection by associated language ID
      * 
