@@ -27,7 +27,7 @@ final class FacilitiyItemMapper extends AbstractMapper
      */
     public static function getJunctionTableName()
     {
-        return self::getWithPrefix('velveto_facilitiy_relations');
+        return FacilityRelationMapper::getTableName();
     }
 
     /**
