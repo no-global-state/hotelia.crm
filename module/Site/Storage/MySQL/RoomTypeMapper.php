@@ -54,6 +54,7 @@ final class RoomTypeMapper extends AbstractMapper
     {
         // Shared columns
         $columns = [
+            self::getFullColumnName('id'),
             RoomCategoryTranslationMapper::getFullColumnName('name'),
             self::getFullColumnName('persons'),
             RoomTypeTranslationMapper::getFullColumnName('description'),
