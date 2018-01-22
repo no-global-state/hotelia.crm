@@ -86,18 +86,19 @@ final class Site extends AbstractSiteController
         $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
         $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
         $id = $this->request->getQuery('id'); // Hotel ID
+        $type = $this->request->getQuery('type', null);
 
         $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId(), $this->getPriceGroupId());
 
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
-        $rooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id);
+        $rooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id, $type);
         $types = $roomTypeService->fetchList($id, $this->getCurrentLangId());
 
         return $this->view->render('hotel', [
             // Renders variables
-            'type' => $this->request->getQuery('type'),
+            'type' => $type,
             'arrival' => $arrival,
             'departure' => $departure,
 
