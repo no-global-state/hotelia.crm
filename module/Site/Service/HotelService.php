@@ -94,11 +94,12 @@ final class HotelService implements FilterableServiceInterface
      * 
      * @param int $id Hotel ID
      * @param int $langId Language ID filter
+     * @param int|null $priceGroupId Optional price group ID filter
      * @return array
      */
-    public function fetchById(int $id, int $langId = 0) : array
+    public function fetchById(int $id, int $langId = 0, $priceGroupId = null)
     {
-        return $this->hotelMapper->fetchById($id, $langId);
+        return $this->hotelMapper->fetchById($id, $langId, $priceGroupId);
     }
 
     /**

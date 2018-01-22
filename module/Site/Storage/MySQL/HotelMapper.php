@@ -201,11 +201,46 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      * 
      * @param int $id Hotel ID
      * @param int $langId Language ID filter
+     * @param int|null $priceGroupId Optional price group ID filter
      * @return array
      */
-    public function fetchById(int $id, int $langId = 0) : array
+    public function fetchById(int $id, int $langId = 0, $priceGroupId = null)
     {
-        return $this->findEntity($this->getColumns(), $id, $langId);
+        // Columns to be selected
+        $columns = array_merge($this->getColumns(), [
+            PriceGroupMapper::getFullColumnName('currency')
+        ]);
+
+        $db = $this->db->select($columns)
+                       ->min(RoomTypePriceMapper::getFullColumnName('price'), 'start_price')
+                       ->from(self::getTableName())
+                       // Hotel translation relation
+                       ->leftJoin(HotelTranslationMapper::getTableName(), [
+                            HotelTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
+                       ])
+                       // Room relation
+                       ->leftJoin(RoomMapper::getTableName(), [
+                            RoomMapper::getFullColumnName('hotel_id') => self::getRawColumn('id')
+                       ])
+                       // Room type relation
+                       ->leftJoin(RoomTypePriceMapper::getTableName(), [
+                            RoomTypePriceMapper::getFullColumnName('room_type_id') => RoomMapper::getRawColumn('type_id')
+                       ])
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::getFullColumnName('id') => RoomTypePriceMapper::getRawColumn('price_group_id')
+                       ])
+                       // Constraints
+                       ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id)
+                       ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), $priceGroupId, true)
+                       ->groupBy($columns);
+
+        if ($langId == 0) {
+            return $db->queryAll();
+        } else {
+            return $db->andWhereEquals(HotelTranslationMapper::getFullColumnName(self::PARAM_COLUMN_LANG_ID), $langId)
+                      ->query();
+        }
     }
 
     /**
