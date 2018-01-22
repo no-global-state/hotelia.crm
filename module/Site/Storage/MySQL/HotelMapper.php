@@ -94,8 +94,9 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             RegionTranslationMapper::getFullColumnName('name') => 'region',
             DistrictTranslationMapper::getFullColumnName('name') => 'district',
             PhotoMapper::getFullColumnName('file') => 'cover',
+            PhotoMapper::getFullColumnName('id') => 'cover_id',
         ];
-        
+
         $db = $this->db->select($columns)
                        ->min(RoomTypePriceMapper::getFullColumnName('price'), 'start_price')
                        ->count(ReviewMapper::getFullColumnName('id'), 'review_count')
