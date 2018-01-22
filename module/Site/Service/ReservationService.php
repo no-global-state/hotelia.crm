@@ -195,6 +195,27 @@ class ReservationService
     }
 
     /**
+     * Calculates stay price based on arrival and departure dates
+     * 
+     * @param string $arrival
+     * @param string $departure
+     * @param mixed $float One night price
+     * @return array
+     */
+    public static function calculateStayPrice(string $arrival, string $departure, $price) : array
+    {
+        $date1 = new DateTime($arrival);
+        $date2 = new DateTime($departure);
+
+        $days = $date2->diff($date1)->format("%a");
+
+        return [
+            'days' => $days,
+            'price' => round($days * $price)
+        ];
+    }
+
+    /**
      * Returns reservation dates
      * 
      * @return array
