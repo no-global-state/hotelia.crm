@@ -116,6 +116,20 @@ final class RoomTypeService
     }
 
     /**
+     * Find room by its type
+     * 
+     * @param int $typeId Room type Id
+     * @param int $priceGroupId Optional price group ID filter
+     * @param int $hotelId Hotel Id
+     * @param int $langId Language Id filter
+     * @return array
+     */
+    public function findByTypeId(int $typeId, int $priceGroupId, int $hotelId, int $langId)
+    {
+        return $this->roomTypeMapper->findByTypeId($typeId, $priceGroupId, $hotelId, $langId);
+    }
+
+    /**
      * Finds room type info by its id
      * 
      * @param int $id Room type id

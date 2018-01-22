@@ -131,6 +131,58 @@ final class RoomTypeMapper extends AbstractMapper
     }
 
     /**
+     * Find room by its type
+     * 
+     * @param int $typeId Room type Id
+     * @param int $priceGroupId Optional price group ID filter
+     * @param int $hotelId Hotel Id
+     * @param int $langId Language Id filter
+     * @return array
+     */
+    public function findByTypeId(int $typeId, int $priceGroupId, int $hotelId, int $langId)
+    {
+        // Columns to be selected
+        $columns = array_merge($this->getColumns(), [
+            RoomTypePriceMapper::getFullColumnName('price'),
+            PriceGroupMapper::getFullColumnName('currency'),
+            RoomCategoryTranslationMapper::getFullColumnName('name'),
+            RoomTypeTranslationMapper::getFullColumnName('description')
+        ]);
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomCategoryMapper::getFullColumnName('id') => self::getRawColumn('category_id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id'),
+                        ])
+                        // Translation relation
+                        ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
+                            self::getFullColumnName(self::PARAM_COLUMN_ID) => RoomTypeTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID),
+                            RoomTypeTranslationMapper::getFullColumnName('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
+                        ])
+                        // Room type price relation
+                        ->leftJoin(RoomTypePriceMapper::getTableName(), [
+                            RoomTypePriceMapper::getFullColumnName('room_type_id') => self::getRawColumn('id')
+                        ])
+                        
+                        // Price group relation
+                        ->leftJoin(PriceGroupMapper::getTableName(), [
+                            RoomTypePriceMapper::getFullColumnName('price_group_id') => PriceGroupMapper::getRawColumn('id')
+                        ])
+                        // Hotel ID constraint
+                        ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
+                        ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), $priceGroupId)
+                        // Language ID constraint
+                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
+                        ->andWhereEquals(self::getFullColumnName('id'), $typeId)
+                        ->query();
+    }
+
+    /**
      * Fetch all entities
      * 
      * @param int $langId
