@@ -207,7 +207,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     {
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
-            PriceGroupMapper::getFullColumnName('currency')
+            PriceGroupMapper::getFullColumnName('currency'),
+            HotelTypeTranslationMapper::getFullColumnName('name') => 'type'
         ]);
 
         $db = $this->db->select($columns)
@@ -224,6 +225,15 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        // Room type relation
                        ->leftJoin(RoomTypePriceMapper::getTableName(), [
                             RoomTypePriceMapper::getFullColumnName('room_type_id') => RoomMapper::getRawColumn('type_id')
+                       ])
+                       // Hotel type relation
+                       ->leftJoin(HotelTypeMapper::getTableName(), [
+                            HotelTypeMapper::getFullColumnName('id') => self::getRawColumn('type_id')
+                       ])
+                       // Hotel type translation relation
+                       ->leftJoin(HotelTypeTranslationMapper::getTableName(), [
+                            HotelTypeTranslationMapper::getFullColumnName('id') => HotelTypeMapper::getRawColumn('id'),
+                            HotelTypeTranslationMapper::getFullColumnName('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
                        ])
                        // Price group relation
                        ->leftJoin(PriceGroupMapper::getTableName(), [
