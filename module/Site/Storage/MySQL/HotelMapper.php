@@ -76,9 +76,10 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      * 
      * @param int $langId
      * @param int $priceGroupId
+     * @param array $filters Optional filters
      * @return array
      */
-    public function findAll(int $langId, int $priceGroupId) : array
+    public function findAll(int $langId, int $priceGroupId, array $filters = []) : array
     {
         // Columns to be selected
         $columns = [
@@ -157,13 +158,32 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        ->leftJoin(PhotoMapper::getTableName(), [
                             PhotoMapper::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('slave_id')
                        ])
+                       // Facility relation
+                       ->leftJoin(FacilityRelationMapper::getTableName(), [
+                            FacilityRelationMapper::getFullColumnName('master_id') => self::getRawColumn('id')
+                       ])
                        // Constraints
                        ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), new RawSqlFragment($langId))
                        ->andWhereEquals(self::getFullColumnName('active'), new RawSqlFragment(1))
-                       ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), new RawSqlFragment($priceGroupId))
-                       ->groupBy($columns);
+                       ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), new RawSqlFragment($priceGroupId));
 
-        return $db->queryAll();
+        // Type filter
+        if (isset($filters['type']) && is_array($filters['type'])) {
+            $db->andWhereIn(self::getFullColumnName('type_id'), $filters['type']);
+        }
+
+        // Facility filter
+        if (isset($filters['facility']) && is_array($filters['facility'])) {
+            $db->andWhereIn(FacilityRelationMapper::getFullColumnName('slave_id'), $filters['facility']);
+        }
+
+        // Hotel region filter
+        if (!empty($filters['region_id'])) {
+            $db->andWhereEquals(self::getFullColumnName('region_id'), $filters['region_id']);
+        }
+
+        return $db->groupBy($columns)
+                  ->queryAll();
     }
 
     /**
