@@ -141,7 +141,8 @@ final class RoomTypeMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
-            RoomCategoryTranslationMapper::getFullColumnName('name')
+            RoomCategoryTranslationMapper::getFullColumnName('name'),
+            RoomTypeTranslationMapper::getFullColumnName('description')
         ]);
 
         return $this->db->select($columns)
