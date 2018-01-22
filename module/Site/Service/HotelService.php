@@ -110,6 +110,25 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Finds all hotels
+     * 
+     * @param int $langId
+     * @param int $priceGroupId
+     * @return array
+     */
+    public function findAll(int $langId, int $priceGroupId) : array
+    {
+        $rows = $this->hotelMapper->findAll($langId, $priceGroupId);
+
+        // Append $rows
+        foreach ($rows as &$row) {
+            $row['cover'] = PhotoService::createImagePath($row['cover_id'], $row['cover'], PhotoService::PARAM_IMAGE_SIZE_LARGE);
+        }
+
+        return $rows;
+    }
+
+    /**
      * Fetch all hotels
      * 
      * @param int $langId Language ID filter
