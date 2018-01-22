@@ -82,6 +82,13 @@ return array(
 						'@Site/map.js',
                     ]
                 ],
+                
+                // Font awesome
+                'font-awesome' => [
+					'stylesheets' => array(
+						'@Site/font-awesome/css/font-awesome.min.css'
+					)
+                ],
 
 				// Datetime picker
 				'datetimepicker' => array(
