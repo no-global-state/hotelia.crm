@@ -14,24 +14,53 @@ final class Site extends AbstractSiteController
      */
     public function paymentAction()
     {
-        return $this->view->render('payment', [
-            
-        ]);
+        // Validate request
+        if ($this->request->hasPost('type_id', 'hotel_id', 'arrival', 'departure')) {
+
+            // Request variables
+            $typeId = $this->request->getPost('type_id');
+            $hotelId = $this->request->getPost('hotel_id');
+            $arrival = $this->request->getPost('arrival');
+            $departure = $this->request->getPost('departure');
+
+            // Room details
+            $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
+
+            return $this->view->render('payment', [
+                'arrival' => $arrival,
+                'departure' => $departure,
+                'room' => $room,
+                'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
+            ]);
+
+        } else {
+            // Invalid request
+            die('Invalid');
+        }
     }
 
     /**
      * Renders booking page
      * 
-     * @param int $hotelId Hotel id
      * @return string
      */
-    public function bookAction($hotelId)
+    public function bookAction()
     {
-        $room = $this->getModuleService('architectureService')->getById(29, $this->getCurrentLangId());
+        // Request variables
+        $typeId = $this->request->getQuery('type_id');
+        $hotelId = $this->request->getQuery('hotel_id');
+        $arrival = $this->request->getQuery('arrival');
+        $departure = $this->request->getQuery('departure');
+
+        $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
 
         return $this->view->render('book', [
             'hotelId' => $hotelId,
-            'room' => $room
+            'typeId' => $typeId,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'room' => $room,
+            'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
         ]);
     }
 
