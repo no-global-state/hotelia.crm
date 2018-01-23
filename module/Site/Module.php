@@ -19,6 +19,7 @@ use Site\Service\HotelTypeService;
 use Site\Service\ServiceManager;
 use Site\Service\ReservationServiceManager;
 use Site\Service\RoomCategoryService;
+use Site\Service\PaymentFieldService;
 
 final class Module extends AbstractModule
 {
@@ -172,6 +173,11 @@ final class Module extends AbstractModule
 
             'districtService' => new DistrictService(
                 $this->createMapper('\Site\Storage\MySQL\DistrictMapper')
+            ),
+
+            'paymentFieldService' => new PaymentFieldService(
+                $this->createMapper('\Site\Storage\MySQL\PaymentSystemFieldMapper'),
+                $this->createMapper('\Site\Storage\MySQL\PaymentSystemFieldDataMapper')
             )
         );
     }
