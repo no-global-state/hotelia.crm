@@ -165,6 +165,7 @@ class Reservation extends AbstractCrmController
 
                 // Free rooms
                 $rooms = $service->findFreeRooms(
+                    $this->getCurrentLangId(),
                     $this->getHotelId(), 
                     $arrival, 
                     $departure, 
@@ -189,7 +190,7 @@ class Reservation extends AbstractCrmController
 
             return $this->view->render('reservation/find', [
                 'client' => new InputDecorator(),
-                'roomTypes' => $service->getRoomTypes($this->getHotelId()),
+                'roomTypes' => $service->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
                 'inventories' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\InventoryMapper')->fetchAll($this->getHotelId()), 'id', 'name')
             ]);
         }
