@@ -20,6 +20,7 @@ use Site\Service\ServiceManager;
 use Site\Service\ReservationServiceManager;
 use Site\Service\RoomCategoryService;
 use Site\Service\PaymentFieldService;
+use Site\Service\ReviewService;
 
 final class Module extends AbstractModule
 {
@@ -178,6 +179,12 @@ final class Module extends AbstractModule
             'paymentFieldService' => new PaymentFieldService(
                 $this->createMapper('\Site\Storage\MySQL\PaymentSystemFieldMapper'),
                 $this->createMapper('\Site\Storage\MySQL\PaymentSystemFieldDataMapper')
+            ),
+
+            'reviewService' => new ReviewService(
+                $this->createMapper('\Site\Storage\MySQL\ReviewMapper'),
+                $this->createMapper('\Site\Storage\MySQL\ReviewTypeMapper'),
+                $this->createMapper('\Site\Storage\MySQL\ReviewMarkMapper')
             )
         );
     }
