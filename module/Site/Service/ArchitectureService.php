@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Text\Math;
 use Site\Storage\MySQL\FloorMapper;
 use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
@@ -112,19 +113,25 @@ class ArchitectureService
      * @param integer $hotelId
      * @return array
      */
-    public function createStat($hotelId)
+    public function createStat(int $hotelId) : array
     {
         $room = $this->roomMapper->fetchStatistic($hotelId);
         $floorCount = $this->roomMapper->getFloorCount($hotelId);
 
+        // Free in %
+        $free = Math::percentage($room['rooms_count'], $room['rooms_taken']);
+        $taken = 100 - $free;
+
         // Statistic
-        return array(
-            'Total room count' => $room['rooms_count'],
-            'Total floors count' => $floorCount,
-            'Taken rooms count' => $room['rooms_taken'],
-            'Free rooms count' => ($room['rooms_count'] - $room['rooms_taken']),
-            'Rooms freeing today' => $room['rooms_leaving_today']
-        );
+        return [
+            'Total room count' => (int) $room['rooms_count'],
+            'Total floors count' => (int) $floorCount,
+            'Taken rooms count' => (int) $room['rooms_taken'],
+            'Free rooms count' => (int) ($room['rooms_count'] - $room['rooms_taken']),
+            'Rooms freeing today' => (int) $room['rooms_leaving_today'],
+            'Free' => $free . ' % ',
+            'Taken' => $taken . ' % ',
+        ];
     }
 
     /**
