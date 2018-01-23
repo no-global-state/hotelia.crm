@@ -105,6 +105,16 @@ CREATE TABLE velveto_reviews (
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_reviews_marks (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `review_id` INT NOT NULL COMMENT 'Attached review ID',
+    `review_type_id` INT NOT NULL COMMENT 'Attached review type ID',
+    `mark` SMALLINT,
+
+    FOREIGN KEY (review_id) REFERENCES velveto_reviews(id) ON DELETE CASCADE,
+    FOREIGN KEY (review_type_id) REFERENCES velveto_reviews_types(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_languages (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `name` varchar(255) NOT NULL COMMENT 'Language name',
