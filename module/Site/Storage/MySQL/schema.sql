@@ -314,6 +314,8 @@ CREATE TABLE velveto_hotels (
     `email` varchar(255) NOT NULL COMMENT 'Hotel email',
     `active` BOOLEAN NOT NULL COMMENT 'Whether this hotel must be visible or not',
     `closed` BOOLEAN NOT NULL COMMENT 'Whether this hotel is closed or not',
+    `legal_address` TEXT NOT NULL COMMENT 'Legal address',
+    `legal_name` varchar(255) NOT NULL COMMENT 'Legal name',
     `lat` varchar(255),
     `lng` varchar(255),
 
