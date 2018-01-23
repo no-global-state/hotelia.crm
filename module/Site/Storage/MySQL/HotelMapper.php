@@ -165,6 +165,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        // Constraints
                        ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), new RawSqlFragment($langId))
                        ->andWhereEquals(self::getFullColumnName('active'), new RawSqlFragment(1))
+                       ->andWhereEquals(self::getFullColumnName('closed'), new RawSqlFragment(0))
                        ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), new RawSqlFragment($priceGroupId));
 
         // Type filter
