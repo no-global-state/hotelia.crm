@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Site\Storage\MySQL\PaymentSystemFieldDataMapper;
 use Site\Storage\MySQL\PaymentSystemFieldMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class PaymentFieldService
 {
@@ -32,6 +33,41 @@ final class PaymentFieldService
     {
         $this->paymentSystemFieldMapper = $paymentSystemFieldMapper;
         $this->paymentSystemFieldDataMapper = $paymentSystemFieldDataMapper;
+    }
+
+    /**
+     * Update gateway attributes
+     * 
+     * @param int $hotelId
+     * @param array $attrs
+     * @return boolean
+     */
+    public function updateGateways(int $hotelId, array $attrs)
+    {
+        // Clear previous if any first
+        $this->paymentSystemFieldDataMapper->deleteAllByHotelId($hotelId);
+
+        foreach ($attrs as $id => $value) {
+            $this->paymentSystemFieldDataMapper->persist([
+                'field_id' => $id,
+                'hotel_id' => $hotelId,
+                'value' => $value
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
+     * Find all data by associated hotel id
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function findAllByHotelId(int $hotelId) : array
+    {
+        $rows = $this->paymentSystemFieldDataMapper->findAllByHotelId($hotelId);
+        return ArrayUtils::arrayPartition($rows, 'system');
     }
 
     /**
