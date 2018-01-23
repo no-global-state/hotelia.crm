@@ -19,6 +19,15 @@ CREATE TABLE velveto_payment_systems (
     `name` varchar(255) NOT NULL
 );
 
+CREATE TABLE velveto_payment_systems_fields (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `payment_system_id` INT NOT NULL,
+    `order` INT NOT NULL COMMENT 'Soring order',
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (payment_system_id) REFERENCES velveto_payment_systems(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_discounts (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
