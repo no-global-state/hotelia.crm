@@ -21,6 +21,7 @@ final class Hotel extends AbstractCrmController
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
             'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
             'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
+            'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId())
         ]);
     }
 
@@ -46,6 +47,9 @@ final class Hotel extends AbstractCrmController
 
         $service = $this->getModuleService('hotelService');
         $service->save($data);
+
+        // Update payment gateway attributes
+        $this->getModuleService('paymentFieldService')->updateGateways($this->getHotelId(), $data['payment']);
 
         $this->flashBag->set('success', 'Settings have been updated successfully');
         return 1;

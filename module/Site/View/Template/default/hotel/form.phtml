@@ -12,6 +12,7 @@ use Site\Service\LanguageService;;
         <li class="nav"><a href="#basic" data-toggle="tab"><i class="glyphicon glyphicon-bookmark"></i> <? $this->show('Basic'); ?></a></li>
         <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
         <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
+        <li class="nav"><a href="#payment" data-toggle="tab"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Payment gateway'); ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -197,6 +198,29 @@ use Site\Service\LanguageService;;
                 ]
 
             ], $this->translator); ?>
+        </div>
+
+        <div class="tab-pane fade" id="payment">
+            <div class="form-horizontal">
+                <fieldset>
+                    <br />
+
+                    <?php foreach ($payments as $system => $gateways): ?>
+                    <h2 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h2>
+
+                    <?php foreach ($gateways as $index => $gateway): ?>
+                    <?php $uniq = sprintf('field-%s', $index); ?>
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
+                      </div>
+                    </div>
+                    <?php endforeach; ?>
+
+                    <?php endforeach; ?>
+                </fieldset>
+            </div>
         </div>
     </div>
 
