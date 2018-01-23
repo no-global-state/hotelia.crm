@@ -32,6 +32,7 @@ CREATE TABLE velveto_payment_systems_fields_data (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `field_id` INT NOT NULL,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
+    `value` TEXT NOT NULL,
 
     FOREIGN KEY (field_id) REFERENCES velveto_payment_systems_fields(id) ON DELETE CASCADE,
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
