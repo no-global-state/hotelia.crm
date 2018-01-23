@@ -48,6 +48,17 @@ final class PaymentSystemService
     }
 
     /**
+     * Finds payment system name by its ID
+     * 
+     * @param int $id Payment system ID
+     * @return string
+     */
+    public function findNameById(int $id) : string
+    {
+        return $this->paymentSystemMapper->findNameById($id);
+    }
+
+    /**
      * Fetch payment system by its ID
      * 
      * @param int $id Payment system ID

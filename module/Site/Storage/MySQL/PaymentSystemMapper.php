@@ -21,6 +21,17 @@ final class PaymentSystemMapper extends AbstractMapper
     }
 
     /**
+     * Finds payment system name by its ID
+     * 
+     * @param int $id Payment system ID
+     * @return string
+     */
+    public function findNameById(int $id) : string
+    {
+        return $this->findColumnByPk($id, 'name');
+    }
+
+    /**
      * Fetch all payment systems
      * 
      * @return array
