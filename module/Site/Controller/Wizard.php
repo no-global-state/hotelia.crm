@@ -33,6 +33,9 @@ final class Wizard extends AbstractCrmController
         // Save hotel data
         $this->getModuleService('hotelService')->save($data);
 
+        // Update payment gateway attributes
+        $this->getModuleService('paymentFieldService')->updateGateways($this->getHotelId(), $data['payment']);
+
         // Mark wizard as finished
         $this->getModuleService('userService')->markWizardAsFinished($this->getUserId());
 
@@ -63,6 +66,7 @@ final class Wizard extends AbstractCrmController
                 'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
                 'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
                 'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
+                'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId())
             ]);
         }
     }

@@ -21,12 +21,21 @@ use Krystal\Form\Element;
                     <li role="presentation" class="disabled">
                         <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="<? $this->show('Step'); ?> 2">
                             <span class="round-tab">
+                                <i class="glyphicon glyphicon-download-alt"></i>
+                            </span>
+                        </a>
+                    </li>
+
+                    <li role="presentation" class="disabled">
+                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="<? $this->show('Step'); ?> 3">
+                            <span class="round-tab">
                                 <i class="glyphicon glyphicon-pencil"></i>
                             </span>
                         </a>
                     </li>
+
                     <li role="presentation" class="disabled">
-                        <a href="#step3" data-toggle="tab" aria-controls="step3" role="tab" title="<? $this->show('Step'); ?> 3">
+                        <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="<? $this->show('Step'); ?> 4">
                             <span class="round-tab">
                                 <i class="glyphicon glyphicon-picture"></i>
                             </span>
@@ -143,7 +152,34 @@ use Krystal\Form\Element;
                         </div>
 
                         <div class="tab-pane" role="tabpanel" id="step2">
-                            <h3><?= $this->show('Step'); ?> 2</h3>
+                          <h3><? $this->show('Step'); ?> 2</h3>
+                          <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
+                            
+                            <?php foreach ($payments as $system => $gateways): ?>
+                            <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
+
+                            <fieldset>
+                                <?php foreach ($gateways as $index => $gateway): ?>
+                                <?php $uniq = sprintf('field-%s', $index); ?>
+                                <div class="form-group">
+                                  <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
+                                  <div class="col-lg-10">
+                                    <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
+                                  </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </fieldset>
+                            <?php endforeach; ?>
+                            
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <h3><?= $this->show('Step'); ?> 3</h3>
                             <p><? $this->show('Сhoice facilites'); ?></p>
 
                             <? $this->loadPartial('facilities', [
@@ -156,8 +192,8 @@ use Krystal\Form\Element;
                             </ul>
                         </div>
 
-                        <div class="tab-pane" role="tabpanel" id="step3">
-                            <h3><? $this->show('Step'); ?> 3</h3>
+                        <div class="tab-pane" role="tabpanel" id="step4">
+                            <h3><? $this->show('Step'); ?> 4</h3>
                             <div class="alert alert-dismissible alert-info">
                                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                                 <p>
