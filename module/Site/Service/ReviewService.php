@@ -55,6 +55,23 @@ final class ReviewService
     }
 
     /**
+     * Fetch all reviews
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchAll(int $hotelId) : array
+    {
+        $reviews = $this->reviewMapper->fetchAll($hotelId);
+
+        foreach ($reviews as &$review) {
+            $review['marks'] = $this->reviewMarkMapper->findAllByReviewId($review['id']);
+        }
+
+        return $reviews;
+    }
+
+    /**
      * Adds a review
      * 
      * @param int $langId
