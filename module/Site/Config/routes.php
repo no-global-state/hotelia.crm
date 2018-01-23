@@ -83,6 +83,23 @@ return [
         'controller' => 'Wizard@indexAction'
     ],
 
+    // Payment system field
+    '/crm/payment-system/fields/all/(:var)' => [
+        'controller' => 'PaymentField@indexAction'
+    ],
+
+    '/crm/payment-system/fields/edit/(:var)' => [
+        'controller' => 'PaymentField@editAction'
+    ],
+
+    '/crm/payment-system/fields/delete/(:var)' => [
+        'controller' => 'PaymentField@deleteAction'
+    ],
+
+    '/crm/payment-system/fields/save' => [
+        'controller' => 'PaymentField@saveAction'
+    ],
+
     // Payment system
     '/crm/payment-system' => [
         'controller' => 'PaymentSystem@indexAction'
