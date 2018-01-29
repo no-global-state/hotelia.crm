@@ -8,6 +8,23 @@ use Site\Service\ReservationService;
 final class Site extends AbstractSiteController
 {
     /**
+     * Leaves a review
+     * 
+     * @return void
+     */
+    public function reviewAction() : void
+    {
+        $data = $this->request->getPost();
+
+        // Review service
+        $reviewService = $this->getModuleService('reviewService');
+        $reviewService->add($this->getCurrentLangId(), $this->getHotelId(), $data);
+
+        $this->flashBag->set('success', 'Your review has been posted');
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Renders payment page
      * 
      * @return string
@@ -134,6 +151,9 @@ final class Site extends AbstractSiteController
             'rooms' => $rooms,
             'types' => $types,
             'hotel' => $hotel,
+            'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
+            'reviews' => $this->getModuleService('reviewService')->fetchAll($this->getHotelId()),
+
             'id' => $id,
             'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, $this->getHotelId()),
             // Hotel images

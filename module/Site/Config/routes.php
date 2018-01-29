@@ -321,6 +321,10 @@ return [
         'controller' => 'Site@searchAction'
     ],
     
+    '/hotel/review/add' => [
+        'controller' => 'Site@reviewAction'
+    ],
+    
     '/hotel/book/(:var)' => [
         'controller' => 'Site@bookAction'
     ],
