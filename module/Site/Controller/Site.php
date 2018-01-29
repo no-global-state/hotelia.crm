@@ -40,6 +40,8 @@ final class Site extends AbstractSiteController
             $arrival = $this->request->getPost('arrival');
             $departure = $this->request->getPost('departure');
 
+            $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
+
             // Room details
             $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
 
@@ -47,6 +49,7 @@ final class Site extends AbstractSiteController
                 'arrival' => $arrival,
                 'departure' => $departure,
                 'room' => $room,
+                'hotel' => $hotel,
                 'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
             ]);
 
