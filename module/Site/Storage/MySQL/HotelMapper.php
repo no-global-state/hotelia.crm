@@ -215,6 +215,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             HotelTypeTranslationMapper::getFullColumnName('name') => 'type',
             RegionTranslationMapper::getFullColumnName('name') => 'region',
             DistrictTranslationMapper::getFullColumnName('name') => 'district',
+            PhotoMapper::getFullColumnName('id') => 'cover_id',
+            PhotoMapper::getFullColumnName('file') => 'cover'
         ]);
 
         $db = $this->db->select($columns)
@@ -262,6 +264,14 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        ->leftJoin(DistrictTranslationMapper::getTableName(), [
                             DistrictTranslationMapper::getFullColumnName('id') => DistrictMapper::getRawColumn('id'),
                             DistrictTranslationMapper::getFullColumnName('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+                       ])
+                       // Photo cover relation
+                       ->leftJoin(PhotoCoverMapper::getTableName(), [
+                            self::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('master_id')
+                       ])
+                       // Photo relation
+                       ->leftJoin(PhotoMapper::getTableName(), [
+                            PhotoMapper::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('slave_id')
                        ])
                        // Constraints
                        ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id)
