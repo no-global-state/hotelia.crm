@@ -94,7 +94,16 @@ final class RoomTypeService
     public function fetchList(int $langId, int $hotelId) : array
     {
         $rows = $this->roomTypeMapper->fetchAll($langId, $hotelId);
-        return ArrayUtils::arrayList($rows, 'id', 'name');
+        $list = ArrayUtils::arrayList($rows, 'id', 'name');
+
+        // Remove empty ones
+        foreach ($list as $key => $value) {
+            if (empty($value)) {
+                unset($list[$key]);
+            }
+        }
+
+        return $list;
     }
 
     /**
