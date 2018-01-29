@@ -99,7 +99,13 @@ final class HotelService implements FilterableServiceInterface
      */
     public function fetchById(int $id, int $langId = 0, $priceGroupId = null)
     {
-        return $this->hotelMapper->fetchById($id, $langId, $priceGroupId);
+        $hotel = $this->hotelMapper->fetchById($id, $langId, $priceGroupId);
+
+        if ($langId !== 0) {
+            $hotel['cover'] = PhotoService::createImagePath($hotel['cover_id'], $hotel['cover'], PhotoService::PARAM_IMAGE_SIZE_LARGE);
+        }
+
+        return $hotel;
     }
 
     /**
