@@ -309,6 +309,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      */
     public function fetchAll(int $langId) : array
     {
+        // Columns to be selected
         $columns = array_merge($this->getColumns(), [
             PhotoMapper::getFullColumnName('id') => 'cover_id',
             PhotoMapper::getFullColumnName('file') => 'cover'
@@ -316,19 +317,13 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
         return $this->createEntitySelect($columns)
                     // Photo cover relation
-                    ->leftJoin(PhotoCoverMapper::getTableName())
-                    ->on()
-                    ->equals(
-                        self::getFullColumnName('id'),
-                        PhotoCoverMapper::getRawColumn('master_id')
-                    )
+                    ->leftJoin(PhotoCoverMapper::getTableName(), [
+                        self::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('master_id')
+                    ])
                     // Photo relation
-                    ->leftJoin(PhotoMapper::getTableName())
-                    ->on()
-                    ->equals(
-                        PhotoMapper::getFullColumnName('id'),
-                        PhotoCoverMapper::getRawColumn('slave_id')
-                    )
+                    ->leftJoin(PhotoMapper::getTableName(), [
+                        PhotoMapper::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('slave_id')
+                    ])
                     // Language ID filter
                     ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), $langId)
                     // Select only active ones
