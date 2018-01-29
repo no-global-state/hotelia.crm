@@ -80,7 +80,7 @@ final class Site extends AbstractSiteController
             'arrival' => $arrival,
             'departure' => $departure,
             'room' => $room,
-            'gallery' => $this->getModuleService('photoService')->fetchAll($this->getHotelId(), PhotoService::PARAM_IMAGE_SIZE_LARGE),
+            'gallery' => $this->getModuleService('photoService')->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
             'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
         ]);
     }
