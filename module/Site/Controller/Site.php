@@ -41,7 +41,7 @@ final class Site extends AbstractSiteController
             $departure = $this->request->getPost('departure');
             $rooms = $this->request->getPost('rooms', 1);
             $adults = $this->request->getPost('adults', 1);
-            $kids = $this->request->getPost('kids', 1);
+            $kids = $this->request->getPost('kids', 0);
 
             $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
@@ -79,7 +79,7 @@ final class Site extends AbstractSiteController
         $departure = $this->request->getQuery('departure');
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 1);
+        $kids = $this->request->getQuery('kids', 0);
 
         $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
         $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
@@ -118,7 +118,7 @@ final class Site extends AbstractSiteController
         $priceStop = $this->request->getQuery('price-stop', 100);
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 1);
+        $kids = $this->request->getQuery('kids', 0);
 
         return $this->view->render('search', [
             // Request variables
@@ -160,7 +160,7 @@ final class Site extends AbstractSiteController
         $type = $this->request->getQuery('type', null);
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 1);
+        $kids = $this->request->getQuery('kids', 0);
 
         $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId(), $this->getPriceGroupId());
 
