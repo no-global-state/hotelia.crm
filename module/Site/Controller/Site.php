@@ -39,6 +39,9 @@ final class Site extends AbstractSiteController
             $hotelId = $this->request->getPost('hotel_id');
             $arrival = $this->request->getPost('arrival');
             $departure = $this->request->getPost('departure');
+            $rooms = $this->request->getPost('rooms', 1);
+            $adults = $this->request->getPost('adults', 1);
+            $kids = $this->request->getPost('kids', 1);
 
             $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
@@ -46,6 +49,9 @@ final class Site extends AbstractSiteController
             $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
 
             return $this->view->render('payment', [
+                'rooms' => $rooms,
+                'adults' => $adults,
+                'kids' => $kids,
                 'arrival' => $arrival,
                 'departure' => $departure,
                 'room' => $room,
@@ -71,18 +77,25 @@ final class Site extends AbstractSiteController
         $hotelId = $this->request->getQuery('hotel_id');
         $arrival = $this->request->getQuery('arrival');
         $departure = $this->request->getQuery('departure');
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 1);
 
         $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
         $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
         return $this->view->render('book', [
+            // Request variables
+            'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
             'hotelId' => $hotelId,
             'typeId' => $typeId,
             'arrival' => $arrival,
             'departure' => $departure,
             'hotel' => $hotel,
             'room' => $room,
-            'gallery' => $this->getModuleService('photoService')->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
+            'gallery' => $this->getModuleService('photoService')->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE, 5),
             'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
         ]);
     }
