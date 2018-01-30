@@ -30,9 +30,10 @@ final class PhotoMapper extends AbstractMapper
      * Fetch all photos
      * 
      * @param string $hotelId
+     * @param string $limit Optional limit
      * @return array
      */
-    public function fetchAll($hotelId)
+    public function fetchAll($hotelId, $limit = null)
     {
         // Columns to be selected
         $columns = [
@@ -43,7 +44,7 @@ final class PhotoMapper extends AbstractMapper
             new RawSqlFragment(sprintf('(%s.id = %s.slave_id) as cover', self::getTableName(), PhotoCoverMapper::getTableName()))
         ];
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         // Photo cover relation
                         ->leftJoin(PhotoCoverMapper::getTableName())
@@ -52,7 +53,13 @@ final class PhotoMapper extends AbstractMapper
                             self::getFullColumnName('id'),
                             PhotoCoverMapper::getRawColumn('slave_id')
                         )
-                        ->whereEquals('hotel_id', $hotelId)
-                        ->queryAll();
+                        ->whereEquals('hotel_id', $hotelId);
+
+        // Use limit if provided
+        if (is_integer($limit)) {
+            $db->limit($limit);
+        }
+
+        return $db->queryAll();
     }
 }

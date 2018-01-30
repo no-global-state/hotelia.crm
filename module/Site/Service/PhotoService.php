@@ -188,11 +188,12 @@ final class PhotoService extends AbstractService
      * 
      * @param string $hotelId
      * @param string $size
+     * @param mixed $limit
      * @return array
      */
-    public function fetchList($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
+    public function fetchList($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE, $limit = null)
     {
-        return ArrayUtils::arrayList($this->fetchAll($hotelId, $size), 'id', 'file');
+        return ArrayUtils::arrayList($this->fetchAll($hotelId, $size, $limit), 'id', 'file');
     }
 
     /**
@@ -200,11 +201,12 @@ final class PhotoService extends AbstractService
      * 
      * @param string $hotelId
      * @param string $size
+     * @param mixed $limit
      * @return array
      */
-    public function fetchAll($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
+    public function fetchAll($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE, $limit = null)
     {
-        $rows = $this->photoMapper->fetchAll($hotelId);
+        $rows = $this->photoMapper->fetchAll($hotelId, $limit);
 
         foreach ($rows as &$row) {
             $row['file'] = self::createImagePath($row['id'], $row['file'], $size);
