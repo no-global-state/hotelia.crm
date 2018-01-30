@@ -55,7 +55,7 @@ final class FacilitiyService
      * @param bool $front Whether to fetch only front items
      * @return array
      */
-    public function getItemList($hotelId, int $langId, bool $front = false) : array
+    public function getItemList(int $hotelId, int $langId, bool $front = false) : array
     {
         $items = $this->itemMapper->fetchAll($langId, null, $hotelId, $front);
         return ArrayUtils::arrayList($items, 'id', 'name');
