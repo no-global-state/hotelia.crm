@@ -159,7 +159,7 @@ final class Site extends AbstractSiteController
             'reviews' => $this->getModuleService('reviewService')->fetchAll($id),
 
             'id' => $id,
-            'facilities' => $this->getModuleService('facilitiyService')->getCollection(false, $id),
+            'facilities' => $this->getModuleService('facilitiyService')->getItemList($id, $this->getCurrentLangId(), false),
             // Hotel images
             'images' => [
                 'large' => $photoService->fetchAll($id, PhotoService::PARAM_IMAGE_SIZE_LARGE),
