@@ -101,6 +101,9 @@ final class Site extends AbstractSiteController
         $rate = $this->request->getQuery('rate', 0);
         $priceStart = $this->request->getQuery('price-start', 10);
         $priceStop = $this->request->getQuery('price-stop', 100);
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 1);
 
         return $this->view->render('search', [
             // Request variables
@@ -112,6 +115,9 @@ final class Site extends AbstractSiteController
             'rate' => $rate,
             'priceStart' => $priceStart,
             'priceStop' => $priceStop,
+            'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
 
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
             'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery()),
@@ -137,13 +143,16 @@ final class Site extends AbstractSiteController
         $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
         $id = $this->request->getQuery('id'); // Hotel ID
         $type = $this->request->getQuery('type', null);
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 1);
 
         $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId(), $this->getPriceGroupId());
 
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
-        $rooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id, $type);
+        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id, $type);
         $types = $roomTypeService->fetchList($id, $this->getCurrentLangId());
 
         return $this->view->render('hotel', [
@@ -151,8 +160,11 @@ final class Site extends AbstractSiteController
             'type' => $type,
             'arrival' => $arrival,
             'departure' => $departure,
-
             'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
+
+            'availableRooms' => $availableRooms,
             'types' => $types,
             'hotel' => $hotel,
             'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
