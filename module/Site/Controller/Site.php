@@ -73,12 +73,14 @@ final class Site extends AbstractSiteController
         $departure = $this->request->getQuery('departure');
 
         $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
+        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
         return $this->view->render('book', [
             'hotelId' => $hotelId,
             'typeId' => $typeId,
             'arrival' => $arrival,
             'departure' => $departure,
+            'hotel' => $hotel,
             'room' => $room,
             'gallery' => $this->getModuleService('photoService')->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
             'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
