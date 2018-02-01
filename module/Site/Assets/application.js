@@ -255,10 +255,12 @@ $(function(){
         var selected = $(this).find(':selected').data('region-id');
 
         // Hide all options
-        $("[data-select='district']").find('option')
-                                     .addClass(hiddenClass)
+        $("[data-select='district']").find('option') // Find all options
+                                     .addClass(hiddenClass) // Hide them all
                                      .each(function(){
+                                         // Find current active
                                          if ($(this).data('region-id') == selected) {
+                                            // Show currently matched against selection
                                             $(this).removeClass(hiddenClass);
                                          }
                                      });
