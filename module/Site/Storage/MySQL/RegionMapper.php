@@ -57,8 +57,7 @@ final class RegionMapper extends AbstractMapper
     {
         return $this->createEntitySelect($this->getColumns())
                     ->whereEquals(RegionTranslationMapper::getFullColumnName('lang_id'), $langId)
-                    ->orderBy($this->getPk())
-                    ->desc()
+                    ->orderBy(self::getFullColumnName('order'))
                     ->queryAll();
     }
 }
