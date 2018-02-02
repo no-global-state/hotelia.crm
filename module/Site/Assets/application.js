@@ -283,7 +283,7 @@ $(function() {
 
     // Initial state of child element
     var $child = $(childSelector);
-    var childInitialValue = $child.val();
+    var childInitialValue = $child.find('[selected]').val();
 
     $(parentSelector).change(function(){
         var currentValue = $(this).find('option')
@@ -301,8 +301,15 @@ $(function() {
         if (currentValue == initialValue) {
             // Now handle region
             if (currentValue) {
-                chainProvider().filter('[value=' + childInitialValue + ']')
-                              .prop('selected', true);
+                // If value is undefined
+                if (!childInitialValue) {
+                    chainProvider().eq(0)
+                                  .prop('selected', true);
+                } else {
+                    chainProvider().filter('[value=' + childInitialValue + ']')
+                                  .prop('selected', true);
+                }
+
             } else {
                 chainProvider()
                 .first()
