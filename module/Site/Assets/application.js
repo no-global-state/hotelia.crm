@@ -241,33 +241,13 @@ $(function(){
 
         $("form").submit();
     });
-    
+
     $(".room-taken").each(function(){
         $(this).css('background', $(this).data('background-color'));
     }).hover(function(){
         $(this).css('background', $(this).data('hover-color'));
     });
-
-    // Region change listener
-    $("[data-select='region']").change(function(){
-        // Target option
-        var hiddenClass = 'hidden';
-        var selected = $(this).find(':selected').data('region-id');
-
-        // Hide all options
-        $("[data-select='district']").find('option') // Find all options
-                                     .addClass(hiddenClass) // Hide them all
-                                     .each(function(){
-                                         // Find current active
-                                         if ($(this).data('region-id') == selected) {
-                                            // Show currently matched against selection
-                                            $(this).removeClass(hiddenClass);
-                                         }
-                                     });
-    }).trigger('change');
-
 });
-
 
 // Keep tabs state on refresh, taken from here: https://stackoverflow.com/a/10524697
 $(function(){
@@ -282,4 +262,59 @@ $(function(){
     if (lastTab) {
         $('[href="' + lastTab + '"]').tab('show');
     }
+});
+
+
+
+
+$(function() {
+    // Initial value
+    var attacher = 'region-id';
+    var childSelector = "[data-select='district']";
+    var parentSelector = "[data-select='region']";
+    var hiddenClass = 'hidden';
+
+    // Find active option
+    var findActiveOption = function(selector){
+        return $(parentSelector).find('option').filter(':selected');
+    };
+
+    var initialValue = findActiveOption().data(attacher);
+
+    // Initial state of child element
+    var $child = $(childSelector);
+    var childInitialValue = $child.val();
+
+    $(parentSelector).change(function(){
+        var currentValue = $(this).find('option')
+                                  .filter(':selected')
+                                  .data(attacher);
+
+        // Shared chain provider
+        var chainProvider = function(){
+            return $child.find('option')
+                       .addClass(hiddenClass)
+                       .filter("[data-" + attacher + "='" + currentValue + "']")
+                       .removeClass(hiddenClass);
+        };
+
+        if (currentValue == initialValue) {
+            // Now handle region
+            if (currentValue) {
+                chainProvider().filter('[value=' + childInitialValue + ']')
+                              .prop('selected', true);
+            } else {
+                chainProvider()
+                .first()
+                .prop('selected', true);
+            }
+
+        } else {
+            // Now handle region
+            chainProvider()
+               .first()
+               .prop('selected', true);
+        }
+
+    }).trigger('change');
 });
