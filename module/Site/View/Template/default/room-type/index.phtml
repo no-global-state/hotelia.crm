@@ -13,7 +13,7 @@ use Krystal\Form\Element;
 
 <h2 class="page-header"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?> <small>(<?= count($types); ?>)</small></h2>
 
-<p><a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@addAction'); ?>"><? $this->show('Add room type'); ?></a></p>
+<p><a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomTypeGallery@addAction'); ?>"><? $this->show('Add room type'); ?></a></p>
 
 <div class="table-responsive">
     <table class="table table-bordered">
@@ -43,6 +43,7 @@ use Krystal\Form\Element;
                     <?php endforeach; ?>
                 </td>
                 <td>
+                    <a href="<?php echo $this->url('Site:Architecture:RoomTypeGallery@indexAction', $type['id']); ?>"><i class="glyphicon glyphicon-picture"></i></a>
                     <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>

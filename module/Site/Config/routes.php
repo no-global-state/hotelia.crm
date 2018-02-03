@@ -187,23 +187,23 @@ return [
     
     // Room gallery
     '/crm/architecture/room/gallery/index/(:var)' => [
-        'controller' => 'Architecture:RoomGallery@indexAction'
+        'controller' => 'Architecture:RoomTypeGallery@indexAction'
     ],
 
     '/crm/architecture/room/gallery/add/(:var)' => [
-        'controller' => 'Architecture:RoomGallery@addAction'
+        'controller' => 'Architecture:RoomTypeGallery@addAction'
     ],
 
     '/crm/architecture/room/gallery/edit/(:var)' => [
-        'controller' => 'Architecture:RoomGallery@editAction'
+        'controller' => 'Architecture:RoomTypeGallery@editAction'
     ],
 
     '/crm/architecture/room/gallery/delete/(:var)' => [
-        'controller' => 'Architecture:RoomGallery@deleteAction'
+        'controller' => 'Architecture:RoomTypeGallery@deleteAction'
     ],
 
     '/crm/architecture/room/gallery/save' => [
-        'controller' => 'Architecture:RoomGallery@saveAction'
+        'controller' => 'Architecture:RoomTypeGallery@saveAction'
     ],
 
     // Regions

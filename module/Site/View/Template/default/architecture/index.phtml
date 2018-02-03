@@ -33,7 +33,6 @@
                 <td><?php $this->show($cleaningCollection->findByKey($room['cleaned'])); ?></td>
                 <td><?php $this->show($roomQualityCollection->findByKey($room['quality'])); ?></td>
                 <td>
-                    <a href="<?php echo $this->url('Site:Architecture:RoomGallery@indexAction', $room['id']); ?>"><i class="glyphicon glyphicon-picture"></i></a>
                     <a href="<?php echo $this->url('Site:Architecture:RoomInventory@indexAction', $room['id']); ?>"><i class="glyphicon glyphicon-eject"></i></a>
                     <a href="<?php echo $this->url('Site:Architecture:Room@editAction', $room['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a data-button="delete" href="<?php echo $this->url('Site:Architecture:Room@deleteAction', $room['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
