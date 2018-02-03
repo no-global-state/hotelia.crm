@@ -12,7 +12,7 @@ final class RoomMapper extends AbstractMapper
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('velveto_floor_room');
+        return self::getWithPrefix('velveto_room');
     }
 
     /**

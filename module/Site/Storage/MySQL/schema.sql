@@ -205,7 +205,7 @@ CREATE TABLE velveto_users (
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room (
+CREATE TABLE velveto_room (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `type_id` INT NOT NULL COMMENT 'Room type ID',
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
@@ -217,7 +217,7 @@ CREATE TABLE velveto_floor_room (
     `quality` SMALLINT(1) NOT NULL COMMENT 'Room quality code',
     `description` TEXT NOT NULL COMMENT 'Room description',
 
-    FOREIGN KEY (type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
@@ -235,7 +235,7 @@ CREATE TABLE velveto_room_categories_translations (
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room_types (
+CREATE TABLE velveto_room_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
     `category_id` INT NOT NULL COMMENT 'Attached Category ID',
@@ -245,32 +245,32 @@ CREATE TABLE velveto_floor_room_types (
     FOREIGN KEY (category_id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room_types_translations (
+CREATE TABLE velveto_room_types_translations (
     `id` INT NOT NULL,
     `lang_id` INT NOT NULL COMMENT 'Attached language ID',
     `description` TEXT NOT NULL,
 
-    FOREIGN KEY (id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room_type_prices (
+CREATE TABLE velveto_room_type_prices (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_type_id` INT NOT NULL COMMENT 'Room type ID',
     `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
     `price` FLOAT NOT NULL,
 
-    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room_type_gallery (
+CREATE TABLE velveto_room_type_gallery (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `room_type_id` INT NOT NULL COMMENT 'Room type ID',
     `file` varchar(255) COMMENT 'Photo file path',
     `order` INT COMMENT 'Sorting order',
 
-    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE
+    FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_inventory (
@@ -290,7 +290,7 @@ CREATE TABLE velveto_room_inventory (
     `comment` TEXT,
 
     FOREIGN KEY (inventory_id) REFERENCES velveto_inventory(id) ON DELETE CASCADE,
-    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE
+    FOREIGN KEY (room_id) REFERENCES velveto_room(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_services (
@@ -374,7 +374,7 @@ CREATE TABLE velveto_reservation (
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (payment_system_id) REFERENCES velveto_payment_systems(id) ON DELETE CASCADE,
-    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES velveto_room(id) ON DELETE CASCADE,
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
