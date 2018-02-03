@@ -145,9 +145,9 @@ final class RoomTypeGalleryService extends AbstractService
      * @param string $size
      * @return array
      */
-    public function fetchAll($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
+    public function fetchAll($roomTypeId, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
-        $rows = $this->roomTypeGalleryMapper->fetchAll($hotelId);
+        $rows = $this->roomTypeGalleryMapper->fetchAll($roomTypeId);
 
         foreach ($rows as &$row) {
             $row['file'] = $this->createImagePath($row, $size);
