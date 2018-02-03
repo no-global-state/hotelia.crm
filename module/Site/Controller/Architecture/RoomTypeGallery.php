@@ -5,7 +5,7 @@ namespace Site\Controller\Architecture;
 use Site\Controller\AbstractCrmController;
 use Krystal\Db\Filter\InputDecorator;
 
-final class RoomGallery extends AbstractCrmController
+final class RoomTypeGallery extends AbstractCrmController
 {
     /**
      * Creates a form
@@ -31,7 +31,7 @@ final class RoomGallery extends AbstractCrmController
     public function indexAction(int $roomId)
     {
         return $this->view->render('architecture/room-gallery-index', [
-            'images' => $this->getModuleService('roomGalleryService')->fetchAll($roomId),
+            'images' => $this->getModuleService('roomTypeGalleryService')->fetchAll($roomId),
             'roomId' => $roomId
         ]);
     }
@@ -55,7 +55,7 @@ final class RoomGallery extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $photo = $this->getModuleService('roomGalleryService')->fetchById($id);
+        $photo = $this->getModuleService('roomTypeGalleryService')->fetchById($id);
 
         if ($photo !== false) {
             return $this->createForm($photo);
@@ -72,12 +72,12 @@ final class RoomGallery extends AbstractCrmController
     public function saveAction() : int
     {
         $data = $this->request->getPost();
-        $service = $this->getModuleService('roomGalleryService');
+        $service = $this->getModuleService('roomTypeGalleryService');
 
         if ($this->request->getPost('id')) {
             $service->update($this->request->getAll());
         } else {
-            $service->add($this->request->getPost('room_id'), $this->request->getAll());
+            $service->add($this->request->getPost('room_type_id'), $this->request->getAll());
         }
 
         $this->flashBag->set('success', $data['id'] ? 'The photo has been updated successfully' : 'The photo has been added successfully');
@@ -92,7 +92,7 @@ final class RoomGallery extends AbstractCrmController
      */
     public function deleteAction(int $id)
     {
-        $this->getModuleService('roomGalleryService')->deleteById($id);
+        $this->getModuleService('roomTypeGalleryService')->deleteById($id);
 
         $this->flashBag->set('danger', 'The photo has been deleted successfully');
         $this->response->redirectToPreviousPage();

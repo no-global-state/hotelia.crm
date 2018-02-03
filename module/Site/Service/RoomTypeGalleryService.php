@@ -3,11 +3,11 @@
 namespace Site\Service;
 
 use Site\Module;
-use Site\Storage\MySQL\RoomGalleryMapper;
+use Site\Storage\MySQL\RoomTypeGalleryMapper;
 use Krystal\Image\Tool\ImageManagerInterface;
 use Krystal\Application\Model\AbstractService;
 
-final class RoomGalleryService extends AbstractService
+final class RoomTypeGalleryService extends AbstractService
 {
     const PARAM_IMAGE_SIZE_LARGE = '850x450';
     const PARAM_IMAGE_SIZE_SMALL = '80x50';
@@ -15,9 +15,9 @@ final class RoomGalleryService extends AbstractService
     /**
      * Any compliant room gallery mapper
      * 
-     * @var \Site\Storage\MySQL\RoomGalleryMapper
+     * @var \Site\Storage\MySQL\RoomTypeGalleryMapper
      */
-    private $roomGalleryMapper;
+    private $roomTypeGalleryMapper;
 
     /**
      * Image handler service
@@ -29,13 +29,13 @@ final class RoomGalleryService extends AbstractService
     /**
      * State initialization
      * 
-     * @param \Site\Storage\MySQL\RoomGalleryMapper $roomGalleryMapper
+     * @param \Site\Storage\MySQL\RoomTypeGalleryMapper $roomGalleryMapper
      * @param \Krystal\Image\Tool\ImageManagerInterface $imageManager
      * @return void
      */
-    public function __construct(RoomGalleryMapper $roomGalleryMapper, ImageManagerInterface $imageManager)
+    public function __construct(RoomTypeGalleryMapper $roomTypeGalleryMapper, ImageManagerInterface $imageManager)
     {
-        $this->roomGalleryMapper = $roomGalleryMapper;
+        $this->roomTypeGalleryMapper = $roomTypeGalleryMapper;
         $this->imageManager = $imageManager;
     }
 
@@ -62,7 +62,7 @@ final class RoomGalleryService extends AbstractService
         }
 
         // Persists
-        return $this->roomGalleryMapper->persist($data);
+        return $this->roomTypeGalleryMapper->persist($data);
     }
 
     /**
@@ -82,16 +82,13 @@ final class RoomGalleryService extends AbstractService
         if (!empty($file)) {
             // Make names unique
             $this->filterFileInput($file);
-
-            // Attach hotel ID
-            $data['room_id'] = $hotelId;
             $data['file'] = $file[0]->getName();
 
             // Persists
-            $this->roomGalleryMapper->persist($data);
+            $this->roomTypeGalleryMapper->persist($data);
 
             // Last id
-            $id = $this->roomGalleryMapper->getMaxId();
+            $id = $this->roomTypeGalleryMapper->getMaxId();
 
             // Upload the image
             $this->imageManager->upload($id, $file);
@@ -111,7 +108,7 @@ final class RoomGalleryService extends AbstractService
      */
     public function deleteById($id)
     {
-        return $this->roomGalleryMapper->deleteByPk($id) && $this->imageManager->delete($id);
+        return $this->roomTypeGalleryMapper->deleteByPk($id) && $this->imageManager->delete($id);
     }
 
     /**
@@ -135,7 +132,7 @@ final class RoomGalleryService extends AbstractService
      */
     public function fetchById($id, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
-        $row = $this->roomGalleryMapper->findByPk($id);
+        $row = $this->roomTypeGalleryMapper->findByPk($id);
         $row['file'] = $this->createImagePath($row, $size);
 
         return $row;
@@ -150,7 +147,7 @@ final class RoomGalleryService extends AbstractService
      */
     public function fetchAll($hotelId, $size = self::PARAM_IMAGE_SIZE_LARGE)
     {
-        $rows = $this->roomGalleryMapper->fetchAll($hotelId);
+        $rows = $this->roomTypeGalleryMapper->fetchAll($hotelId);
 
         foreach ($rows as &$row) {
             $row['file'] = $this->createImagePath($row, $size);

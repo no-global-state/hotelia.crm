@@ -264,13 +264,13 @@ CREATE TABLE velveto_floor_room_type_prices (
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
-CREATE TABLE velveto_floor_room_gallery (
+CREATE TABLE velveto_floor_room_type_gallery (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `room_id` INT NOT NULL COMMENT 'Attahced Room ID',
+    `room_type_id` INT NOT NULL COMMENT 'Room type ID',
     `file` varchar(255) COMMENT 'Photo file path',
     `order` INT COMMENT 'Sorting order',
 
-    FOREIGN KEY (room_id) REFERENCES velveto_floor_room(id) ON DELETE CASCADE
+    FOREIGN KEY (room_type_id) REFERENCES velveto_floor_room_types(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_inventory (

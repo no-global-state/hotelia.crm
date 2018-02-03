@@ -8,7 +8,7 @@ use Site\Service\UserService;
 use Site\Service\ArchitectureService;
 use Site\Service\FacilitiyService;
 use Site\Service\PhotoService;
-use Site\Service\RoomGalleryService;
+use Site\Service\RoomTypeGalleryService;
 use Site\Service\RoomTypeService;
 use Site\Service\HotelService;
 use Site\Service\RegionService;
@@ -32,7 +32,7 @@ final class Module extends AbstractModule
      * 
      * @return \Site\Service\PhotoService
      */
-    private function createRoomGalleryService()
+    private function createRoomTypeGalleryService()
     {
         // Create image service
         $imageManager = new ImageManager(self::PARAM_ROOM_GALLERY_PATH, $this->appConfig->getRootDir(), $this->appConfig->getRootUrl(), [
@@ -49,9 +49,9 @@ final class Module extends AbstractModule
         ]);
         
         // Create mapper
-        $mapper = $this->createMapper('\Site\Storage\MySQL\RoomGalleryMapper');
+        $mapper = $this->createMapper('\Site\Storage\MySQL\RoomTypeGalleryMapper');
 
-        return new RoomGalleryService($mapper, $imageManager);
+        return new RoomTypeGalleryService($mapper, $imageManager);
     }
 
     /**
@@ -141,7 +141,7 @@ final class Module extends AbstractModule
                 $userMapper
             ),
 
-            'roomGalleryService' => $this->createRoomGalleryService(),
+            'roomTypeGalleryService' => $this->createRoomTypeGalleryService(),
 
             'regionService' => new RegionService(
                 $this->createMapper('\Site\Storage\MySQL\RegionMapper')
