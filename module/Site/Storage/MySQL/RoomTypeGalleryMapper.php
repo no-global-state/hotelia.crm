@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class RoomTypeGalleryMapper extends AbstractMapper
 {
     /**
@@ -20,8 +22,25 @@ final class RoomTypeGalleryMapper extends AbstractMapper
      */
     public function fetchAll(int $roomTypeId) : array
     {
-        return $this->db->select('*')
+        // Columns to be selected
+        $columns = [
+            self::getFullColumnName('id'),
+            self::getFullColumnName('room_type_id'),
+            self::getFullColumnName('file'),
+            self::getFullColumnName('order'),
+            new RawSqlFragment(sprintf('(%s = %s) AS cover', RoomTypeCoverMapper::getFullColumnName('master_id'), self::getFullColumnName('room_type_id')))
+        ];
+
+        return $this->db->select($columns)
                         ->from(self::getTableName())
+                        // Room type relation
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('id') => self::getRawColumn('room_type_id')
+                        ])
+                        // Room type cover
+                        ->leftJoin(RoomTypeCoverMapper::getTableName(), [
+                            RoomTypeCoverMapper::getFullColumnName('slave_id') => self::getRawColumn('id')
+                        ])
                         ->whereEquals('room_type_id', $roomTypeId)
                         ->orderBy($this->getPk())
                         ->desc()
