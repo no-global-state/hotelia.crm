@@ -207,7 +207,7 @@ final class RoomTypeMapper extends AbstractMapper
             RoomTypeTranslationMapper::getFullColumnName('description')
         ]);
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         // Room category relation
                         ->leftJoin(RoomCategoryMapper::getTableName(), [
@@ -227,7 +227,8 @@ final class RoomTypeMapper extends AbstractMapper
                         // Language ID constraint
                         ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
                         ->orderBy($this->getPk())
-                        ->desc()
-                        ->queryAll();
+                        ->desc();
+
+        return $db->queryAll();
     }
 }
