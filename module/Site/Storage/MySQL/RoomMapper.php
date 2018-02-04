@@ -174,7 +174,7 @@ final class RoomMapper extends AbstractMapper
         // Columns to be selected
         $columns = array(
             // Availability indicators (virtual columns)
-            new RawSqlFragment('COUNT(velveto_floor_room.id) AS rooms_count'),
+            new RawSqlFragment(sprintf('COUNT(%s) AS rooms_count', self::getFullColumnName('id'))),
             new RawSqlFragment('SUM(CURDATE() BETWEEN arrival AND departure) AS rooms_taken'),
             new RawSqlFragment('SUM(CURDATE() = departure) AS rooms_leaving_today'),
         );
