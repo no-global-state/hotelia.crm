@@ -5,33 +5,45 @@ use Krystal\Grid\Grid;
 
 ?>
 
-<p>
-    <a href="<?= $this->url('Site:Architecture:RoomTypeGallery@addAction', $roomId); ?>" class="btn btn-success"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Add new photo'); ?></a>
-</p>
 
-<div class="table-responsive">
-    <?= Grid::render($images, [
-        'pk' => 'id',
-        'batch' => false,
-        'columns' => [
-            [
-                'column' => 'file',
-                'title' => 'Image',
-                'value' => function($row){
-                    return Element::image($row['file'], ['class' => 'img-responsive']);
-                }
+<form action="<?= $this->url('Site:Architecture:RoomTypeGallery@tweakAction'); ?>">
+    <p>
+        <a href="<?= $this->url('Site:Architecture:RoomTypeGallery@addAction', $roomId); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Add new photo'); ?></a>
+        <button type="submit" class="btn btn-success"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Save changes'); ?></button>
+    </p>
+
+    <div class="table-responsive">
+        <?= Grid::render($images, [
+            'pk' => 'id',
+            'batch' => false,
+            'columns' => [
+                [
+                    'column' => 'file',
+                    'title' => 'Image',
+                    'value' => function($row){
+                        return Element::image($row['file'], ['class' => 'img-responsive']);
+                    }
+                ],
+
+                [
+                    'column' => 'cover',
+                    'value' => function($row){
+                        return Element::radio(sprintf('cover[%s]', $row['room_type_id']), $row['id'], (bool) $row['cover'], ['class' => 'form-control']);
+                    }
+                ],
+
+                ['column' => 'order'],
             ],
-            ['column' => 'order'],
-        ],
 
-        'actions' => [
-            'update' => function($row){
-                return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Architecture:RoomTypeGallery@editAction', $row['id']));
-            },
-            'delete' => function($row){
-                return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Architecture:RoomTypeGallery@deleteAction', $row['id']), ['data-button' => 'delete']);
-            }
-        ]
+            'actions' => [
+                'update' => function($row){
+                    return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Architecture:RoomTypeGallery@editAction', $row['id']));
+                },
+                'delete' => function($row){
+                    return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Architecture:RoomTypeGallery@deleteAction', $row['id']), ['data-button' => 'delete']);
+                }
+            ]
 
-    ], $this->translator); ?>
-</div>
+        ], $this->translator); ?>
+    </div>
+</form>
