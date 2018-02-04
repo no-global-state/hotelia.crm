@@ -5,6 +5,7 @@ namespace Site\Service;
 use Site\Storage\MySQL\RoomTypeMapper;
 use Site\Storage\MySQL\PriceGroupMapper;
 use Site\Storage\MySQL\RoomTypePriceMapper;
+use Site\Module;
 use Krystal\Stdlib\ArrayUtils;
 
 final class RoomTypeService
@@ -39,6 +40,19 @@ final class RoomTypeService
     }
 
     /**
+     * Creates image path URL
+     * 
+     * @param mixed $id Image ID
+     * @param mixed $file
+     * @param string $size
+     * @return string
+     */
+    public static function createImagePath($id, $file, string $size) : string
+    {
+        return sprintf('%s/%s/%s', Module::PARAM_ROOM_GALLERY_PATH . $id, $size, $file);
+    }
+
+    /**
      * Find available room types based on dates
      * 
      * @param string $arrival
@@ -51,7 +65,18 @@ final class RoomTypeService
      */
     public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId, $typeId = null) : array
     {
-        return $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId, $typeId);
+        $rows = $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId, $typeId);
+
+        // Process cover attribute
+        foreach ($rows as &$row) {
+            if (empty($row['cover'])) {
+                $row['cover'] = Module::PARAM_DEFAULT_IMAGE;
+            } else {
+                $row['cover'] = self::createImagePath($row['cover_id'], $row['cover'], PhotoService::PARAM_IMAGE_SIZE_LARGE);
+            }
+        }
+
+        return $rows;
     }
 
     /**
