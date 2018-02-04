@@ -26,6 +26,7 @@ final class Module extends AbstractModule
 {
     const PARAM_GALLERY_PATH = '/data/uploads/gallery/';
     const PARAM_ROOM_GALLERY_PATH = '/data/uploads/room-gallery/';
+    const PARAM_DEFAULT_IMAGE = '/data/no-image.png';
 
     /**
      * Returns room gallery service
