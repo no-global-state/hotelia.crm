@@ -15,6 +15,18 @@ final class RoomTypeGalleryMapper extends AbstractMapper
     }
 
     /**
+     * Updates a cover
+     * 
+     * @param int $roomTypeId
+     * @param int $photoId
+     * @return boolean
+     */
+    public function updateCover(int $roomTypeId, int $photoId)
+    {
+        return $this->syncWithJunction(RoomTypeCoverMapper::getTableName(), $roomTypeId, [$photoId]);
+    }
+
+    /**
      * Fetch all images associated with unique room type
      * 
      * @param int $roomTypeId

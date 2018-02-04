@@ -40,6 +40,18 @@ final class RoomTypeGalleryService extends AbstractService
     }
 
     /**
+     * Updates a cover
+     * 
+     * @param int $roomTypeId
+     * @param int $photoId
+     * @return boolean
+     */
+    public function updateCover(int $roomTypeId, int $photoId)
+    {
+        return $this->roomTypeGalleryMapper->updateCover($roomTypeId, $photoId);
+    }
+
+    /**
      * Updates a photo
      * 
      * @param array $input
