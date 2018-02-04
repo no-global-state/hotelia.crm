@@ -157,26 +157,26 @@ final class Site extends AbstractSiteController
     public function hotelAction()
     {
         // Hotel ID is a must
-        if (!$this->request->hasQuery('id')) {
+        if (!$this->request->hasQuery('hotel_id')) {
             return false;
         }
 
         // Request variables
         $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
         $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
-        $id = $this->request->getQuery('id'); // Hotel ID
+        $hotelId = $this->request->getQuery('hotel_id'); // Hotel ID
         $type = $this->request->getQuery('type', null);
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
         $kids = $this->request->getQuery('kids', 0);
 
-        $hotel = $this->getModuleService('hotelService')->fetchById($id, $this->getCurrentLangId(), $this->getPriceGroupId());
+        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
-        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $id, $type);
-        $types = $roomTypeService->fetchList($id, $this->getCurrentLangId());
+        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $type);
+        $types = $roomTypeService->fetchList($hotelId, $this->getCurrentLangId());
 
         return $this->view->render('hotel', [
             // Renders variables
@@ -191,14 +191,14 @@ final class Site extends AbstractSiteController
             'types' => $types,
             'hotel' => $hotel,
             'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
-            'reviews' => $this->getModuleService('reviewService')->fetchAll($id),
+            'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
 
-            'id' => $id,
-            'facilities' => $this->getModuleService('facilitiyService')->getItemList($id, $this->getCurrentLangId(), false),
+            'hotelId' => $hotelId,
+            'facilities' => $this->getModuleService('facilitiyService')->getItemList($hotelId, $this->getCurrentLangId(), false),
             // Hotel images
             'images' => [
-                'large' => $photoService->fetchAll($id, PhotoService::PARAM_IMAGE_SIZE_LARGE),
-                'small' => $photoService->fetchAll($id, PhotoService::PARAM_IMAGE_SIZE_SMALL)
+                'large' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
+                'small' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_SMALL)
             ]
         ]);
     }
