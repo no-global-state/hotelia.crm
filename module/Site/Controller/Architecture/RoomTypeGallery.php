@@ -65,6 +65,28 @@ final class RoomTypeGallery extends AbstractCrmController
     }
 
     /**
+     * Update grid parameters
+     * 
+     * @return void
+     */
+    public function tweakAction()
+    {
+        if ($this->request->hasPost('cover')) {
+            $data = $this->request->getPost('cover');
+
+            // Extra selected values
+            $roomTypeId = array_keys($data)[0];
+            $imageId = array_values($data)[0];
+
+            // Update a cover
+            $this->getModuleService('roomTypeGalleryService')->updateCover($roomTypeId, $imageId);
+        }
+
+        $this->flashBag->set('success', 'Settings have been updated successfully');
+        return 1;
+    }
+
+    /**
      * Saves a room gallery
      * 
      * @return int
