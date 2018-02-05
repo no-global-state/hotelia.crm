@@ -11,10 +11,15 @@ final class Hotel extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Hotel information');
+        
         $this->view->getPluginBag()
                    ->load('map');
 
         return $this->view->render('hotel/form', [
+            'icon' => 'glyphicon glyphicon-list-alt',
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),
             'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
             'photos' => $this->getModuleService('photoService')->fetchAll($this->getHotelId()),
