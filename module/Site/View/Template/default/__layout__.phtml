@@ -4,173 +4,164 @@ use Krystal\Date\TimeHelper;
 use Site\Service\UserService;
 
 ?>
-
 <!DOCTYPE html>
-<html lang="<?= $locale; ?>">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
     <meta name="csrf-token" content="<?php echo $csrfToken; ?>" />
     <title><?= $appName; ?></title>
-    
+
     <?php foreach ($this->getPluginBag()->getStylesheets() as $path): ?>
     <link href="<?php echo $path; ?>" rel="stylesheet" />
     <?php endforeach; ?>
-  </head>
-  <body role="document">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="<?= $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@indexAction' : 'Site:Crm@indexAction', null); ?>"><?= $appName; ?></a>
-        </div>
-        
-        <div id="navbar" class="collapse navbar-collapse">
-          <?php if ($isLoggedIn): ?>
-          <ul class="nav navbar-nav">
 
-            <?php if ($role == UserService::USER_ROLE_USER || $admin == true): ?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reservation'); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <a class="navbar-brand" href="<?= $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@indexAction' : 'Site:Crm@indexAction', null); ?>"><?= $appName; ?></a>
+            </div>
+
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><? $this->show('Language'); ?> <b class="caret"></b></a>
+
+                    <ul class="dropdown-menu alert-dropdown">
+                        <li>
+                            <?php foreach ($languages as $language): ?>
+                            <li>
+                                <a href="<?= $this->url('Site:Language@switchAction', $language['code']); ?>">
+                                    <?php if ($code == $language['code']): ?>
+                                    <i class="glyphicon glyphicon-ok"></i>
+                                    <?php endif; ?>
+                                    <?= $language['name']; ?>
+                                </a>
+                            </li>
+                            <?php endforeach; ?>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?= $name; ?> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <li><a href="<?= $this->url('Site:Settings@changePasswordAction'); ?>"><i class="glyphicon glyphicon-flash"></i> <?php $this->show('Change password'); ?></a></li>
+                            <li><a href="<?= $this->url('Site:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-log-out"></i> <?php $this->show('Logout'); ?></a></li>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+              <?php if ($isLoggedIn): ?>
+              <ul class="nav navbar-nav side-nav">
+                <?php if ($role == UserService::USER_ROLE_USER || $admin == true): ?>
                 <li><a href="<?= $this->url('Site:Reservation@tableAction', null); ?>"><i class="glyphicon glyphicon-blackboard"></i> <?php $this->show('Desktop'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <?php $this->show('Clients'); ?></a></li>
-                <li class="dropdown-header"><? $this->show('Management'); ?></li>
                 <li><a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-pencil"></i> <?php $this->show('New reservation'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Find a free room'); ?></a></li>
-              </ul>
-            </li>
-
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('My hotel'); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
                 <li><a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Hotel information'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Review:Review@indexAction'); ?>"><i class="glyphicon glyphicon-signal"></i> <? $this->show('Customer reviews'); ?></a></li>
-                <li class="dropdown-header"><? $this->show('Helpers'); ?></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Discount@indexAction'); ?>"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Inventory'); ?></a></li>
-              </ul>
-            </li>
 
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Reports'); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></a></li>
-              </ul>
-            </li>
-            <?php endif; ?>
-
-            <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true): ?>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Administration'); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->url('Site:RoomCategory@indexAction'); ?>"><? $this->show('Room categories'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Property@indexAction', null); ?>"><? $this->show('Properties'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>"><? $this->show('Review types'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Region@indexAction'); ?>"><? $this->show('Regions'); ?></a></li>
-                <li><a href="<?= $this->url('Site:PaymentSystem@indexAction'); ?>"><i class="glyphicon glyphicon-card"></i> <? $this->show('Payment systems'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Language@indexAction'); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Languages'); ?></a></li>
-                <li><a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?></a></li>
-              </ul>
-            </li>
-            <?php endif; ?>
-          </ul>
-          
-          <ul class="nav navbar-nav navbar-right">
-            <li><a><span class="date"></span></a></li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><? $this->show('Language'); ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <?php foreach ($languages as $language): ?>
                 <li>
-                    <a href="<?= $this->url('Site:Language@switchAction', $language['code']); ?>">
-                        <?php if ($code == $language['code']): ?>
-                        <i class="glyphicon glyphicon-ok"></i>
-                        <?php endif; ?>
-                        <?= $language['name']; ?>
-                    </a>
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-hotel"><? $this->show('Helpers'); ?> <span class="caret"></span></a>
+                  <ul id="menu-hotel" class="collapse">
+                    <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Discount@indexAction'); ?>"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Inventory'); ?></a></li>
+                  </ul>
                 </li>
-                <?php endforeach; ?>
+
+                <li>
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-reports"><? $this->show('Reports'); ?> <span class="caret"></span></a>
+                  <ul id="menu-reports" class="collapse">
+                    <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></a></li>
+                  </ul>
+                </li>
+                <?php endif; ?>
+
+                <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true): ?>
+                <li>
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
+                  <ul id="menu-admin" class="collapse">
+                    <li><a href="<?= $this->url('Site:RoomCategory@indexAction'); ?>"><? $this->show('Room categories'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Property@indexAction', null); ?>"><? $this->show('Properties'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>"><? $this->show('Review types'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Region@indexAction'); ?>"><? $this->show('Regions'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:PaymentSystem@indexAction'); ?>"><i class="glyphicon glyphicon-card"></i> <? $this->show('Payment systems'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Language@indexAction'); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Languages'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?></a></li>
+                  </ul>
+                </li>
+                <?php endif; ?>
               </ul>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="glyphicon glyphicon-user"></i> <?= $name; ?> <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="<?= $this->url('Site:Settings@changePasswordAction'); ?>"><i class="glyphicon glyphicon-flash"></i> <?php $this->show('Change password'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Auth@logoutAction'); ?>"><i class="glyphicon glyphicon-log-out"></i> <?php $this->show('Logout'); ?></a></li>
-              </ul>
-            </li>
-          </ul>
-          <?php endif; ?>
-        </div>
-      </div>
-    </nav>
-
-    <div class="container" role="main">
-        <?php if ($flashBag->has('danger')): ?>
-        <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('danger')); ?>
-        </div>
-        <?php endif; ?>
-
-        <?php if ($flashBag->has('success')): ?>
-        <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('success')); ?>
-        </div>
-        <?php endif; ?>
-
-        <?php if ($flashBag->has('warning')): ?>
-        <div class="alert alert-warning" role="alert">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('warning')); ?>
-        </div>
-        <?php endif; ?>
-
-        <?php $this->loadPartial('breadcrumbs'); ?>
-        <?php echo $fragment; ?>
-    </div>
-    
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <footer class="hidden-print">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <p>Copyrights <?= date('Y'); ?> NGS Labs</p>
-                </div>
-
-                <div class="col-lg-6 pull-right">
-                    <ul class="pull-right">
-                        <li><a href="#"><? $this->show('FAQ'); ?></a></li>
-                        <li><a href="#"><? $this->show('Terms & Conditions'); ?></a></li>
-                        <li><a href="<?= $this->url('Site:Feedback@indexAction'); ?>"><? $this->show('Help & Support'); ?></a></li>
-                    </ul>
-                </div>
+              <?php endif; ?>
             </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <?php if ($flashBag->has('danger')): ?>
+                <div class="alert alert-danger" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('danger')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($flashBag->has('success')): ?>
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('success')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?php if ($flashBag->has('warning')): ?>
+                <div class="alert alert-warning" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <i class="glyphicon glyphicon-ok"></i> <?php $this->show($flashBag->get('warning')); ?>
+                </div>
+                <?php endif; ?>
+
+                <?= $fragment; ?>
+            </div>
+            <!-- /.container-fluid -->
         </div>
-    </footer>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
 
     <div class="modal fade" id="errors-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
-          <div class="modal-content">
+         <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title"><?php $this->show('Response'); ?></h4>
@@ -205,7 +196,7 @@ use Site\Service\UserService;
         </div>
       </div>
     </div>
-    
+
     <?php foreach ($this->getPluginBag()->getScripts() as $script): ?>
     <script src="<?php echo $script; ?>"></script>
     <?php endforeach;?>
@@ -266,7 +257,7 @@ use Site\Service\UserService;
             },
             options: {
                 responsive: true,
-                title:{
+                title: {
                     display:true,
                     text:"<? $this->show('Summary statistic for year'); ?>"
                 },
@@ -286,5 +277,6 @@ use Site\Service\UserService;
 
     </script>
     <?php endif; ?>
-  </body>
+
+</body>
 </html>

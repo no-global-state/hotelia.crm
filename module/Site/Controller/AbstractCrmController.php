@@ -174,6 +174,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $this->view->getPluginBag()->appendStylesheets(array(
             '@Site/bootstrap/css/bootstrap.min.css',
             '@Site/jasny-bootstrap/css/jasny-bootstrap.min.css',
+            '@Site/sb-admin.css',
             '@Site/styles.css'
         ));
 
