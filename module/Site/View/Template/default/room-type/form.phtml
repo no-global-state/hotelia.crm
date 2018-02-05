@@ -37,11 +37,9 @@ use Site\Service\LanguageService;
                 </div>
             </div>
         </div>
-        
+
         <div class="tab-pane fade in active" id="configuration" role="tabpanel">
           <div class="well">
-            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add new room type' : 'Edit room type'); ?></legend>
-
             <?= Element::hidden('type[id]', $entity['id']); ?>
 
             <div class="form-group">

@@ -27,7 +27,13 @@ final class RoomType extends AbstractCrmController
      */
     private function createForm($type, array $priceGroups) : string
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
+                   ->addOne(!is_array($type) ? 'Add new room type' : 'Edit room type');
+
         return $this->view->render('room-type/form', [
+            'icon' => 'glyphicon glyphicon-pencil',
             'type' => $type,
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
@@ -42,7 +48,12 @@ final class RoomType extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room types');
+
         return $this->view->render('room-type/index', array(
+            'icon' => 'glyphicon glyphicon-link',
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
         ));
