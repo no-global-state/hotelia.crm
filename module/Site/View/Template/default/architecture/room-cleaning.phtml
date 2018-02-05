@@ -6,10 +6,6 @@ use Site\Collection\CleaningCollection;
 
 ?>
 
-<br />
-
-<h2 class="page-header"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></h2>
-
 <form method="POST">
     <?= Element::hidden('csrf-token', $csrfToken); ?>
     <div class="btn-group form-action-group">

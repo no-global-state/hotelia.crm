@@ -24,9 +24,14 @@ final class RoomCleaning extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room cleaning');
+        
         $types = ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')->fetchAll($this->getCurrentLangId(), $this->getHotelId()), 'id', 'name');
 
         return $this->view->render('architecture/room-cleaning', array(
+            'icon' => 'glyphicon glyphicon-refresh',
             'types' => $types,
             'data' => $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchCleaning($this->getCurrentLangId(), $this->getHotelId())
         ));
