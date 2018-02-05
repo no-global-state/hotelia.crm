@@ -188,7 +188,12 @@ class Reservation extends AbstractCrmController
             $this->view->getPluginBag()
                        ->load('datetimepicker');
 
+            // Add a breadcrumb
+            $this->view->getBreadcrumbBag()
+                       ->addOne('Find a free room');
+
             return $this->view->render('reservation/find', [
+                'icon' => 'glyphicon glyphicon-search',
                 'client' => new InputDecorator(),
                 'roomTypes' => $service->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
                 'inventories' => ArrayUtils::arrayList($this->createMapper('\Site\Storage\MySQL\InventoryMapper')->fetchAll($this->getHotelId()), 'id', 'name')
@@ -337,6 +342,10 @@ class Reservation extends AbstractCrmController
 
             $entity['arrival'] = $dates['today'];
             $entity['departure'] = $dates['tomorrow'];
+
+            // Add a breadcrumb
+            $this->view->getBreadcrumbBag()
+                       ->addOne('New reservation');
 
             return $this->createForm($entity);
         }
