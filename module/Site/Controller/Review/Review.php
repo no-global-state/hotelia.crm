@@ -24,7 +24,12 @@ final class Review extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Reviews');
+
         return $this->view->render('review/index', [
+            'icon' => 'glyphicon glyphicon-signal',
             'reviews' => $this->getReviewMapper()->fetchAll($this->getHotelId())
         ]);
     }
