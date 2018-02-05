@@ -1,3 +1,14 @@
+#wrapper {
+    background: #ececec;
+    padding-left: 244px;
+    padding-top: 21px;
+    padding-right: 21px;
+}
+
+.breadcrumb {
+    background: transparent;
+    border: none;
+}
 
 .alert-description {
   padding-top: 21px;
