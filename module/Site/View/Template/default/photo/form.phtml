@@ -6,7 +6,6 @@ use Krystal\Form\Element;
 
 <form class="form-horizontal" action="<?= $this->url('Site:Photo@saveAction'); ?>">
   <fieldset>
-    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($photo['id'] ? 'Edit the photo' : 'Add a photo'); ?></legend>
     <?= Element::hidden('id', $photo['id']); ?>
 
     <div class="form-group">

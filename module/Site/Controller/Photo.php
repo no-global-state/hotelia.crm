@@ -14,8 +14,14 @@ final class Photo extends AbstractCrmController
      */
     private function createForm($photo) : string
     {
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Hotel information', $this->createUrl('Site:Hotel@indexAction'))
+                   ->addOne($photo['id'] ? 'Edit the photo' : 'Add a photo');
+        
         return $this->view->render('photo/form', array(
-            'photo' => $photo
+            'photo' => $photo,
+            'icon' => 'glyphicon glyphicon-pencil'
         ));
     }
 
