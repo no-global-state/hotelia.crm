@@ -139,12 +139,15 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                             <?php if (isset($icon)): ?>
                             <i class="<?= $icon; ?>"></i>
                             <?php endif; ?>
+
+                            <?php if ($this->getBreadcrumbBag()->has()): ?>
                             <?= $this->translate($this->getBreadcrumbBag()->getLastName()); ?>
+                            <?php endif; ?>
                         </h1>
 
+                        <?php if ($this->getBreadcrumbBag()->has()): ?>
                         <ol class="breadcrumb">
                             <li><i class="fa fa-dashboard"></i> <a href="<?= $homeUrl; ?>"><? $this->show('Dashboard'); ?></a></li>
-
                             <?php foreach ($this->getBreadcrumbBag()->getBreadcrumbs() as $bc): ?>
                             <?php if ($bc->isActive()): ?>
                             <li class="active"><?= $this->translate($bc->getName()); ?></li>
@@ -153,6 +156,8 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                             <?php endif; ?>
                             <?php endforeach; ?>
                         </ol>
+                        <?php endif; ?>
+
                     </div>
                 </div>
                 <!-- /.row -->
