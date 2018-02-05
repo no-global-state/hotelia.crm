@@ -2,6 +2,11 @@
 
 use Krystal\Form\Element;
 
+$options = [
+    '1' => 'Yes, free of charge', 
+    '0' => 'Yes, but not free'
+];
+
 ?>
 
 <?php foreach ($checklist as $category): ?>
@@ -10,10 +15,14 @@ use Krystal\Form\Element;
   <div class="col-lg-10">
     <?php foreach ($category['items'] as $item): ?>
     <div class="radio">
-      <label>
+      <label class="facility-radio">
         <?= Element::checkbox(sprintf('checked[%s]', $item['id']), (bool) $item['checked'], array(), false); ?>
         <? $this->show($item['name']); ?>
       </label>
+
+      <span class="facility-container <?= $item['checked'] ? null : 'hidden'; ?>">
+        <?= Element::select(null, $this->translateArray($options), null, ['class' => 'form-control']); ?>
+      </span>
     </div>
     <?php endforeach; ?>
   </div>

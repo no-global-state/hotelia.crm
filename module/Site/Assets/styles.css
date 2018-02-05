@@ -1,3 +1,19 @@
+
+.facility-radio {
+    min-width: 306px;
+    font-size: 13px;
+    padding: 7px;
+}
+
+.facility-container {
+    
+}
+
+.facility-container > .form-control {
+    display: inline-block !important;
+    width: initial !important;
+}
+
 #wrapper {
     background: #ececec;
     padding-left: 244px;

@@ -264,8 +264,20 @@ $(function(){
     }
 });
 
+$(function(){
+    // Facility selector
+    $(".facility-radio > input[type='checkbox']").change(function(){
+        var state = $(this).prop('checked');
+        var hiddenClass = 'hidden';
+        var $wrapper = $(this).parent().parent().find('.facility-container');
 
-
+        if (state == true) {
+            $wrapper.removeClass(hiddenClass);
+        } else {
+            $wrapper.addClass(hiddenClass);
+        }
+    });
+});
 
 $(function() {
     // Initial value
