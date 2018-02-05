@@ -92,6 +92,9 @@ final class Site extends AbstractSiteController
             $gallery = $this->getModuleService('photoService')->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE, 5);
         }
 
+        // Extra available rooms
+        $availableRooms = $this->getModuleService('roomTypeService')->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId);
+
         return $this->view->render('book', [
             // Request variables
             'rooms' => $rooms,
@@ -104,7 +107,8 @@ final class Site extends AbstractSiteController
             'hotel' => $hotel,
             'room' => $room,
             'gallery' => $gallery,
-            'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
+            'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price']),
+            'availableRooms' => $availableRooms
         ]);
     }
 
