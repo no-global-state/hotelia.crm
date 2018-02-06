@@ -9,8 +9,6 @@ $roomTypeId = isset($roomId) ? $roomId : $entity['room_type_id'];
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:RoomTypeGallery@saveAction'); ?>">
   <fieldset>
-    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the photo' : 'Add a photo'); ?></legend>
-
     <?= Element::hidden('id', $entity['id']); ?>
     <?= Element::hidden('room_type_id', $roomTypeId); ?>
 

@@ -16,9 +16,16 @@ final class RoomTypeGallery extends AbstractCrmController
      */
     private function createForm($entity, $roomId = null) : string
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
+                   ->addOne('Gallery', $this->createUrl('Site:Architecture:RoomTypeGallery@indexAction', [$roomId]))
+                   ->addOne(is_array($entity) ? 'Edit the photo' : 'Add a photo');
+
         return $this->view->render('architecture/room-gallery-form', [
             'entity' => $entity,
-            'roomId' => $roomId
+            'roomId' => $roomId,
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 
@@ -30,7 +37,15 @@ final class RoomTypeGallery extends AbstractCrmController
      */
     public function indexAction(int $roomId)
     {
+        $room = $this->getModuleService('roomTypeService')->findById($roomId, $this->getCurrentLangId());
+
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
+                   ->addOne('Gallery');
+
         return $this->view->render('architecture/room-gallery-index', [
+            'icon' => 'glyphicon glyphicon-picture',
             'images' => $this->getModuleService('roomTypeGalleryService')->fetchAll($roomId),
             'roomId' => $roomId
         ]);
@@ -58,7 +73,7 @@ final class RoomTypeGallery extends AbstractCrmController
         $photo = $this->getModuleService('roomTypeGalleryService')->fetchById($id);
 
         if ($photo !== false) {
-            return $this->createForm($photo);
+            return $this->createForm($photo, $photo['room_type_id']);
         } else {
             return false;
         }
