@@ -60,6 +60,7 @@ final class Wizard extends AbstractCrmController
                        ->appendLastScript('@Site/wizard.js');
 
             return $this->view->render('wizard/index', [
+                'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
                 'languageId' => $this->getCurrentLangId(),
                 'hotelId' => $this->getHotelId(),
                 'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),

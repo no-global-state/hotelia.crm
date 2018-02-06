@@ -249,6 +249,20 @@ $(function(){
     });
 });
 
+$(function(){
+    $(".room-append a").click(function(event){
+        event.preventDefault();
+
+        // Hide a in clone
+        var $clone = $(".room-append").first().clone();
+
+        $clone.find('a').hide();
+        $clone.find('input').val('');
+
+        $(".room-append").last().after($clone);
+    });
+});
+
 // Keep tabs state on refresh, taken from here: https://stackoverflow.com/a/10524697
 $(function(){
     // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
