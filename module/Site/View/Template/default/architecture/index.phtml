@@ -1,10 +1,9 @@
 
-<a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a>
-
 <div class="table-responsive">
-    <h2><? $this->show('Rooms'); ?> <small class="text-muted">(<?php echo count($rooms); ?>)</small></h2>
-
-    <p><a href="<?php echo $this->url('Site:Architecture:Room@addAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a></p>
+    <p>
+        <a href="<?php echo $this->url('Site:Architecture:Room@addAction'); ?>" class="btn btn-success"><? $this->show('Add a room'); ?></a>
+        <a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a>
+    </p>
 
     <table class="table table-bordered table-striped table-hover">
         <thead>
