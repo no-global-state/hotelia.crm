@@ -36,7 +36,13 @@ final class Room extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Architecture', $this->createUrl('Site:Architecture:Grid@indexAction'))
+                   ->addOne(is_array($entity) ? 'Edit the room' : 'Add a room');
+
         return $this->view->render('architecture/form-room', array(
+            'icon' => 'glyphicon glyphicon-pencil',
             'entity' => $entity,
             'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),

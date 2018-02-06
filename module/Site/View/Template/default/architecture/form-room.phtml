@@ -10,8 +10,6 @@ use Krystal\Form\Element;
 
 <form class="form-horizontal" action="<?= $this->url('Site:Architecture:Room@saveAction'); ?>">
   <fieldset>
-    <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the room' : 'Add a room'); ?></legend>
-
     <?= Element::hidden('id', $entity['id']); ?>
 
     <div class="form-group">

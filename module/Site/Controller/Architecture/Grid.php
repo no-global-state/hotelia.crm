@@ -32,7 +32,12 @@ final class Grid extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Architecture');
+
         return $this->view->render('architecture/index', array(
+            'icon' => 'glyphicon glyphicon-home',
             'rooms' => $this->createRoomMapper()->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualityCollection' => new RoomQualityCollection()
