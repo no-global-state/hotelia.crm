@@ -11,7 +11,7 @@ use Krystal\Iso\ISO3166\Country;
     <div class="row">
         <div class="col-lg-6">
             <div class="summary">
-                <h4 class="page-header"><i class="glyphicon glyphicon-user"></i> <?php $this->show($title); ?> 
+                <h4 class="page-header">
                     <?php if ($paginator->getSummary() != 0): ?>
                     <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
                     <?php endif; ?>

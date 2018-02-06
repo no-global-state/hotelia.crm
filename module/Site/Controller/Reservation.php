@@ -101,6 +101,10 @@ class Reservation extends AbstractCrmController
      */
     private function createGrid(array $query, $title, $showRooms)
     {
+        // Appends one breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Clients');
+
         // Load view plugins
         $this->view->getPluginBag()
                    ->load('datetimepicker');
@@ -120,6 +124,7 @@ class Reservation extends AbstractCrmController
         ));
 
         return $this->view->render('reservation/index', array(
+            'icon' => 'glyphicon glyphicon-user',
             // Whether to show range filter or not
             'hideRange' => $this->request->hasQuery('leaving') || $this->request->hasQuery('coming'),
             'from' => $this->request->getQuery('from'),
