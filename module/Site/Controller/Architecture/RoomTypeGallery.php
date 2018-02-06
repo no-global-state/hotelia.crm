@@ -22,7 +22,7 @@ final class RoomTypeGallery extends AbstractCrmController
                    ->addOne('Gallery', $this->createUrl('Site:Architecture:RoomTypeGallery@indexAction', [$roomId]))
                    ->addOne(is_array($entity) ? 'Edit the photo' : 'Add a photo');
 
-        return $this->view->render('architecture/room-gallery-form', [
+        return $this->view->render('room-type-gallery/form', [
             'entity' => $entity,
             'roomId' => $roomId,
             'icon' => 'glyphicon glyphicon-pencil'
@@ -44,7 +44,7 @@ final class RoomTypeGallery extends AbstractCrmController
                    ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
                    ->addOne('Gallery');
 
-        return $this->view->render('architecture/room-gallery-index', [
+        return $this->view->render('room-type-gallery/index', [
             'icon' => 'glyphicon glyphicon-picture',
             'images' => $this->getModuleService('roomTypeGalleryService')->fetchAll($roomId),
             'roomId' => $roomId
