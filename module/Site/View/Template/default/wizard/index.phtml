@@ -52,203 +52,200 @@ use Krystal\Form\Element;
                 </ul>
             </div>
 
-            <div class="container">
-                <form role="form" class="form-horizontal" method="POST">
-                    <div class="tab-content">
-                        <div class="tab-pane active" role="tabpanel" id="step1">
-                          <div class="container-fluid">
-                              <h3><? $this->show('Step'); ?> 1</h3>
+            <form role="form" class="form-horizontal" method="POST">
+                <div class="tab-content">
+                    <div class="tab-pane active" role="tabpanel" id="step1">
+                      <div class="container-fluid">
+                          <h3><? $this->show('Step'); ?> 1</h3>
 
-                              <legend><? $this->show('Please provide basic data of your object'); ?></legend>
+                          <legend><? $this->show('Please provide basic data of your object'); ?></legend>
 
-                              <?= Element::hidden(sprintf('translation[%s][id]', $languageId), $hotelId); ?>
-                              <?= Element::hidden(sprintf('translation[%s][lang_id]', $languageId), $languageId); ?>
-                              <?= Element::hidden('hotel[id]', $hotelId); ?>
+                          <?= Element::hidden(sprintf('translation[%s][id]', $languageId), $hotelId); ?>
+                          <?= Element::hidden(sprintf('translation[%s][lang_id]', $languageId), $languageId); ?>
+                          <?= Element::hidden('hotel[id]', $hotelId); ?>
 
-                              <fieldset>
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::select('hotel[type_id]', $hotelTypes, null, ['class' => 'form-control']); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::select('hotel[region_id]', $regions, null, ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
-                                        return [
-                                            'data-region-id' => $key,
-                                        ];
-                                    }); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('District'); ?></label>
-                                  <div class="col-lg-10">
-                                    <select name="hotel[district_id]" class="form-control" data-select="district">
-                                    <?php foreach ($districts as $district): ?>
-                                    <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id']]); ?>
-                                    <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><?= $this->show('Address'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::textarea(sprintf('translation[%s][address]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full address')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[phone]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full phone number with code')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><?= $this->show('Description'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Discount'); ?> %</label>
-                                  <div class="col-lg-10">
-                                    <?= Element::number('hotel[discount]', null, ['min' => 1, 'max' => 100, 'class' => 'form-control', 'placeholder' => $this->translate('Minimal discount for customers if you provide')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[website]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
-                                  <div class="col-lg-10">
-                                    <? $this->loadPartial('map'); ?>
-                                  </div>
-                                </div>
-                              </fieldset>
-
-                              <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Next'); ?></button></li>
-                              </ul>
-                          </div>
-                        </div>
-
-                        <div class="tab-pane" role="tabpanel" id="step2">
-                          <h3><? $this->show('Step'); ?> 2</h3>
-                          <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
-                            
-                            <?php foreach ($payments as $system => $gateways): ?>
-                            <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
-
-                            <fieldset>
-                                <?php foreach ($gateways as $index => $gateway): ?>
-                                <?php $uniq = sprintf('field-%s', $index); ?>
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
-                                  </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </fieldset>
-                            <?php endforeach; ?>
-                            
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
-                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
-                            </ul>
-                        </div>
-
-                        <div class="tab-pane" role="tabpanel" id="step3">
-                            <h3><?= $this->show('Step'); ?> 3</h3>
-                            <p><? $this->show('Сhoice facilites'); ?></p>
-
-                            <? $this->loadPartial('facilities', [
-                                'checklist' => $checklist
-                            ]); ?>
-
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
-                            </ul>
-                        </div>
-
-                        <div class="tab-pane" role="tabpanel" id="step4">
-                            <h3><? $this->show('Step'); ?> 4</h3>
-                            <div class="alert alert-dismissible alert-info">
-                                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                <p>
-                                    <?= $this->translate('Keep in mind! The size of each photo must not be greater than - %s', '700KB'); ?>
-                                    <br /> 
-                                    <?= $this->translate('Recommended size for photos - %s', '850x450'); ?>
-                                </p>
+                          <fieldset>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select('hotel[type_id]', $hotelTypes, null, ['class' => 'form-control']); ?>
+                              </div>
                             </div>
 
-                            <p><? $this->show('Upload photos'); ?></p>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
+                              </div>
+                            </div>
 
-                            <p><a href="#" class="btn btn-primary" data-button="file-add"><? $this->show('Add a photo'); ?></a></p>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select('hotel[region_id]', $regions, null, ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
+                                    return [
+                                        'data-region-id' => $key,
+                                    ];
+                                }); ?>
+                              </div>
+                            </div>
 
-                            <section class="image-wrapper">
-                                <div class="fileinput fileinput-new hidden" data-provides="fileinput">
-                                  <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
-                                  <div>
-                                    <span class="btn btn-default btn-file">
-                                        <span class="fileinput-new"><? $this->show('Select image'); ?></span>
-                                        <span class="fileinput-exists"><? $this->show('Change'); ?></span>
-                                        <input type="file" name="files[]" accept="image/*" />
-                                    </span>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('District'); ?></label>
+                              <div class="col-lg-10">
+                                <select name="hotel[district_id]" class="form-control" data-select="district">
+                                <?php foreach ($districts as $district): ?>
+                                <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id']]); ?>
+                                <?php endforeach; ?>
+                                </select>
+                              </div>
+                            </div>
 
-                                    <a href="#" class="btn btn-default fileinput-exists" data-button="fileinput-remove" data-dismiss="fileinput"><? $this->show('Remove'); ?></a>
-                                  </div>
-                                </div>
-                            </section>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><?= $this->show('Address'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::textarea(sprintf('translation[%s][address]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full address')]); ?>
+                              </div>
+                            </div>
 
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
-                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
-                                <li><button type="button" class="btn btn-primary btn-info-full next-step"><? $this->show('Save and continue'); ?></button></li>
-                            </ul>
-                        </div>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text('hotel[phone]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full phone number with code')]); ?>
+                              </div>
+                            </div>
 
-                        <div class="tab-pane" role="tabpanel" id="complete">
-                            <h3><? $this->show('Thank you!'); ?></h3>
-                            <p><? $this->show('You have successfully completed all steps'); ?></p>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><?= $this->show('Description'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
+                              </div>
+                            </div>
 
-                            <p><? $this->show('Remained steps'); ?>:</p>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Discount'); ?> %</label>
+                              <div class="col-lg-10">
+                                <?= Element::number('hotel[discount]', null, ['min' => 1, 'max' => 100, 'class' => 'form-control', 'placeholder' => $this->translate('Minimal discount for customers if you provide')]); ?>
+                              </div>
+                            </div>
 
-                            <ul>
-                                <li><? $this->show('Configure room types and their corresponding prices'); ?></li>
-                                <li><? $this->show('Configure architecture'); ?></li>
-                            </ul>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text('hotel[website]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)')]); ?>
+                              </div>
+                            </div>
 
-                            <ul class="list-inline pull-right">
-                                <li><button type="submit" class="btn btn-success btn-info-full next-step"><? $this->show('Configure room types'); ?></button></li>
-                            </ul>
-                        </div>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
+                              <div class="col-lg-10">
+                                <? $this->loadPartial('map'); ?>
+                              </div>
+                            </div>
+                          </fieldset>
 
-                        <div class="clearfix"></div>
+                          <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-primary next-step"><? $this->show('Next'); ?></button></li>
+                          </ul>
+                      </div>
                     </div>
-                </form>
-            </div>
+
+                    <div class="tab-pane" role="tabpanel" id="step2">
+                      <h3><? $this->show('Step'); ?> 2</h3>
+                      <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
+                        
+                        <?php foreach ($payments as $system => $gateways): ?>
+                        <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
+
+                        <fieldset>
+                            <?php foreach ($gateways as $index => $gateway): ?>
+                            <?php $uniq = sprintf('field-%s', $index); ?>
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
+                              </div>
+                            </div>
+                            <?php endforeach; ?>
+                        </fieldset>
+                        <?php endforeach; ?>
+                        
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                            <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                            <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" role="tabpanel" id="step3">
+                        <h3><?= $this->show('Step'); ?> 3</h3>
+                        <p><? $this->show('Сhoice facilites'); ?></p>
+
+                        <? $this->loadPartial('facilities', [
+                            'checklist' => $checklist
+                        ]); ?>
+
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                            <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" role="tabpanel" id="step4">
+                        <h3><? $this->show('Step'); ?> 4</h3>
+                        <div class="alert alert-dismissible alert-info">
+                            <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            <p>
+                                <?= $this->translate('Keep in mind! The size of each photo must not be greater than - %s', '700KB'); ?>
+                                <br /> 
+                                <?= $this->translate('Recommended size for photos - %s', '850x450'); ?>
+                            </p>
+                        </div>
+
+                        <p><? $this->show('Upload photos'); ?></p>
+
+                        <p><a href="#" class="btn btn-primary" data-button="file-add"><? $this->show('Add a photo'); ?></a></p>
+
+                        <section class="image-wrapper">
+                            <div class="fileinput fileinput-new hidden" data-provides="fileinput">
+                              <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                              <div>
+                                <span class="btn btn-default btn-file">
+                                    <span class="fileinput-new"><? $this->show('Select image'); ?></span>
+                                    <span class="fileinput-exists"><? $this->show('Change'); ?></span>
+                                    <input type="file" name="files[]" accept="image/*" />
+                                </span>
+
+                                <a href="#" class="btn btn-default fileinput-exists" data-button="fileinput-remove" data-dismiss="fileinput"><? $this->show('Remove'); ?></a>
+                              </div>
+                            </div>
+                        </section>
+
+                        <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                            <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                            <li><button type="button" class="btn btn-primary btn-info-full next-step"><? $this->show('Save and continue'); ?></button></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" role="tabpanel" id="complete">
+                        <h3><? $this->show('Thank you!'); ?></h3>
+                        <p><? $this->show('You have successfully completed all steps'); ?></p>
+                        <p><? $this->show('Remained steps'); ?>:</p>
+
+                        <ul>
+                            <li><? $this->show('Configure room types and their corresponding prices'); ?></li>
+                            <li><? $this->show('Configure architecture'); ?></li>
+                        </ul>
+
+                        <ul class="list-inline pull-right">
+                            <li><button type="submit" class="btn btn-success btn-info-full next-step"><? $this->show('Configure room types'); ?></button></li>
+                        </ul>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+            </form>
         </div>
     </section>
 </div>
