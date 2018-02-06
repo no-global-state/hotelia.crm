@@ -15,7 +15,12 @@ final class Discount extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
+        // Append one breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Discounts');
+
         return $this->view->render('helpers/discount', [
+            'icon' => 'glyphicon glyphicon-retweet',
             'discounts' => $this->getModuleService('discountService')->fetchAll($this->getHotelId()),
             'entity' => $entity
         ]);
