@@ -11,12 +11,6 @@ use Krystal\Form\Element;
 
 <?php else: ?>
 <form class="form-horizontal" action="<?= $this->url('Site:Reservation@saveAction'); ?>">
-  <div>
-    <? $this->loadPartial('reservation-buttons', [
-        'client' => $client
-    ]); ?>
-  </div>
-  
   <fieldset>
 	<h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
     <br />

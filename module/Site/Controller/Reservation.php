@@ -63,6 +63,7 @@ class Reservation extends AbstractCrmController
         $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(true);
 
         return $this->view->render('reservation/form', array(
+            'icon' => 'glyphicon glyphicon-pencil',
             'arrival' => $arrival,
             'departure' => $departure,
             'client' => $client,
