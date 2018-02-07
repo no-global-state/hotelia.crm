@@ -11,13 +11,13 @@ use Krystal\Form\Element;
     <?php foreach ($category['items'] as $item): ?>
     <div class="radio">
       <label class="facility-radio">
-        <?= Element::checkbox(sprintf('checked[%s]', $item['id']), (bool) $item['checked'], array(), false); ?>
+        <?= Element::checkbox(sprintf('facility[checked][%s]', $item['id']), (bool) $item['checked'], array(), false); ?>
         <? $this->show($item['name']); ?>
       </label>
 
       <?php if (!$item['always_free']): ?>
       <span class="facility-container <?= $item['checked'] ? null : 'hidden'; ?>">
-        <?= Element::select(null, $this->translateArray($types), null, ['class' => 'form-control']); ?>
+        <?= Element::select(sprintf('facility[type][%s]', $item['id']), $this->translateArray($types), $item['type'], ['class' => 'form-control']); ?>
       </span>
       <?php endif; ?>
     </div>

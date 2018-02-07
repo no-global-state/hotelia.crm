@@ -42,9 +42,19 @@ final class FacilitiyService
      * @param array $ids
      * @return boolean
      */
-    public function updateRelation($hotelId, array $ids)
+    public function updateRelation(int $hotelId, array $data)
     {
-        return $this->itemMapper->updateRelation($hotelId, $ids);
+        $output = [];
+        $ids = array_keys($data['checked']);
+
+        foreach ($ids as $id) {
+            // Don't include non-selected
+            if (isset($data['type'][$id])) {
+                $output[] = [$hotelId, $id, $data['type'][$id]];
+            }
+        }
+
+        return $this->itemMapper->updateRelation($hotelId, $output);
     }
 
     /**

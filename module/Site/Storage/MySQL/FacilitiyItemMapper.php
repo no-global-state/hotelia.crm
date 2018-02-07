@@ -64,17 +64,15 @@ final class FacilitiyItemMapper extends AbstractMapper
      * Updates a relation
      * 
      * @param string $hotelId
-     * @param array $ids
+     * @param array $data
      * @return boolean
      */
-    public function updateRelation($hotelId, array $ids)
+    public function updateRelation(int $hotelId, array $data)
     {
-        // Synchronize relations if provided
-        if (!empty($ids)) {
-            return $this->syncWithJunction(self::getJunctionTableName(), $hotelId, $ids);
-        } else {
-            return $this->removeFromJunction(self::getJunctionTableName(), $hotelId);
-        }
+        // Remove all related items
+        $this->removeFromJunction(self::getJunctionTableName(), $hotelId);
+
+        return $this->db->insertMany(self::getJunctionTableName(), ['master_id', 'slave_id', 'type'], $data)->execute();
     }
 
     /**
@@ -90,7 +88,8 @@ final class FacilitiyItemMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
-            new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName()))
+            new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName())),
+            self::getFullColumnName('type', self::getJunctionTableName()),
         ]);
 
         $db = $this->db->select($columns)
