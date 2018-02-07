@@ -79,25 +79,35 @@ final class FacilitiyItemMapper extends AbstractMapper
      */
     public function fetchAll(int $langId, $categoryId = null, $hotelId = null, $front = false) : array
     {
-        // Columns to be selected
-        $columns = array_merge($this->getColumns(), [
-            new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName())),
-            FacilityRelationMapper::getFullColumnName('type'),
-        ]);
+        $columns = $this->getColumns();
+
+        // Append hotel ID relation if provided
+        if ($hotelId !== null) {
+            // Columns to be selected
+            $columns = array_merge($columns, [
+                FacilityRelationMapper::getFullColumnName('type'),
+                new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName()))
+            ]);
+        }
 
         $db = $this->db->select($columns)
                        ->from(self::getTableName())
                        // Translation relation
                        ->leftJoin(FacilitiyItemTranslationMapper::getTableName(), [
                             FacilitiyItemTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
-                        ])
-                       // Junction relation
-                       ->leftJoin(FacilityRelationMapper::getTableName(), [
-                            FacilityRelationMapper::getFullColumnName('slave_id') => self::getRawColumn('id'),
-                            FacilityRelationMapper::getFullColumnName('master_id') => $hotelId
-                       ])
-                       // Language ID filter
-                       ->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
+                        ]);
+
+        // Append hotel ID relation if provided
+        if ($hotelId !== null) {
+            // Junction relation
+            $db->leftJoin(FacilityRelationMapper::getTableName(), [
+                FacilityRelationMapper::getFullColumnName('slave_id') => self::getRawColumn('id'),
+                FacilityRelationMapper::getFullColumnName('master_id') => $hotelId
+            ]);
+        }
+
+        // Language ID filter
+        $db->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
 
         if ($categoryId !== null) {
             $db->andWhereEquals(self::getFullColumnName('category_id'), $categoryId);
