@@ -330,6 +330,7 @@ CREATE TABLE velveto_hotels (
     `district_id` INT NOT NULL COMMENT 'Attached district ID',
     `phone` varchar(255) NOT NULL,
     `fax` varchar(255) NOT NULL,
+    `zip` varchar(255) NOT NULL COMMENT 'ZIP code',
     `rate` SMALLINT COMMENT 'Hotel rate',
     `discount` FLOAT COMMENT 'Discount if available',
     `website` varchar(255) NOT NULL COMMENT 'Web-site URL',
