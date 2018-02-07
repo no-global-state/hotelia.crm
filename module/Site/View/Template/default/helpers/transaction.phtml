@@ -9,7 +9,7 @@ use Krystal\Iso\ISO3166\Country;
 <form action="<?= $route; ?>">
 
 <div class="summary">
-    <h4 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?php $this->show('All transactions'); ?> 
+    <h4 class="page-header">
         <?php if ($paginator->getSummary() != 0): ?>
         <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
         <?php endif; ?>

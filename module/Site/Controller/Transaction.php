@@ -14,6 +14,10 @@ final class Transaction extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Transactions');
+
         $route = $this->createUrl('Site:Transaction@indexAction', [null]);
 
         $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
@@ -24,6 +28,7 @@ final class Transaction extends AbstractCrmController
         ));
 
         return $this->view->render('helpers/transaction', array(
+            'icon' => 'glyphicon glyphicon-credit-card',
             'route' => $route,
             'query' => $this->request->getQuery(),
             'data' => $data,
