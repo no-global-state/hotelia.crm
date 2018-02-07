@@ -23,14 +23,6 @@ final class FacilitiyItemMapper extends AbstractMapper
     }
 
     /**
-     * {@inheritDoc}
-     */
-    public static function getJunctionTableName()
-    {
-        return FacilityRelationMapper::getTableName();
-    }
-
-    /**
      * Returns shared columns 
      * 
      * @return array
@@ -70,9 +62,9 @@ final class FacilitiyItemMapper extends AbstractMapper
     public function updateRelation(int $hotelId, array $data)
     {
         // Remove all related items
-        $this->removeFromJunction(self::getJunctionTableName(), $hotelId);
+        $this->removeFromJunction(FacilityRelationMapper::getTableName(), $hotelId);
 
-        return $this->db->insertMany(self::getJunctionTableName(), ['master_id', 'slave_id', 'type'], $data)->execute();
+        return $this->db->insertMany(FacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)->execute();
     }
 
     /**
@@ -89,7 +81,7 @@ final class FacilitiyItemMapper extends AbstractMapper
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
             new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName())),
-            self::getFullColumnName('type', self::getJunctionTableName()),
+            FacilityRelationMapper::getFullColumnName('type'),
         ]);
 
         $db = $this->db->select($columns)
@@ -102,15 +94,15 @@ final class FacilitiyItemMapper extends AbstractMapper
                             self::getRawColumn('id')
                        )
                        // Junction relation
-                       ->leftJoin(self::getJunctionTableName())
+                       ->leftJoin(FacilityRelationMapper::getTableName())
                        ->on()
                        ->equals(
-                            self::getFullColumnName('slave_id', self::getJunctionTableName()),
+                            FacilityRelationMapper::getFullColumnName('slave_id'),
                             self::getRawColumn('id')
                        )
                        ->rawAnd()
                        ->equals(
-                            self::getFullColumnName('master_id', self::getJunctionTableName()),
+                            FacilityRelationMapper::getFullColumnName('master_id'),
                             $hotelId
                        )
                        // Language ID filter
