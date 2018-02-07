@@ -341,6 +341,7 @@ CREATE TABLE velveto_hotels (
     `legal_name` varchar(255) NOT NULL COMMENT 'Legal name',
     `lat` varchar(255),
     `lng` varchar(255),
+    `city_tax_include` BOOLEAN NOT NULL COMMENT 'Whether city tax is used',
     `contact_full_name` varchar(255) NOT NULL,
     `contact_position` varchar(255) NOT NULL,
     `contact_email` varchar(255) NOT NULL,
