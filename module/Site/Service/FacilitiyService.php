@@ -38,8 +38,8 @@ final class FacilitiyService
     /**
      * Update relational data
      * 
-     * @param string $hotelId
-     * @param array $ids
+     * @param int $hotelId
+     * @param array $data
      * @return boolean
      */
     public function updateRelation(int $hotelId, array $data)
@@ -48,10 +48,10 @@ final class FacilitiyService
         $ids = array_keys($data['checked']);
 
         foreach ($ids as $id) {
-            // Don't include non-selected
-            if (isset($data['type'][$id])) {
-                $output[] = [$hotelId, $id, $data['type'][$id]];
-            }
+            // Special type
+            $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
+            // Append prepared data
+            $output[] = [$hotelId, $id, $type];
         }
 
         return $this->itemMapper->updateRelation($hotelId, $output);
