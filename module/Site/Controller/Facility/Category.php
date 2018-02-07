@@ -31,8 +31,14 @@ final class Category extends AbstractCrmController
      */
     private function createForm($category) : string
     {
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Facilities', $this->createUrl('Site:Facility:Grid@indexAction'))
+                   ->addOne(is_array($category) ? 'Edit the category' : 'Add new category');
+
         return $this->view->render('facility/form-category', array(
-            'category' => $category
+            'category' => $category,
+            'icon' => 'glyphicon glyphicon-pencil'
         ));
     }
 
