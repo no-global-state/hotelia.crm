@@ -31,7 +31,13 @@ final class Item extends AbstractCrmController
      */
     private function createForm($item) : string
     {
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Facilities', $this->createUrl('Site:Facility:Grid@indexAction'))
+                   ->addOne(is_array($item) ? 'Edit the item' : 'Add new item');
+
         return $this->view->render('facility/form-item', array(
+            'icon' => 'glyphicon glyphicon-pencil',
             'item' => $item,
             'categories' => $this->getModuleService('facilitiyService')->getCategoryList($this->getCurrentLangId())
         ));
