@@ -64,7 +64,8 @@ final class FacilitiyItemMapper extends AbstractMapper
         // Remove all related items
         $this->removeFromJunction(FacilityRelationMapper::getTableName(), $hotelId);
 
-        return $this->db->insertMany(FacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)->execute();
+        return $this->db->insertMany(FacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)
+                        ->execute();
     }
 
     /**
@@ -76,7 +77,7 @@ final class FacilitiyItemMapper extends AbstractMapper
      * @param bool $front Whether to fetch only front items
      * @return array
      */
-    public function fetchAll(int $langId, $categoryId = null, $hotelId = null, $front = false)
+    public function fetchAll(int $langId, $categoryId = null, $hotelId = null, $front = false) : array
     {
         // Columns to be selected
         $columns = array_merge($this->getColumns(), [
@@ -87,24 +88,14 @@ final class FacilitiyItemMapper extends AbstractMapper
         $db = $this->db->select($columns)
                        ->from(self::getTableName())
                        // Translation relation
-                       ->leftJoin(FacilitiyItemTranslationMapper::getTableName())
-                       ->on()
-                       ->equals(
-                            FacilitiyItemTranslationMapper::getFullColumnName('id'),
-                            self::getRawColumn('id')
-                       )
+                       ->leftJoin(FacilitiyItemTranslationMapper::getTableName(), [
+                            FacilitiyItemTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
+                        ])
                        // Junction relation
-                       ->leftJoin(FacilityRelationMapper::getTableName())
-                       ->on()
-                       ->equals(
-                            FacilityRelationMapper::getFullColumnName('slave_id'),
-                            self::getRawColumn('id')
-                       )
-                       ->rawAnd()
-                       ->equals(
-                            FacilityRelationMapper::getFullColumnName('master_id'),
-                            $hotelId
-                       )
+                       ->leftJoin(FacilityRelationMapper::getTableName(), [
+                            FacilityRelationMapper::getFullColumnName('slave_id') => self::getRawColumn('id'),
+                            FacilityRelationMapper::getFullColumnName('master_id') => $hotelId
+                       ])
                        // Language ID filter
                        ->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
 
