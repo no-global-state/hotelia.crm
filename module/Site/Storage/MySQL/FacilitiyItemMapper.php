@@ -41,6 +41,7 @@ final class FacilitiyItemMapper extends AbstractMapper
             self::getFullColumnName('id'),
             self::getFullColumnName('icon'),
             self::getFullColumnName('front'),
+            self::getFullColumnName('always_free'),
             self::getFullColumnName('category_id'),
             FacilitiyItemTranslationMapper::getFullColumnName('name'),
             FacilitiyItemTranslationMapper::getFullColumnName('lang_id'),
