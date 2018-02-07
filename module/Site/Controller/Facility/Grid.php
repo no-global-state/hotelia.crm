@@ -14,9 +14,14 @@ final class Grid extends AbstractCrmController
      */
     private function createGrid($categoryId)
     {
+        // Append breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Facilities');
+
         $service = $this->getModuleService('facilitiyService');
 
         return $this->view->render('facility/index', array(
+            'icon' => 'glyphicon glyphicon-check',
             'categories' => $service->getCategories($this->getCurrentLangId()),
             'categoryId' => $categoryId,
             'items' => $service->getItems($this->getCurrentLangId(), $categoryId)
