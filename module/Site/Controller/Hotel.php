@@ -2,6 +2,8 @@
 
 namespace Site\Controller;
 
+use Site\Collection\FacilityTypeCollection;
+
 final class Hotel extends AbstractCrmController
 {
     /**
@@ -19,6 +21,7 @@ final class Hotel extends AbstractCrmController
                    ->load('map');
 
         return $this->view->render('hotel/form', [
+            'types' => (new FacilityTypeCollection)->getAll(),
             'icon' => 'glyphicon glyphicon-list-alt',
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),
             'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),

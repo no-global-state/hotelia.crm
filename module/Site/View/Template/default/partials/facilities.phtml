@@ -2,11 +2,6 @@
 
 use Krystal\Form\Element;
 
-$options = [
-    '1' => 'Yes, free of charge', 
-    '0' => 'Yes, but not free'
-];
-
 ?>
 
 <?php foreach ($checklist as $category): ?>
@@ -22,7 +17,7 @@ $options = [
 
       <?php if (!$item['always_free']): ?>
       <span class="facility-container <?= $item['checked'] ? null : 'hidden'; ?>">
-        <?= Element::select(null, $this->translateArray($options), null, ['class' => 'form-control']); ?>
+        <?= Element::select(null, $this->translateArray($types), null, ['class' => 'form-control']); ?>
       </span>
       <?php endif; ?>
     </div>
