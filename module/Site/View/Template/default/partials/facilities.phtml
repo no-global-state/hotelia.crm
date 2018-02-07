@@ -20,9 +20,11 @@ $options = [
         <? $this->show($item['name']); ?>
       </label>
 
+      <?php if (!$item['always_free']): ?>
       <span class="facility-container <?= $item['checked'] ? null : 'hidden'; ?>">
         <?= Element::select(null, $this->translateArray($options), null, ['class' => 'form-control']); ?>
       </span>
+      <?php endif; ?>
     </div>
     <?php endforeach; ?>
   </div>
