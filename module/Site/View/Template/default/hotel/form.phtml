@@ -163,6 +163,13 @@ use Site\Service\LanguageService;;
                     </div>
 
                     <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('City tax is included in room price by default'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::checkbox('hotel[city_tax_include]', $entity['city_tax_include'], ['class' => 'form-control']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Rate'); ?></label>
                       <div class="col-lg-10">
                           <?php for ($i = 1; $i < 6; $i++): ?>
