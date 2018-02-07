@@ -116,6 +116,13 @@ use Krystal\Form\Element;
                             </div>
 
                             <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Fax'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text('hotel[fax]', $entity['fax'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the fax'))); ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
                               <label class="col-lg-2 control-label"><?= $this->show('Description'); ?></label>
                               <div class="col-lg-10">
                                 <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
