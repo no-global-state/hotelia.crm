@@ -1,4 +1,15 @@
 
+.navbar-inverse,
+.top-nav>.open>.dropdown-menu {
+  background: #0074D9  !important;  
+}
+
+body,
+.side-nav {
+  background-color: #111;
+}
+
+
 .facility-radio {
     min-width: 306px;
     font-size: 13px;
