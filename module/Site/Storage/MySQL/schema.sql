@@ -346,6 +346,10 @@ CREATE TABLE velveto_hotels (
     `contact_email` varchar(255) NOT NULL,
     `contact_first_phone` varchar(255) NOT NULL,
     `contact_second_phone` varchar(255) NOT NULL,
+    `checkin_from` varchar(5) NOT NULL,
+    `checkin_to` varchar(5) NOT NULL,
+    `checkout_from` varchar(5) NOT NULL,
+    `checkout_to` varchar(5) NOT NULL,
 
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
