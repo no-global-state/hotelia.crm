@@ -110,6 +110,11 @@ $(function(){
             var defaultDate = new Date();
         }
 
+        $('[data-plugin="timepicker"]').datetimepicker({
+            format: 'HH:mm',
+            locale: locale
+        });
+
         $('[data-plugin="datetimepicker"]').datetimepicker({
             //defaultDate: defaultDate,
             format: 'YYYY-MM-DD',
