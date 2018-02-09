@@ -18,7 +18,7 @@ final class Hotel extends AbstractCrmController
                    ->addOne('Hotel information');
         
         $this->view->getPluginBag()
-                   ->load('map');
+                   ->load(['map', 'datetimepicker']);
 
         return $this->view->render('hotel/form', [
             'types' => (new FacilityTypeCollection)->getAll(),

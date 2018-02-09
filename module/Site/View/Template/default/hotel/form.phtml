@@ -14,6 +14,7 @@ use Site\Service\LanguageService;;
         <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
         <li class="nav"><a href="#payment" data-toggle="tab"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Payment gateway'); ?></a></li>
         <li class="nav"><a href="#contact-person" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> <? $this->show('Contact person'); ?></a></li>
+        <li class="nav"><a href="#check-in-out" data-toggle="tab"><i class="glyphicon glyphicon-off"></i> <? $this->show('Check-in / Check-out'); ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -305,6 +306,50 @@ use Site\Service\LanguageService;;
                         <?= Element::text('hotel[contact_second_phone]', $entity['contact_second_phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the second phone if available'))); ?>
                       </div>
                     </div>
+                </fieldset>
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="check-in-out">
+            <div class="form-horizontal">
+                <fieldset>
+                    <br />
+                    
+                    <section>
+                        <h2 class="text-muted"><i class="glyphicon glyphicon-resize-small"></i> <? $this->show('Check-in'); ?></h2>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Check-in from'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[checkin_from]', $entity['checkin_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Check-in to'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[checkin_to]', $entity['checkin_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                          </div>
+                        </div>
+                    </section>
+
+                    <section>
+                        <h2 class="text-muted"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Check-out'); ?></h2>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Check-out from'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[checkout_from]', $entity['checkout_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Check-out to'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[checkout_to]', $entity['checkout_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                          </div>
+                        </div>
+                    </section>
                 </fieldset>
             </div>
         </div>
