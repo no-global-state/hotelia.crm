@@ -217,7 +217,6 @@ CREATE TABLE velveto_room (
     `square` float COMMENT 'Square of the room',
     `cleaned` varchar(1) NOT NULL COMMENT 'Cleaning code status of the room',
     `quality` SMALLINT(1) NOT NULL COMMENT 'Room quality code',
-    `description` TEXT NOT NULL COMMENT 'Room description',
 
     FOREIGN KEY (type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE

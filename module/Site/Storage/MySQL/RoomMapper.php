@@ -69,7 +69,6 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            self::getFullColumnName('description'),
             RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
         );
 
@@ -213,7 +212,6 @@ final class RoomMapper extends AbstractMapper
             self::getFullColumnName('square'),
             self::getFullColumnName('quality'),
             self::getFullColumnName('cleaned'),
-            self::getFullColumnName('description'),
             RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
         );
 

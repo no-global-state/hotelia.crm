@@ -69,13 +69,6 @@ use Krystal\Form\Element;
     </div>
     
     <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Description'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::textarea('description', $entity['description'], array('class' => 'form-control', 'rows' => 7, 'placeholder' => $this->translate('Room description'))); ?>
-      </div>
-    </div>
-    
-    <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Back'); ?></a>
         <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
