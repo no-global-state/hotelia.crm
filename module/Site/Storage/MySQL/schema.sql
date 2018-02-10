@@ -164,6 +164,23 @@ CREATE TABLE velveto_facilitiy_items_translation (
     FOREIGN KEY (id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_facilitiy_items_data (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `item_id` INT NOT NULL COMMENT 'Attched item ID',
+    `order` INT NOT NULL COMMENT 'Sorting order',
+
+    FOREIGN KEY (item_id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
+);
+
+CREATE TABLE velveto_facilitiy_items_data_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_facilitiy_items_data(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_hotels_photos (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL,
