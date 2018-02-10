@@ -17,8 +17,47 @@ final class FacilityItemDataMapper extends AbstractMapper
     /**
      * {@inheritDoc}
      */
+    public static function getTranslationTable()
+    {
+        return FacilityItemDataTranslationMapper::getTableName();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     protected function getPk()
     {
         return 'id';
+    }
+
+    /**
+     * Returns a collection of shared columns to be selected
+     * 
+     * @return array
+     */
+    private function getSharedColumns() : array
+    {
+        return [
+            self::column('id'),
+            self::column('order'),
+            FacilityItemDataTranslationMapper::column('lang_id'),
+            FacilityItemDataTranslationMapper::column('name')
+        ];
+    }
+
+    /**
+     * Fetch all data by associated item id
+     * 
+     * @param int $itemId
+     * @param int $langId
+     * @return array
+     */
+    public function fetchAll(int $itemId, int $langId) : array
+    {
+        return $this->createEntitySelect($this->getSharedColumns())
+                    ->whereEquals(FacilityItemDataTranslationMapper::column('lang_id'), $langId)
+                    ->orderBy($this->getPk())
+                    ->desc()
+                    ->queryAll();
     }
 }
