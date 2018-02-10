@@ -4,7 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\RawSqlFragment;
 
-final class FacilitiyItemMapper extends AbstractMapper
+final class FacilityItemDataMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}

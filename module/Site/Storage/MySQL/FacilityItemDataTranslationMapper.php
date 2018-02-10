@@ -2,7 +2,7 @@
 
 namespace Site\Storage\MySQL;
 
-final class FacilitiyItemDataTranslationMapper extends AbstractMapper
+final class FacilityItemDataTranslationMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
