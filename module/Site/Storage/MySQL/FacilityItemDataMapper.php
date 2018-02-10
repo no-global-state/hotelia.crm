@@ -46,6 +46,18 @@ final class FacilityItemDataMapper extends AbstractMapper
     }
 
     /**
+     * Fetch by item data by its id
+     * 
+     * @param int $id
+     * @param int $langId
+     * @return array
+     */
+    public function fetchById(int $id, int $langId = 0)
+    {
+        return $this->findEntity($this->getSharedColumns(), $id, $langId);
+    }
+
+    /**
      * Fetch all data by associated item id
      * 
      * @param int $itemId

@@ -25,6 +25,18 @@ final class FacilityItemDataService
     }
 
     /**
+     * Fetch by item data by its id
+     * 
+     * @param int $id
+     * @param int $langId
+     * @return array
+     */
+    public function fetchById(int $id, int $langId = 0)
+    {
+        return $this->facilityItemDataMapper->fetchById($id, $langId);
+    }
+
+    /**
      * Fetch all item data
      * 
      * @param int $itemId
