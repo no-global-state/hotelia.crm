@@ -7,6 +7,7 @@ use Krystal\Image\Tool\ImageManager;
 use Site\Service\UserService;
 use Site\Service\ArchitectureService;
 use Site\Service\FacilitiyService;
+use Site\Service\FacilityItemDataService;
 use Site\Service\PhotoService;
 use Site\Service\RoomTypeGalleryService;
 use Site\Service\RoomTypeService;
@@ -125,6 +126,10 @@ final class Module extends AbstractModule
             'facilitiyService' => new FacilitiyService(
                 $this->createMapper('\Site\Storage\MySQL\FacilitiyCategoryMapper'), 
                 $this->createMapper('\Site\Storage\MySQL\FacilitiyItemMapper')
+            ),
+
+            'facilityItemDataService' => new FacilityItemDataService(
+                $this->createMapper('\Site\Storage\MySQL\FacilityItemDataMapper')
             ),
 
             'photoService' => new PhotoService(
