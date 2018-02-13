@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <p><a href="<?= $this->url('Site:Facility:ItemData@addAction', $itemId); ?>" class="btn btn-success"><? $this->show('Add item data'); ?></a></p>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th><? $this->show('Name'); ?></th>
+                <th><? $this->show('Order'); ?></th>
+                <th><? $this->show('Actions'); ?></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <?php foreach ($data as $item): ?>
+            <tr>
+                <td><?= $item['id']; ?></td>
+                <td><?= $item['name']; ?></td>
+                <td><?= $item['order']; ?></td>
+                <td>
+                    <a href="<?= $this->url('Site:Facility:ItemData@editAction', $item['item_id'], $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <a data-button="delete" href="<?= $this->url('Site:Facility:ItemData@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
