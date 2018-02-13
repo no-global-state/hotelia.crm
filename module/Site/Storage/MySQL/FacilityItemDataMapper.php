@@ -69,6 +69,7 @@ final class FacilityItemDataMapper extends AbstractMapper
     {
         return $this->createEntitySelect($this->getSharedColumns())
                     ->whereEquals(FacilityItemDataTranslationMapper::column('lang_id'), $langId)
+                    ->andWhereEquals(self::column('item_id'), $itemId)
                     ->orderBy($this->getPk())
                     ->desc()
                     ->queryAll();
