@@ -387,6 +387,27 @@ return [
         'controller' => 'Facility:Grid@categoryAction'
     ],
 
+    // Item data
+    '/crm/facility/data/index/(:var)' => [
+        'controller' => 'Facility:ItemData@indexAction'
+    ],
+
+    '/crm/facility/data/add/(:var)' => [
+        'controller' => 'Facility:ItemData@addAction'
+    ],
+
+    '/crm/facility/data/edit/item/(:var)/(:var)' => [
+        'controller' => 'Facility:ItemData@editAction'
+    ],
+
+    '/crm/facility/data/delete/(:var)' => [
+        'controller' => 'Facility:ItemData@deleteAction'
+    ],
+
+    '/crm/facility/data/save' => [
+        'controller' => 'Facility:ItemData@saveAction'
+    ],
+
     // Categories
     '/crm/facility/category/add' => [
         'controller' => 'Facility:Category@addAction'
