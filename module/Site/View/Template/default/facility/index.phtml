@@ -25,6 +25,7 @@
                     <td><? $this->show($item['front'] ? 'Yes' : 'No'); ?></td>
                     <td><? $this->show($item['always_free'] ? 'Yes' : 'No'); ?></td>
                     <td>
+                        <a href="<?= $this->url('Site:Facility:ItemData@indexAction', $item['id']); ?>"><i class="glyphicon glyphicon-check"></i></a>
                         <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a data-button="delete" href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                     </td>
