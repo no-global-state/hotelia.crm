@@ -39,6 +39,7 @@ final class FacilityItemDataMapper extends AbstractMapper
     {
         return [
             self::column('id'),
+            self::column('item_id'),
             self::column('order'),
             FacilityItemDataTranslationMapper::column('lang_id'),
             FacilityItemDataTranslationMapper::column('name')
