@@ -143,6 +143,10 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                             <?php if ($this->getBreadcrumbBag()->has()): ?>
                             <?= $this->translate($this->getBreadcrumbBag()->getLastName()); ?>
                             <?php endif; ?>
+
+                            <?php if (isset($pageTitle)): ?>
+                            <? $this->show($pageTitle); ?>
+                            <?php endif; ?>
                         </h1>
 
                         <?php if ($this->getBreadcrumbBag()->has()): ?>
