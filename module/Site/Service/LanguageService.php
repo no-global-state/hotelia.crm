@@ -42,8 +42,14 @@ final class LanguageService
             }
         }
 
+        // Default case
         $input = new InputDecorator();
         $input['id'] = isset($entity[0]) ? $entity[0]['id'] : null;
+
+        // Merge missing keys
+        foreach ($entity as $key => $value) {
+            $input[$key] = $value;
+        }
 
         return $input;
     }
