@@ -25,6 +25,17 @@ final class FacilityItemDataService
     }
 
     /**
+     * Deletes item data by its id
+     * 
+     * @param int $id Item data id
+     * @return boolean
+     */
+    public function deleteById(int $id)
+    {
+        return $this->facilityItemDataMapper->deleteEntity($id);
+    }
+
+    /**
      * Saves facility data
      * 
      * @param array $input
