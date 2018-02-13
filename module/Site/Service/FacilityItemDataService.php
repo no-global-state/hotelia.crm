@@ -25,6 +25,17 @@ final class FacilityItemDataService
     }
 
     /**
+     * Saves facility data
+     * 
+     * @param array $input
+     * @return boolean
+     */
+    public function save(array $input) : bool
+    {
+        return $this->facilityItemDataMapper->saveEntity($input['item'], $input['translation']);
+    }
+
+    /**
      * Fetch by item data by its id
      * 
      * @param int $id
