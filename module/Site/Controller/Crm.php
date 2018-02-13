@@ -32,7 +32,9 @@ final class Crm extends AbstractCrmController
         }
 
         return $this->view->render('home', array(
-            'stat' => $this->getModuleService('architectureService')->createStat($this->getHotelId())
+            'stat' => $this->getModuleService('architectureService')->createStat($this->getHotelId()),
+            'pageTitle' => 'My property',
+            'icon' => 'glyphicon glyphicon-blackboard'
         ));
     }
 }
