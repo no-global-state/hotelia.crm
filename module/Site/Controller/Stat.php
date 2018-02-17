@@ -32,7 +32,7 @@ final class Stat extends AbstractCrmController
                 'stat' => true,
                 'months' => TimeHelper::getMonths(),
                 'year' => date('Y'),
-                'rooms' => $this->getModuleService('architectureService')->createRooms($this->getCurrentLangId(), $this->getHotelId())
+                'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId())
             ]);
         }
     }

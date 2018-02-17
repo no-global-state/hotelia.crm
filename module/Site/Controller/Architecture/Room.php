@@ -44,7 +44,7 @@ final class Room extends AbstractCrmController
         return $this->view->render('architecture/form-room', array(
             'icon' => 'glyphicon glyphicon-pencil',
             'entity' => $entity,
-            'roomTypes' => $this->getModuleService('architectureService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
+            'roomTypes' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualities' => (new RoomQualityCollection())->getAll()
         ));
@@ -79,7 +79,7 @@ final class Room extends AbstractCrmController
         $this->formAttribute->setNewAttributes($data);
 
         // Whether name checking needs to be done
-        $nameExists = $this->getModuleService('architectureService')->roomNameExists($data['name'], $this->getHotelId());
+        $nameExists = $this->getModuleService('roomService')->roomNameExists($data['name'], $this->getHotelId());
         $hasChanged = $this->formAttribute->hasChanged('name') ? $nameExists : false;
 
         $formValidator = $this->createValidator([

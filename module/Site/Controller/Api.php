@@ -59,13 +59,13 @@ final class Api extends AbstractCrmController
             $hotelService = $this->getModuleService('hotelService');
             $photoService = $this->getModuleService('photoService');
             $facilitiyService = $this->getModuleService('facilitiyService');
-            $architectureService = $this->getModuleService('architectureService');
+            $roomService = $this->getModuleService('roomService');
 
             // Data
             $hotel = $hotelService->fetchById($hotelId, $langId);
             $gallery = $photoService->fetchList($hotelId);
             $facilities = $facilitiyService->getItemList($hotelId, $langId);
-            $rooms = $architectureService->findAvailableRooms($hotel['id']);
+            $rooms = $roomService->findAvailableRooms($hotel['id']);
 
             foreach ($gallery as &$image) {
                 $image = $this->request->getBaseUrl() . $image;

@@ -73,7 +73,7 @@ class Reservation extends AbstractCrmController
             'priceGroupList' => ArrayUtils::arrayList($priceGroups, 'id', 'name'),
             'priceGroups' => $priceGroups,
 
-            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
             'prices' => $this->getModuleService('roomTypeService')->findAllPrices($this->getHotelId()),
             'discounts' => $this->createDiscounts(),
 
@@ -138,7 +138,7 @@ class Reservation extends AbstractCrmController
             'data' => $data,
             'paginator' => $mapper->getPaginator(),
             'countries' => (new Country)->getAll(),
-            'rooms' => $this->getModuleService('architectureService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
             'showRooms' => $showRooms,
             'reservationCollection' => new ReservationCollection
         ));
@@ -151,7 +151,7 @@ class Reservation extends AbstractCrmController
      */
     public function findAction()
     {
-        $service = $this->getModuleService('architectureService');
+        $service = $this->getModuleService('roomService');
 
         if ($this->request->isPost()) {
             $formValidator = $this->createValidator([
@@ -221,13 +221,13 @@ class Reservation extends AbstractCrmController
         $rooms = ReservationService::parseRooms($rooms);
 
         return $this->view->render('reservation/table', array(
-            'types' => $this->getModuleService('architectureService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
+            'types' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
             'type' => $type,
             'rooms' => $rooms,
             'periods' => (new DaysCollection())->getAll(),
             'period' => $period,
             'dates' => ReservationService::createPeriodRange($period),
-            'table' => $this->getModuleService('architectureService')->createTable($this->getCurrentLangId(), $this->getHotelId())
+            'table' => $this->getModuleService('roomService')->createTable($this->getCurrentLangId(), $this->getHotelId())
         ));
     }
 
