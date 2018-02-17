@@ -9,7 +9,7 @@ use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
 use DateTime;
 
-class ArchitectureService
+final class RoomService
 {
     /**
      * Any compliant mapper implementing room mapper

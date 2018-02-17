@@ -5,7 +5,7 @@ namespace Site;
 use Krystal\Application\Module\AbstractModule;
 use Krystal\Image\Tool\ImageManager;
 use Site\Service\UserService;
-use Site\Service\ArchitectureService;
+use Site\Service\RoomService;
 use Site\Service\FacilitiyService;
 use Site\Service\FacilityItemDataService;
 use Site\Service\PhotoService;
@@ -118,7 +118,7 @@ final class Module extends AbstractModule
         return array(
             'userService' => $userService,
 
-            'architectureService' => new ArchitectureService(
+            'roomService' => new RoomService(
                 $this->createMapper('\Site\Storage\MySQL\RoomMapper'),
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper')
             ),
