@@ -21,14 +21,6 @@ use Krystal\Validate\Pattern;
 final class Room extends AbstractCrmController
 {
     /**
-     * @return \Site\Storage\RoomMapper
-     */
-    private function createRoomMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\RoomMapper');
-    }
-
-    /**
      * Renders room form
      * 
      * @param mixed $entity
@@ -58,7 +50,7 @@ final class Room extends AbstractCrmController
      */
     public function viewAction(int $id)
     {
-        $entity = $this->createRoomMapper()->fetchById($id, $this->getCurrentLangId());
+        $entity = $this->getModuleService('roomService')->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->disableLayout()->render('architecture/room-view', array(
             'entity' => $entity,
@@ -73,13 +65,15 @@ final class Room extends AbstractCrmController
      */
     public function saveAction()
     {
+        $roomService = $this->getModuleService('roomService');
+
         $data = $this->request->getPost();
         $data = $this->getWithHotelId($data);
 
         $this->formAttribute->setNewAttributes($data);
 
         // Whether name checking needs to be done
-        $nameExists = $this->getModuleService('roomService')->roomNameExists($data['name'], $this->getHotelId());
+        $nameExists = $roomService->roomNameExists($data['name'], $this->getHotelId());
         $hasChanged = $this->formAttribute->hasChanged('name') ? $nameExists : false;
 
         $formValidator = $this->createValidator([
@@ -103,7 +97,7 @@ final class Room extends AbstractCrmController
         ]);
 
         if ($formValidator->isValid()) {
-            $this->createRoomMapper()->persist($data);
+            $roomService->save($data);
 
             $this->flashBag->set('success', $data['id'] ? 'The room has been updated successfully' : 'The room has been added successfully');
             return 1;
@@ -127,12 +121,13 @@ final class Room extends AbstractCrmController
      * Edits the room by its ID
      * 
      * @param int $id Room ID
-     * @return string
+     * @return mixed
      */
     public function editAction(int $id)
     {
-        $room = $this->createRoomMapper()->findByPk($id);
+        $room = $this->getModuleService('roomService')->getById($id, $this->getCurrentLangId());
 
+        // If can find by id
         if (!empty($room)) {
             // Save the old name
             $this->formAttribute->setOldAttribute('name', $room['name']);
@@ -151,9 +146,9 @@ final class Room extends AbstractCrmController
      */
     public function deleteAction($id) : void
     {
-        $this->createRoomMapper()->deleteByPk($id);
-        $this->flashBag->set('success', 'The room has been deleted successfully');
+        $this->getModuleService('roomService')->deleteById($id);
 
-        return $this->redirectToRoute('Site:Architecture:Grid@indexAction');
+        $this->flashBag->set('success', 'The room has been deleted successfully');
+        $this->redirectToRoute('Site:Architecture:Grid@indexAction');
     }
 }
