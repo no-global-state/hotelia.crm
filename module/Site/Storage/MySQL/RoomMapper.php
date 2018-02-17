@@ -206,6 +206,7 @@ final class RoomMapper extends AbstractMapper
         // Columns to be selected
         $columns = array(
             self::getFullColumnName('id'),
+            self::getFullColumnName('type_id'),
             self::getFullColumnName('persons'),
             self::getFullColumnName('name'),
             self::getFullColumnName('floor'),
