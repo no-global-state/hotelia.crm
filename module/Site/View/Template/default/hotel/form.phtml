@@ -314,7 +314,14 @@ use Site\Service\LanguageService;;
             <div class="form-horizontal">
                 <fieldset>
                     <br />
-                    
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Payment time'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('hotel[payment_time]', $entity['payment_time'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                      </div>
+                    </div>
+
                     <section>
                         <h2 class="text-muted"><i class="glyphicon glyphicon-resize-small"></i> <? $this->show('Check-in'); ?></h2>
 
