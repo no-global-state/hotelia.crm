@@ -39,6 +39,17 @@ final class RoomService
     }
 
     /**
+     * Persists room entity
+     * 
+     * @param array $input
+     * @return boolean
+     */
+    public function save(array $input) : bool
+    {
+        return $this->roomMapper->persist($input);
+    }
+
+    /**
      * Checks whether room name exists
      * 
      * @param string $name
@@ -60,6 +71,17 @@ final class RoomService
     public function getById(int $id, int $langId)
     {
         return $this->roomMapper->fetchById($id, $langId);
+    }
+
+    /**
+     * Deletes a room by its associated ID
+     * 
+     * @param int $id Room ID
+     * @return boolean
+     */
+    public function deleteById(int $id)
+    {
+        return $this->roomMapper->deleteByPk($id);
     }
 
     /**
