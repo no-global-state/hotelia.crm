@@ -85,6 +85,19 @@ final class RoomService
     }
 
     /**
+     * Finds all rooms
+     * 
+     * @param int $langId
+     * @param int $hotelId
+     * @param int|null $typeId Optional type ID filter
+     * @return array
+     */
+    public function findAll(int $langId, int $hotelId, $typeId = null) : array
+    {
+        return $this->roomMapper->findAll($langId, $hotelId, $typeId);
+    }
+
+    /**
      * Find available rooms for next days
      * 
      * @param int $langId

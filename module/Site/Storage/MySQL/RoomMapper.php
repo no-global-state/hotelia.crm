@@ -285,6 +285,59 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Find all rooms by attached hotel ID
+     * 
+     * @param int $langId
+     * @param int $hotelId
+     * @param int|null $typeId Optional type ID filter
+     * @return array
+     */
+    public function findAll(int $langId, int $hotelId, $typeId = null) : array
+    {
+        // Columns to be selected
+        $columns = [
+            self::getFullColumnName('id'),
+            self::getFullColumnName('type_id'),
+            self::getFullColumnName('persons'),
+            self::getFullColumnName('name'),
+            self::getFullColumnName('floor'),
+            self::getFullColumnName('square'),
+            self::getFullColumnName('quality'),
+            self::getFullColumnName('cleaned'),
+            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
+        ];
+
+        $db = $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Type relation
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            self::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Hotel ID constraint
+                        ->whereEquals(self::column('hotel_id'), $hotelId)
+                        // Language ID constraint
+                        ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId);
+
+        // Optional type ID filter
+        if ($typeId !== null) {
+            $db->andWhereEquals(self::getFullColumnName('type_id'), $typeId);
+        }
+
+        // Sort in DESC order
+        return $db->orderBy(self::getFullColumnName('id'))
+                  ->desc()
+                  ->queryAll();
+    }
+
+    /**
      * Fetch all rooms by associated floor ID
      * 
      * @param int $langId
