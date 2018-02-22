@@ -8,7 +8,7 @@ final class TimeRangeCollection extends ArrayCollection
 {
     const PARAM_MONTH = 'month';
     const PARAM_WEEK = 'week';
-    
+
     /**
      * {@inheritDoc}
      */
