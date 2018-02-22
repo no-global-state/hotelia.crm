@@ -108,7 +108,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
 
             // Check the validity
             if (!$this->csrfProtector->isValid($token)) {
-                $this->response->setStatusCode(400);
+                //$this->response->setStatusCode(400);
                 //die('Invalid CSRF token');
             }
         }
