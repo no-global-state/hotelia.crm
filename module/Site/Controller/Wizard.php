@@ -2,6 +2,8 @@
 
 namespace Site\Controller;
 
+use Site\Collection\FacilityTypeCollection;
+
 final class Wizard extends AbstractCrmController
 {
     /**
@@ -60,6 +62,7 @@ final class Wizard extends AbstractCrmController
                        ->appendLastScript('@Site/wizard.js');
 
             return $this->view->render('wizard/index', [
+                'types' => (new FacilityTypeCollection)->getAll(),
                 'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
                 'languageId' => $this->getCurrentLangId(),
                 'hotelId' => $this->getHotelId(),
