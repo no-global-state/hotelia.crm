@@ -327,7 +327,7 @@ final class RoomMapper extends AbstractMapper
                         ->andWhereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId);
 
         // Optional type ID filter
-        if ($typeId !== null) {
+        if ($typeId !== null && !empty($typeId)) {
             $db->andWhereEquals(self::getFullColumnName('type_id'), $typeId);
         }
 
