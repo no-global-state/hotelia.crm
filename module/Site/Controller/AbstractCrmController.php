@@ -214,6 +214,6 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         ));
 
         // Define the main layout
-        $this->view->setLayout('__layout__');
+        $this->view->setLayout('layouts/main');
     }
 }
