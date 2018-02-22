@@ -15,6 +15,7 @@ use Site\Collection\LegalStatusCollection;
 use Site\Collection\StatusCollection;
 use Site\Collection\DaysCollection;
 use Site\Collection\SourceCollection;
+use Site\Collection\GenderCollection;
 use Site\Service\ReservationService;
 
 class Reservation extends AbstractCrmController
@@ -85,10 +86,7 @@ class Reservation extends AbstractCrmController
             'legalStatuses' => (new LegalStatusCollection)->getAll(),
             'statuses' => (new StatusCollection)->getAll(),
             'sources' => (new SourceCollection())->getAll(),
-            'genders' => array(
-                'M' => 'Male',
-                'F' => 'Female'
-            )
+            'genders' => (new GenderCollection)->getAll(),
         ));
     }
 
