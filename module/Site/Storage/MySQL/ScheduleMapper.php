@@ -7,6 +7,29 @@ use Krystal\Db\Sql\RawSqlFragment;
 final class ScheduleMapper extends AbstractMapper
 {
     /**
+     * Checks whether there's an overlap
+     * 
+     * @param int $roomId
+     * @param string $arrival
+     * @param string $departure
+     * @return boolean
+     */
+    public function hasOverlap(int $roomId, string $arrival, string $departure) : bool
+    {
+        $query = sprintf('SELECT COUNT(id) FROM %s WHERE NOT ((departure <= :arrival) OR (arrival >= :departure)) AND id <> :id AND room_id = :room_id', ReservationMapper::getTableName());
+        $bindings = [
+            ':arrival' => $arrival,
+            ':departure' => $departure,
+            ':roomId' => $roomId
+        ];
+
+        $count = $this->db->raw($query, $bindings)
+                          ->queryScalar();
+
+        return $count > 0;
+    }
+
+    /**
      * Resizes an event
      * 
      * @param int $id
