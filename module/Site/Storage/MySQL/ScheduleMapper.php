@@ -23,18 +23,20 @@ final class ScheduleMapper extends AbstractMapper
     /**
      * Checks whether there's an overlap
      * 
+     * @param int $id Reservation ID
      * @param int $roomId
      * @param string $arrival
      * @param string $departure
      * @return boolean
      */
-    public function hasOverlap(int $roomId, string $arrival, string $departure) : bool
+    public function hasOverlap(int $id, int $roomId, string $arrival, string $departure) : bool
     {
         $query = sprintf('SELECT COUNT(id) FROM %s WHERE NOT ((departure <= :arrival) OR (arrival >= :departure)) AND id <> :id AND room_id = :room_id', ReservationMapper::getTableName());
         $bindings = [
+            ':id' => $id,
             ':arrival' => $arrival,
             ':departure' => $departure,
-            ':roomId' => $roomId
+            ':room_id' => $roomId
         ];
 
         $count = $this->db->raw($query, $bindings)
