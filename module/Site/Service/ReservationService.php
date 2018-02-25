@@ -31,6 +31,79 @@ final class ReservationService
     }
 
     /**
+     * Deletes a reservation by its associated id
+     * 
+     * @param int $id
+     * @return boolean
+     */
+    public function deleteById(int $id)
+    {
+        return $this->reservationMapper->deleteById($id);
+    }
+
+    /**
+     * Fetch reservation info by room ID
+     * 
+     * @param int $roomId
+     * @return array
+     */
+    public function fetchByRoomId(int $roomId) : array
+    {
+        return $this->reservationMapper->fetchByRoomId($roomId);
+    }
+
+    /**
+     * Find reservations
+     * 
+     * @param string $type Optional room type filter
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchReservations(int $hotelId, $type = null) : array
+    {
+        $rows = $this->reservationMapper->findReservations($hotelId, $type);
+        return self::parseRooms($rows);
+    }
+
+    /**
+     * Fetch reservation info by its associated id
+     * 
+     * @param int $id
+     * @return mixed
+     */
+    public function fetchById(int $id)
+    {
+        return $this->reservationMapper->fetchById($id);
+    }
+
+    /**
+     * Saves a reservation
+     * 
+     * @param array $data
+     * @return boolean
+     */
+    public function save(array $data) : bool
+    {
+        if (!empty($data['id'])) {
+            return $this->reservationMapper->update($data);
+        } else {
+            return $this->reservationMapper->insert($data);
+        }
+    }
+
+    /**
+     * Checks room availability based on arrival date and its ID
+     * 
+     * @param string $date Arrival date
+     * @param int $roomId Room ID
+     * @return boolean
+     */
+    public function hasAvailability(string $date, int $roomId) : bool
+    {
+        return $this->reservationMapper->hasAvailability($date, $roomId);
+    }
+
+    /**
      * Find reservation dates from collection of rooms and group them
      * 
      * @param string $pk Primary column item name
