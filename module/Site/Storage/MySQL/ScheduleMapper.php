@@ -44,6 +44,27 @@ final class ScheduleMapper extends AbstractMapper
     }
 
     /**
+     * Moves an event
+     * 
+     * @param int $id
+     * @param int $roomId
+     * @param string $arrival
+     * @param string $departure
+     * @return boolean
+     */
+    public function move(int $id, int $roomId, string $arrival, string $departure) : bool
+    {
+        // Data to be updated
+        $data = [
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'room_id' => $roomId
+        ];
+
+        return $this->updateById($id, $data);
+    }
+
+    /**
      * Resizes an event
      * 
      * @param int $id
