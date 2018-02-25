@@ -124,7 +124,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      * @param int $hotelId
      * @return array
      */
-    public function findReservations(int $hotelId, $type = null)
+    public function findReservations(int $hotelId, $type = null) : array
     {
         // Columns to be selected
         $columns = array(
@@ -139,19 +139,13 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
         $db = $this->db->select($columns)
                         ->from(RoomMapper::getTableName())
                         // Reservation relation
-                        ->leftJoin(self::getTableName())
-                        ->on()
-                        ->equals(
-                            self::getFullColumnName('room_id'),
-                            RoomMapper::getRawColumn('id')
-                        )
+                        ->leftJoin(self::getTableName(), [
+                            self::getFullColumnName('room_id') => RoomMapper::getRawColumn('id')
+                        ])
                         // Room type relation
-                        ->leftJoin(RoomTypeMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            RoomMapper::getFullColumnName('type_id'),
-                            RoomTypeMapper::getRawColumn('id')
-                        )
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            RoomMapper::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
                         // Room category relation
                         ->leftJoin(RoomCategoryMapper::getTableName(), [
                             RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
