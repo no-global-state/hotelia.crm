@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Site\Storage\MySQL\DiscountMapper;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\I18n\TranslatorInterface;
 
 final class DiscountService
 {
@@ -23,6 +24,35 @@ final class DiscountService
     public function __construct(DiscountMapper $discountMapper)
     {
         $this->discountMapper = $discountMapper;
+    }
+
+    /**
+     * Create discounts
+     * 
+     * @param int $hotelId
+     * @param \Krystal\I18n\TranslatorInterface $translator
+     * @return array
+     */
+    public function createDiscounts(int $hotelId, TranslatorInterface $translator) : array
+    {
+        // Grab all available discounts by current hotel ID
+        $discounts = $this->fetchList($hotelId);
+
+        $defaults = $translator->translateArray([
+            '0' => $translator->translate('No discount'),
+            '' => $translator->translate('Type manually')
+        ]);
+
+        $output = [
+            $translator->translate('Defaults') => $defaults,
+        ];
+
+        // Append discounts to output if provided
+        if (!empty($discounts)) {
+            $output[$translator->translate('Discounts')] = $discounts;
+        }
+
+        return $output;
     }
 
     /**

@@ -21,32 +21,6 @@ use Site\Service\ReservationService;
 final class Reservation extends AbstractCrmController
 {
     /**
-     * Create discounts
-     * 
-     * @return array
-     */
-    private function createDiscounts() : array
-    {
-        // Grab all available discounts by current hotel ID
-        $discounts = $this->getModuleService('discountService')->fetchList($this->getHotelId());
-
-        $defaults = $this->translator->translateArray([
-            '0' => $this->translator->translate('No discount'),
-            '' => $this->translator->translate('Type manually')
-        ]);
-
-        $output = [
-            $this->translator->translate('Defaults') => $defaults,
-        ];
-
-        if (!empty($discounts)) {
-            $output[$this->translator->translate('Discounts')] = $discounts;
-        }
-
-        return $output;
-    }
-
-    /**
      * Creates a form
      * 
      * @param \Krystal\Db\Filter\InputDecorator|array $client
@@ -76,7 +50,7 @@ final class Reservation extends AbstractCrmController
 
             'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
             'prices' => $this->getModuleService('roomTypeService')->findAllPrices($this->getHotelId()),
-            'discounts' => $this->createDiscounts(),
+            'discounts' => $this->getModuleService('discountService')->createDiscounts($this->getHotelId(), $this->translator),
 
             // Collections
             'countries' => (new Country())->getAll(),
