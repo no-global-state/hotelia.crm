@@ -18,7 +18,7 @@ use Site\Collection\SourceCollection;
 use Site\Collection\GenderCollection;
 use Site\Service\ReservationService;
 
-class Reservation extends AbstractCrmController
+final class Reservation extends AbstractCrmController
 {
     /**
      * Create discounts
@@ -215,8 +215,7 @@ class Reservation extends AbstractCrmController
         $period = $this->request->getQuery('period', 7);
         $type = $this->request->getQuery('type', null);
 
-        $rooms = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findReservations($this->getHotelId(), $type);
-        $rooms = ReservationService::parseRooms($rooms);
+        $rooms = $this->getModuleService('reservationService')->fetchReservations($this->getHotelId(), $type);
 
         return $this->view->render('reservation/table', array(
             'types' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
@@ -237,7 +236,7 @@ class Reservation extends AbstractCrmController
      */
     public function viewTakenAction($roomId)
     {
-        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchByRoomId($roomId);
+        $entity = $this->getModuleService('reservationService')->fetchByRoomId($id);
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity
@@ -252,7 +251,7 @@ class Reservation extends AbstractCrmController
      */
     public function viewAction($id)
     {
-        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id, $this->getCurrentLangId());
+        $entity = $this->getModuleService('reservationService')->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->disableLayout()->render('reservation/view', array(
             'entity' => $entity
@@ -267,7 +266,7 @@ class Reservation extends AbstractCrmController
      */
     public function printAction($id)
     {
-        $entity = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->fetchById($id);
+        $entity = $this->getModuleService('reservationService')->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->render('reservation/print', array(
             'entity' => $entity
@@ -308,11 +307,9 @@ class Reservation extends AbstractCrmController
      */
     public function deleteAction($id)
     {
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-        $mapper->deleteById($id);
+        $this->getModuleService('reservationService')->deleteById($id);
 
         $this->flashBag->set('danger', 'Selected reservation has been removed successfully');
-
         return $this->response->redirect($this->createUrl('Site:Reservation@indexAction', [null]));
     }
 
@@ -361,10 +358,9 @@ class Reservation extends AbstractCrmController
      * @param string $id
      * @return string
      */
-    public function editAction($id)
+    public function editAction(int $id)
     {
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
-        $entity = $mapper->fetchById($id);
+        $entity = $this->getModuleService('reservationService')->fetchById($id);
 
         if ($entity) {
             $this->formAttribute->setOldAttribute('arrival', $entity['arrival']);
@@ -386,13 +382,13 @@ class Reservation extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReservationMapper');
+        $service = $this->getModuleService('reservationService');
 
         $this->formAttribute->setNewAttributes($data);
 
         // Whether arrival checking needs to be done
         if ($data['id']) {
-            $hasChanged = $this->formAttribute->hasChanged('arrival') ? $mapper->hasAvailability($data['arrival'], $data['room_id']) : false;
+            $hasChanged = $this->formAttribute->hasChanged('arrival') ? $service->hasAvailability($data['arrival'], $data['room_id']) : false;
         } else {
             $hasChanged = true;
         }
@@ -407,7 +403,7 @@ class Reservation extends AbstractCrmController
                         'rules' => [
                             'Unique' => [
                                 'message' => 'Selected room is already reserved on provided arrival date',
-                                'value' => $hasChanged ? !$mapper->hasAvailability($data['arrival'], $data['room_id']) : false,
+                                'value' => $hasChanged ? !$service->hasAvailability($data['arrival'], $data['room_id']) : false,
                             ]
                         ]
                     ]
@@ -417,12 +413,7 @@ class Reservation extends AbstractCrmController
 
         if ($formValidator->isValid()) {
             $data = $this->getWithHotelId($data);
-
-            if (!empty($data['id'])) {
-                $mapper->update($data);
-            } else {
-                $mapper->insert($data);
-            }
+            $service->save($data);
 
             $this->flashBag->set('success', $data['id'] ? 'Reservation is updated' : 'Reservation is successful');
             return '1';
