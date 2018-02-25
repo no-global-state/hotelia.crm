@@ -6,10 +6,29 @@ use DateTime;
 use DateInterval;
 use DatePeriod;
 use LogicException;
+use Site\Storage\MySQL\ReservationMapper;
 
-class ReservationService
+final class ReservationService
 {
     const PARAM_TIME_FORMAT = 'Y-m-d';
+
+    /**
+     * Any compliant reservation mapper
+     * 
+     * @var \Site\Storage\MySQL\ReservationMapper
+     */
+    private $reservationMapper;
+
+    /**
+     * State initialization
+     * 
+     * @param \Site\Storage\MySQL\ReservationMapper $reservationMapper
+     * @return void
+     */
+    public function __construct(ReservationMapper $reservationMapper)
+    {
+        $this->reservationMapper = $reservationMapper;
+    }
 
     /**
      * Find reservation dates from collection of rooms and group them

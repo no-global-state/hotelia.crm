@@ -22,6 +22,7 @@ use Site\Service\ReservationServiceManager;
 use Site\Service\RoomCategoryService;
 use Site\Service\PaymentFieldService;
 use Site\Service\ReviewService;
+use Site\Service\ReservationService;
 
 final class Module extends AbstractModule
 {
@@ -117,6 +118,10 @@ final class Module extends AbstractModule
 
         return array(
             'userService' => $userService,
+
+            'reservationService' => new ReservationService(
+                $this->createMapper('\Site\Storage\MySQL\ReservationMapper')
+            ),
 
             'roomService' => new RoomService(
                 $this->createMapper('\Site\Storage\MySQL\RoomMapper'),
