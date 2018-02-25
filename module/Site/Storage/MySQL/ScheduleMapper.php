@@ -7,6 +7,20 @@ use Krystal\Db\Sql\RawSqlFragment;
 final class ScheduleMapper extends AbstractMapper
 {
     /**
+     * Resizes an event
+     * 
+     * @param int $id
+     * @param array $data
+     * @return boolean
+     */
+    private function updateById(int $id, array $data) : bool
+    {
+        return $this->db->update(ReservationMapper::getTableName(), $data)
+                        ->whereEquals('id', $id)
+                        ->execute();
+    }
+
+    /**
      * Checks whether there's an overlap
      * 
      * @param int $roomId
@@ -37,7 +51,7 @@ final class ScheduleMapper extends AbstractMapper
      * @param string $departure
      * @return boolean
      */
-    public function resize(int $id, string $arrival, string $departure)
+    public function resize(int $id, string $arrival, string $departure) : bool
     {
         // Data to be updated
         $data = [
@@ -45,9 +59,7 @@ final class ScheduleMapper extends AbstractMapper
             'departure' => $departure
         ];
 
-        return $this->db->update(ReservationMapper::getTableName(), $data)
-                        ->whereEquals('id', $id)
-                        ->execute();
+        return $this->updateById($id, $data);
     }
 
     /**
