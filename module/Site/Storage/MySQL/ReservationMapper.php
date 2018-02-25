@@ -277,12 +277,12 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
-     * Fetches by room ID
+     * Fetch reservation info by room ID
      * 
-     * @param string $roomId
+     * @param int $roomId
      * @return array
      */
-    public function fetchByRoomId($roomId)
+    public function fetchByRoomId(int $roomId) : array
     {
         return $this->findByConstraint(function($db) use ($roomId){
             $db->whereEquals(self::getFullColumnName('room_id'), $roomId)
