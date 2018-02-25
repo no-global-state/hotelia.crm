@@ -356,6 +356,8 @@ final class Reservation extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
+        $data = $this->getWithHotelId($data);
+
         $service = $this->getModuleService('reservationService');
 
         $this->formAttribute->setNewAttributes($data);
@@ -386,7 +388,6 @@ final class Reservation extends AbstractCrmController
         ]);
 
         if ($formValidator->isValid()) {
-            $data = $this->getWithHotelId($data);
             $service->save($data);
 
             $this->flashBag->set('success', $data['id'] ? 'Reservation is updated' : 'Reservation is successful');
