@@ -4,6 +4,31 @@ use Site\Service\UserService;
 
 return [
 
+    // Scheduler
+    '/crm/scheduler/add/(:var)' => [
+        'controller' => 'Scheduler@add'
+    ],
+
+    '/crm/scheduler/delete' => [
+        'controller' => 'Scheduler@delete'
+    ],
+
+    '/crm/scheduler/move' => [
+        'controller' => 'Scheduler@move'
+    ],
+
+    '/crm/scheduler/resize' => [
+        'controller' => 'Scheduler@resize'
+    ],
+
+    '/crm/scheduler/get-rooms' => [
+        'controller' => 'Scheduler@rooms'
+    ],
+
+    '/crm/scheduler/get-events' => [
+        'controller' => 'Scheduler@events'
+    ],
+
     // District
     '/crm/district' => [
         'controller' => 'District@indexAction'
