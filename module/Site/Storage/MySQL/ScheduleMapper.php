@@ -7,6 +7,27 @@ use Krystal\Db\Sql\RawSqlFragment;
 final class ScheduleMapper extends AbstractMapper
 {
     /**
+     * Resizes an event
+     * 
+     * @param int $id
+     * @param string $arrival
+     * @param string $departure
+     * @return boolean
+     */
+    public function resize(int $id, string $arrival, string $departure)
+    {
+        // Data to be updated
+        $data = [
+            'arrival' => $arrival,
+            'departure' => $departure
+        ];
+
+        return $this->db->update(ReservationMapper::getTableName(), $data)
+                        ->whereEquals('id', $id)
+                        ->execute();
+    }
+
+    /**
      * Find all events by hotel it and date ranges
      * 
      * @param int $hotelId
