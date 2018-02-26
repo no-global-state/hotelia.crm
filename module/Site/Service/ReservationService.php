@@ -80,15 +80,11 @@ final class ReservationService
      * Saves a reservation
      * 
      * @param array $data
-     * @return boolean
+     * @return int
      */
-    public function save(array $data) : bool
+    public function save(array $data) : int
     {
-        if (!empty($data['id'])) {
-            return $this->reservationMapper->update($data);
-        } else {
-            return $this->reservationMapper->insert($data);
-        }
+        return $this->reservationMapper->persistRow($data);
     }
 
     /**
