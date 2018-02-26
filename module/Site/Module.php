@@ -23,6 +23,7 @@ use Site\Service\RoomCategoryService;
 use Site\Service\PaymentFieldService;
 use Site\Service\ReviewService;
 use Site\Service\ReservationService;
+use Site\Service\ScheduleService;
 
 final class Module extends AbstractModule
 {
@@ -118,6 +119,10 @@ final class Module extends AbstractModule
 
         return array(
             'userService' => $userService,
+
+            'scheduleService' => new ScheduleService(
+                $this->createMapper('\Site\Storage\MySQL\ScheduleMapper')
+            ),
 
             'reservationService' => new ReservationService(
                 $this->createMapper('\Site\Storage\MySQL\ReservationMapper')
