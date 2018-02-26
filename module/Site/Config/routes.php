@@ -9,6 +9,10 @@ return [
         'controller' => 'Scheduler@add'
     ],
 
+    '/crm/scheduler/edit/(:var)' => [
+        'controller' => 'Scheduler@edit'
+    ],
+
     '/crm/scheduler/delete' => [
         'controller' => 'Scheduler@delete'
     ],
