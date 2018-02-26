@@ -202,6 +202,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
 
         // Add shared variables
         $this->view->addVariables(array(
+            'extended' => true,
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'role' => $this->getAuthService()->getRole(),
             'name' => $this->getAuthService()->getName(),
