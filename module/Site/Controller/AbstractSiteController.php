@@ -117,6 +117,12 @@ abstract class AbstractSiteController extends AbstractController
             'appName' => $this->paramBag->get('appName')
         ));
 
+        // Load language if explicitly provided
+        if ($this->paramBag->has('siteLanguage')) {
+            $siteLanguage = $this->paramBag->get('siteLanguage');
+            $this->loadTranslations($siteLanguage);
+        }
+
         // Define the main layout
         $this->view->setLayout('__layout__');
     }
