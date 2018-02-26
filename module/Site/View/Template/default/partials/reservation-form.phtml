@@ -1,0 +1,223 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<fieldset>
+    <h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
+    <br />
+
+    <?= Element::hidden('id', $client['id']); ?>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('full_name', $client['full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the full name like in the password'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('gender', $this->translateArray($genders), $client['gender'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('country', $countries, $client['country'], array('class' => 'form-control', 'data-plugin' => 'chosen')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Legal Status'); ?></label>
+              <div class="col-lg-10">
+
+                <?php foreach ($legalStatuses as $id => $name): ?>
+                <div class="radio">
+                  <label>
+                    <?= Element::radio('legal_status', $id, $client['legal_status'] == $id, ['data-legal-status' => $id]); ?> <? $this->show($name); ?>
+                  </label>
+                </div>
+                <?php endforeach; ?>
+              </div>
+            </div>
+
+            <div data-group="legal" class="hidden">
+                <h3 class="text-muted"><i class="glyphicon glyphicon-export"></i> <? $this->show('Legal data'); ?></h3>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><? $this->show('Company'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::text('company', $client['company'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('phone', $client['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Client phone with code'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::email('email', $client['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type email if any'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Passport data'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('passport', $client['passport'], array('class' => 'form-control', 'placeholder' => $this->translate('Full passport data'))); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Comment'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::textarea('comment', $client['comment'], array('class' => 'form-control', 'placeholder' => $this->translate('Additional notes if any'))); ?>
+              </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6">
+            <h3 class="text-muted"><i class="glyphicon glyphicon-road"></i> <? $this->show('Arrival and Departure'); ?></h3>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Arrival purpose'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('purpose', $this->translateArray($purposes), $client['purpose'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Arrival'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('arrival', $client['arrival'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'data-initial-date' => isset($arrival) ? $arrival : null)); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Departure'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::text('departure', $client['departure'], array('class' => 'form-control', 'data-plugin' => 'datetimepicker', 'data-initial-date' => isset($departure) ? $departure : null)); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Payment Type'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('payment_system_id', $paymentSystems, $client['payment_system_id'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('status', $this->translateArray($statuses), $client['status'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Reservation state'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('state', $this->translateArray($states), $client['state'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><? $this->show('Source'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('source', $this->translateArray($sources), $client['source'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <h3 class="text-muted"><i class="glyphicon glyphicon-import"></i> <? $this->show('Room'); ?></h3>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('room_id', $rooms, $client['room_id'], array('class' => 'form-control'), false, function($key) use ($prices){
+                    $result = [];
+
+                    foreach ($prices as $id => $collection) {
+                        if ($id == $key) {
+                            $result['data-price-group'] = htmlentities(json_encode($collection), ENT_QUOTES, 'UTF-8');
+                            return $result;
+                        }
+                    }
+
+                }); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select(null, $discounts, 0, array('class' => 'form-control', 'data-input' => 'discount'), false); ?>
+              </div>
+            </div>
+
+            <div class="form-group" data-group="discount">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Type discount'); ?> (%)</label>
+              <div class="col-lg-10">
+                <?= Element::number('discount', $client['discount'], array('class' => 'form-control', 'min' => 1, 'max' => '99', 'placeholder' => $this->translate('Discount for living'))); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Services'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('services[]', $services, isset($client['service_ids']) ? $client['service_ids'] : null, array('class' => 'form-control', 'data-plugin' => 'chosen', 'data-placeholder' => ' ', 'multiple' => true)); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="inputPassword" class="col-lg-2 control-label"><? $this->show('Price group'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('price_group_id', $priceGroupList, $client['price_group_id'], array('class' => 'form-control', 'disabled' => $client['id']), false, function($key) use ($priceGroups){
+                    $result = [];
+
+                    foreach ($priceGroups as $priceGroup) {
+                        if ($priceGroup['id'] == $key) {
+                            $result['data-price-group-tax'] = $priceGroup['daily_tax'];
+                            $result['data-price-group-currency'] = $priceGroup['currency'];
+                            return $result;
+                        }
+                    }
+
+                }); ?>
+              </div>
+            </div>
+
+            <?= Element::hidden('tax', $client['tax']); ?>
+            <?= Element::hidden('price', $client['price']); ?>
+            <?= Element::hidden('discount', $client['discount']); ?>
+
+            <div class="form-group">
+              <div class="col-lg-10 col-lg-offset-2">
+                <?php $this->loadPartial('counter', array(
+                    'count' => array()
+                )); ?>
+
+                <? $this->loadPartial('reservation-buttons', [
+                    'client' => $client
+                ]); ?>
+              </div>
+            </div>
+        </div>
+    </div>
+</fieldset>
