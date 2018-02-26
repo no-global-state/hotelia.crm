@@ -82,10 +82,10 @@ return array(
                         '@Site/daypilot-handler.js',
                     ],
                     'stylesheets' => [
-						'@Site/font-awesome/css/font-awesome.min.css'
+                        '@Site/daypilot-styles.css',
                     ]
                 ],
-                
+
                 // Map
                 'map' => [
                     'scripts' => [
