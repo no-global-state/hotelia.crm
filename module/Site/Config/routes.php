@@ -322,6 +322,10 @@ return [
         'controller' => 'Crm@indexAction'
     ],
 
+    '/crm/chess' => [
+        'controller' => 'Crm@chessAction'
+    ],
+
     '/crm/languages/switch/(:var)' => [
         'controller' => 'Language@switchAction'
     ],
