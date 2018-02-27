@@ -3,6 +3,7 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Filter\FilterableServiceInterface;
+use Krystal\Db\Filter\InputDecorator;
 
 final class TransactionMapper extends AbstractMapper implements FilterableServiceInterface
 {
@@ -20,6 +21,18 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
     protected function getPk()
     {
         return 'id';
+    }
+
+    /**
+     * Fetch latest transactions
+     * 
+     * @param int $hotelId
+     * @param int $limit
+     * @return array
+     */
+    public function fetchLast(int $hotelId, int $limit = 5) : array
+    {
+        return $this->filter(new InputDecorator(), 1, $limit, $this->getPk(), true, ['hotel_id' => $hotelId]);
     }
 
     /**
