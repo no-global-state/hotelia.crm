@@ -134,6 +134,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
 
         <div id="page-wrapper">
             <div class="container-fluid">
+                <?php if ($extended): ?>
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">
@@ -163,10 +164,10 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                             <?php endforeach; ?>
                         </ol>
                         <?php endif; ?>
-
                     </div>
                 </div>
                 <!-- /.row -->
+                <?php endif; ?>
 
                 <?php if ($flashBag->has('danger')): ?>
                 <div class="alert alert-danger" role="alert">
