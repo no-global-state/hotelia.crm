@@ -10,12 +10,12 @@ use Site\Collection\TimeRangeCollection;
         <div class="row">
             <div class="col-lg-4">
                 <span><? $this->show('Room types'); ?></span>
-                <?= Element::select(null, $types, null, ['id' => 'type_id', 'class' => 'form-control'], null); ?>
+                <?= Element::select(null, $types, null, ['id' => 'type_id', 'class' => 'form-control input-sm'], null); ?>
             </div>
 
             <div class="col-lg-4">
                 <span><? $this->show('Time range'); ?></span>
-                <?= Element::select(null, $this->translateArray($timeRanges), TimeRangeCollection::PARAM_MONTH, ['id' => 'timerange', 'class' => 'form-control']); ?>
+                <?= Element::select(null, $this->translateArray($timeRanges), TimeRangeCollection::PARAM_MONTH, ['id' => 'timerange', 'class' => 'form-control input-sm']); ?>
             </div>
 
             <div class="col-lg-4">
