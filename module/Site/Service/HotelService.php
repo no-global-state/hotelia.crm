@@ -122,11 +122,12 @@ final class HotelService implements FilterableServiceInterface
      * @param int $langId
      * @param int $priceGroupId
      * @param array $filters Optional filters
+     * @param mixed $limit Optional limit
      * @return array
      */
-    public function findAll(int $langId, int $priceGroupId, array $filters = []) : array
+    public function findAll(int $langId, int $priceGroupId, array $filters = [], $limit = null) : array
     {
-        $rows = $this->hotelMapper->findAll($langId, $priceGroupId, $filters);
+        $rows = $this->hotelMapper->findAll($langId, $priceGroupId, $filters, $limit);
 
         // Append $rows
         foreach ($rows as &$row) {
