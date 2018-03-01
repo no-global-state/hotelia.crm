@@ -156,7 +156,9 @@ final class RoomTypeMapper extends AbstractMapper
             RoomTypePriceMapper::getFullColumnName('price'),
             PriceGroupMapper::getFullColumnName('currency'),
             RoomCategoryTranslationMapper::getFullColumnName('name'),
-            RoomTypeTranslationMapper::getFullColumnName('description')
+            RoomTypeTranslationMapper::getFullColumnName('description'),
+            RoomTypeGalleryMapper::getFullColumnName('file') => 'cover',
+            RoomTypeGalleryMapper::getFullColumnName('id') => 'cover_id'
         ]);
 
         return $this->db->select($columns)
@@ -182,6 +184,15 @@ final class RoomTypeMapper extends AbstractMapper
                         // Price group relation
                         ->leftJoin(PriceGroupMapper::getTableName(), [
                             RoomTypePriceMapper::getFullColumnName('price_group_id') => PriceGroupMapper::getRawColumn('id')
+                        ])
+                        // Room type cover
+                        ->leftJoin(RoomTypeCoverMapper::getTableName(), [
+                            RoomTypeCoverMapper::getFullColumnName('master_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
+                        // Gallery relation
+                        ->leftJoin(RoomTypeGalleryMapper::getTableName(), [
+                            RoomTypeGalleryMapper::getFullColumnName('id') => RoomTypeCoverMapper::getRawColumn('slave_id'),
+                            RoomTypeGalleryMapper::getFullColumnName('room_type_id') => RoomTypeCoverMapper::getRawColumn('master_id')
                         ])
                         // Hotel ID constraint
                         ->whereEquals(self::getFullColumnName('hotel_id'), $hotelId)
