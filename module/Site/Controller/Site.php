@@ -191,6 +191,7 @@ final class Site extends AbstractSiteController
             'adults' => $adults,
             'kids' => $kids,
 
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
             'availableRooms' => $availableRooms,
             'types' => $types,
             'hotel' => $hotel,
@@ -198,6 +199,8 @@ final class Site extends AbstractSiteController
             'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
 
             'hotelId' => $hotelId,
+            'regionId' => $hotel['region_id'],
+
             'facilities' => $this->getModuleService('facilitiyService')->getItemList($hotelId, $this->getCurrentLangId(), false),
             // Hotel images
             'images' => [
