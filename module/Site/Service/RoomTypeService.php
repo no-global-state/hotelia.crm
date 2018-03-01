@@ -160,7 +160,13 @@ final class RoomTypeService
      */
     public function findByTypeId(int $typeId, int $priceGroupId, int $hotelId, int $langId)
     {
-        return $this->roomTypeMapper->findByTypeId($typeId, $priceGroupId, $hotelId, $langId);
+        $row = $this->roomTypeMapper->findByTypeId($typeId, $priceGroupId, $hotelId, $langId);
+
+        if (isset($row['cover_id'], $row['cover'])) {
+            $row['cover'] = self::createImagePath($row['cover_id'], $row['cover'], '850x450');
+        }
+
+        return $row;
     }
 
     /**
