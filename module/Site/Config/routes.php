@@ -350,7 +350,7 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
-    '/payment' => [
+    '/payment/(:var)' => [
         'controller' => 'Site@paymentAction'
     ],
     

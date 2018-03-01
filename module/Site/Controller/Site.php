@@ -32,16 +32,16 @@ final class Site extends AbstractSiteController
     public function paymentAction()
     {
         // Validate request
-        if ($this->request->hasPost('type_id', 'hotel_id', 'arrival', 'departure')) {
+        if ($this->request->hasQuery('type_id', 'hotel_id', 'arrival', 'departure')) {
 
             // Request variables
-            $typeId = $this->request->getPost('type_id');
-            $hotelId = $this->request->getPost('hotel_id');
-            $arrival = $this->request->getPost('arrival');
-            $departure = $this->request->getPost('departure');
-            $rooms = $this->request->getPost('rooms', 1);
-            $adults = $this->request->getPost('adults', 1);
-            $kids = $this->request->getPost('kids', 0);
+            $typeId = $this->request->getQuery('type_id');
+            $hotelId = $this->request->getQuery('hotel_id');
+            $arrival = $this->request->getQuery('arrival');
+            $departure = $this->request->getQuery('departure');
+            $rooms = $this->request->getQuery('rooms', 1);
+            $adults = $this->request->getQuery('adults', 1);
+            $kids = $this->request->getQuery('kids', 0);
 
             $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
