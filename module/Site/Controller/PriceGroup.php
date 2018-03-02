@@ -7,16 +7,6 @@ use Krystal\Db\Filter\InputDecorator;
 final class PriceGroup extends AbstractCrmController
 {
     /**
-     * Creates price group mapper
-     * 
-     * @return \Site\Storage\MySQL\PriceGroupMapper
-     */
-    private function createPriceGroupMapper()
-    {
-        return $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper');
-    }
-
-    /**
      * Creates form
      * 
      * @param mixed $entity
@@ -26,7 +16,7 @@ final class PriceGroup extends AbstractCrmController
     {
         return $this->view->render('helpers/price-group', [
             'entity' => $entity,
-            'priceGroups' => $this->createPriceGroupMapper()->fetchAll()
+            'priceGroups' => $this->getModuleService('priceGroupService')->fetchAll()
         ]);
     }
 
@@ -48,7 +38,7 @@ final class PriceGroup extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $priceGroup = $this->createPriceGroupMapper()->findByPk($id);
+        $priceGroup = $this->getModuleService('priceGroupService')->fetchById($id);
 
         if ($priceGroup) {
             return $this->createForm($priceGroup);
@@ -65,7 +55,8 @@ final class PriceGroup extends AbstractCrmController
      */
     public function deleteAction(int $id)
     {
-        $this->createPriceGroupMapper()->deleteByPk($id);
+        $this->getModuleService('priceGroupService')->deleteById($id);
+
         $this->flashBag->set('danger', 'The price group has been deleted successfully');
         $this->response->redirectToPreviousPage();
     }
@@ -78,7 +69,7 @@ final class PriceGroup extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
-        $this->createPriceGroupMapper()->persist($data);
+        $this->getModuleService('priceGroupService')->save($data);
 
         $this->flashBag->set('success', $data['id'] ? 'The price group has been updated successfully' : 'The price group has been added successfully');
         return 1;
