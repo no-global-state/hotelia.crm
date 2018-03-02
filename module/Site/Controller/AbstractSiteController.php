@@ -7,6 +7,19 @@ use Krystal\Validate\Renderer;
 
 abstract class AbstractSiteController extends AbstractController
 {
+    const PARAM_SESSION_PRICE_GROUP = 'price_group';
+
+    /**
+     * Sets price group id
+     * 
+     * @param int $priceGroupId
+     * @return void
+     */
+    protected function setPriceGroupId(int $priceGroupId)
+    {
+        $this->sessionBag->set(self::PARAM_SESSION_PRICE_GROUP, $priceGroupId);
+    }
+
     /**
      * Returns current price group ID
      * 
@@ -14,6 +27,10 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function getPriceGroupId() : int
     {
+        if ($this->sessionBag->has(self::PARAM_SESSION_PRICE_GROUP)) {
+            return $this->sessionBag->get(self::PARAM_SESSION_PRICE_GROUP);
+        }
+
         return 1;
     }
 
@@ -114,7 +131,9 @@ abstract class AbstractSiteController extends AbstractController
         $this->view->addVariables(array(
             'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
-            'appName' => $this->paramBag->get('appName')
+            'appName' => $this->paramBag->get('appName'),
+            'priceGroups' => $this->getModuleService('priceGroupService')->fetchAll(),
+            'activePriceGroupId' => $this->getPriceGroupId(),
         ));
 
         // Load language if explicitly provided
