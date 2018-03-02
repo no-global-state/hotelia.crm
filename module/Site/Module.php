@@ -24,6 +24,7 @@ use Site\Service\PaymentFieldService;
 use Site\Service\ReviewService;
 use Site\Service\ReservationService;
 use Site\Service\ScheduleService;
+use Site\Service\PriceGroupService;
 
 final class Module extends AbstractModule
 {
@@ -119,6 +120,10 @@ final class Module extends AbstractModule
 
         return array(
             'userService' => $userService,
+
+            'priceGroupService' => new PriceGroupService(
+                $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')
+            ),
 
             'scheduleService' => new ScheduleService(
                 $this->createMapper('\Site\Storage\MySQL\ScheduleMapper')
