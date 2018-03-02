@@ -4,6 +4,11 @@ use Site\Service\UserService;
 
 return [
 
+    '/state/price-group/(:var)' => [
+        'controller' => 'Site@priceGroupAction',
+    ],
+
+
     // Scheduler
     '/crm/scheduler/add/(:var)' => [
         'controller' => 'Scheduler@add'

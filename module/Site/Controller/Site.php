@@ -8,6 +8,18 @@ use Site\Service\ReservationService;
 final class Site extends AbstractSiteController
 {
     /**
+     * Sets price group
+     * 
+     * @param int $priceGroupId
+     * @return void
+     */
+    public function priceGroupAction(int $priceGroupId) : void
+    {
+        $this->setPriceGroupId($priceGroupId);
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Leaves a review
      * 
      * @return void
