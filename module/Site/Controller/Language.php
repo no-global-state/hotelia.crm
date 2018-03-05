@@ -16,9 +16,9 @@ final class Language extends AbstractCrmController
      */
     public function switchAction(string $code)
     {
-        $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
+        $exists = $this->getModuleService('languageService')->exists($code);
 
-        if ($languageMapper->exists($code)) {
+        if ($exists) {
             $this->request->getCookieBag()->set('language', $code);
         }
 
@@ -33,10 +33,8 @@ final class Language extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
-
         return $this->view->render('helpers/languages', [
-            'languages' => $languageMapper->fetchAll(),
+            'languages' => $this->getModuleService('languageService')->fetchAll(),
             'entity' => $entity
         ]);
     }
@@ -55,12 +53,11 @@ final class Language extends AbstractCrmController
      * Renders edit form for language
      * 
      * @param integer $id
-     * @return string
+     * @return mixed
      */
     public function editAction(int $id)
     {
-        $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
-        $entity = $languageMapper->findByPk($id);
+        $entity = $this->getModuleService('languageService')->fetchById($id);
 
         if ($entity) {
             return $this->createForm($entity);
@@ -77,8 +74,8 @@ final class Language extends AbstractCrmController
      */
     public function deleteAction(int $id) : void
     {
-        $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
-        $languageMapper->deleteByPk($id);
+        $languageService = $this->getModuleService('languageService');
+        $languageService->deleteById($id);
 
         $this->flashBag->set('danger', 'Language has been removed successfully');
         $this->response->redirectToPreviousPage();
@@ -93,8 +90,8 @@ final class Language extends AbstractCrmController
     {
         $data = $this->request->getPost();
 
-        $languageMapper = $this->createMapper('\Site\Storage\MySQL\LanguageMapper');
-        $languageMapper->persist($data);
+        $languageService = $this->getModuleService('languageService');
+        $languageService->save($data);
 
         $this->flashBag->set('success', $data['id'] ? 'Language has been updated successfully' : 'Language has been added successfully');
         return 1;
