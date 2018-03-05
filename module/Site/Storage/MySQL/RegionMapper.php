@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class RegionMapper extends AbstractMapper
 {
     /**
@@ -33,6 +35,42 @@ final class RegionMapper extends AbstractMapper
             RegionTranslationMapper::getFullColumnName('lang_id'),
             RegionTranslationMapper::getFullColumnName('name'),
         ];
+    }
+
+    /**
+     * Find all hotels with their count by related region
+     * 
+     * @param int $languageId
+     * @return array
+     */
+    public function findHotels(int $languageId) : array
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            RegionTranslationMapper::column('name') => 'region',
+        ];
+
+        $db = $this->db->select($columns)
+                       ->count(HotelMapper::column('region_id'), 'hotel_count')
+                       ->from(self::getTableName())
+                       // Translation relation
+                       ->leftJoin(RegionTranslationMapper::getTableName(), [
+                            RegionTranslationMapper::column('id') => self::column('id'),
+                            RegionTranslationMapper::column('lang_id') => new RawSqlFragment(intval($languageId))
+                       ])
+                       // Hotel relation
+                       ->leftJoin(HotelMapper::getTableName(), [
+                            self::column('id') => HotelMapper::column('region_id'),
+                            HotelMapper::column('active') => new RawSqlFragment('1')
+                       ])
+                       ->groupBy([
+                            self::column('id'), 
+                            'region'
+                        ])
+                       ->orderBy(self::column('order'));
+
+        return $db->queryAll();
     }
 
     /**

@@ -48,6 +48,17 @@ final class RegionService
     }
 
     /**
+     * Find all hotels with their count by related region
+     * 
+     * @param int $languageId
+     * @return array
+     */
+    public function findHotels(int $languageId) : array
+    {
+        return $this->regionMapper->findHotels($languageId);
+    }
+
+    /**
      * Fetch all region
      * 
      * @param int $langId Language ID filter
