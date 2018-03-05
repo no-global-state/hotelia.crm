@@ -250,7 +250,7 @@ final class Site extends AbstractSiteController
     {
         return $this->view->render('home', [
             'home' => true,
-            'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
+            'regions' => $this->getModuleService('regionService')->findHotels($this->getCurrentLangId()),
             'hotels' => $this->createMapper('\Site\Storage\MySQL\HotelMapper')->fetchAll($this->getCurrentLangId())
         ]);
     }
