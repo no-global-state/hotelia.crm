@@ -4,6 +4,7 @@ namespace Site;
 
 use Krystal\Application\Module\AbstractModule;
 use Krystal\Image\Tool\ImageManager;
+use Site\Service\LanguageService;
 use Site\Service\UserService;
 use Site\Service\RoomService;
 use Site\Service\FacilitiyService;
@@ -120,6 +121,10 @@ final class Module extends AbstractModule
 
         return array(
             'userService' => $userService,
+
+            'languageService' => new LanguageService(
+                $this->createMapper('\Site\Storage\MySQL\LanguageMapper')
+            ),
 
             'priceGroupService' => new PriceGroupService(
                 $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')
