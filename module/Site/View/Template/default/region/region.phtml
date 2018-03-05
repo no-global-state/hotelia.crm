@@ -50,6 +50,13 @@ use Krystal\Form\Element;
                     <?= Element::number('region[order]', $entity['order'], array('class' => 'form-control', 'min' => 0)); ?>
                   </div>
                 </div>
+
+                <div class="form-group">
+                  <label class="col-lg-2 control-label"><?php $this->show('Image'); ?></label>
+                  <div class="col-lg-10">
+                    <?= Element::text('region[image]', $entity['image'], array('class' => 'form-control')); ?>
+                  </div>
+                </div>
             </div>
         </div>
 
