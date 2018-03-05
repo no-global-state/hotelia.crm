@@ -1,4 +1,17 @@
 
+CREATE TABLE velveto_dictionary (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `alias` varchar(255) NOT NULL COMMENT 'Alias name'
+);
+
+CREATE TABLE velveto_dictionary_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `value` varchar(255) NOT NULL,
+
+    FOREIGN KEY (id) REFERENCES velveto_dictionary(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_hotel_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL COMMENT 'Soring order'
