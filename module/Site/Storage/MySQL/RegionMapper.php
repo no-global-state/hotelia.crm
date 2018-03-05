@@ -32,6 +32,7 @@ final class RegionMapper extends AbstractMapper
         return [
             self::getFullColumnName('id'),
             self::getFullColumnName('order'),
+            self::getFullColumnName('image'),
             RegionTranslationMapper::getFullColumnName('lang_id'),
             RegionTranslationMapper::getFullColumnName('name'),
         ];
@@ -48,6 +49,7 @@ final class RegionMapper extends AbstractMapper
         // Columns to be selected
         $columns = [
             self::column('id'),
+            self::column('image'),
             RegionTranslationMapper::column('name') => 'region',
         ];
 

@@ -57,7 +57,8 @@ CREATE TABLE velveto_price_groups (
 
 CREATE TABLE velveto_regions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `order` INT NOT NULL COMMENT 'Region sorting order'
+    `order` INT NOT NULL COMMENT 'Region sorting order',
+    `image` varchar(255) COMMENT 'Optional region image'
 );
 
 CREATE TABLE velveto_regions_translation (
