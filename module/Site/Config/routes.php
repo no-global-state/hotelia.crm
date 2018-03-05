@@ -8,7 +8,10 @@ return [
         'controller' => 'Site@priceGroupAction',
     ],
 
-
+    '/state/language/(:var)' => [
+        'controller' => 'Site@languageAction',
+    ],
+    
     // Scheduler
     '/crm/scheduler/add/(:var)' => [
         'controller' => 'Scheduler@add'

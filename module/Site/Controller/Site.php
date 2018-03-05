@@ -8,6 +8,23 @@ use Site\Service\ReservationService;
 final class Site extends AbstractSiteController
 {
     /**
+     * Switches a language
+     * 
+     * @param string $code
+     * @return void
+     */
+    public function languageAction(string $code)
+    {
+        $exists = $this->getModuleService('languageService')->exists($code);
+
+        if ($exists) {
+            $this->request->getCookieBag()->set('language', $code);
+        }
+
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Sets price group
      * 
      * @param int $priceGroupId
