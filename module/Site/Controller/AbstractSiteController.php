@@ -127,8 +127,17 @@ abstract class AbstractSiteController extends AbstractController
 
         $hotel = $this->getHotelData();
 
+        // Language loading
+        $bag = $this->request->getCookieBag();
+        $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
+        $this->loadTranslations($code);
+
         // Add shared variables
         $this->view->addVariables(array(
+            // Languages
+            'languages' => $this->getModuleService('languageService')->fetchAll(),
+            'language' => $code,
+
             'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
             'appName' => $this->paramBag->get('appName'),
