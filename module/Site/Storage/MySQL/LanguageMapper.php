@@ -13,6 +13,20 @@ final class LanguageMapper extends AbstractMapper
     }
 
     /**
+     * Finds language ID by its attached code
+     * 
+     * @param string $code Language code
+     * @return string
+     */
+    public function findIdByCode(string $code)
+    {
+        return $this->db->select($this->getPk())
+                        ->from(self::getTableName())
+                        ->whereEquals('code', $code)
+                        ->queryScalar();
+    }
+
+    /**
      * Checks whether language code is valid
      * 
      * @param string $code
