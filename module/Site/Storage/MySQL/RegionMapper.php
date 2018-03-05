@@ -50,7 +50,7 @@ final class RegionMapper extends AbstractMapper
         $columns = [
             self::column('id'),
             self::column('image'),
-            RegionTranslationMapper::column('name') => 'region',
+            RegionTranslationMapper::column('name'),
         ];
 
         $db = $this->db->select($columns)
@@ -68,7 +68,7 @@ final class RegionMapper extends AbstractMapper
                        ])
                        ->groupBy([
                             self::column('id'), 
-                            'region'
+                            RegionTranslationMapper::column('name')
                         ])
                        ->orderBy(self::column('order'));
 
