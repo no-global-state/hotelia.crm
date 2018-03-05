@@ -15,10 +15,11 @@ final class Site extends AbstractSiteController
      */
     public function languageAction(string $code)
     {
-        $exists = $this->getModuleService('languageService')->exists($code);
+        $id = $this->getModuleService('languageService')->findIdByCode($code);
 
-        if ($exists) {
-            $this->request->getCookieBag()->set('language', $code);
+        if ($id) {
+            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_ID, $id);
+            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_CODE, $code);
         }
 
         $this->response->redirectToPreviousPage();

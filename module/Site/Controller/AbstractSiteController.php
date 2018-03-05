@@ -8,6 +8,8 @@ use Krystal\Validate\Renderer;
 abstract class AbstractSiteController extends AbstractController
 {
     const PARAM_SESSION_PRICE_GROUP = 'price_group';
+    const PARAM_COOKIE_LANG_ID = 'language_id';
+    const PARAM_COOKIE_LANG_CODE = 'language_code';
 
     /**
      * Sets price group id
@@ -51,6 +53,12 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function getCurrentLangId() : int
     {
+        $bag = $this->request->getCookieBag();
+
+        if ($bag->has(self::PARAM_COOKIE_LANG_ID)) {
+            return $bag->get(self::PARAM_COOKIE_LANG_ID);
+        }
+
         return 1;
     }
 
@@ -129,7 +137,7 @@ abstract class AbstractSiteController extends AbstractController
 
         // Language loading
         $bag = $this->request->getCookieBag();
-        $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
+        $code = $bag->has(self::PARAM_COOKIE_LANG_CODE) ? $bag->get(self::PARAM_COOKIE_LANG_CODE) : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
         // Add shared variables
