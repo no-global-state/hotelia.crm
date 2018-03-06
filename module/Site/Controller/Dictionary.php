@@ -13,7 +13,12 @@ final class Dictionary extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Append one breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Dictionary');
+
         return $this->view->render('dictionary/index', [
+            'icon' => 'glyphicon glyphicon-book',
             'entries' => $this->getModuleService('dictionaryService')->fetchAll($this->getCurrentLangId())
         ]);
     }
@@ -26,7 +31,13 @@ final class Dictionary extends AbstractCrmController
      */
     private function createForm($entry) : string
     {
+        // Append one breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Dictionary', $this->createUrl('Site:Dictionary@indexAction'))
+                   ->addOne(!is_array($entry) ? 'Add entry' : 'Edit entry');
+
         return $this->view->render('dictionary/form', [
+            'icon' => 'glyphicon glyphicon-pencil',
             'entry' => $entry
         ]);
     }
