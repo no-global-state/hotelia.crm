@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\DictionaryMapper;
+use Krystal\Stdlib\ArrayUtils;
 
 final class DictionaryService
 {
@@ -44,6 +45,32 @@ final class DictionaryService
     public function deleteById(int $id)
     {
         return $this->dictionaryMapper->deleteByPk($id);
+    }
+
+    /**
+     * Finds by alias
+     * 
+     * @param string $alias
+     * @param int $languageId
+     * @return string
+     */
+    public function findByAlias(string $alias, int $languageId) : string
+    {
+        static $rows = null;
+
+        if (is_null($rows)) {
+            $rows = ArrayUtils::arrayList($this->fetchAll($languageId), 'alias', 'value');
+        }
+
+        foreach ($rows as $key => $value) {
+            // Linear search
+            if ($key == $alias) {
+                return $value;
+            }
+        }
+
+        // By default
+        return $alias;
     }
 
     /**
