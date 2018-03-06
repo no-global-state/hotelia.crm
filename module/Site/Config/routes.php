@@ -41,6 +41,27 @@ return [
         'controller' => 'Scheduler@events'
     ],
 
+    // Dictionary
+    '/crm/dictionary' => [
+        'controller' => 'Dictionary@indexAction'
+    ],
+    
+    '/crm/dictionary/add' => [
+        'controller' => 'Dictionary@addAction'
+    ],
+    
+    '/crm/dictionary/edit/(:var)' => [
+        'controller' => 'Dictionary@editAction'
+    ],
+
+    '/crm/dictionary/delete/(:var)' => [
+        'controller' => 'Dictionary@deleteAction'
+    ],
+    
+    '/crm/dictionary/save' => [
+        'controller' => 'Dictionary@saveAction'
+    ],
+
     // District
     '/crm/district' => [
         'controller' => 'District@indexAction'
