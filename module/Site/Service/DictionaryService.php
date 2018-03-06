@@ -62,15 +62,7 @@ final class DictionaryService
             $rows = ArrayUtils::arrayList($this->fetchAll($languageId), 'alias', 'value');
         }
 
-        foreach ($rows as $key => $value) {
-            // Linear search
-            if ($key == $alias) {
-                return $value;
-            }
-        }
-
-        // By default
-        return $alias;
+        return isset($rows[$alias]) ? $rows[$alias] : $alias;
     }
 
     /**
