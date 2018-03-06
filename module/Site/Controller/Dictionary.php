@@ -77,6 +77,8 @@ final class Dictionary extends AbstractCrmController
     public function deleteAction($id) : void
     {
         $this->getModuleService('dictionaryService')->deleteById($id);
+
+        $this->flashBag->set('danger', 'The entry has been removed successfully');
         $this->response->redirectToPreviousPage();
     }
 
@@ -92,6 +94,7 @@ final class Dictionary extends AbstractCrmController
         $service = $this->getModuleService('dictionaryService');
         $service->save($input);
 
+        $this->flashBag->set('success', $input['dictionary']['id'] ? 'The entry has been updated successfully' : 'The entry has been added successfully');
         return 1;
     }
 }
