@@ -37,6 +37,17 @@ final class Dictionary
      * @param string $alias
      * @return string
      */
+    public function __invoke(string $alias)
+    {
+        return $this->t($alias);
+    }
+
+    /**
+     * Translates a string by alias
+     * 
+     * @param string $alias
+     * @return string
+     */
     public function t(string $alias) : string
     {
         return $this->dictionaryService->findByAlias($alias, $this->languageId);
