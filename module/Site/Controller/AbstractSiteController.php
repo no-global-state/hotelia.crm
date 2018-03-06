@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractController;
 use Krystal\Validate\Renderer;
+use Site\Service\Dictionary;
 
 abstract class AbstractSiteController extends AbstractController
 {
@@ -44,6 +45,22 @@ abstract class AbstractSiteController extends AbstractController
     protected function getHotelId()
     {
         return 1;
+    }
+
+    /**
+     * Creates dictionary instance
+     * 
+     * @return \Site\Service\Dictionary
+     */
+    protected function createDictionary()
+    {
+        static $dictionary;
+
+        if (is_null($dictionary)) {
+            $dictionary = new Dictionary($this->getModuleService('dictionaryService'), $this->getCurrentLangId());
+        }
+
+        return $dictionary;
     }
 
     /**
@@ -145,6 +162,7 @@ abstract class AbstractSiteController extends AbstractController
             // Languages
             'languages' => $this->getModuleService('languageService')->fetchAll(),
             'language' => $code,
+            'dictionary' => $this->createDictionary(),
 
             'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
