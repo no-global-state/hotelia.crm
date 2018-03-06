@@ -26,6 +26,7 @@ use Site\Service\ReviewService;
 use Site\Service\ReservationService;
 use Site\Service\ScheduleService;
 use Site\Service\PriceGroupService;
+use Site\Service\DictionaryService;
 
 final class Module extends AbstractModule
 {
@@ -120,6 +121,10 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'dictionaryService' => new DictionaryService(
+                $this->createMapper('\Site\Storage\MySQL\DictionaryMapper')
+            ),
+
             'userService' => $userService,
 
             'languageService' => new LanguageService(
