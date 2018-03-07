@@ -1,4 +1,18 @@
 
+CREATE TABLE velveto_meals (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL
+);
+
+CREATE TABLE velveto_meals_translations (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_meals(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_dictionary (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `alias` varchar(255) NOT NULL COMMENT 'Alias name'
