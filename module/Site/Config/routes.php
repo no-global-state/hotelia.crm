@@ -4,6 +4,27 @@ use Site\Service\UserService;
 
 return [
 
+    // Meals
+    '/crm/meals' => [
+        'controller' => 'Meals@indexAction'
+    ],
+    
+    '/crm/meals/add' => [
+        'controller' => 'Meals@addAction'
+    ],
+
+    '/crm/meals/edit/(:var)' => [
+        'controller' => 'Meals@editAction'
+    ],
+    
+    '/crm/meals/delete/(:var)' => [
+        'controller' => 'Meals@deleteAction'
+    ],
+    
+    '/crm/meals/save' => [
+        'controller' => 'Meals@saveAction'
+    ],
+    
     '/state/price-group/(:var)' => [
         'controller' => 'Site@priceGroupAction',
     ],
