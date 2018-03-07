@@ -27,6 +27,7 @@ use Site\Service\ReservationService;
 use Site\Service\ScheduleService;
 use Site\Service\PriceGroupService;
 use Site\Service\DictionaryService;
+use Site\Service\MealsService;
 
 final class Module extends AbstractModule
 {
@@ -121,6 +122,10 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'mealsService' => new MealsService(
+                $this->createMapper('\Site\Storage\MySQL\MealsMapper')
+            ),
+
             'dictionaryService' => new DictionaryService(
                 $this->createMapper('\Site\Storage\MySQL\DictionaryMapper')
             ),
