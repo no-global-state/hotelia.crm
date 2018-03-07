@@ -5,7 +5,7 @@ CREATE TABLE velveto_meals (
 );
 
 CREATE TABLE velveto_meals_translations (
-    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `id` INT NOT NULL,
     `lang_id` INT NOT NULL,
     `name` varchar(255) NOT NULL,
 
@@ -36,7 +36,7 @@ CREATE TABLE velveto_hotel_types_translation (
     `lang_id` INT NOT NULL,
     `name` varchar(255) NOT NULL,
 
-    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(lang_id) ON DELETE CASCADE,
     FOREIGN KEY (id) REFERENCES velveto_hotel_types(id) ON DELETE CASCADE
 );
 
