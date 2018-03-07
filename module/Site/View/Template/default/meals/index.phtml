@@ -1,0 +1,46 @@
+<?php
+
+use Krystal\Grid\Grid;
+use Krystal\Form\Element;
+
+?>
+
+<p>
+    <a class="btn btn-success" href="<?= $this->url('Site:Meals@addAction'); ?>"><i class="glyphicon glyphicon-floppy-disk"></i> <? $this->show('Add'); ?></a>
+</p>
+
+<div class="table-responsive">
+    <?= Grid::render($meals, [
+        // A column to be considered as a primary key
+        'pk' => 'id',
+        'batch' => false,
+        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+        'columns' => [
+            [
+                'column' => 'id',
+                'label' => 'ID'
+            ],
+
+            [
+                'column' => 'name',
+                'type' => 'text'
+            ],
+
+            [
+                'column' => 'order',
+                'type' => 'text'
+            ]
+        ],
+
+        'actions' => [
+            'edit' => function($row){
+                return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Meals@editAction', $row['id']));
+            },
+
+            'delete' => function($row){
+                return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Meals@deleteAction', $row['id']), ['data-button' => 'delete']);
+            }
+        ]
+
+    ], $this->translator); ?>
+</div>
