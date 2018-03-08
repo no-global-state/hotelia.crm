@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class MealsMapper extends AbstractMapper
 {
     /**
@@ -51,14 +53,30 @@ final class MealsMapper extends AbstractMapper
      * Fetch all meals
      * 
      * @param int $langId Language ID filter
+     * @param mixed $hotelId Optional hotel ID
      * @return array
      */
-    public function fetchAll(int $langId) : array
+    public function fetchAll(int $langId, $hotelId = null) : array
     {
-        return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(MealsTranslationMapper::getFullColumnName('lang_id'), $langId)
-                    ->orderBy($this->getPk())
-                    ->desc()
-                    ->queryAll();
+        $columns = $this->getColumns();
+
+        if ($hotelId !== null) {
+            $columns[] = new RawSqlFragment(sprintf('(%s = %s) AS active', MealsRelationMapper::column('slave_id'), self::column('id')));
+        }
+
+        $db = $this->createEntitySelect($columns);
+
+        if ($hotelId !== null) {
+            $db->leftJoin(MealsRelationMapper::getTableName(), [
+                MealsRelationMapper::column('master_id') => $hotelId,
+                MealsRelationMapper::column('slave_id') => new RawSqlFragment(self::column('id'))
+            ]);
+        }
+
+        $db->whereEquals(MealsTranslationMapper::getFullColumnName('lang_id'), $langId)
+           ->orderBy($this->getPk())
+           ->desc();
+
+        return $db->queryAll();
     }
 }

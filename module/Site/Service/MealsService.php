@@ -62,10 +62,11 @@ final class MealsService
      * Fetch all meals
      * 
      * @param int $langId Language ID filter
+     * @param mixed $hotelId
      * @return array
      */
-    public function fetchAll(int $langId) : array
+    public function fetchAll(int $langId, $hotelId = null) : array
     {
-        return $this->mealsMapper->fetchAll($langId);
+        return $this->mealsMapper->fetchAll($langId, $hotelId);
     }
 }
