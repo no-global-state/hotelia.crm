@@ -393,6 +393,30 @@ use Site\Service\LanguageService;;
                     </div>
 
                     <?php endforeach; ?>
+
+                    <h2 class="page-header"><? $this->show('Restaurant'); ?></h2>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Do your offer restaurant services to your guests?'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['has_restaurant'], ['class' => 'form-control']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Opening'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('hotel[restaurant_opening]', $entity['restaurant_opening'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Closing'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::text('hotel[restaurant_closing]', $entity['restaurant_closing'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                      </div>
+                    </div>
+
                 </fieldset>
             </div>
         </div>
