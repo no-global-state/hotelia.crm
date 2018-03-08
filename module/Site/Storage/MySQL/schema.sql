@@ -21,6 +21,16 @@ CREATE TABLE velveto_meals_relation (
     FOREIGN KEY (slave_id) REFERENCES velveto_meals(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_meals_global_prices (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT NOT NULL,
+    `price_group_id` INT NOT NULL,
+    `price` FLOAT NOT NULL,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_dictionary (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `alias` varchar(255) NOT NULL COMMENT 'Alias name'
