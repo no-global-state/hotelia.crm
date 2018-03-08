@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Site\Storage\MySQL\MealsMapper;
+use Site\Storage\MySQL\MealsGlobalPriceMapper;
 
 final class MealsService
 {
@@ -14,14 +15,53 @@ final class MealsService
     private $mealsMapper;
 
     /**
+     * Any compliant global price mapper
+     * 
+     * @var \Site\Storage\MySQL\MealsGlobalPriceMapper
+     */
+    private $mealsGlobalPriceMapper;
+
+    /**
      * State initialization
      * 
      * @param \Site\Storage\MySQL\MealsMapper $mealsMapper
+     * @param \Site\Storage\MySQL\MealsGlobalPriceMapper
      * @return void
      */
-    public function __construct(MealsMapper $mealsMapper)
+    public function __construct(MealsMapper $mealsMapper, MealsGlobalPriceMapper $mealsGlobalPriceMapper)
     {
         $this->mealsMapper = $mealsMapper;
+        $this->mealsGlobalPriceMapper = $mealsGlobalPriceMapper;
+    }
+
+    /**
+     * Find global prices by hotel ID
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function findGlobalPrices(int $hotelId)
+    {
+        return $this->mealsGlobalPriceMapper->findByHotelId($hotelId);
+    }
+
+    /**
+     * Update global price
+     * 
+     * @param int $hotelId
+     * @param array $input
+     * @return boolean
+     */
+    public function updateGlobalPrice(int $hotelId, array $input)
+    {
+        $data = [];
+
+        // Process and prepare
+        foreach ($input['price'] as $priceGroupId => $price) {
+            $data[] = [$hotelId, $priceGroupId, $price];
+        }
+
+        return $this->mealsGlobalPriceMapper->updateRelation($hotelId, $data);
     }
 
     /**
