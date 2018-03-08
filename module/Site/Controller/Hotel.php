@@ -33,7 +33,8 @@ final class Hotel extends AbstractCrmController
             'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
             'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
             'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId()),
-            'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId())
+            'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId())
         ]);
     }
 
@@ -51,6 +52,9 @@ final class Hotel extends AbstractCrmController
 
         // Update meals relations
         $this->getModuleService('mealsService')->updateRelation($this->getHotelId(), $this->request->getPost('meal', []));
+
+        // Update global prices
+        $this->getModuleService('mealsService')->updateGlobalPrice($this->getHotelId(), $this->request->getPost('meal', []));
 
         if (isset($data['cover'])) {
             $photoService = $this->getModuleService('photoService');

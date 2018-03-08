@@ -365,6 +365,20 @@ use Site\Service\LanguageService;;
                   </label>
                 </div>
                 <?php endforeach; ?>                
+
+                <h2 class="page-header"><? $this->show('Breakfast price'); ?></h2>
+
+                <?php foreach ($globalMealPrices as $globalMealPrice): ?>
+                <?php $uniq = md5($globalMealPrice['group']); ?>
+
+                <div class="form-group">
+                  <label for="<?= $uniq; ?>" class="col-lg-2 control-label"><?= $globalMealPrice['group']; ?> (<?= $globalMealPrice['currency']; ?>)</label>
+                  <div class="col-lg-10">
+                    <?= Element::text(sprintf('meal[price][%s]', $globalMealPrice['price_group_id']), $globalMealPrice['price'], ['id' => $uniq, 'class' => 'form-control']); ?>
+                  </div>
+                </div>
+
+                <?php endforeach; ?>
             </div>
         </div>
     </div>
