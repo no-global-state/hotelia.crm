@@ -123,7 +123,8 @@ final class Module extends AbstractModule
 
         return array(
             'mealsService' => new MealsService(
-                $this->createMapper('\Site\Storage\MySQL\MealsMapper')
+                $this->createMapper('\Site\Storage\MySQL\MealsMapper'),
+                $this->createMapper('\Site\Storage\MySQL\MealsGlobalPriceMapper')
             ),
 
             'dictionaryService' => new DictionaryService(
