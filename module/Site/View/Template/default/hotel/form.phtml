@@ -362,7 +362,7 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Do your offer breakfast to your guests?'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select(null, $this->translateArray($breakfasts), null, array('class' => 'form-control')); ?>
+                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), $entity['breakfast'], array('class' => 'form-control')); ?>
                       </div>
                     </div>
                     
