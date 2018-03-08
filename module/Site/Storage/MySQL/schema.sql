@@ -13,6 +13,14 @@ CREATE TABLE velveto_meals_translations (
     FOREIGN KEY (id) REFERENCES velveto_meals(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_meals_relation (
+    `master_id` INT NOT NULL COMMENT 'Hotel ID',
+    `slave_id` INT NOT NULL COMMENT 'Meal ID',
+
+    FOREIGN KEY (master_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_meals(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_dictionary (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `alias` varchar(255) NOT NULL COMMENT 'Alias name'
