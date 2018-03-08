@@ -416,6 +416,9 @@ CREATE TABLE velveto_hotels (
     `checkout_to` varchar(5) NOT NULL,
     `payment_time` varchar(5) NOT NULL,
     `breakfast` SMALLINT COMMENT 'Breakfast constant',
+    `has_restaurant` BOOLEAN,
+    `restaurant_opening` varchar(5),
+    `restaurant_closing` varchar(5),
 
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
