@@ -38,6 +38,18 @@ final class MealsMapper extends AbstractMapper
     }
 
     /**
+     * Update relation with hotel ID
+     * 
+     * @param int $hotelId
+     * @param array $mealIds
+     * @return boolean
+     */
+    public function updateRelation(int $hotelId, array $mealIds) : bool
+    {
+        return $this->syncWithJunction(MealsRelationMapper::getTableName(), $hotelId, $mealIds);
+    }
+
+    /**
      * Fetch meal by its ID
      * 
      * @param int $id Meal ID

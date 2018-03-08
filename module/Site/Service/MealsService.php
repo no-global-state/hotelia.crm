@@ -25,6 +25,20 @@ final class MealsService
     }
 
     /**
+     * Update relation with hotel ID
+     * 
+     * @param int $hotelId
+     * @param array $mealIds
+     * @return boolean
+     */
+    public function updateRelation(int $hotelId, array $relations) : bool
+    {
+        $mealIds = isset($relations['checked']) ? array_keys($relations['checked']) : [];
+
+        return $this->mealsMapper->updateRelation($hotelId, $mealIds);
+    }
+
+    /**
      * Save meals
      * 
      * @param array $input
