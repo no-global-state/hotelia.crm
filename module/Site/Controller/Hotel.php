@@ -18,7 +18,7 @@ final class Hotel extends AbstractCrmController
         // Add a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Hotel information');
-        
+
         $this->view->getPluginBag()
                    ->load(['map', 'datetimepicker']);
 
