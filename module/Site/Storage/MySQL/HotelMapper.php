@@ -217,7 +217,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         }
 
         // A list of supported sortable columns
-        $sortableColumns = ['discount', 'price', 'reviews'];
+        $sortableColumns = ['discount', 'price', 'reviews', 'distance'];
 
         // Start applying sorting
         if ($sort !== false && in_array($sort, $sortableColumns)) {
@@ -237,6 +237,12 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                 case 'reviews':
                     $sort = [
                         'review_count' => 'DESC',
+                    ];
+                break;
+
+                case 'distance':
+                    $sort = [
+                        self::column('located_in_center') => 'DESC'
                     ];
                 break;
             }
