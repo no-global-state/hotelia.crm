@@ -153,6 +153,7 @@ final class Site extends AbstractSiteController
         $regionId = $this->request->getQuery('region_id');
         $typeIds = $this->request->getQuery('type', []);
         $facilityIds = $this->request->getQuery('facility', []);
+        $pricesIds = $this->request->getQuery('prices', []);
         $arrival = $this->request->getQuery('arrival');
         $departure = $this->request->getQuery('departure');
         $rate = $this->request->getQuery('rate', 0);
@@ -179,6 +180,7 @@ final class Site extends AbstractSiteController
             'regionId' => $regionId,
             'typeIds' => $typeIds,
             'facilityIds' => $facilityIds,
+            'priceIds' => $pricesIds,
             'arrival' => $arrival,
             'departure' => $departure,
             'rate' => $rate,
