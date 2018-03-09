@@ -122,9 +122,9 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             PhotoMapper::getFullColumnName('id') => 'cover_id',
         ];
 
-        $db = $this->db->select($columns)
+        $db = $this->db->select($columns, true)
                        ->min(RoomTypePriceMapper::getFullColumnName('price'), 'start_price')
-                       ->count(ReviewMapper::getFullColumnName('id'), 'review_count')
+                       ->count(new RawSqlFragment('DISTINCT ' . ReviewMapper::getFullColumnName('id')) , 'review_count')
                        ->from(self::getTableName())
                        // Hotel translation relation
                        ->leftJoin(HotelTranslationMapper::getTableName(), [
