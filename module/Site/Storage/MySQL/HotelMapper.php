@@ -84,7 +84,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             self::getFullColumnName('has_restaurant'),
             self::getFullColumnName('restaurant_opening'),
             self::getFullColumnName('restaurant_closing'),
-            self::getFullColumnName('located_in_center'),
+            self::getFullColumnName('center_distance'),
             HotelTranslationMapper::getFullColumnName('lang_id'),
             HotelTranslationMapper::getFullColumnName('name'),
             HotelTranslationMapper::getFullColumnName('address'),
@@ -242,7 +242,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
                 case 'distance':
                     $sort = [
-                        self::column('located_in_center') => 'DESC'
+                        self::column('center_distance') => 'DESC'
                     ];
                 break;
             }

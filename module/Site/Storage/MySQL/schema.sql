@@ -419,7 +419,7 @@ CREATE TABLE velveto_hotels (
     `has_restaurant` BOOLEAN,
     `restaurant_opening` varchar(5),
     `restaurant_closing` varchar(5),
-    `located_in_center` BOOLEAN,
+    `center_distance` varchar(10),
 
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
