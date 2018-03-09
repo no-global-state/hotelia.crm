@@ -179,6 +179,13 @@ use Site\Service\LanguageService;;
                     </div>
 
                     <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Located in center of the city?'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::select('hotel[located_in_center]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['located_in_center'], ['class' => 'form-control']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
                       <div class="col-lg-10">
                         <? $this->loadPartial('map', [
