@@ -165,7 +165,16 @@ final class Site extends AbstractSiteController
         // Sorting param
         $sort = $this->request->getQuery('sort', 'discount');
 
+        // Create region data based on its ID
+        if ($regionId) {
+            $region = $this->getModuleService('regionService')->fetchById($regionId, $this->getCurrentLangId());
+        } else {
+            $region = null;
+        }
+
         return $this->view->render('search', [
+            'region' => $region,
+
             // Request variables
             'regionId' => $regionId,
             'typeIds' => $typeIds,
