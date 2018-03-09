@@ -97,10 +97,11 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      * @param int $langId
      * @param int $priceGroupId
      * @param array $filters Optional filters
+     * @param bool|string $sort Optional sorting column
      * @param mixed $limit Optional limit
      * @return array
      */
-    public function findAll(int $langId, int $priceGroupId, array $filters = [], $limit = null) : array
+    public function findAll(int $langId, int $priceGroupId, array $filters = [], $sort = false, $limit = null) : array
     {
         // Columns to be selected
         $columns = [
@@ -214,7 +215,44 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             $db->andWhereBetween(RoomTypePriceMapper::getFullColumnName('price'), $filters['price-start'], $filters['price-stop']);
         }
 
+        // A list of supported sortable columns
+        $sortableColumns = ['discount', 'price', 'reviews'];
+
+        // Start applying sorting
+        if ($sort !== false && in_array($sort, $sortableColumns)) {
+            switch ($sort) {
+                case 'discount':
+                    $sort = [
+                        self::column('discount') => 'DESC'
+                    ];
+                break;
+
+                case 'price':
+                    $sort = [
+                        'start_price' => 'DESC',
+                    ];
+                break;
+
+                case 'reviews':
+                    $sort = [
+                        'review_count' => 'DESC',
+                    ];
+                break;
+            }
+
+            // Sort by id DESC, in case the collision occurs
+            $sort = array_merge($sort, [self::column('id') => 'DESC']);
+
+        } else {
+            // By default
+            $sort = self::column('id');
+        }
+
+        // Apply grouping
         $db->groupBy($columns);
+
+        // Apply sorting
+        $db->orderBy($sort);
 
         // Apply limit if provided
         if (is_int($limit)) {

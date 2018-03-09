@@ -162,6 +162,9 @@ final class Site extends AbstractSiteController
         $adults = $this->request->getQuery('adults', 1);
         $kids = $this->request->getQuery('kids', 0);
 
+        // Sorting param
+        $sort = $this->request->getQuery('sort', 'discount');
+
         return $this->view->render('search', [
             // Request variables
             'regionId' => $regionId,
@@ -175,9 +178,10 @@ final class Site extends AbstractSiteController
             'rooms' => $rooms,
             'adults' => $adults,
             'kids' => $kids,
+            'sort' => $sort,
 
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
-            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery()),
+            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery(), $sort),
             'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
             'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getCurrentLangId(), true)
         ]);
