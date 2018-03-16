@@ -62,9 +62,10 @@ final class RoomTypeMapper extends AbstractMapper
      * @param int $langId Language ID filter
      * @param integer $categoryId Optional category ID filter
      * @param bool $front Whether to fetch only front items
+     * @param boolean $strict Whether to get all rows, including non-matching ones
      * @return array
      */
-    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false) : array
+    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false, bool $strict = false) : array
     {
         $columns = [
             FacilitiyItemMapper::getFullColumnName('id'),
@@ -94,8 +95,10 @@ final class RoomTypeMapper extends AbstractMapper
 
         // Append hotel ID relation if provided
         if ($typeId !== null) {
+            $joinType = $strict ? 'INNER' : 'LEFT';
+
             // Junction relation
-            $db->leftJoin(RoomTypeFacilityRelationMapper::getTableName(), [
+            $db->join($joinType, RoomTypeFacilityRelationMapper::getTableName(), [
                 RoomTypeFacilityRelationMapper::getFullColumnName('slave_id') => FacilitiyItemMapper::getRawColumn('id'),
                 RoomTypeFacilityRelationMapper::getFullColumnName('master_id') => $typeId
             ]);

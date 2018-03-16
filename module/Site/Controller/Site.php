@@ -224,7 +224,7 @@ final class Site extends AbstractSiteController
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
-        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $type);
+        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $type, true);
         $types = $roomTypeService->fetchList($this->getCurrentLangId(), $hotelId);
 
         return $this->view->render('hotel', [

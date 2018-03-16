@@ -91,14 +91,15 @@ final class RoomTypeService
      * @param int $langId Language ID filter
      * @param integer $categoryId Optional category ID filter
      * @param bool $front Whether to fetch only front items
+     * @param boolean $strict Whether to get all rows, including non-matching ones
      * @return array
      */
-    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false) : array
+    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false, bool $strict = false) : array
     {
         $categories = $this->facilityCategoryMapper->fetchAll($langId);
 
         foreach ($categories as &$category) {
-            $category['items'] = $this->roomTypeMapper->findFacilities($typeId, $langId, $category['id'], false);
+            $category['items'] = $this->roomTypeMapper->findFacilities($typeId, $langId, $category['id'], false, $strict);
         }
 
         return $categories;
@@ -113,9 +114,10 @@ final class RoomTypeService
      * @param int $langId
      * @param int $hotelId
      * @param mixed $typeId Optional type id filter
+     * @param boolean $withFacilities
      * @return array
      */
-    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId, $typeId = null) : array
+    public function findAvailableTypes(string $arrival, string $departure, int $priceGroupId, int $langId, int $hotelId, $typeId = null, bool $withFacilities = false) : array
     {
         $rows = $this->roomTypeMapper->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId, $typeId);
 
@@ -125,6 +127,10 @@ final class RoomTypeService
                 $row['cover'] = Module::PARAM_DEFAULT_IMAGE;
             } else {
                 $row['cover'] = self::createImagePath($row['cover_id'], $row['cover'], PhotoService::PARAM_IMAGE_SIZE_LARGE);
+            }
+
+            if ($withFacilities === true) {
+                $row['facilities'] = $this->findFacilities($row['id'], $langId, null, false, true);
             }
         }
 
