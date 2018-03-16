@@ -173,7 +173,7 @@ CREATE TABLE velveto_languages (
 CREATE TABLE velveto_facilitiy_relations (
     `master_id` INT NOT NULL COMMENT 'Hotel ID',
     `slave_id` INT NOT NULL COMMENT 'Item ID',
-    `type` SMALLINT NOT NOT COMMENT 'Facility type const',
+    `type` SMALLINT NOT NULL COMMENT 'Facility type const',
 
     FOREIGN KEY (master_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (slave_id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
