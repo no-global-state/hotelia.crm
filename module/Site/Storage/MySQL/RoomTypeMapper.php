@@ -40,6 +40,82 @@ final class RoomTypeMapper extends AbstractMapper
     }
 
     /**
+     * Updates a relation
+     * 
+     * @param string $typeId
+     * @param array $data
+     * @return boolean
+     */
+    public function updateRelation(int $typeId, array $data)
+    {
+        // Remove all related items
+        $this->removeFromJunction(RoomTypeFacilityRelationMapper::getTableName(), $typeId);
+
+        return $this->db->insertMany(RoomTypeFacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)
+                        ->execute();
+    }
+
+    /**
+     * Find all items attached to particular category
+     * 
+     * @param integer $hotelId typeId type ID
+     * @param int $langId Language ID filter
+     * @param integer $categoryId Optional category ID filter
+     * @param bool $front Whether to fetch only front items
+     * @return array
+     */
+    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false) : array
+    {
+        $columns = [
+            FacilitiyItemMapper::getFullColumnName('id'),
+            FacilitiyItemMapper::getFullColumnName('icon'),
+            FacilitiyItemMapper::getFullColumnName('front'),
+            FacilitiyItemMapper::getFullColumnName('always_free'),
+            FacilitiyItemMapper::getFullColumnName('category_id'),
+            FacilitiyItemTranslationMapper::getFullColumnName('name'),
+            FacilitiyItemTranslationMapper::getFullColumnName('lang_id'),
+        ];
+
+        // Append hotel ID relation if provided
+        if ($typeId !== null) {
+            // Columns to be selected
+            $columns = array_merge($columns, [
+                RoomTypeFacilityRelationMapper::getFullColumnName('type'),
+                new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', FacilitiyItemMapper::getTableName()))
+            ]);
+        }
+
+        $db = $this->db->select($columns)
+                       ->from(FacilitiyItemMapper::getTableName())
+                       // Translation relation
+                       ->leftJoin(FacilitiyItemTranslationMapper::getTableName(), [
+                            FacilitiyItemTranslationMapper::getFullColumnName('id') => FacilitiyItemMapper::getRawColumn('id')
+                        ]);
+
+        // Append hotel ID relation if provided
+        if ($typeId !== null) {
+            // Junction relation
+            $db->leftJoin(RoomTypeFacilityRelationMapper::getTableName(), [
+                RoomTypeFacilityRelationMapper::getFullColumnName('slave_id') => FacilitiyItemMapper::getRawColumn('id'),
+                RoomTypeFacilityRelationMapper::getFullColumnName('master_id') => $typeId
+            ]);
+        }
+
+        // Language ID filter
+        $db->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
+
+        if ($categoryId !== null) {
+            $db->andWhereEquals(FacilitiyItemMapper::getFullColumnName('category_id'), $categoryId);
+        }
+
+        if ($front === true) {
+            $db->andWhereEquals(FacilitiyItemMapper::getFullColumnName('front'), '1');
+        }
+
+        return $db->queryAll();
+    }
+
+    /**
      * Find available room types based on dates
      * 
      * @param string $arrival

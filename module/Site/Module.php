@@ -170,7 +170,8 @@ final class Module extends AbstractModule
 
             'roomTypeService' => new RoomTypeService(
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper'),
-                $this->createMapper('\Site\Storage\MySQL\RoomTypePriceMapper')
+                $this->createMapper('\Site\Storage\MySQL\RoomTypePriceMapper'),
+                $this->createMapper('\Site\Storage\MySQL\FacilitiyCategoryMapper')
             ),
 
             'hotelService' => new HotelService(

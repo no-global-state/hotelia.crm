@@ -5,6 +5,7 @@ namespace Site\Service;
 use Site\Storage\MySQL\RoomTypeMapper;
 use Site\Storage\MySQL\PriceGroupMapper;
 use Site\Storage\MySQL\RoomTypePriceMapper;
+use Site\Storage\MySQL\FacilitiyCategoryMapper;
 use Site\Module;
 use Krystal\Stdlib\ArrayUtils;
 
@@ -27,16 +28,25 @@ final class RoomTypeService
     private $roomTypePriceMapper;
 
     /**
+     * Facility category mapper
+     * 
+     * @var \Site\Storage\MySQL\FacilitiyCategoryMapper
+     */
+    private $facilityCategoryMapper;
+
+    /**
      * State initialization
      * 
      * @param \Site\Storage\MySQL\RoomTypeMapper $roomTypeMapper
      * @param \Site\Storage\MySQL\RoomTypePriceMapper $roomTypePriceMapper
+     * @param \Site\Storage\MySQL\FacilitiyCategoryMapper $facilityCategoryMapper
      * @return void
      */
-    public function __construct(RoomTypeMapper $roomTypeMapper, RoomTypePriceMapper $roomTypePriceMapper)
+    public function __construct(RoomTypeMapper $roomTypeMapper, RoomTypePriceMapper $roomTypePriceMapper, FacilitiyCategoryMapper $facilityCategoryMapper)
     {
         $this->roomTypeMapper = $roomTypeMapper;
         $this->roomTypePriceMapper = $roomTypePriceMapper;
+        $this->facilityCategoryMapper = $facilityCategoryMapper;
     }
 
     /**
@@ -50,6 +60,48 @@ final class RoomTypeService
     public static function createImagePath($id, $file, string $size) : string
     {
         return sprintf('%s/%s/%s', Module::PARAM_ROOM_GALLERY_PATH . $id, $size, $file);
+    }
+
+    /**
+     * Update relational data
+     * 
+     * @param int $hotelId
+     * @param array $data
+     * @return boolean
+     */
+    public function updateRelation(int $typeId, array $data)
+    {
+        $output = [];
+        $ids = array_keys($data['checked']);
+
+        foreach ($ids as $id) {
+            // Special type
+            $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
+            // Append prepared data
+            $output[] = [$typeId, $id, $type];
+        }
+
+        return $this->roomTypeMapper->updateRelation($typeId, $output);
+    }
+
+    /**
+     * Find all items attached to particular category
+     * 
+     * @param integer $hotelId typeId type ID
+     * @param int $langId Language ID filter
+     * @param integer $categoryId Optional category ID filter
+     * @param bool $front Whether to fetch only front items
+     * @return array
+     */
+    public function findFacilities($typeId, int $langId, $categoryId = null, $front = false) : array
+    {
+        $categories = $this->facilityCategoryMapper->fetchAll($langId);
+
+        foreach ($categories as &$category) {
+            $category['items'] = $this->roomTypeMapper->findFacilities($typeId, $langId, $category['id'], false);
+        }
+
+        return $categories;
     }
 
     /**
