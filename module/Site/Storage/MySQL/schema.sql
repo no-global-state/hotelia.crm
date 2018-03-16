@@ -346,6 +346,14 @@ CREATE TABLE velveto_room_type_gallery_covers (
     FOREIGN KEY (slave_id) REFERENCES velveto_room_type_gallery(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_room_type_facility (
+    `master_id` INT NOT NULL COMMENT 'Room type ID',
+    `slave_id` INT NOT NULL COMMENT 'Facility ID',
+
+    FOREIGN KEY (master_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
