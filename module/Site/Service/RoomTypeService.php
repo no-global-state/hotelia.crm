@@ -250,7 +250,7 @@ final class RoomTypeService
      * @param array $input
      * @return array
      */
-    private function save(array $input) : array
+    private function persist(array $input) : array
     {
         // Keep them
         $priceGroupIds = $input[self::PARAM_PRICE_GROUP_IDS];
@@ -264,30 +264,23 @@ final class RoomTypeService
     }
 
     /**
-     * Updates room type
+     * Saves room type
      * 
      * @param array $input
      * @return boolean
      */
-    public function update(array $input)
+    public function save(array $input)
     {
-        $priceGroupIds = $this->save($input);
-        $this->roomTypePriceMapper->save($input['type']['id'], $priceGroupIds);
+        $priceGroupIds = $this->persist($input);
 
-        return true;
-    }
+        // Get ID
+        $id = !empty($input['type']['id']) ? $input['type']['id'] : $this->roomTypeMapper->getMaxId();
 
-    /**
-     * Adds room type
-     * 
-     * @param array $input
-     * @return boolean
-     */
-    public function add(array $input)
-    {
-        $priceGroupIds = $this->save($input);
-        $this->roomTypePriceMapper->save($this->roomTypeMapper->getMaxId(), $priceGroupIds);
+        $this->roomTypePriceMapper->save($id, $priceGroupIds);
 
-        return true;
+        $facilities = isset($input['facility']) ? $input['facility'] : [];
+
+        // Update facility relations
+        return $this->updateRelation($id, $facilities);
     }
 }

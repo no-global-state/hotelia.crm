@@ -12,6 +12,7 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
+use Site\Collection\FacilityTypeCollection;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Validate\Pattern;
@@ -27,6 +28,13 @@ final class RoomType extends AbstractCrmController
      */
     private function createForm($type, array $priceGroups) : string
     {
+        // Get ID if possible
+        if (is_array($type)) {
+            $id = $type[0]['id'];
+        } else {
+            $id = null;
+        }
+
         // Add a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
@@ -37,7 +45,10 @@ final class RoomType extends AbstractCrmController
             'type' => $type,
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
-            'priceGroups' => $priceGroups
+            'priceGroups' => $priceGroups,
+            // Facilities
+            'types' => (new FacilityTypeCollection)->getAll(),
+            'checklist' => $this->getModuleService('roomTypeService')->findFacilities($id, $this->getCurrentLangId(), null),
         ]);
     }
 
@@ -70,7 +81,7 @@ final class RoomType extends AbstractCrmController
         $data['type'] = $this->getWithHotelId($data['type']);
 
         $service = $this->getModuleService('roomTypeService');
-        !$data['type']['id'] ? $service->add($data) : $service->update($data);
+        $service->save($data);
 
         $this->flashBag->set('success', $data['type']['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
         return 1;
