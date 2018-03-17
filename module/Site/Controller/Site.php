@@ -72,6 +72,7 @@ final class Site extends AbstractSiteController
             $rooms = $this->request->getQuery('rooms', 1);
             $adults = $this->request->getQuery('adults', 1);
             $kids = $this->request->getQuery('kids', 0);
+            $qty = $this->request->getQuery('qty', 1);
 
             $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
@@ -86,7 +87,8 @@ final class Site extends AbstractSiteController
                 'departure' => $departure,
                 'room' => $room,
                 'hotel' => $hotel,
-                'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price'])
+                'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price']),
+                'qty' => $qty
             ]);
 
         } else {
