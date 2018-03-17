@@ -32,6 +32,13 @@ use Site\Service\LanguageService;
                             <?= Element::text(sprintf('translation[%s][name]', $language['id']), $entity['name'], array('class' => 'form-control')); ?>
                           </div>
                         </div>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Description'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::textarea(sprintf('translation[%s][description]', $language['id']), $entity['description'], array('class' => 'form-control')); ?>
+                          </div>
+                        </div>
                     </div>
                     <?php endforeach; ?>
                 </div>
