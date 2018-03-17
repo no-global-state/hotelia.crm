@@ -173,6 +173,10 @@ final class Site extends AbstractSiteController
             $region = null;
         }
 
+        // Load map plugin
+        $this->view->getPluginBag()
+                   ->load(['map']);
+
         return $this->view->render('search', [
             'region' => $region,
 
