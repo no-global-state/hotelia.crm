@@ -206,6 +206,7 @@ CREATE TABLE velveto_facilitiy_items_translation (
     `id` INT NOT NULL,
     `lang_id` INT NOT NULL,
     `name` varchar(255),
+    `description` TEXT COMMENT 'Optional description',
 
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
     FOREIGN KEY (id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE

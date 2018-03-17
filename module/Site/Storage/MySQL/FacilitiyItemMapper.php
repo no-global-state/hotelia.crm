@@ -36,6 +36,7 @@ final class FacilitiyItemMapper extends AbstractMapper
             self::getFullColumnName('always_free'),
             self::getFullColumnName('category_id'),
             FacilitiyItemTranslationMapper::getFullColumnName('name'),
+            FacilitiyItemTranslationMapper::getFullColumnName('description'),
             FacilitiyItemTranslationMapper::getFullColumnName('lang_id'),
         ];
     }
