@@ -72,13 +72,17 @@ final class RoomTypeService
     public function updateRelation(int $typeId, array $data)
     {
         $output = [];
-        $ids = array_keys($data['checked']);
 
-        foreach ($ids as $id) {
-            // Special type
-            $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
-            // Append prepared data
-            $output[] = [$typeId, $id, $type];
+        // Do update if only provided
+        if (isset($data['checked'])) {
+            $ids = array_keys($data['checked']);
+
+            foreach ($ids as $id) {
+                // Special type
+                $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
+                // Append prepared data
+                $output[] = [$typeId, $id, $type];
+            }
         }
 
         return $this->roomTypeMapper->updateRelation($typeId, $output);

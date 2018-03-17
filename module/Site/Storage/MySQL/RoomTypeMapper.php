@@ -51,8 +51,11 @@ final class RoomTypeMapper extends AbstractMapper
         // Remove all related items
         $this->removeFromJunction(RoomTypeFacilityRelationMapper::getTableName(), $typeId);
 
-        return $this->db->insertMany(RoomTypeFacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)
-                        ->execute();
+        // Update only if not empty
+        if (!empty($data)) {
+            return $this->db->insertMany(RoomTypeFacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)
+                            ->execute();
+        }
     }
 
     /**
