@@ -86,6 +86,9 @@ return array(
                     ]
                 ],
 
+                // Site plugin
+                'site' => $_ENV['site'],
+
                 // Map
                 'map' => [
                     'scripts' => [

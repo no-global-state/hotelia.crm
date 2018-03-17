@@ -134,21 +134,9 @@ abstract class AbstractSiteController extends AbstractController
         $this->view->getPartialBag()
                    ->addPartialDir($this->view->createThemePath('Site', $this->appConfig->getTheme()).'/partials/');
 
-        // Append required assets
-        $this->view->getPluginBag()->appendStylesheets(array(
-            '@Site/bootstrap/css/bootstrap.min.css',
-            '@Site/styles.css'
-        ));
-
-        // Append required script paths
+        // Load site plugin
         $this->view->getPluginBag()
-                   ->appendScripts(array(
-                        '@Site/jquery.min.js',
-                        '@Site/bootstrap/js/bootstrap.min.js',
-                        '@Site/krystal.jquery.js',
-                   ))
-                   // This one will always be last
-                   ->appendLastScript('@Site/application.js');
+                   ->load('site');
 
         $hotel = $this->getHotelData();
 
