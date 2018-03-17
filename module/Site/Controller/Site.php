@@ -252,7 +252,7 @@ final class Site extends AbstractSiteController
             'hotelId' => $hotelId,
             'regionId' => $hotel['region_id'],
 
-            'facilities' => $this->getModuleService('facilitiyService')->getItemList($hotelId, $this->getCurrentLangId(), false),
+            'facilities' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $hotelId),
             // Hotel images
             'images' => [
                 'large' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
