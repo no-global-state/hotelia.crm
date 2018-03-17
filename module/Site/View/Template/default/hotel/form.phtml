@@ -369,37 +369,52 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Do your offer breakfast to your guests?'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), $entity['breakfast'], array('class' => 'form-control')); ?>
+                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), $entity['breakfast'], array('class' => 'form-control'), false, function($key, $value){
+                            $map = [
+                                1 => 'breakfast-included',
+                                2 => 'breakfast-extra',
+                                3 => 'breakfast-none'
+                            ];
+
+                            return [
+                                'data-group' => $map[$key]
+                            ];
+                            
+                        }); ?>
                       </div>
                     </div>
-                    
-                    <div class="form-group">
-                      <label class="col-lg-2 control-label"><? $this->show('Breakfast types'); ?> </label>
-                      <div class="col-lg-10">
-                        <?php foreach ($meals as $meal): ?>
-                        <div class="checkbox">
-                          <label>
-                            <?= Element::checkbox(sprintf('meal[checked][%s]', $meal['id']), (bool) $meal['active'], [], false); ?>
-                            <?= $meal['name']; ?>
-                          </label>
+
+                    <section data-group="breakfast-extra, breakfast-included">
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Breakfast types'); ?> </label>
+                          <div class="col-lg-10">
+                            <?php foreach ($meals as $meal): ?>
+                            <div class="checkbox">
+                              <label>
+                                <?= Element::checkbox(sprintf('meal[checked][%s]', $meal['id']), (bool) $meal['active'], [], false); ?>
+                                <?= $meal['name']; ?>
+                              </label>
+                            </div>
+                            <?php endforeach; ?>
+                          </div>
                         </div>
+                    </section>
+
+                    <section data-group="breakfast-extra">
+                        <h2 class="page-header"><? $this->show('Breakfast price'); ?></h2>
+
+                        <?php foreach ($globalMealPrices as $globalMealPrice): ?>
+                        <?php $uniq = md5($globalMealPrice['group']); ?>
+
+                        <div class="form-group">
+                          <label for="<?= $uniq; ?>" class="col-lg-2 control-label"><?= $globalMealPrice['group']; ?> (<?= $globalMealPrice['currency']; ?>)</label>
+                          <div class="col-lg-10">
+                            <?= Element::text(sprintf('meal[price][%s]', $globalMealPrice['price_group_id']), $globalMealPrice['price'], ['id' => $uniq, 'class' => 'form-control']); ?>
+                          </div>
+                        </div>
+
                         <?php endforeach; ?>
-                      </div>
-                    </div>
-                    
-                    <h2 class="page-header"><? $this->show('Breakfast price'); ?></h2>
-
-                    <?php foreach ($globalMealPrices as $globalMealPrice): ?>
-                    <?php $uniq = md5($globalMealPrice['group']); ?>
-
-                    <div class="form-group">
-                      <label for="<?= $uniq; ?>" class="col-lg-2 control-label"><?= $globalMealPrice['group']; ?> (<?= $globalMealPrice['currency']; ?>)</label>
-                      <div class="col-lg-10">
-                        <?= Element::text(sprintf('meal[price][%s]', $globalMealPrice['price_group_id']), $globalMealPrice['price'], ['id' => $uniq, 'class' => 'form-control']); ?>
-                      </div>
-                    </div>
-
-                    <?php endforeach; ?>
+                    </section>
 
                     <h2 class="page-header"><? $this->show('Restaurant'); ?></h2>
 
