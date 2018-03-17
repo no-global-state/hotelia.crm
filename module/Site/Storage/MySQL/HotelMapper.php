@@ -231,7 +231,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
                 case 'price':
                     $sort = [
-                        'start_price' => 'DESC',
+                        'start_price' => 'ASC',
                     ];
                 break;
 
