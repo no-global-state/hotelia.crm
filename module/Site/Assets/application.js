@@ -296,6 +296,28 @@ $(function(){
             $wrapper.addClass(hiddenClass);
         }
     });
+
+    $("option[data-group]").parent().change(function(){
+        var hiddenClass = 'hidden';
+        var entity = $(this).find(':selected').data('group'); // Selected one
+
+        $("section[data-group]").addClass(hiddenClass).each(function(){
+            // Find attached groups
+            var group = $(this).attr('data-group');
+            var groups = group.split(', ');
+
+            for (var key in groups) {
+                // A single group without spaces
+                var singleGroup = groups[key].trim();
+
+                // Show
+                if (entity == singleGroup) {
+                    $(this).removeClass(hiddenClass);
+                }
+            }
+        });
+
+    }).trigger('change');
 });
 
 $(function() {
