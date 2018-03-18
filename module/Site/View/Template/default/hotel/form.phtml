@@ -421,24 +421,34 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Do your offer restaurant services to your guests?'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['has_restaurant'], ['class' => 'form-control']); ?>
+                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['has_restaurant'], ['class' => 'form-control'], false, function($key, $value){
+                            $map = [
+                                0 => 'restaurant-none',
+                                1 => 'restaurant-exists'
+                            ];
+
+                            return [
+                                'data-group' => $map[$key]
+                            ];
+                        }); ?>
                       </div>
                     </div>
 
-                    <div class="form-group">
-                      <label class="col-lg-2 control-label"><? $this->show('Opening'); ?></label>
-                      <div class="col-lg-10">
-                        <?= Element::text('hotel[restaurant_opening]', $entity['restaurant_opening'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
-                      </div>
-                    </div>
+                    <section data-group="restaurant-exists">
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Opening'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[restaurant_opening]', $entity['restaurant_opening'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                          </div>
+                        </div>
 
-                    <div class="form-group">
-                      <label class="col-lg-2 control-label"><? $this->show('Closing'); ?></label>
-                      <div class="col-lg-10">
-                        <?= Element::text('hotel[restaurant_closing]', $entity['restaurant_closing'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
-                      </div>
-                    </div>
-
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Closing'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text('hotel[restaurant_closing]', $entity['restaurant_closing'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                          </div>
+                        </div>
+                    </section>
                 </fieldset>
             </div>
         </div>
