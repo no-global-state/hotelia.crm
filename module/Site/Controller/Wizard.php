@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Site\Collection\FacilityTypeCollection;
+use Site\Collection\BreakfastCollection;
 
 final class Wizard extends AbstractCrmController
 {
@@ -31,6 +32,12 @@ final class Wizard extends AbstractCrmController
         if (isset($data['checked'])) {
             unset($data['checked']);
         }
+
+        // Update meals relations
+        $this->getModuleService('mealsService')->updateRelation($this->getHotelId(), $this->request->getPost('meal', []));
+
+        // Update global prices
+        $this->getModuleService('mealsService')->updateGlobalPrice($this->getHotelId(), $this->request->getPost('meal', []));
 
         // Save hotel data
         $this->getModuleService('hotelService')->save($data);
@@ -63,6 +70,8 @@ final class Wizard extends AbstractCrmController
 
             return $this->view->render('wizard/index', [
                 'extended' => false,
+                // Collections
+                'breakfasts' => (new BreakfastCollection())->getAll(),
                 'types' => (new FacilityTypeCollection)->getAll(),
                 'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
                 'languageId' => $this->getCurrentLangId(),
@@ -71,7 +80,9 @@ final class Wizard extends AbstractCrmController
                 'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
                 'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
                 'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
-                'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId())
+                'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId()),
+                'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+                'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId())
             ]);
         }
     }

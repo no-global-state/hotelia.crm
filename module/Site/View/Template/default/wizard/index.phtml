@@ -4,6 +4,10 @@ use Krystal\Form\Element;
 
 ?>
 
+<style>
+    #page-wrapper { background: #e0e0e0; }
+</style>
+
 <div class="container">
     <div class="row">
         <section>
@@ -59,105 +63,245 @@ use Krystal\Form\Element;
                           <div class="container-fluid">
                               <h3><? $this->show('Step'); ?> 1</h3>
 
-                              <legend><? $this->show('Please provide basic data of your object'); ?></legend>
-
                               <?= Element::hidden(sprintf('translation[%s][id]', $languageId), $hotelId); ?>
                               <?= Element::hidden(sprintf('translation[%s][lang_id]', $languageId), $languageId); ?>
                               <?= Element::hidden('hotel[id]', $hotelId); ?>
 
-                              <fieldset>
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::select('hotel[type_id]', $hotelTypes, null, ['class' => 'form-control']); ?>
-                                  </div>
+                              <div class="row">
+                                <div class="col-lg-8">
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Please provide basic data of your object'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Hotel type'); ?></label>
+                                      <?= Element::select('hotel[type_id]', $hotelTypes, null, ['class' => 'form-control']); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Name'); ?></label>
+                                      <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
+                                    </div>
+                                  </fieldset>
+
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Breakfast and restaurant'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><? $this->show('Do your offer breakfast to your guests?'); ?></label>
+                                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), null, array('class' => 'form-control'), false, function($key, $value){
+                                            $map = [
+                                                1 => 'breakfast-included',
+                                                2 => 'breakfast-extra',
+                                                3 => 'breakfast-none'
+                                            ];
+
+                                            return [
+                                                'data-group' => $map[$key]
+                                            ];
+                                        }); ?>
+                                    </div>
+
+                                    <section data-group="breakfast-extra, breakfast-included">
+                                        <div class="form-group">
+                                          <label class="col-lg-2 control-label"><? $this->show('Breakfast types'); ?> </label>
+                                          <div class="col-lg-10">
+                                            <?php foreach ($meals as $meal): ?>
+                                            <div class="checkbox">
+                                              <label>
+                                                <?= Element::checkbox(sprintf('meal[checked][%s]', $meal['id']), (bool) $meal['active'], [], false); ?>
+                                                <?= $meal['name']; ?>
+                                              </label>
+                                            </div>
+                                            <?php endforeach; ?>
+                                          </div>
+                                        </div>
+                                    </section>
+
+                                    <section data-group="breakfast-extra">
+                                        <h2 class="page-header"><? $this->show('Breakfast price'); ?></h2>
+
+                                        <?php foreach ($globalMealPrices as $globalMealPrice): ?>
+                                        <?php $uniq = md5($globalMealPrice['group']); ?>
+
+                                        <div class="form-group">
+                                          <label for="<?= $uniq; ?>" class="col-lg-2 control-label"><?= $globalMealPrice['group']; ?> (<?= $globalMealPrice['currency']; ?>)</label>
+                                          <div class="col-lg-10">
+                                            <?= Element::text(sprintf('meal[price][%s]', $globalMealPrice['price_group_id']), $globalMealPrice['price'], ['id' => $uniq, 'class' => 'form-control']); ?>
+                                          </div>
+                                        </div>
+
+                                        <?php endforeach; ?>
+                                    </section>
+                                    
+                                    <h2 class="page-header"><? $this->show('Restaurant'); ?></h2>
+
+                                    <div class="form-group">
+                                        <label><? $this->show('Do your offer restaurant services to your guests?'); ?></label>
+                                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), null, ['class' => 'form-control'], false, function($key, $value){
+                                            $map = [
+                                                0 => 'restaurant-none',
+                                                1 => 'restaurant-exists'
+                                            ];
+
+                                            return [
+                                                'data-group' => $map[$key]
+                                            ];
+                                        }); ?>
+                                    </div>
+
+                                    <section data-group="restaurant-exists">
+                                        <div class="form-group">
+                                          <label class="col-lg-2 control-label"><? $this->show('Opening'); ?></label>
+                                          <div class="col-lg-10">
+                                            <?= Element::text('hotel[restaurant_opening]', '09:00', ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                                          </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                          <label class="col-lg-2 control-label"><? $this->show('Closing'); ?></label>
+                                          <div class="col-lg-10">
+                                            <?= Element::text('hotel[restaurant_closing]', '23:00', ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                                          </div>
+                                        </div>
+                                    </section>
+                                    
+                                  </fieldset>
+                                  
+                                  <!-- Contacts -->
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('What are the contact details for your property?'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Region'); ?></label>
+                                      <?= Element::select('hotel[region_id]', $regions, null, ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
+                                            return [
+                                                'data-region-id' => $key,
+                                            ];
+                                      }); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('District'); ?></label>
+                                      <select name="hotel[district_id]" class="form-control" data-select="district">
+                                        <?php foreach ($districts as $district): ?>
+                                        <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id']]); ?>
+                                        <?php endforeach; ?>
+                                       </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><?= $this->show('Address'); ?></label>
+                                      <?= Element::textarea(sprintf('translation[%s][address]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full address')]); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Phone'); ?></label>
+                                      <?= Element::text('hotel[phone]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full phone number with code')]); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('ZIP code'); ?></label>
+                                      <?= Element::text('hotel[zip]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Type your ZIP code'))); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Fax'); ?></label>
+                                      <?= Element::text('hotel[fax]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Type the fax'))); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Pick your location on map'); ?></label>
+                                      <? $this->loadPartial('map'); ?>
+                                    </div>
+                                  </fieldset>
                                 </div>
 
+                                <? $this->loadPartial('wizard-stick'); ?>
+                              </div>
+
+                              <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Next'); ?></button></li>
+                              </ul>
+                          </div>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="step2">
+                          <h3><? $this->show('Step'); ?> 2</h3>
+
+                          <div class="row">
+                              <div class="col-lg-8">
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Marketing'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><?= $this->show('Description'); ?></label>
+                                      <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Discount'); ?> %</label>
+                                      <?= Element::number('hotel[discount]', null, ['min' => 1, 'max' => 100, 'class' => 'form-control', 'placeholder' => $this->translate('Minimal discount for customers if you provide')]); ?>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label><? $this->show('Web-site'); ?></label>
+                                      <?= Element::text('hotel[website]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)')]); ?>
+                                    </div>
+                                  </fieldset>
+
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Сhoice facilites'); ?></legend>
+                                    </div>
+
+                                    <? $this->loadPartial('facilities', [
+                                        'checklist' => $checklist
+                                    ]); ?>
+                                  </fieldset>
+                              </div>
+
+                              <? $this->loadPartial('wizard-stick'); ?>
+                          </div>
+                          
+                          <!--
+                            <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
+                            
+                            <?php foreach ($payments as $system => $gateways): ?>
+                            <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
+
+                            <fieldset>
+                                <?php foreach ($gateways as $index => $gateway): ?>
+                                <?php $uniq = sprintf('field-%s', $index); ?>
                                 <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
+                                  <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
                                   <div class="col-lg-10">
-                                    <?= Element::text(sprintf('translation[%s][name]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the name of your object')]); ?>
+                                    <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
                                   </div>
                                 </div>
+                                <?php endforeach; ?>
+                            </fieldset>
+                            <?php endforeach; ?>
+                            -->
+                            
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                            </ul>
+                        </div>
 
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::select('hotel[region_id]', $regions, null, ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
-                                        return [
-                                            'data-region-id' => $key,
-                                        ];
-                                    }); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('District'); ?></label>
-                                  <div class="col-lg-10">
-                                    <select name="hotel[district_id]" class="form-control" data-select="district">
-                                    <?php foreach ($districts as $district): ?>
-                                    <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id']]); ?>
-                                    <?php endforeach; ?>
-                                    </select>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><?= $this->show('Address'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::textarea(sprintf('translation[%s][address]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full address')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[phone]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Type the full phone number with code')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('ZIP code'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[zip]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Type your ZIP code'))); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Fax'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[fax]', null, array('class' => 'form-control', 'placeholder' => $this->translate('Type the fax'))); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><?= $this->show('Description'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::textarea(sprintf('translation[%s][description]', $languageId), null, ['class' => 'form-control', 'placeholder' => $this->translate('Describe your object. Type what it offers, why people should come to it')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Discount'); ?> %</label>
-                                  <div class="col-lg-10">
-                                    <?= Element::number('hotel[discount]', null, ['min' => 1, 'max' => 100, 'class' => 'form-control', 'placeholder' => $this->translate('Minimal discount for customers if you provide')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text('hotel[website]', null, ['class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)')]); ?>
-                                  </div>
-                                </div>
-
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
-                                  <div class="col-lg-10">
-                                    <? $this->loadPartial('map'); ?>
-                                  </div>
-                                </div>
-
+                        <div class="tab-pane" role="tabpanel" id="step3">
+                            <h3><?= $this->show('Step'); ?> 3</h3>
+                            
+                            <fieldset>
                                 <h2 class="text-muted"><? $this->show('Add rooms'); ?></h2>
 
                                 <div class="form-group room-append">
@@ -178,48 +322,7 @@ use Krystal\Form\Element;
                                     </div>
                                   </div>
                                 </div>
-                              </fieldset>
-
-                              <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Next'); ?></button></li>
-                              </ul>
-                          </div>
-                        </div>
-
-                        <div class="tab-pane" role="tabpanel" id="step2">
-                          <h3><? $this->show('Step'); ?> 2</h3>
-                          <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
-                            
-                            <?php foreach ($payments as $system => $gateways): ?>
-                            <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
-
-                            <fieldset>
-                                <?php foreach ($gateways as $index => $gateway): ?>
-                                <?php $uniq = sprintf('field-%s', $index); ?>
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
-                                  </div>
-                                </div>
-                                <?php endforeach; ?>
                             </fieldset>
-                            <?php endforeach; ?>
-                            
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
-                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
-                            </ul>
-                        </div>
-
-                        <div class="tab-pane" role="tabpanel" id="step3">
-                            <h3><?= $this->show('Step'); ?> 3</h3>
-                            <p><? $this->show('Сhoice facilites'); ?></p>
-
-                            <? $this->loadPartial('facilities', [
-                                'checklist' => $checklist
-                            ]); ?>
 
                             <ul class="list-inline pull-right">
                                 <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
