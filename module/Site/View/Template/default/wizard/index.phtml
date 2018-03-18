@@ -215,6 +215,47 @@ use Krystal\Form\Element;
                                     </div>
                                   </fieldset><!-- .Misc -->
 
+                                  <!--Payment time & Arrival -->
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Check-in / Check-out'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label><? $this->show('Payment time'); ?></label>
+                                        <?= Element::text('hotel[payment_time]', null, array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                                    </div>
+
+                                    <section>
+                                        <h2 class="text-muted"><i class="glyphicon glyphicon-resize-small"></i> <? $this->show('Check-in'); ?></h2>
+
+                                        <div class="form-group">
+                                            <label><? $this->show('Check-in from'); ?></label>
+                                            <?= Element::text('hotel[checkin_from]', null, array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label><? $this->show('Check-in to'); ?></label>
+                                            <?= Element::text('hotel[checkin_to]', null, array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                                        </div>
+                                    </section>
+
+                                    <section>
+                                        <h2 class="text-muted"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Check-out'); ?></h2>
+
+                                        <div class="form-group">
+                                            <label><? $this->show('Check-out from'); ?></label>
+                                            <?= Element::text('hotel[checkout_from]', null, array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label><? $this->show('Check-out to'); ?></label>
+                                            <?= Element::text('hotel[checkout_to]', null, array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                                        </div>
+                                    </section>
+                                  </fieldset>
+                                  <!--Payment time & Arrival -->
+
                                   <!-- Contacts -->
                                   <fieldset>
                                     <div class="row">
