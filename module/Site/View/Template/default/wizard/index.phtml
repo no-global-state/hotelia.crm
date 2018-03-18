@@ -203,6 +203,18 @@ use Krystal\Form\Element;
                                   </fieldset>
                                   <!-- Contact person -->
 
+                                  <!-- Misc -->
+                                  <fieldset>
+                                    <div class="row">
+                                        <legend><? $this->show('Miscellaneous'); ?></legend>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <?= Element::checkbox('hotel[city_tax_include]', null, ['id' => 'city_tax_include']); ?>
+                                        <label for="city_tax_include"><? $this->show('City tax is included in room price by default'); ?></label>
+                                    </div>
+                                  </fieldset><!-- .Misc -->
+
                                   <!-- Contacts -->
                                   <fieldset>
                                     <div class="row">
