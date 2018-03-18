@@ -64,6 +64,11 @@ body,
     color: #949494;
 }
 
+.wizard .alert-info {
+    background-color: #0074d9;
+    border-color: #0074d9;
+}
+
 .wizard .form-group {
     margin-bottom: 30px;
 }
