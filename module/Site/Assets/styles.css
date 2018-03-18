@@ -50,10 +50,32 @@ body,
 
 
 /* Wizard */
+.wizard fieldset {
+    background: #fff;
+    padding: 37px;
+    margin-bottom: 21px;
+    border-radius: 12px;
+    border: 1px solid #d8d8d8;
+}
+
+.wizard .form-group label {
+    margin-bottom: 7px;
+    font-size: 14px;
+    color: #949494;
+}
+
+.wizard .form-group {
+    margin-bottom: 30px;
+}
+
+.wizard .sticky-hint-col {
+    position: sticky;
+    top: 74px;
+}
 
 .wizard {
     margin: 20px auto;
-    background: #fff;
+    background: transparent;
 }
 
 .wizard .nav-tabs {
