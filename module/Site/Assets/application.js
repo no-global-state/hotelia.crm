@@ -297,27 +297,37 @@ $(function(){
         }
     });
 
-    $("option[data-group]").parent().change(function(){
+    // Option + Section group processor
+    (function(){
         var hiddenClass = 'hidden';
-        var entity = $(this).find(':selected').data('group'); // Selected one
 
-        $("section[data-group]").addClass(hiddenClass).each(function(){
-            // Find attached groups
-            var group = $(this).attr('data-group');
-            var groups = group.split(', ');
+        // Attach and trigger change event
+        $("option[data-group]").parent().change(function(){
+            // Hide all sections
+            $("section[data-group]").addClass(hiddenClass);
 
-            for (var key in groups) {
-                // A single group without spaces
-                var singleGroup = groups[key].trim();
+            // Iterate over available options
+            $("option[data-group]:selected").each(function(){
+                var entity = $(this).data('group');
 
-                // Show
-                if (entity == singleGroup) {
-                    $(this).removeClass(hiddenClass);
-                }
-            }
-        });
+                $("section[data-group]").each(function(){
+                    // Find attached groups
+                    var group = $(this).attr('data-group');
+                    var groups = group.split(', ');
 
-    }).trigger('change');
+                    for (var key in groups) {
+                        // A single group without spaces
+                        var singleGroup = groups[key].trim();
+
+                        // Show
+                        if (entity == singleGroup) {
+                            $(this).removeClass(hiddenClass);
+                        }
+                    }
+                });
+            });
+        }).change();
+    })();
 });
 
 $(function() {
