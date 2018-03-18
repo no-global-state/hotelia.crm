@@ -263,6 +263,10 @@ $(function(){
 
         $clone.find('a').hide();
         $clone.find('input').val('');
+        $clone.find('.btn-danger').show().removeClass('hidden').click(function(event){
+            event.preventDefault();
+            $clone.remove();
+        });
 
         $(".room-append").last().after($clone);
     });
