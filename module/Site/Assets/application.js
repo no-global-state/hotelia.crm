@@ -255,52 +255,56 @@ $(function(){
 });
 
 $(function(){
-    $(".room-append a").click(function(event){
-        event.preventDefault();
 
-        // Hide a in clone
-        var $clone = $(".room-append").first().clone();
-
-        $clone.find('a').hide();
-        $clone.find('input').val('');
-        $clone.find('.btn-danger').show().removeClass('hidden').click(function(event){
+    // Room appender
+    (function(){
+        $(".room-append a").click(function(event){
             event.preventDefault();
-            $clone.remove();
+
+            // Hide a in clone
+            var $clone = $(".room-append").first().clone();
+
+            $clone.find('a').hide();
+            $clone.find('input').val('');
+            $clone.find('.btn-danger').show().removeClass('hidden').click(function(event){
+                event.preventDefault();
+                $clone.remove();
+            });
+
+            $(".room-append").last().after($clone);
+        });
+    })();
+    
+    // Keep tabs state on refresh, taken from here: https://stackoverflow.com/a/10524697
+    (function(){
+        // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            // save the latest tab; use cookies if you like 'em better:
+            localStorage.setItem('lastTab', $(this).attr('href'));
         });
 
-        $(".room-append").last().after($clone);
-    });
-});
-
-// Keep tabs state on refresh, taken from here: https://stackoverflow.com/a/10524697
-$(function(){
-    // for bootstrap 3 use 'shown.bs.tab', for bootstrap 2 use 'shown' in the next line
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        // save the latest tab; use cookies if you like 'em better:
-        localStorage.setItem('lastTab', $(this).attr('href'));
-    });
-
-    // go to the latest tab, if it exists:
-    var lastTab = localStorage.getItem('lastTab');
-    if (lastTab) {
-        $('[href="' + lastTab + '"]').tab('show');
-    }
-});
-
-$(function(){
-    // Facility selector
-    $(".facility-radio > input[type='checkbox']").change(function(){
-        var state = $(this).prop('checked');
-        var hiddenClass = 'hidden';
-        var $wrapper = $(this).parent().parent().find('.facility-container');
-
-        if (state == true) {
-            $wrapper.removeClass(hiddenClass);
-        } else {
-            $wrapper.addClass(hiddenClass);
+        // go to the latest tab, if it exists:
+        var lastTab = localStorage.getItem('lastTab');
+        if (lastTab) {
+            $('[href="' + lastTab + '"]').tab('show');
         }
-    });
+    })();
+    
+    // Facility selector
+    (function(){
+        $(".facility-radio > input[type='checkbox']").change(function(){
+            var state = $(this).prop('checked');
+            var hiddenClass = 'hidden';
+            var $wrapper = $(this).parent().parent().find('.facility-container');
 
+            if (state == true) {
+                $wrapper.removeClass(hiddenClass);
+            } else {
+                $wrapper.addClass(hiddenClass);
+            }
+        });
+    })();
+    
     // Option + Section group processor
     (function(){
         var hiddenClass = 'hidden';
@@ -332,63 +336,66 @@ $(function(){
             });
         }).change();
     })();
-});
 
-$(function() {
-    // Initial value
-    var attacher = 'region-id';
-    var childSelector = "[data-select='district']";
-    var parentSelector = "[data-select='region']";
-    var hiddenClass = 'hidden';
+    // Region switcher
+    (function(){
+        // Initial value
+        var attacher = 'region-id';
+        var childSelector = "[data-select='district']";
+        var parentSelector = "[data-select='region']";
+        var hiddenClass = 'hidden';
 
-    // Find active option
-    var findActiveOption = function(selector){
-        return $(parentSelector).find('option').filter(':selected');
-    };
-
-    var initialValue = findActiveOption().data(attacher);
-
-    // Initial state of child element
-    var $child = $(childSelector);
-    var childInitialValue = $child.find('[selected]').val();
-
-    $(parentSelector).change(function(){
-        var currentValue = $(this).find('option')
-                                  .filter(':selected')
-                                  .data(attacher);
-
-        // Shared chain provider
-        var chainProvider = function(){
-            return $child.find('option')
-                       .addClass(hiddenClass)
-                       .filter("[data-" + attacher + "='" + currentValue + "']")
-                       .removeClass(hiddenClass);
+        // Find active option
+        var findActiveOption = function(selector){
+            return $(parentSelector).find('option').filter(':selected');
         };
 
-        if (currentValue == initialValue) {
-            // Now handle region
-            if (currentValue) {
-                // If value is undefined
-                if (!childInitialValue) {
-                    chainProvider().eq(0)
-                                  .prop('selected', true);
+        var initialValue = findActiveOption().data(attacher);
+
+        // Initial state of child element
+        var $child = $(childSelector);
+        var childInitialValue = $child.find('[selected]').val();
+
+        $(parentSelector).change(function(){
+            var currentValue = $(this).find('option')
+                                      .filter(':selected')
+                                      .data(attacher);
+
+            // Shared chain provider
+            var chainProvider = function(){
+                return $child.find('option')
+                           .addClass(hiddenClass)
+                           .filter("[data-" + attacher + "='" + currentValue + "']")
+                           .removeClass(hiddenClass);
+            };
+
+            if (currentValue == initialValue) {
+                // Now handle region
+                if (currentValue) {
+                    // If value is undefined
+                    if (!childInitialValue) {
+                        chainProvider().eq(0)
+                                      .prop('selected', true);
+                    } else {
+                        chainProvider().filter('[value=' + childInitialValue + ']')
+                                      .prop('selected', true);
+                    }
+
                 } else {
-                    chainProvider().filter('[value=' + childInitialValue + ']')
-                                  .prop('selected', true);
+                    chainProvider()
+                    .first()
+                    .prop('selected', true);
                 }
 
             } else {
+                // Now handle region
                 chainProvider()
-                .first()
-                .prop('selected', true);
+                   .first()
+                   .prop('selected', true);
             }
 
-        } else {
-            // Now handle region
-            chainProvider()
-               .first()
-               .prop('selected', true);
-        }
-
-    }).trigger('change');
+        }).trigger('change');
+    })();
+    
 });
+
