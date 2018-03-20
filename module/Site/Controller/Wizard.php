@@ -54,6 +54,37 @@ final class Wizard extends AbstractCrmController
     }
 
     /**
+     * Renders a form
+     * 
+     * @return string
+     */
+    private function formAction()
+    {
+        // Append UI handler
+        $this->view->getPluginBag()
+                   ->load('map')
+                   ->appendLastScript('@Site/wizard.js');
+
+        return $this->view->render('wizard/index', [
+            'extended' => false,
+            // Collections
+            'breakfasts' => (new BreakfastCollection())->getAll(),
+            'types' => (new FacilityTypeCollection)->getAll(),
+            'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
+            'languageId' => $this->getCurrentLangId(),
+            'hotelId' => $this->getHotelId(),
+            'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
+            'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
+            'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId()),
+            'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId()),
+            'priceGroups' => $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false)
+        ]);
+    }
+
+    /**
      * Renders main page
      * 
      * @return string
@@ -63,28 +94,7 @@ final class Wizard extends AbstractCrmController
         if ($this->request->isPost()) {
             return $this->saveAction();
         } else {
-            // Append UI handler
-            $this->view->getPluginBag()
-                       ->load('map')
-                       ->appendLastScript('@Site/wizard.js');
-
-            return $this->view->render('wizard/index', [
-                'extended' => false,
-                // Collections
-                'breakfasts' => (new BreakfastCollection())->getAll(),
-                'types' => (new FacilityTypeCollection)->getAll(),
-                'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
-                'languageId' => $this->getCurrentLangId(),
-                'hotelId' => $this->getHotelId(),
-                'checklist' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $this->getHotelId()),
-                'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchList($this->getCurrentLangId()),
-                'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
-                'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
-                'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId()),
-                'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
-                'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId()),
-                'priceGroups' => $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false)
-            ]);
+            return $this->formAction();
         }
     }
 }
