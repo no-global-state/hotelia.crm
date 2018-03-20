@@ -82,7 +82,8 @@ final class Wizard extends AbstractCrmController
                 'districts' => $this->getModuleService('districtService')->fetchAll(null, $this->getCurrentLangId()),
                 'payments' => $this->getModuleService('paymentFieldService')->findAllByHotelId($this->getHotelId()),
                 'meals' => $this->getModuleService('mealsService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
-                'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId())
+                'globalMealPrices' => $this->getModuleService('mealsService')->findGlobalPrices($this->getHotelId()),
+                'priceGroups' => $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false)
             ]);
         }
     }

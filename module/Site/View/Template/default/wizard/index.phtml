@@ -385,29 +385,48 @@ use Krystal\Form\Element;
 
                         <div class="tab-pane" role="tabpanel" id="step3">
                             <h3><?= $this->show('Step'); ?> 3</h3>
-                            
+
                             <fieldset>
                                 <h2 class="text-muted"><? $this->show('Add rooms'); ?></h2>
 
-                                <div class="form-group room-append">
-                                  <label class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
-                                  <div class="col-lg-10">
-                                    <div class="row">
-                                        <div class="col-lg-7">
-                                            <?= Element::select('room[]', $categories, null, ['class' => 'form-control']); ?>
-                                        </div>
+                                <section class="room-append">
+                                    <div class="form-group">
+                                      <label class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
+                                      <div class="col-lg-10">
+                                        <div class="row">
+                                            <div class="col-lg-7">
+                                                <?= Element::select('room[type][]', $categories, null, ['class' => 'form-control']); ?>
+                                            </div>
 
-                                        <div class="col-lg-3">
-                                            <?= Element::number('room[]', null, ['class' => 'form-control', 'min' => 1, 'placeholder' => $this->translate('Amount of this type')]); ?>
-                                        </div>
+                                            <div class="col-lg-3">
+                                                <?= Element::number('room[qty][]', null, ['class' => 'form-control', 'min' => 1, 'placeholder' => $this->translate('Amount of this type')]); ?>
+                                            </div>
 
-                                        <div class="col-lg-2">
-                                            <a href="#" class="btn btn-primary"><? $this->show('Add'); ?></a>
-                                            <a href="#" class="btn btn-danger hidden"><? $this->show('Remove'); ?></a>
+                                            <div class="col-lg-2">
+                                                <a href="#" class="btn btn-primary"><? $this->show('Add'); ?></a>
+                                                <a href="#" class="btn btn-danger hidden"><? $this->show('Remove'); ?></a>
+                                            </div>
                                         </div>
+                                      </div>
                                     </div>
-                                  </div>
-                                </div>
+
+                                    <div class="form-group">
+                                      <label class="col-lg-2 control-label"><? $this->show('Description'); ?></label>
+                                      <div class="col-lg-10">
+                                        <?= Element::textarea('room[description][]', null, ['class' => 'form-control']); ?>
+                                      </div>
+                                    </div>
+
+                                    <?php foreach ($priceGroups as $priceGroup): ?>
+                                    <div class="form-group">
+                                      <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>
+                                      <div class="col-lg-10">
+                                        <?= Element::number(sprintf('room[price_group_ids][%s][]', $priceGroup['id']), isset($priceGroup['price']) ? $priceGroup['price'] : null, array('class' => 'form-control')); ?>
+                                      </div>
+                                    </div>
+                                    <?php endforeach; ?>
+
+                                </section>
                             </fieldset>
 
                             <ul class="list-inline pull-right">
@@ -475,3 +494,12 @@ use Krystal\Form\Element;
         </section>
     </div>
 </div>
+
+<style>
+    .room-append {
+        margin-bottom: 45px;
+        border: 1px solid #d8d8d8;
+        padding: 26px;
+    }
+</style>
+
