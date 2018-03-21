@@ -48,6 +48,14 @@ use Krystal\Form\Element;
                         </li>
 
                         <li role="presentation" class="disabled">
+                            <a href="#step5" data-toggle="tab" aria-controls="step5" role="tab" title="<? $this->show('Step'); ?> 5">
+                                <span class="round-tab">
+                                    <i class="glyphicon glyphicon-usd"></i>
+                                </span>
+                            </a>
+                        </li>
+
+                        <li role="presentation" class="disabled">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="<? $this->show('Complete'); ?>">
                                 <span class="round-tab">
                                     <i class="glyphicon glyphicon-ok"></i>
@@ -355,32 +363,12 @@ use Krystal\Form\Element;
 
                               <? $this->loadPartial('wizard-stick'); ?>
                           </div>
-                          
-                          <!--
-                            <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
-                            
-                            <?php foreach ($payments as $system => $gateways): ?>
-                            <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
 
-                            <fieldset>
-                                <?php foreach ($gateways as $index => $gateway): ?>
-                                <?php $uniq = sprintf('field-%s', $index); ?>
-                                <div class="form-group">
-                                  <label class="col-lg-2 control-label" for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
-                                  <div class="col-lg-10">
-                                    <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
-                                  </div>
-                                </div>
-                                <?php endforeach; ?>
-                            </fieldset>
-                            <?php endforeach; ?>
-                            -->
-                            
-                            <ul class="list-inline pull-right">
-                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
-                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
-                                <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
-                            </ul>
+                          <ul class="list-inline pull-right">
+                            <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                            <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                            <li><button type="button" class="btn btn-primary next-step"><? $this->show('Save and continue'); ?></button></li>
+                          </ul>
                         </div>
 
                         <div class="tab-pane" role="tabpanel" id="step3">
@@ -465,6 +453,43 @@ use Krystal\Form\Element;
                                 </div>
                             </section>
 
+                            <ul class="list-inline pull-right">
+                                <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
+                                <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
+                                <li><button type="button" class="btn btn-primary btn-info-full next-step"><? $this->show('Save and continue'); ?></button></li>
+                            </ul>
+                        </div>
+
+                        <div class="tab-pane" role="tabpanel" id="step5">
+                            <h3><? $this->show('Step'); ?> 5</h3>
+
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <fieldset>
+                                        <div class="row">
+                                            <legend><? $this->show('Please enter your payment gateway data'); ?></legend>
+                                        </div>
+
+                                        <?php foreach ($payments as $system => $gateways): ?>
+                                        <h3 class="page-header"><i class="glyphicon glyphicon-credit-card"></i> <?= $system; ?></h3>
+
+                                        <fieldset>
+                                        <?php foreach ($gateways as $index => $gateway): ?>
+                                        <?php $uniq = sprintf('field-%s', $index); ?>
+                                        <div class="form-group">
+                                          <label for="<?= $uniq; ?>"><?= $gateway['field']; ?></label>
+                                          <?= Element::text(sprintf('payment[%s]', $gateway['field_id']), $gateway['value'], ['class' => 'form-control', 'id' => $uniq]); ?>
+                                        </div>
+                                        <?php endforeach; ?>
+                                        </fieldset>
+
+                                        <?php endforeach; ?>
+                                    </fieldset>
+                                </div>
+
+                                <? $this->loadPartial('wizard-stick'); ?>
+                            </div>
+                            
                             <ul class="list-inline pull-right">
                                 <li><button type="button" class="btn btn-default prev-step"><? $this->show('Previous'); ?></button></li>
                                 <li><button type="button" class="btn btn-default next-step"><? $this->show('Skip'); ?></button></li>
