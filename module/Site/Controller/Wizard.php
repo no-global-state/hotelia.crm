@@ -29,14 +29,8 @@ final class Wizard extends AbstractCrmController
 
         $data = $this->request->getPost();
 
-        // Update checklist if provided
-        $ids = array_keys($this->request->getPost('checked', []));
-        $this->getModuleService('facilitiyService')->updateRelation($this->getHotelId(), $ids);
-
-        // No need any more
-        if (isset($data['checked'])) {
-            unset($data['checked']);
-        }
+        // Update facility relations
+        $this->getModuleService('facilitiyService')->updateRelation($this->getHotelId(), $this->request->getPost('facility', []));
 
         // Update meals relations
         $this->getModuleService('mealsService')->updateRelation($this->getHotelId(), $this->request->getPost('meal', []));
