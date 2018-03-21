@@ -2,6 +2,7 @@
 
 namespace Site\Service;
 
+use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
 use Site\Storage\MySQL\PriceGroupMapper;
 use Site\Storage\MySQL\RoomTypePriceMapper;
@@ -12,6 +13,13 @@ use Krystal\Stdlib\ArrayUtils;
 final class RoomTypeService
 {
     const PARAM_PRICE_GROUP_IDS = 'price_group_ids';
+
+    /**
+     * Any compliant room type mapper
+     * 
+     * @var \Site\Storage\MySQL\RoomMapper
+     */
+    private $roomMapper;
 
     /**
      * Any compliant room type mapper
@@ -38,15 +46,70 @@ final class RoomTypeService
      * State initialization
      * 
      * @param \Site\Storage\MySQL\RoomTypeMapper $roomTypeMapper
+     * @param \Site\Storage\MySQL\RoomMapper $roomMapper
      * @param \Site\Storage\MySQL\RoomTypePriceMapper $roomTypePriceMapper
      * @param \Site\Storage\MySQL\FacilitiyCategoryMapper $facilityCategoryMapper
      * @return void
      */
-    public function __construct(RoomTypeMapper $roomTypeMapper, RoomTypePriceMapper $roomTypePriceMapper, FacilitiyCategoryMapper $facilityCategoryMapper)
+    public function __construct(RoomTypeMapper $roomTypeMapper, RoomMapper $roomMapper, RoomTypePriceMapper $roomTypePriceMapper, FacilitiyCategoryMapper $facilityCategoryMapper)
     {
         $this->roomTypeMapper = $roomTypeMapper;
+        $this->roomMapper = $roomMapper;
         $this->roomTypePriceMapper = $roomTypePriceMapper;
         $this->facilityCategoryMapper = $facilityCategoryMapper;
+    }
+
+    /**
+     * Create from wizard
+     * 
+     * @param int $hotelId
+     * @param array $rooms
+     * @return void
+     */
+    public function createFromWizard(int $hotelId, array $input)
+    {
+        // Default language ID
+        $langId = 1;
+
+        $rooms = WizardService::parseRawRooms($input);
+
+        foreach ($rooms as $room) {
+            $type = [
+                'hotel_id' => $hotelId,
+                'category_id' => $room['type'],
+                'persons' => 0
+            ];
+
+            $translation = [
+                $langId => [
+                    'lang_id' => $langId,
+                    'description' => $room['description']
+                ]
+            ];
+
+            $this->roomTypeMapper->saveEntity($type, $translation);
+
+            // Last type ID
+            $typeId = $this->roomTypeMapper->getMaxId();
+
+            // Save related prices
+            $this->roomTypePriceMapper->save($typeId, $room['prices']);
+
+            // Now insert rooms
+            for ($i = 0; $i < $room['qty']; $i++) {
+                // Save room
+                $this->roomMapper->persist([
+                    'type_id' => $typeId,
+                    'hotel_id' => $hotelId,
+                    'floor' => 0,
+                    'persons' => 0,
+                    'name' => 'Room ' . $i + 1,
+                    'square' => 0,
+                    'cleaned' => 0,
+                    'quality' => 0
+                ]);
+            }
+        }
     }
 
     /**
