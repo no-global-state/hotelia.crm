@@ -61,7 +61,7 @@ final class Wizard extends AbstractCrmController
     {
         // Append UI handler
         $this->view->getPluginBag()
-                   ->load('map')
+                   ->load(['map', 'datetimepicker'])
                    ->appendLastScript('@Site/wizard.js');
 
         return $this->view->render('wizard/index', [
