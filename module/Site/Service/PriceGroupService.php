@@ -70,6 +70,22 @@ final class PriceGroupService
     }
 
     /**
+     * Fetch populated data
+     * 
+     * @param array $data
+     * @return array
+     */
+    public function fetchPopulated(array $data) : array
+    {
+        $priceGroups = $this->fetchAll(false);
+
+        // Populate
+        $priceGroups = array_replace_recursive($priceGroups, $data);
+
+        return $priceGroups;
+    }
+
+    /**
      * Fetches as a list
      * 
      * @return array
