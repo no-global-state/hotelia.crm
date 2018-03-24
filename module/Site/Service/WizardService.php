@@ -5,6 +5,29 @@ namespace Site\Service;
 final class WizardService
 {
     /**
+     * Create share localizations (one for all languages)
+     * 
+     * @param array $ids Language IDs
+     * @param string $description
+     * 
+     * @return array
+     */
+    public static function createSharedLocalization(array $ids, string $description) : array
+    {
+        $output = [];
+
+        foreach ($ids as $langId) {
+            // Append description to given language ID
+            $output[$langId] = [
+                'lang_id' => $langId,
+                'description' => $description
+            ];
+        }
+
+        return $output;
+    }
+
+    /**
      * Parse input
      * 
      * @param array $rooms
