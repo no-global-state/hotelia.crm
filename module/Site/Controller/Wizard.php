@@ -17,7 +17,12 @@ final class Wizard extends AbstractCrmController
         $rooms = $this->request->getPost('room', []);
 
         // Add rooms
-        $this->getModuleService('roomTypeService')->createFromWizard($this->getHotelId(), $this->getModuleService('languageService')->findIds(), $rooms);
+        $this->getModuleService('roomTypeService')->createFromWizard(
+            $this->getHotelId(), 
+            $this->getModuleService('languageService')->findIds(), 
+            $rooms,
+            $this->translator->translate('Room')
+        );
 
         // Optional photo upload
         if ($this->request->hasFiles('files')) {

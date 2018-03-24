@@ -65,9 +65,10 @@ final class RoomTypeService
      * @param int $hotelId
      * @param array $langIds
      * @param array $rooms
+     * @param string $roomLabel
      * @return void
      */
-    public function createFromWizard(int $hotelId, array $langIds, array $input)
+    public function createFromWizard(int $hotelId, array $langIds, array $input, string $roomLabel)
     {
         $rooms = WizardService::parseRawRooms($input);
 
@@ -97,7 +98,7 @@ final class RoomTypeService
                     'hotel_id' => $hotelId,
                     'floor' => 0,
                     'persons' => 0,
-                    'name' => 'Room ' . $i + 1,
+                    'name' => $roomLabel . ' ' . (string) ($i + 1),
                     'square' => 0,
                     'cleaned' => 0,
                     'quality' => 0
