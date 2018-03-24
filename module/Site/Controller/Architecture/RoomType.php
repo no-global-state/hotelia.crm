@@ -94,7 +94,7 @@ final class RoomType extends AbstractCrmController
      */
     public function addAction()
     {
-        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
+        $priceGroups = $this->getModuleService('priceGroupService')->fetchAll();
         return $this->createForm(new InputDecorator(), $priceGroups);
     }
 
@@ -110,9 +110,7 @@ final class RoomType extends AbstractCrmController
         $type = $service->findById($id);
 
         if (!empty($type)) {
-            $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
-            $priceGroups = array_replace_recursive($priceGroups, $service->findPricesByRoomTypeId($id));
-
+            $priceGroups = $this->getModuleService('priceGroupService')->fetchPopulated($service->findPricesByRoomTypeId($id));
             return $this->createForm($type, $priceGroups);
         } else {
             return false;
