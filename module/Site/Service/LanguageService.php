@@ -27,6 +27,16 @@ final class LanguageService
     }
 
     /**
+     * Find IDs
+     * 
+     * @return array
+     */
+    public function findIds() : array
+    {
+        return $this->languageMapper->findIds();
+    }
+
+    /**
      * Finds language ID by its attached code
      * 
      * @param string $code Language code

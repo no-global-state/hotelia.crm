@@ -13,6 +13,18 @@ final class LanguageMapper extends AbstractMapper
     }
 
     /**
+     * Find IDs
+     * 
+     * @return array
+     */
+    public function findIds() : array
+    {
+        return $this->db->select('id')
+                        ->from(self::getTableName())
+                        ->queryAll('id');
+    }
+
+    /**
      * Finds language ID by its attached code
      * 
      * @param string $code Language code
