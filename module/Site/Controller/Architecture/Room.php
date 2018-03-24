@@ -33,7 +33,7 @@ final class Room extends AbstractCrmController
                    ->addOne('Architecture', $this->createUrl('Site:Architecture:Grid@indexAction'))
                    ->addOne(is_array($entity) ? 'Edit the room' : 'Add a room');
 
-        return $this->view->render('architecture/form-room', array(
+        return $this->view->render('room/form', array(
             'icon' => 'glyphicon glyphicon-pencil',
             'entity' => $entity,
             'roomTypes' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
