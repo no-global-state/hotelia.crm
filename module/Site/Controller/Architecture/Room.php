@@ -21,6 +21,33 @@ use Krystal\Validate\Pattern;
 final class Room extends AbstractCrmController
 {
     /**
+     * @return \Site\Storage\RoomMapper
+     */
+    private function createRoomMapper()
+    {
+        return $this->createMapper('\Site\Storage\MySQL\RoomMapper');
+    }
+
+    /**
+     * Render floors and rooms
+     * 
+     * @return string
+     */
+    public function indexAction()
+    {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Architecture');
+
+        return $this->view->render('room/index', array(
+            'icon' => 'glyphicon glyphicon-home',
+            'rooms' => $this->createRoomMapper()->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'cleaningCollection' => new CleaningCollection(),
+            'roomQualityCollection' => new RoomQualityCollection()
+        ));
+    }
+
+    /**
      * Renders room form
      * 
      * @param mixed $entity
@@ -30,7 +57,7 @@ final class Room extends AbstractCrmController
     {
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
-                   ->addOne('Architecture', $this->createUrl('Site:Architecture:Grid@indexAction'))
+                   ->addOne('Architecture', $this->createUrl('Site:Architecture:Room@indexAction'))
                    ->addOne(is_array($entity) ? 'Edit the room' : 'Add a room');
 
         return $this->view->render('room/form', array(
@@ -149,6 +176,6 @@ final class Room extends AbstractCrmController
         $this->getModuleService('roomService')->deleteById($id);
 
         $this->flashBag->set('success', 'The room has been deleted successfully');
-        $this->redirectToRoute('Site:Architecture:Grid@indexAction');
+        $this->redirectToRoute('Site:Architecture:Room@indexAction');
     }
 }

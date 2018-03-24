@@ -680,7 +680,7 @@ return [
     ],
 
     '/crm/architecture' => [
-        'controller' => 'Architecture:Grid@indexAction'
+        'controller' => 'Architecture:Room@indexAction'
     ],
 
     '/crm/architecture/room/add' => [

@@ -94,7 +94,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                   <a href="javascript:;" data-toggle="collapse" data-target="#menu-hotel"><? $this->show('Helpers'); ?> <span class="caret"></span></a>
                   <ul id="menu-hotel" class="collapse">
                     <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:Room@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Discount@indexAction'); ?>"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Inventory@indexAction'); ?>"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Inventory'); ?></a></li>
