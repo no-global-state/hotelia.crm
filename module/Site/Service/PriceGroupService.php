@@ -64,7 +64,7 @@ final class PriceGroupService
      * @param boolean $sort Whether to sort
      * @return array
      */
-    public function fetchAll($sort = false) : array
+    public function fetchAll($sort = true) : array
     {
         return $this->priceGroupMapper->fetchAll($sort);
     }
