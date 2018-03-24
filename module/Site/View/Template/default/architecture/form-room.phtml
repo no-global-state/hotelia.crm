@@ -13,9 +13,9 @@ use Krystal\Form\Element;
     <?= Element::hidden('id', $entity['id']); ?>
 
     <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <a href="<?= $this->url('Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Back'); ?></a>
-        <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
+      <label class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::select('type_id', $roomTypes, $entity['type_id'], array('class' => 'form-control')); ?>
       </div>
     </div>
 
@@ -37,13 +37,6 @@ use Krystal\Form\Element;
       <label class="col-lg-2 control-label"><? $this->show('Maximal person amount'); ?></label>
       <div class="col-lg-10">
         <?= Element::number('persons', $entity['persons'], array('class' => 'form-control', 'min' => 1, 'placeholder' => $this->translate('Type maximal amount of people this room can accept'))); ?>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label class="col-lg-2 control-label"><? $this->show('Room type'); ?></label>
-      <div class="col-lg-10">
-        <?= Element::select('type_id', $roomTypes, $entity['type_id'], array('class' => 'form-control')); ?>
       </div>
     </div>
 
