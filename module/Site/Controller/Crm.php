@@ -2,8 +2,6 @@
 
 namespace Site\Controller;
 
-use Site\Collection\TimeRangeCollection;
-
 final class Crm extends AbstractCrmController
 {
     /**
@@ -17,25 +15,6 @@ final class Crm extends AbstractCrmController
         $this->becomeAdmin($hotelId);
 
         return $this->response->redirect($this->createUrl('Site:Crm@indexAction'));
-    }
-
-    /**
-     * Renders schedule grid
-     * 
-     * @return string
-     */
-    public function chessAction() : string
-    {
-        // Load daypilot
-        $this->view->getPluginBag()
-                   ->load('daypilot');
-
-        return $this->view->render('chessboard/main', [
-            'pageTitle' => 'Chessboard',
-            'icon' => 'glyphicon glyphicon-king',
-            'types' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
-            'timeRanges' => (new TimeRangeCollection())->getAll()
-        ]);
     }
 
     /**

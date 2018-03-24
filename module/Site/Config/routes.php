@@ -33,35 +33,6 @@ return [
         'controller' => 'Site@languageAction',
     ],
     
-    // Scheduler
-    '/crm/scheduler/add/(:var)' => [
-        'controller' => 'Scheduler@add'
-    ],
-
-    '/crm/scheduler/edit/(:var)' => [
-        'controller' => 'Scheduler@edit'
-    ],
-
-    '/crm/scheduler/delete' => [
-        'controller' => 'Scheduler@delete'
-    ],
-
-    '/crm/scheduler/move' => [
-        'controller' => 'Scheduler@move'
-    ],
-
-    '/crm/scheduler/resize' => [
-        'controller' => 'Scheduler@resize'
-    ],
-
-    '/crm/scheduler/get-rooms' => [
-        'controller' => 'Scheduler@rooms'
-    ],
-
-    '/crm/scheduler/get-events' => [
-        'controller' => 'Scheduler@events'
-    ],
-
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction'
@@ -370,10 +341,6 @@ return [
     
     '/crm' => [
         'controller' => 'Crm@indexAction'
-    ],
-
-    '/crm/chess' => [
-        'controller' => 'Crm@chessAction'
     ],
 
     '/crm/languages/switch/(:var)' => [

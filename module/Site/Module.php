@@ -24,7 +24,6 @@ use Site\Service\RoomCategoryService;
 use Site\Service\PaymentFieldService;
 use Site\Service\ReviewService;
 use Site\Service\ReservationService;
-use Site\Service\ScheduleService;
 use Site\Service\PriceGroupService;
 use Site\Service\DictionaryService;
 use Site\Service\MealsService;
@@ -139,10 +138,6 @@ final class Module extends AbstractModule
 
             'priceGroupService' => new PriceGroupService(
                 $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')
-            ),
-
-            'scheduleService' => new ScheduleService(
-                $this->createMapper('\Site\Storage\MySQL\ScheduleMapper')
             ),
 
             'reservationService' => new ReservationService(
