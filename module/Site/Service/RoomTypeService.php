@@ -63,14 +63,12 @@ final class RoomTypeService
      * Create from wizard
      * 
      * @param int $hotelId
+     * @param array $langIds
      * @param array $rooms
      * @return void
      */
-    public function createFromWizard(int $hotelId, array $input)
+    public function createFromWizard(int $hotelId, array $langIds, array $input)
     {
-        // Default language ID
-        $langId = 1;
-
         $rooms = WizardService::parseRawRooms($input);
 
         foreach ($rooms as $room) {
@@ -80,12 +78,8 @@ final class RoomTypeService
                 'persons' => 0
             ];
 
-            $translation = [
-                $langId => [
-                    'lang_id' => $langId,
-                    'description' => $room['description']
-                ]
-            ];
+            // Translations
+            $translation = WizardService::createSharedLocalization($langIds, $room['description']);
 
             $this->roomTypeMapper->saveEntity($type, $translation);
 
