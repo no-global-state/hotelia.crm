@@ -76,9 +76,10 @@ final class FacilitiyItemMapper extends AbstractMapper
      * @param integer $categoryId Optional category ID filter
      * @param integer $hotelId Optional hotel ID filter
      * @param bool $front Whether to fetch only front items
+     * @param bool $checked Whether to select only checked items
      * @return array
      */
-    public function fetchAll(int $langId, $categoryId = null, $hotelId = null, $front = false) : array
+    public function fetchAll(int $langId, $categoryId = null, $hotelId = null, bool $front = false, bool $checked = false) : array
     {
         $columns = $this->getColumns();
 
@@ -100,8 +101,11 @@ final class FacilitiyItemMapper extends AbstractMapper
 
         // Append hotel ID relation if provided
         if ($hotelId !== null) {
+            // JOIN type
+            $joinType = $checked === false ? 'LEFT' : 'INNER';
+
             // Junction relation
-            $db->leftJoin(FacilityRelationMapper::getTableName(), [
+            $db->join($joinType, FacilityRelationMapper::getTableName(), [
                 FacilityRelationMapper::getFullColumnName('slave_id') => self::getRawColumn('id'),
                 FacilityRelationMapper::getFullColumnName('master_id') => $hotelId
             ]);

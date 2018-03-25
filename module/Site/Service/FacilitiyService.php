@@ -63,11 +63,12 @@ final class FacilitiyService
      * @param int $hotelId
      * @param int $langId
      * @param bool $front Whether to fetch only front items
+     * @param bool $checked Whether to select only checked items
      * @return array
      */
-    public function getItemList($hotelId, int $langId, bool $front = false) : array
+    public function getItemList($hotelId, int $langId, bool $front = false, bool $checked = false) : array
     {
-        $items = $this->itemMapper->fetchAll($langId, null, $hotelId, $front);
+        $items = $this->itemMapper->fetchAll($langId, null, $hotelId, $front, $checked);
         return ArrayUtils::arrayList($items, 'id', 'name');
     }
 
@@ -77,15 +78,16 @@ final class FacilitiyService
      * @param int $langId
      * @param boolean $withCategories Whether to fetch with categories
      * @param integer $hotelId Optional hotel ID filter
+     * @param bool $checked Whether to select only checked items
      * @return array
      */
-    public function getCollection(int $langId, $withCategories = true, $hotelId = null)
+    public function getCollection(int $langId, $withCategories = true, $hotelId = null, bool $checked = false)
     {
         if ($withCategories == true) {
             $categories = $this->categoryMapper->fetchAll($langId);
 
             foreach ($categories as &$category) {
-                $category['items'] = $this->itemMapper->fetchAll($langId, $category['id'], $hotelId);
+                $category['items'] = $this->itemMapper->fetchAll($langId, $category['id'], $hotelId, false, $checked);
             }
 
             return $categories;
