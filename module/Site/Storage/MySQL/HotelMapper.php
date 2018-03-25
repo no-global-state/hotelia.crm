@@ -111,6 +111,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             self::getFullColumnName('rate'),
             self::getFullColumnName('discount'),
             self::getFullColumnName('center_distance'),
+            self::getFullColumnName('lat'),
+            self::getFullColumnName('lng'),
             HotelTranslationMapper::getFullColumnName('name'),
             HotelTranslationMapper::getFullColumnName('address'),
             HotelTranslationMapper::getFullColumnName('description'),
