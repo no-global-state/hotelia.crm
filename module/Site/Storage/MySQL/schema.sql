@@ -180,7 +180,8 @@ CREATE TABLE velveto_facilitiy_relations (
 );
 
 CREATE TABLE velveto_facilitiy_categories (
-    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL DEFAULT 0 COMMENT 'Sorting order'
 );
 
 CREATE TABLE velveto_facilitiy_categories_translation (

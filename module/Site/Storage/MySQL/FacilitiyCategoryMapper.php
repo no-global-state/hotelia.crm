@@ -29,6 +29,7 @@ final class FacilitiyCategoryMapper extends AbstractMapper
     {
         return [
             self::getFullColumnName('id'),
+            self::getFullColumnName('order'),
             FacilitiyCategoryTranslationMapper::getFullColumnName('lang_id'),
             FacilitiyCategoryTranslationMapper::getFullColumnName('name')
         ];
