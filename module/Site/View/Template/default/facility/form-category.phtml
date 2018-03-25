@@ -5,7 +5,7 @@ use Site\Service\LanguageService;
 
 ?>
 
-<form action="<?= $this->url('Site:Facility:Category@saveAction'); ?>">
+<form action="<?= $this->url('Site:Facility:Category@saveAction'); ?>" class="form-horizontal">
     <?php $this->loadPartial('language-tabs'); ?>
 
     <div class="tab-content">
@@ -30,12 +30,20 @@ use Site\Service\LanguageService;
 
         <?= Element::hidden('category[id]', $entity['id']); ?>
 
-        <div class="form-group">
-          <div class="col-lg-10 col-lg-offset-2">
-            <br />
-            <a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
-            <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
-          </div>
-        </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><? $this->show('Order'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('category[order]', $entity['order'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <br />
+        <a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>" class="btn btn-danger"><? $this->show('Cancel'); ?></a>
+        <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
+      </div>
     </div>
 </form>
