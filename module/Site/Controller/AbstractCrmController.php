@@ -35,7 +35,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
      */
     protected function getUserId() : int
     {
-        return $this->getModuleService('userService')->getId();
+        return $this->getService('Site', 'userService')->getId();
     }
 
     /**
@@ -49,7 +49,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             return $this->sessionBag->get('admin_hotel_id');
         }
 
-        return $this->getModuleService('userService')->getHotelId();
+        return $this->getService('Site', 'userService')->getHotelId();
     }
 
     /**
@@ -69,7 +69,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
      */
     protected function getAuthService()
     {
-        return $this->getModuleService('userService');
+        return $this->getService('Site', 'userService');
     }
 
     /**
