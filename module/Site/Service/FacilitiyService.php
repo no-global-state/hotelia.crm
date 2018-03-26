@@ -44,17 +44,19 @@ final class FacilitiyService
      */
     public function updateRelation(int $hotelId, array $data)
     {
-        $output = [];
-        $ids = array_keys($data['checked']);
+        if (isset($data['checked'])) {
+            $output = [];
+            $ids = array_keys($data['checked']);
 
-        foreach ($ids as $id) {
-            // Special type
-            $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
-            // Append prepared data
-            $output[] = [$hotelId, $id, $type];
+            foreach ($ids as $id) {
+                // Special type
+                $type = isset($data['type'][$id]) ? $data['type'][$id] : null;
+                // Append prepared data
+                $output[] = [$hotelId, $id, $type];
+            }
+
+            return $this->itemMapper->updateRelation($hotelId, $output);
         }
-
-        return $this->itemMapper->updateRelation($hotelId, $output);
     }
 
     /**
