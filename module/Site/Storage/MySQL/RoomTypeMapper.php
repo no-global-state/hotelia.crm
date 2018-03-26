@@ -53,6 +53,12 @@ final class RoomTypeMapper extends AbstractMapper
 
         // Update only if not empty
         if (!empty($data)) {
+            foreach ($data as $index => $array) {
+                if (empty($array[2])) {
+                    $data[$index][2] = 'DEFAULT';
+                }
+            }
+
             return $this->db->insertMany(RoomTypeFacilityRelationMapper::getTableName(), ['master_id', 'slave_id', 'type'], $data)
                             ->execute();
         }
