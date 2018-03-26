@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
+use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
 {
@@ -80,6 +81,7 @@ final class Site extends AbstractSiteController
             $room = $this->getModuleService('roomTypeService')->findByTypeId($typeId, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
 
             return $this->view->render('payment', [
+                'countries' => (new Country)->getAll(),
                 'rooms' => $rooms,
                 'adults' => $adults,
                 'kids' => $kids,
