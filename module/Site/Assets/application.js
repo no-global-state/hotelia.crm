@@ -1,6 +1,11 @@
 
 $(function(){
 
+    $(".wizard .next-step").click(function(event){
+        $("html, body").animate({ scrollTop: 200 }, "slow");
+        return false;
+    });
+
     // Unit caption handler in reservation services
     $("[name='slave_id']").change(function(){
         var $selected = $(this).find(':selected');
