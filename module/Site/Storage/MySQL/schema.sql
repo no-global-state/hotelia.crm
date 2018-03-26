@@ -432,6 +432,13 @@ CREATE TABLE velveto_hotels (
     `restaurant_closing` varchar(5),
     `center_distance` varchar(10),
 
+    `penality_not_taken_after` INT,
+    `penality_not_later_arrival` INT,
+    `penality_cancelation_item` INT,
+    `penality_cancelation_type` varchar(5),
+    `penality_percentage` INT,
+    `penality_percentage_type` varchar(5),
+
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
