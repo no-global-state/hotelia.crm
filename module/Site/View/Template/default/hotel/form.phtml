@@ -16,6 +16,7 @@ use Site\Service\LanguageService;;
         <li class="nav"><a href="#contact-person" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> <? $this->show('Contact person'); ?></a></li>
         <li class="nav"><a href="#check-in-out" data-toggle="tab"><i class="glyphicon glyphicon-off"></i> <? $this->show('Check-in / Check-out'); ?></a></li>
         <li class="nav"><a href="#meals" data-toggle="tab"><i class="glyphicon glyphicon-glass"></i> <? $this->show('Meals'); ?></a></li>
+        <li class="nav"><a href="#penalties" data-toggle="tab"><i class="glyphicon glyphicon-usd"></i> <? $this->show('Penalties for cancellations'); ?></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -451,6 +452,66 @@ use Site\Service\LanguageService;;
                     </section>
                 </fieldset>
             </div>
+        </div>
+        
+        <div class="tab-pane fade" id="penalties">
+            <fieldset>
+                <div class="form-group">
+                    <label><? $this->show('The penalty is not being withheld when canceling after (hours after making reservation)'); ?></label>
+                    <?= Element::number('hotel[penality_not_taken_after]', $entity['penality_not_taken_after'], ['class' => 'form-control', 'min' => 1]); ?>
+                </div>
+
+                <div class="form-group">
+                    <label><? $this->show('But made not later (hours before arrival)'); ?></label>
+                    <?= Element::text('hotel[penality_not_later_arrival]', $entity['penality_not_later_arrival'], ['class' => 'form-control']); ?>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label><? $this->show('Before making a cancellation of the reservation'); ?></label>
+                            <?= Element::text('hotel[penality_cancelation_item]', $entity['penality_cancelation_item'], ['class' => 'form-control']); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="well">
+                            <label class="radio-inline">
+                                <?= Element::radio('hotel[penality_cancelation_type]', 'hr', $entity['penality_cancelation_type'] == 'hr'); ?> <? $this->show('Hours'); ?>
+                            </label>
+
+                            <label class="radio-inline">
+                                <?= Element::radio('hotel[penality_cancelation_type]', 'd', $entity['penality_cancelation_type'] == 'd'); ?> <? $this->show('Days'); ?>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                          <label><? $this->show('A penalty will be withheld'); ?> % </label>
+                          <?= Element::number('hotel[penality_percentage]', $entity['penality_percentage'], ['class' => 'form-control', 'min' => 1, 'max' => 100]); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="well">
+                            <div class="radio">
+                                <label>
+                                    <?= Element::radio('hotel[penality_percentage_type]', 'T', $entity['penality_percentage_type'] == 'T'); ?> <? $this->show('From total reservation price'); ?>
+                                </label>
+                            </div>
+
+                            <div class="radio">
+                                <label>
+                                    <?= Element::radio('hotel[penality_percentage_type]', 'N', $entity['penality_percentage_type'] == 'N'); ?> <? $this->show('From price of the first night'); ?>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
         </div>
     </div>
 
