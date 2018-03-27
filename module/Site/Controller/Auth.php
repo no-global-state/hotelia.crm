@@ -51,7 +51,9 @@ final class Auth extends AbstractCrmController
             // Then simply go home
             return $this->response->redirect('/crm');
         } else {
-            return $this->view->render('login');
+            return $this->view->render('login', [
+                'login' => true
+            ]);
         }
     }
 
