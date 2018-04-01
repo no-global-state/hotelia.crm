@@ -34,6 +34,7 @@ final class Crm extends AbstractCrmController
 
         return $this->view->render('home', array(
             'states' => $this->getModuleService('reservationService')->countStates($this->getHotelId()),
+            'reservations' => $this->getModuleService('reservationService')->fetchLatest($this->getHotelId()),
             'transactions' => $mapper->fetchLast($this->getHotelId()),
             'stat' => $this->getModuleService('roomService')->createStat($this->getHotelId()),
             'pageTitle' => 'My property',
