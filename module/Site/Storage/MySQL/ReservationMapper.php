@@ -5,6 +5,7 @@ namespace Site\Storage\MySQL;
 use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Db\Sql\RawBinding;
 use Krystal\Db\Filter\FilterableServiceInterface;
+use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
 use Closure;
 
@@ -317,6 +318,17 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
         return $this->findByConstraint(function($db) use ($id){
             $db->whereEquals(self::getFullColumnName($this->getPk()), $id);
         });
+    }
+
+    /**
+     * Fetch latest reservations
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchLatest(int $hotelId) : array
+    {
+        return $this->filter(new InputDecorator(), 1, 10, false, true, ['hotel_id' => $hotelId]);
     }
 
     /**

@@ -75,6 +75,17 @@ final class ReservationService
     }
 
     /**
+     * Fetch latest reservations
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchLatest(int $hotelId) : array
+    {
+        return $this->reservationMapper->fetchLatest($hotelId);
+    }
+
+    /**
      * Find reservations
      * 
      * @param string $type Optional room type filter
