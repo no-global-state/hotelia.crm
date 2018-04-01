@@ -11,6 +11,14 @@ use DateTime;
 
 final class RoomService
 {
+    const PARAM_ROOM_COUNT = 1;
+    const PARAM_FLOOR_COUNT = 2;
+    const PARAM_TAKEN_ROOM_COUNT = 3;
+    const PARAM_FREE_ROOM_COUNT = 4;
+    const PARAM_FREE_ROOMS_TODAY = 5;
+    const PARAM_FREE = 6;
+    const PARAM_TAKEN = 7;
+
     /**
      * Any compliant mapper implementing room mapper
      * 
@@ -157,15 +165,41 @@ final class RoomService
         $free = Math::percentage($room['rooms_count'], $room['rooms_taken']);
         $taken = 100 - $free;
 
-        // Statistic
         return [
-            'Total room count' => (int) $room['rooms_count'],
-            'Total floors count' => (int) $floorCount,
-            'Taken rooms count' => (int) $room['rooms_taken'],
-            'Free rooms count' => (int) ($room['rooms_count'] - $room['rooms_taken']),
-            'Rooms freeing today' => (int) $room['rooms_leaving_today'],
-            'Free' => $free . ' % ',
-            'Taken' => $taken . ' % ',
+            self:: PARAM_ROOM_COUNT => [
+                'value' => (int) $room['rooms_count'],
+                'description' => 'Total room count',
+            ],
+
+            self::PARAM_FLOOR_COUNT => [
+                'value' => (int) $floorCount,
+                'description' => 'Total floors count',
+            ],
+
+            self::PARAM_TAKEN_ROOM_COUNT => [
+                'value' => (int) $room['rooms_taken'],
+                'description' => 'Taken rooms count',
+            ],
+
+            self::PARAM_FREE_ROOM_COUNT => [
+                'value' => (int) ($room['rooms_count'] - $room['rooms_taken']),
+                'description' => 'Free rooms count',
+            ],
+
+            self::PARAM_FREE_ROOMS_TODAY => [
+                'value' => (int) $room['rooms_leaving_today'],
+                'description' => 'Rooms freeing today',
+            ],
+
+            self::PARAM_FREE => [
+                'value' => $free . ' % ',
+                'description' => 'Free',
+            ],
+
+            self::PARAM_TAKEN => [
+                'value' => $taken . ' % ',
+                'description' => 'Taken',
+            ]
         ];
     }
 
