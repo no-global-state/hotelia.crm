@@ -80,9 +80,9 @@ final class ReservationService
      * Saves a reservation
      * 
      * @param array $data
-     * @return int
+     * @return array
      */
-    public function save(array $data) : int
+    public function save(array $data) : array
     {
         return $this->reservationMapper->persistRow($data);
     }
