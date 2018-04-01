@@ -7,6 +7,8 @@ use DateInterval;
 use DatePeriod;
 use LogicException;
 use Site\Storage\MySQL\ReservationMapper;
+use Site\Collection\ReservationCollection;
+use Krystal\Stdlib\ArrayUtils;
 
 final class ReservationService
 {
@@ -28,6 +30,26 @@ final class ReservationService
     public function __construct(ReservationMapper $reservationMapper)
     {
         $this->reservationMapper = $reservationMapper;
+    }
+
+    /**
+     * Counts by reservation states
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function countStates(int $hotelId) : array
+    {
+        $rows = ArrayUtils::arrayList($this->reservationMapper->countStates($hotelId), 'state', 'count');
+
+        // Add missing values on absence
+        foreach ((new ReservationCollection)->getAll() as $key => $value) {
+            if (!isset($rows[$key])) {
+                $rows[$key] = 0;
+            }
+        }
+
+        return $rows;
     }
 
     /**

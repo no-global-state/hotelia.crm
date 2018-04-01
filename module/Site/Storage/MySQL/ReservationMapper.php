@@ -66,6 +66,22 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Counts by reservation states
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function countStates(int $hotelId) : array
+    {
+        return $this->db->select('state')
+                        ->count('id', 'count')
+                        ->from(self::getTableName())
+                        ->whereEquals('hotel_id', $hotelId)
+                        ->groupBy('state')
+                        ->queryAll();
+    }
+
+    /**
      * Finds full name of reservation ID
      * 
      * @param int $id Reservation ID
