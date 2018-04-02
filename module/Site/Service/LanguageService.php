@@ -110,7 +110,7 @@ final class LanguageService
     public static function normalizeEntity($entity)
     {
         if ($entity['id']) {
-            $entity = $entity instanceof ArrayAccess ? $item[0] : $entity;
+            $entity = $entity instanceof ArrayAccess ? $entity[0] : $entity;
         }
 
         return $entity;
