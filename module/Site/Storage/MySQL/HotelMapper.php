@@ -370,7 +370,16 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
      */
     public function filter($input, $page, $itemsPerPage, $sortingColumn, $desc, array $parameters = array())
     {
-        $db = $this->createEntitySelect($this->getColumns())
+        // Columns to be selected
+        $columns = array_merge($this->getColumns(), [
+            UserMapper::column('id') => 'user_id'
+        ]);
+
+        $db = $this->createEntitySelect($columns)
+                   // User relation
+                   ->leftJoin(UserMapper::getTableName(), [
+                        UserMapper::column('hotel_id') => self::column('id')
+                    ])
                    // Language ID constraint
                    ->whereEquals(self::getDynamicAttribute('lang_id'), $parameters['lang_id'])
                    ->andWhereLike(self::getDynamicAttribute('name'), '%'.$input['name'].'%', true)
