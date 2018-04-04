@@ -47,6 +47,8 @@ final class Property extends AbstractCrmController
         ]);
 
         return $this->view->render('property/index', [
+            'pageTitle' => 'Property list',
+            'icon' => 'glyphicon glyphicon-list-alt',
             'data' => $data,
             'query' => $query,
             'route' => $route,
