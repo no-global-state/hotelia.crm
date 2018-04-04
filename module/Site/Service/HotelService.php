@@ -36,6 +36,17 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Deletes a hotel by its ID
+     * 
+     * @param int $id Hotel ID
+     * @return boolean
+     */
+    public function deleteById(int $id)
+    {
+        return $this->hotelMapper->deleteByPk($id);
+    }
+
+    /**
      * Registers a new hotel
      * Required keys: email, phone, name, login, password
      * 
