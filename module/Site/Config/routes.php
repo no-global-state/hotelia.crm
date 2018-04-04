@@ -386,7 +386,11 @@ return [
     '/hotel/(:var)' => [
         'controller' => 'Site@hotelAction'
     ],
-    
+
+    '/hotel/delete/(:var)' => [
+        'controller' => 'Hotel@deleteAction'
+    ],
+
     '/site/captcha/(:var)' => [
         'controller' => 'Site@captchaAction'
     ],

@@ -9,6 +9,20 @@ use Site\Collection\BreakfastCollection;
 final class Hotel extends AbstractCrmController
 {
     /**
+     * Deletes a hotel by user ID
+     * 
+     * @param int $userId
+     * @return void
+     */
+    public function deleteAction(int $id) : void
+    {
+        $this->getModuleService('hotelService')->deleteById($id);
+
+        $this->flashBag->set('danger', 'The hotel has been deleted successfully');
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Renders the form
      * 
      * @return string
