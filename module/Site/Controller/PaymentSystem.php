@@ -14,7 +14,12 @@ final class PaymentSystem extends AbstractCrmController
      */
     private function createForm($entity)
     {
+        // Append a payment system
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Payment systems');
+
         return $this->view->render('payment-system/index', [
+            'icon' => 'glyphicon glyphicon-credit-card',
             'entity' => $entity,
             'paymentSystems' => $this->getModuleService('paymentSystemService')->fetchAll()
         ]);
