@@ -13,7 +13,12 @@ final class RoomCategory extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room categories');
+
         return $this->view->render('room-category/index', [
+            'icon' => 'glyphicon glyphicon-resize-full',
             'categories' => $this->getModuleService('roomCategoryService')->fetchAll($this->getCurrentLangId())
         ]);
     }
@@ -26,8 +31,14 @@ final class RoomCategory extends AbstractCrmController
      */
     private function createForm($category) : string
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Room categories', $this->createUrl('Site:RoomCategory@indexAction'))
+                   ->addOne(!is_array($category) ? 'Add room category' : 'Edit the room category');
+
         return $this->view->render('room-category/form', [
-            'category' => $category
+            'category' => $category,
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 

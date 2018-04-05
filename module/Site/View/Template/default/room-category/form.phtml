@@ -26,8 +26,6 @@ use Krystal\Form\Element;
 
                         <?php $this->loadPartial('language-name', ['language' => $language]); ?>
 
-                        <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the room category' : 'Add room category'); ?></legend>
-
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>
                           <div class="col-lg-10">
