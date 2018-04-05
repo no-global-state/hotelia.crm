@@ -33,8 +33,13 @@ final class Language extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('helpers/languages', [
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Languages');
+
+        return $this->view->render('languages/index', [
             'languages' => $this->getModuleService('languageService')->fetchAll(),
+            'icon' => 'glyphicon glyphicon-flag',
             'entity' => $entity
         ]);
     }
