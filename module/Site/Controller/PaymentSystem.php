@@ -14,7 +14,7 @@ final class PaymentSystem extends AbstractCrmController
      */
     private function createForm($entity)
     {
-        return $this->view->render('helpers/payment-system', [
+        return $this->view->render('payment-system/index', [
             'entity' => $entity,
             'paymentSystems' => $this->getModuleService('paymentSystemService')->fetchAll()
         ]);

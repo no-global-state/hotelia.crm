@@ -14,7 +14,7 @@ final class PaymentField extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('helpers/payment-field', [
+        return $this->view->render('payment-system/field', [
             'name' => $this->getModuleService('paymentSystemService')->findNameById($entity['payment_system_id']),
             'entity' => $entity,
             'fields' => $this->getModuleService('paymentFieldService')->findAllByPaymentSystemId($entity['payment_system_id'])
