@@ -165,6 +165,7 @@ final class Module extends AbstractModule
 
             'roomTypeService' => new RoomTypeService(
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeMapper'),
+                $this->createMapper('\Site\Storage\MySQL\RoomTypeGalleryMapper'),
                 $this->createMapper('\Site\Storage\MySQL\RoomMapper'),
                 $this->createMapper('\Site\Storage\MySQL\RoomTypePriceMapper'),
                 $this->createMapper('\Site\Storage\MySQL\FacilitiyCategoryMapper')

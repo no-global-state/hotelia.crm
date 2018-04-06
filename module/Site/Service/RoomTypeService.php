@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
+use Site\Storage\MySQL\RoomTypeGalleryMapper;
 use Site\Storage\MySQL\PriceGroupMapper;
 use Site\Storage\MySQL\RoomTypePriceMapper;
 use Site\Storage\MySQL\FacilitiyCategoryMapper;
@@ -29,6 +30,13 @@ final class RoomTypeService
     private $roomTypeMapper;
 
     /**
+     * Room type gallery mapper
+     * 
+     * @var \Site\Storage\MySQL
+     */
+    private $roomTypeGalleryMapper;
+
+    /**
      * Room type price mapper
      * 
      * @var \Site\Storage\MySQL\RoomTypePriceMapper
@@ -46,14 +54,21 @@ final class RoomTypeService
      * State initialization
      * 
      * @param \Site\Storage\MySQL\RoomTypeMapper $roomTypeMapper
+     * @param \Site\Storage\MySQL\RoomTypeGalleryMapper $roomTypeGalleryMapper
      * @param \Site\Storage\MySQL\RoomMapper $roomMapper
      * @param \Site\Storage\MySQL\RoomTypePriceMapper $roomTypePriceMapper
      * @param \Site\Storage\MySQL\FacilitiyCategoryMapper $facilityCategoryMapper
      * @return void
      */
-    public function __construct(RoomTypeMapper $roomTypeMapper, RoomMapper $roomMapper, RoomTypePriceMapper $roomTypePriceMapper, FacilitiyCategoryMapper $facilityCategoryMapper)
-    {
+    public function __construct(
+        RoomTypeMapper $roomTypeMapper, 
+        RoomTypeGalleryMapper $roomTypeGalleryMapper, 
+        RoomMapper $roomMapper, 
+        RoomTypePriceMapper $roomTypePriceMapper, 
+        FacilitiyCategoryMapper $facilityCategoryMapper
+    ){
         $this->roomTypeMapper = $roomTypeMapper;
+        $this->roomTypeGalleryMapper = $roomTypeGalleryMapper;
         $this->roomMapper = $roomMapper;
         $this->roomTypePriceMapper = $roomTypePriceMapper;
         $this->facilityCategoryMapper = $facilityCategoryMapper;
@@ -194,9 +209,31 @@ final class RoomTypeService
             if ($withFacilities === true) {
                 $row['facilities'] = $this->findFacilities($row['id'], $langId, null, false, true);
             }
+
+            // Find gallery
+            $row['gallery'] = $this->createGallery($row['id']);
         }
 
         return $rows;
+    }
+
+    /**
+     * Prepares and parses gallery
+     * 
+     * @param int $roomTypeId
+     * @return array
+     */
+    private function createGallery(int $roomTypeId)
+    {
+        $rows = $this->roomTypeGalleryMapper->fetchAll($roomTypeId);
+
+        $output = [];
+
+        foreach ($rows as $row) {
+            $output[] = self::createImagePath($row['id'], $row['file'], PhotoService::PARAM_IMAGE_SIZE_LARGE);
+        }
+
+        return $output;
     }
 
     /**
