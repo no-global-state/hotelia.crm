@@ -36,6 +36,18 @@ final class FacilitiyService
     }
 
     /**
+     * Fetch translations
+     * 
+     * @param array $hotelIds
+     * @return array
+     */
+    public function fetchRelations(array $hotelIds) : array
+    {
+        $relations = $this->itemMapper->fetchRelations($hotelIds);
+        return ArrayUtils::arrayDropdown($relations, 'hotel_id', 'item_id', 'item_id');
+    }
+
+    /**
      * Update relational data
      * 
      * @param int $hotelId

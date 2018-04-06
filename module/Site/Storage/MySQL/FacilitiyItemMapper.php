@@ -42,6 +42,26 @@ final class FacilitiyItemMapper extends AbstractMapper
     }
 
     /**
+     * Fetch relations: hotel ID -> Item ID
+     * 
+     * @param array $hotelIds
+     * @return array
+     */
+    public function fetchRelations(array $hotelIds) : array
+    {
+        // Columns to be selected
+        $columns = [
+            'master_id' => 'hotel_id', 
+            'slave_id' => 'item_id'
+        ];
+
+        return $this->db->select($columns)
+                        ->from(FacilityRelationMapper::getTableName())
+                        ->whereIn('master_id', $hotelIds)
+                        ->queryAll();
+    }
+
+    /**
      * Fetch item by its ID
      * 
      * @param int $id Category ID
