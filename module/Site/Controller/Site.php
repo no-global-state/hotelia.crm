@@ -177,6 +177,9 @@ final class Site extends AbstractSiteController
             $region = null;
         }
 
+        $hotels = $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery(), $sort);
+        $hotels = $this->getModuleService('facilitiyService')->appendFacilityMapToHotels($hotels);
+
         return $this->view->render('search', [
             'region' => $region,
 
@@ -196,7 +199,7 @@ final class Site extends AbstractSiteController
             'sort' => $sort,
 
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
-            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery(), $sort),
+            'hotels' => $hotels,
             'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
             'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getCurrentLangId(), true)
         ]);
@@ -253,6 +256,8 @@ final class Site extends AbstractSiteController
             'regionId' => $hotel['region_id'],
 
             'facilities' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $hotelId, true),
+            'facilityMap' => $this->getModuleService('facilitiyService')->fetchSingleRelation($hotelId),
+
             // Hotel images
             'images' => [
                 'large' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
