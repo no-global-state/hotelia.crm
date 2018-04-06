@@ -84,6 +84,25 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
             <div class="collapse navbar-collapse navbar-ex1-collapse">
               <?php if ($isLoggedIn): ?>
               <ul class="nav navbar-nav side-nav">
+                <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true): ?>
+                <li>
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
+                  <ul id="menu-admin" class="collapse">
+                    <li><a href="<?= $this->url('Site:RoomCategory@indexAction'); ?>"><i class="glyphicon glyphicon-align-right"></i> <? $this->show('Room categories'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Property@indexAction', null); ?>"><i class="glyphicon glyphicon-tasks"></i> <? $this->show('Properties'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>"><i class="glyphicon glyphicon-star"></i> <? $this->show('Review types'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Region@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Regions'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Meals@indexAction'); ?>"><i class="glyphicon glyphicon-glass"></i> <? $this->show('Meals'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Dictionary@indexAction'); ?>"><i class="glyphicon glyphicon-book"></i> <? $this->show('Dictionary'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:PaymentSystem@indexAction'); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Payment systems'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Language@indexAction'); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Languages'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:HotelType@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Hotel types'); ?></a></li>
+                  </ul>
+                </li>
+                <?php endif; ?>
+
                 <?php if ($role == UserService::USER_ROLE_USER || $admin == true): ?>
                 <li><a href="<?= $this->url('Site:Reservation@tableAction', null); ?>"><i class="glyphicon glyphicon-blackboard"></i> <?php $this->show('Desktop'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <?php $this->show('Clients'); ?></a></li>
@@ -109,25 +128,6 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                   <ul id="menu-reports" class="collapse">
                     <li><a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Transactions'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Stat@indexAction'); ?>"><i class="glyphicon glyphicon-stats"></i> <? $this->show('Statistic'); ?></a></li>
-                  </ul>
-                </li>
-                <?php endif; ?>
-
-                <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true): ?>
-                <li>
-                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
-                  <ul id="menu-admin" class="collapse">
-                    <li><a href="<?= $this->url('Site:RoomCategory@indexAction'); ?>"><i class="glyphicon glyphicon-align-right"></i> <? $this->show('Room categories'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Property@indexAction', null); ?>"><i class="glyphicon glyphicon-tasks"></i> <? $this->show('Properties'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>"><i class="glyphicon glyphicon-star"></i> <? $this->show('Review types'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Region@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Regions'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Meals@indexAction'); ?>"><i class="glyphicon glyphicon-glass"></i> <? $this->show('Meals'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Dictionary@indexAction'); ?>"><i class="glyphicon glyphicon-book"></i> <? $this->show('Dictionary'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:PaymentSystem@indexAction'); ?>"><i class="glyphicon glyphicon-credit-card"></i> <? $this->show('Payment systems'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Facility:Grid@indexAction'); ?>"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Language@indexAction'); ?>"><i class="glyphicon glyphicon-flag"></i> <? $this->show('Languages'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:PriceGroup@indexAction'); ?>"><i class="glyphicon glyphicon-euro"></i> <? $this->show('Price groups'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:HotelType@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Hotel types'); ?></a></li>
                   </ul>
                 </li>
                 <?php endif; ?>
