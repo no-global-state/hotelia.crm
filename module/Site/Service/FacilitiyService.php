@@ -36,6 +36,18 @@ final class FacilitiyService
     }
 
     /**
+     * Checks whether at least one item id is present in the map
+     * 
+     * @param array $ids
+     * @param array $map
+     * @return boolean
+     */
+    public static function hasAtLeastOneFacility(array $ids, array $map) : bool
+    {
+        return (bool) array_intersect($ids, $map);
+    }
+
+    /**
      * Fetches relations for single hotel
      * 
      * @param int $hotelId
