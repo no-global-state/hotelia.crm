@@ -14,8 +14,13 @@ final class PriceGroup extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('helpers/price-group', [
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Price groups');
+
+        return $this->view->render('price-group/index', [
             'entity' => $entity,
+            'icon' => 'glyphicon glyphicon-euro',
             'priceGroups' => $this->getModuleService('priceGroupService')->fetchAll()
         ]);
     }
