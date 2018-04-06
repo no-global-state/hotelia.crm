@@ -36,6 +36,29 @@ final class FacilitiyService
     }
 
     /**
+     * Append facility item map to collection of hotels
+     * 
+     * @param array $hotels
+     * @return array
+     */
+    public function appendFacilityMapToHotels(array $hotels) : array
+    {
+        // Get hotel IDs
+        $hotelIds = array_column($hotels, 'id');
+
+        $relations = $this->fetchRelations($hotelIds);
+
+        // Append relations to hotel map
+        foreach ($hotels as &$hotel) {
+            if (isset($relations[$hotel['id']])) {
+                $hotel['facility_map'] = $relations[$hotel['id']];
+            }
+        }
+
+        return $hotels;
+    }
+
+    /**
      * Checks whether at least one item id is present in the map
      * 
      * @param array $ids
