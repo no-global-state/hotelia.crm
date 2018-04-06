@@ -29,7 +29,7 @@ use Krystal\Form\Element;
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Value'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text(sprintf('translation[%s][value]', $language['id']), $entity['value'], array('class' => 'form-control')); ?>
+                            <?= Element::textarea(sprintf('translation[%s][value]', $language['id']), htmlspecialchars($entity['value']), array('class' => 'form-control')); ?>
                           </div>
                         </div>
                     </div>
