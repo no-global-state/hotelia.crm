@@ -36,6 +36,18 @@ final class FacilitiyService
     }
 
     /**
+     * Fetches relations for single hotel
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function fetchSingleRelation(int $hotelId) : array
+    {
+        $list = $this->fetchRelations([$hotelId]);
+        return isset($list[$hotelId]) ? $list[$hotelId] : [];
+    }
+
+    /**
      * Fetch translations
      * 
      * @param array $hotelIds
