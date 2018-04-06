@@ -432,6 +432,7 @@ CREATE TABLE velveto_hotels (
     `restaurant_closing` varchar(5),
     `center_distance` varchar(10),
 
+    `penality_enabled` BOOLEAN,
     `penality_not_taken_after` INT,
     `penality_not_later_arrival` INT,
     `penality_cancelation_item` INT,

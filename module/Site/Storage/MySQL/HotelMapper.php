@@ -85,6 +85,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             self::getFullColumnName('restaurant_opening'),
             self::getFullColumnName('restaurant_closing'),
             self::getFullColumnName('center_distance'),
+            self::getFullColumnName('penality_enabled'),
             self::getFullColumnName('penality_not_taken_after'),
             self::getFullColumnName('penality_not_later_arrival'),
             self::getFullColumnName('penality_cancelation_item'),
