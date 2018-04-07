@@ -36,6 +36,26 @@ final class RoomCategoryMapper extends AbstractMapper
     }
 
     /**
+     * Find attached IDs by associated hotel ID
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function findAttachedIds(int $hotelId) : array
+    {
+        $db = $this->db->select(self::column($this->getPk()))
+                        ->from(RoomTypeMapper::getTableName())
+                        // Room category relation
+                        ->leftJoin(self::getTableName(), [
+                            self::getFullColumnName('id') => RoomTypeMapper::getRawColumn('category_id')
+                        ])
+                        // Hotel ID constraint
+                        ->whereEquals(RoomTypeMapper::getFullColumnName('hotel_id'), $hotelId);
+
+        return $db->queryAll($this->getPk());
+    }
+
+    /**
      * Fetch region by its ID
      * 
      * @param int $id Region ID
