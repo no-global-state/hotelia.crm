@@ -75,17 +75,6 @@ return array(
         'view' => array(
             'theme' => 'default',
             'plugins' => array(
-                // Day pilot
-                'daypilot' => [
-                    'scripts' => [
-                        '@Site/daypilot/js/daypilot-all.min.js',
-                        '@Site/daypilot-handler.js',
-                    ],
-                    'stylesheets' => [
-                        '@Site/daypilot-styles.css',
-                    ]
-                ],
-
                 // Site plugin
                 'site' => $_ENV['site'],
 
@@ -96,7 +85,7 @@ return array(
 						'@Site/map.js',
                     ]
                 ],
-                
+
                 // Font awesome
                 'font-awesome' => [
 					'stylesheets' => array(
