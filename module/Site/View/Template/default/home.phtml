@@ -11,62 +11,176 @@ use Site\Service\UserService;
 </div>
 <?php endif; ?>
 
-<div class="row home-row">
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Reservation@tableAction', null); ?>"><i class="glyphicon glyphicon-tasks"></i><br /><? $this->show('Desktop'); ?></a>
+<div class="row">
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-universal-access fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><?= $states[0]; ?></div>
+                        <div><? $this->show('New reservations'); ?></div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', ['filter[state]' => '0']); ?>">
+                <div class="panel-footer">
+                    <span class="pull-left"><? $this->show('View'); ?></span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-pencil"></i><br /><? $this->show('New reservation'); ?></a>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-green">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-ok fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><?= $states[1]; ?></div>
+                        <div><? $this->show('Confirmed'); ?></div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', ['filter[state]' => '1']); ?>">
+                <div class="panel-footer">
+                    <span class="pull-left"><? $this->show('View'); ?></span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i><br /><? $this->show('Find a free room'); ?></a>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-yellow">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="fa fa-question-circle-o fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><?= $states[2]; ?></div>
+                        <div><? $this->show('Unconfirmed'); ?></div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', ['filter[state]' => '2']); ?>">
+                <div class="panel-footer">
+                    <span class="pull-left"><? $this->show('View'); ?></span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
     </div>
 
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i><br /><? $this->show('Customer list'); ?></a>
-    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="panel panel-red">
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <i class="glyphicon glyphicon-remove fa-5x"></i>
+                    </div>
+                    <div class="col-xs-9 text-right">
+                        <div class="huge"><?= $states[3]; ?></div>
+                        <div><? $this->show('Cancellations'); ?></div>
+                    </div>
+                </div>
+            </div>
 
-    <div class="col-lg-4">
-        <a href="#" data-toggle="modal" data-target="#statModal"><i class="glyphicon glyphicon-calendar"></i><br /><? $this->show('Statistic'); ?></a>
-    </div>
-
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><i class="glyphicon glyphicon-credit-card"></i><br /><? $this->show('Transactions'); ?></a>
-    </div>
-
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Review:Review@indexAction'); ?>"><i class="glyphicon glyphicon-signal"></i><br /><? $this->show('Customer reviews'); ?></a>
-    </div>
-
-    <div class="col-lg-4">
-        <a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-send"></i><br /><? $this->show('Configuration'); ?></a>
+            <a href="<?= $this->createQueryUrl('Site:Reservation@indexAction', ['filter[state]' => '3']); ?>">
+                <div class="panel-footer">
+                    <span class="pull-left"><? $this->show('View'); ?></span>
+                    <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                    <div class="clearfix"></div>
+                </div>
+            </a>
+        </div>
     </div>
 </div>
 
-<!-- Modal -->
-<div id="statModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title"><i class="glyphicon glyphicon-calendar"></i> <? $this->show('Statistic'); ?></h4>
-      </div>
-      <div class="modal-body">
-        <div class="list-group">
-          <?php foreach ($stat as $name => $value): ?>
-          <a href="#" class="list-group-item">
-            <h4 class="list-group-item-heading"><? $this->show($name); ?></h4>
-            <p class="list-group-item-text"><b><?= $value; ?></b></span></p>
-          </a>
-          <?php endforeach; ?>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-long-arrow-right fa-fw"></i> <? $this->show('Sales funnel'); ?></h3>
+            </div>
+
+            <div class="panel-body">
+                <div id="morris-donut-chart">
+                    <svg height="372" version="1.1" width="306" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;">
+                        <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with RaphaÃ«l 2.1.2</desc>
+                        <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
+                        <path fill="none" stroke="#0b62a4" d="M153,283.8333333333333A95.33333333333333,95.33333333333333,0,0,0,243.10368304650171,219.6411423345388" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#0b62a4" stroke="#ffffff" d="M153,286.8333333333333A98.33333333333333,98.33333333333333,0,0,0,245.93911363188113,220.62110835205925L283.4298069274535,233.5784368059408A138,138,0,0,1,153,326.5Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#3980b5" d="M243.10368304650171,219.6411423345388A95.33333333333333,95.33333333333333,0,0,0,67.48942206387726,146.35281141671817" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path><path fill="#3980b5" stroke="#ffffff" d="M245.93911363188113,220.62110835205925A98.33333333333333,98.33333333333333,0,0,0,64.79852975120207,145.02650128647502L24.734133095815878,125.27921712507725A143,143,0,0,1,288.1555245697525,235.21171350180822Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#679dc6" d="M67.48942206387726,146.35281141671817A95.33333333333333,95.33333333333333,0,0,0,152.97005015052835,283.83332862882196" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#679dc6" stroke="#ffffff" d="M64.79852975120207,145.02650128647502A98.33333333333333,98.33333333333333,0,0,0,152.96910767274778,286.8333284807779L152.9566460220935,326.499993189973A138,138,0,0,1,29.218953616941192,127.48973400881582Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="153" y="178.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-stretch: normal; font-size: 15px; line-height: normal; font-family: Arial;" font-size="15px" font-weight="800" transform="matrix(1.4924,0,0,1.4924,-75.3298,-93.3054)" stroke-width="0.6700721153846154"><tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><? $this->show(date('F')); ?></tspan></text><text x="153" y="198.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Arial;" font-size="14px" transform="matrix(1.9861,0,0,1.9861,-150.9674,-187.8542)" stroke-width="0.5034965034965035">
+                        <tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><?= $states[1]; ?></tspan>
+                        </text>
+                    </svg>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><? $this->show('Close'); ?></button>
-      </div>
     </div>
-  </div>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-clock-o fa-fw"></i> <? $this->show('Recent actions'); ?></h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="list-group">
+                    <?php foreach ($reservations as $reservation): ?>
+                    <a href="<?= $this->url('Site:Reservation@printAction', $reservation['id']); ?>" class="list-group-item">
+                        <i class="fa fa-fw fa-user"></i> <?= $reservation['full_name']; ?> <? $this->show('has been registered'); ?>
+                    </a>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i> <? $this->show('Recent transactions'); ?></h3>
+            </div>
+
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th><? $this->show('Date'); ?></th>
+                                <th><? $this->show('Amount'); ?></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <?php foreach ($transactions as $transaction): ?>
+                            <tr>
+                                <td><?= $transaction['id']; ?></td>
+                                <td><?= $transaction['datetime']; ?></td>
+                                <td><?= number_format($transaction['amount']), ' ', $transaction['currency']; ?></td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="text-right">
+                    <a href="<?= $this->url('Site:Transaction@indexAction', null); ?>"><? $this->show('Show all transactions'); ?> <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
