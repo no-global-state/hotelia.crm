@@ -129,6 +129,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             DistrictTranslationMapper::getFullColumnName('name') => 'district',
             PhotoMapper::getFullColumnName('file') => 'cover',
             PhotoMapper::getFullColumnName('id') => 'cover_id',
+            RoomCategoryTranslationMapper::column('name') => 'room'
         ];
 
         $db = $this->db->select($columns, true)
@@ -195,11 +196,34 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        ->leftJoin(FacilityRelationMapper::getTableName(), [
                             FacilityRelationMapper::getFullColumnName('master_id') => self::getRawColumn('id')
                        ])
+                       // Room type relation
+                       ->leftJoin(RoomTypeMapper::getTableName(), [
+                            RoomTypeMapper::column('hotel_id') => self::getRawColumn('id')
+                       ])
+                       // Room type translation relation
+                       ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
+                            RoomTypeTranslationMapper::column('id') => RoomTypeMapper::getRawColumn('id'),
+                            RoomTypeTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+                       ])
+                       // Room category relation
+                       ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomCategoryMapper::column('id') => RoomTypeMapper::getRawColumn('category_id'),
+                       ])
+                       // Room category translation mapper
+                       ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id'),
+                            RoomCategoryTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+                       ])
                        // Constraints
                        ->whereEquals(HotelTranslationMapper::getFullColumnName('lang_id'), new RawSqlFragment($langId))
                        ->andWhereEquals(self::getFullColumnName('active'), new RawSqlFragment(1))
                        ->andWhereEquals(self::getFullColumnName('closed'), new RawSqlFragment(0))
                        ->andWhereEquals(RoomTypePriceMapper::getFullColumnName('price_group_id'), new RawSqlFragment($priceGroupId));
+
+        // Adults count
+        if (isset($filters['adults'])) {
+            $db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
+        }
 
         // Type filter
         if (isset($filters['type']) && is_array($filters['type'])) {
