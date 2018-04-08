@@ -57,6 +57,13 @@ use Site\Service\LanguageService;
               </div>
             </div>
 
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('Children capacity'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::select('type[children]', $this->translateArray($children), $entity['children'], ['class' => 'form-control']); ?>
+              </div>
+            </div>
+
             <?php foreach ($priceGroups as $priceGroup): ?>
             <div class="form-group">
               <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>

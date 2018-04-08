@@ -11,6 +11,7 @@
 
 namespace Site\Controller\Architecture;
 
+use Site\Collection\ChildrenCountCollection;
 use Site\Controller\AbstractCrmController;
 use Site\Collection\FacilityTypeCollection;
 use Krystal\Db\Filter\InputDecorator;
@@ -45,6 +46,7 @@ final class RoomType extends AbstractCrmController
         return $this->view->render('room-type/form', [
             'icon' => 'glyphicon glyphicon-pencil',
             'type' => $type,
+            'children' => (new ChildrenCountCollection())->getAll(),
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
             'priceGroups' => $priceGroups,
