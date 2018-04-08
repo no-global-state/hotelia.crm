@@ -31,8 +31,10 @@ final class RoomType extends AbstractCrmController
         // Get ID if possible
         if (is_array($type)) {
             $id = $type[0]['id'];
+            $categoryId = $type[0]['category_id'];
         } else {
             $id = null;
+            $categoryId = null;
         }
 
         // Add a breadcrumb
@@ -44,7 +46,7 @@ final class RoomType extends AbstractCrmController
             'icon' => 'glyphicon glyphicon-pencil',
             'type' => $type,
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
-            'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
+            'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
             'priceGroups' => $priceGroups,
             // Facilities
             'types' => (new FacilityTypeCollection)->getAll(),
