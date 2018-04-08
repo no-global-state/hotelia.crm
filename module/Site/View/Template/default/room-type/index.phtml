@@ -21,6 +21,7 @@ use Krystal\Form\Element;
                 <th><?php $this->show('Name'); ?></th>
                 <th class="col-lg-3"><?php $this->show('Description'); ?></th>
                 <th><?php $this->show('Persons'); ?></th>
+                <th><?php $this->show('Children capacity'); ?></th>
                 <th><?php $this->show('Prices'); ?></th>
                 <th><?php $this->show('Actions'); ?></th>
             </tr>
@@ -34,6 +35,13 @@ use Krystal\Form\Element;
                 <td class="col-lg-3"><?= $type['description']; ?></td>
                 <td>
                     <?= str_repeat('<i class="glyphicon glyphicon-user"></i> ', $type['persons']); ?>
+                </td>
+                <td>
+                    <?php if ($type['children'] > 0): ?>
+                    <?= str_repeat('<i class="glyphicon glyphicon-user"></i> ', $type['children']); ?>
+                    <?php else: ?>
+                    <em><? $this->show('Without children'); ?></em>
+                    <?php endif; ?>
                 </td>
                 <td>
                     <?php foreach ($type['prices'] as $price): ?>
