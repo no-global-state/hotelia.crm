@@ -128,9 +128,13 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             RegionTranslationMapper::column('name') => 'region',
             DistrictTranslationMapper::column('name') => 'district',
             PhotoMapper::column('file') => 'cover',
-            PhotoMapper::column('id') => 'cover_id',
-            RoomCategoryTranslationMapper::column('name') => 'room'
+            PhotoMapper::column('id') => 'cover_id'
         ];
+
+        // Adults count
+        if (isset($filters['adults'])) {
+            $columns[RoomCategoryTranslationMapper::column('name')] = 'room';
+        }
 
         $db = $this->db->select($columns, true)
                        ->min(RoomTypePriceMapper::column('price'), 'start_price')
