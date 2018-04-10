@@ -30,10 +30,10 @@ final class HotelTypeMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            HotelTypeTranslationMapper::getFullColumnName('name'),
-            HotelTypeTranslationMapper::getFullColumnName('lang_id'),
+            self::column('id'),
+            self::column('order'),
+            HotelTypeTranslationMapper::column('name'),
+            HotelTypeTranslationMapper::column('lang_id'),
         ];
     }
 
@@ -49,24 +49,24 @@ final class HotelTypeMapper extends AbstractMapper
 
         // Columns to be selected
         $columns = [
-            self::getFullColumnName('id'),
-            HotelTypeTranslationMapper::getFullColumnName('name')
+            self::column('id'),
+            HotelTypeTranslationMapper::column('name')
         ];
 
         $db = $this->db->select($columns)
-                       ->count(HotelMapper::getFullColumnName('id'), 'count')
+                       ->count(HotelMapper::column('id'), 'count')
                        ->from(self::getTableName())
                        // Translate relation
                        ->leftJoin(HotelTypeTranslationMapper::getTableName(), [
-                            HotelTypeTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
+                            HotelTypeTranslationMapper::column('id') => self::getRawColumn('id')
                        ])
                        // Hotel relation
                        ->leftJoin(HotelMapper::getTableName(), [
-                            HotelMapper::getFullColumnName('type_id') => self::getRawColumn('id'),
-                            HotelMapper::getFullColumnName('active') => new RawSqlFragment(1)
+                            HotelMapper::column('type_id') => self::getRawColumn('id'),
+                            HotelMapper::column('active') => new RawSqlFragment(1)
                        ])
                        // Language ID constraint
-                       ->whereEquals(HotelTypeTranslationMapper::getFullColumnName('lang_id'), new RawSqlFragment($langId))
+                       ->whereEquals(HotelTypeTranslationMapper::column('lang_id'), new RawSqlFragment($langId))
                        ->groupBy($columns);
 
         return $db->queryAll();
@@ -93,7 +93,7 @@ final class HotelTypeMapper extends AbstractMapper
     public function fetchAll(int $langId) : array
     {
         return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(HotelTypeTranslationMapper::getFullColumnName('lang_id'), $langId)
+                    ->whereEquals(HotelTypeTranslationMapper::column('lang_id'), $langId)
                     ->orderBy($this->getPk())
                     ->desc()
                     ->queryAll();

@@ -36,22 +36,22 @@ final class RoomTypeGalleryMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('room_type_id'),
-            self::getFullColumnName('file'),
-            self::getFullColumnName('order'),
-            new RawSqlFragment(sprintf('(%s = %s) AS cover', RoomTypeCoverMapper::getFullColumnName('master_id'), self::getFullColumnName('room_type_id')))
+            self::column('id'),
+            self::column('room_type_id'),
+            self::column('file'),
+            self::column('order'),
+            new RawSqlFragment(sprintf('(%s = %s) AS cover', RoomTypeCoverMapper::column('master_id'), self::column('room_type_id')))
         ];
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
                         // Room type relation
                         ->leftJoin(RoomTypeMapper::getTableName(), [
-                            RoomTypeMapper::getFullColumnName('id') => self::getRawColumn('room_type_id')
+                            RoomTypeMapper::column('id') => self::getRawColumn('room_type_id')
                         ])
                         // Room type cover
                         ->leftJoin(RoomTypeCoverMapper::getTableName(), [
-                            RoomTypeCoverMapper::getFullColumnName('slave_id') => self::getRawColumn('id')
+                            RoomTypeCoverMapper::column('slave_id') => self::getRawColumn('id')
                         ])
                         ->whereEquals('room_type_id', $roomTypeId)
                         ->orderBy($this->getPk())

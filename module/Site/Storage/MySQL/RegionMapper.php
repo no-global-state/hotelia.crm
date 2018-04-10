@@ -30,11 +30,11 @@ final class RegionMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            self::getFullColumnName('image'),
-            RegionTranslationMapper::getFullColumnName('lang_id'),
-            RegionTranslationMapper::getFullColumnName('name'),
+            self::column('id'),
+            self::column('order'),
+            self::column('image'),
+            RegionTranslationMapper::column('lang_id'),
+            RegionTranslationMapper::column('name'),
         ];
     }
 
@@ -96,8 +96,8 @@ final class RegionMapper extends AbstractMapper
     public function fetchAll(int $langId) : array
     {
         return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(RegionTranslationMapper::getFullColumnName('lang_id'), $langId)
-                    ->orderBy(self::getFullColumnName('order'))
+                    ->whereEquals(RegionTranslationMapper::column('lang_id'), $langId)
+                    ->orderBy(self::column('order'))
                     ->queryAll();
     }
 }

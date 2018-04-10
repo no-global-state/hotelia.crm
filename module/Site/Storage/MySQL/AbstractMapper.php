@@ -35,9 +35,9 @@ abstract class AbstractMapper extends CoreMapper
     protected static function getDynamicAttribute(string $attr) : string
     {
         if (in_array($attr, static::$translateable)) {
-            return self::getFullColumnName($attr, static::getTranslationTable());
+            return self::column($attr, static::getTranslationTable());
         } else {
-            return self::getFullColumnName($attr);
+            return self::column($attr);
         }
     }
 
@@ -129,8 +129,8 @@ abstract class AbstractMapper extends CoreMapper
                        ->leftJoin(static::getTranslationTable())
                        ->on()
                        ->equals(
-                            static::getFullColumnName(self::PARAM_COLUMN_ID), 
-                            new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                            static::column(self::PARAM_COLUMN_ID), 
+                            new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                         );
     }
 
@@ -145,12 +145,12 @@ abstract class AbstractMapper extends CoreMapper
     final protected function findEntity(array $columns, $id, int $langId = 0)
     {
         $db = $this->createEntitySelect($columns)
-                   ->whereEquals(self::getFullColumnName(self::PARAM_COLUMN_ID), $id);
+                   ->whereEquals(self::column(self::PARAM_COLUMN_ID), $id);
 
         if ($langId == 0) {
             return $db->queryAll();
         } else {
-            return $db->andWhereEquals(self::getFullColumnName(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $langId)
+            return $db->andWhereEquals(self::column(self::PARAM_COLUMN_LANG_ID, static::getTranslationTable()), $langId)
                       ->query();
         }
     }
@@ -179,11 +179,11 @@ abstract class AbstractMapper extends CoreMapper
                      ->innerJoin(static::getTranslationTable())
                      ->on()
                      ->equals(
-                        static::getFullColumnName(self::PARAM_COLUMN_ID), 
-                        new RawSqlFragment(static::getFullColumnName(self::PARAM_COLUMN_ID, static::getTranslationTable()))
+                        static::column(self::PARAM_COLUMN_ID), 
+                        new RawSqlFragment(static::column(self::PARAM_COLUMN_ID, static::getTranslationTable()))
                      )
                      // Current ID
-                     ->whereIn(static::getFullColumnName(self::PARAM_COLUMN_ID), $id)
+                     ->whereIn(static::column(self::PARAM_COLUMN_ID), $id)
                      ->execute();
     }
 }

@@ -28,10 +28,10 @@ final class FacilitiyCategoryMapper extends AbstractMapper
     private function getColumns()
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            FacilitiyCategoryTranslationMapper::getFullColumnName('lang_id'),
-            FacilitiyCategoryTranslationMapper::getFullColumnName('name')
+            self::column('id'),
+            self::column('order'),
+            FacilitiyCategoryTranslationMapper::column('lang_id'),
+            FacilitiyCategoryTranslationMapper::column('name')
         ];
     }
 
@@ -56,24 +56,24 @@ final class FacilitiyCategoryMapper extends AbstractMapper
     public function fetchAll(int $langId) : array
     {
         return $this->db->select($this->getColumns())
-                        ->count(FacilitiyItemMapper::getFullColumnName('category_id'), 'item_count')
+                        ->count(FacilitiyItemMapper::column('category_id'), 'item_count')
                         ->from(self::getTableName())
                         // Room relation
                         ->leftJoin(FacilitiyItemMapper::getTableName())
                         ->on()
                         ->equals(
-                            self::getFullColumnName('id'),
+                            self::column('id'),
                             FacilitiyItemMapper::getRawColumn('category_id')
                         )
                         // Translation relation
                        ->leftJoin(self::getTranslationTable())
                        ->on()
                        ->equals(
-                            self::getFullColumnName(self::PARAM_COLUMN_ID), 
+                            self::column(self::PARAM_COLUMN_ID), 
                             FacilitiyCategoryTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID)
                         )
                         // Language ID constraint
-                        ->whereEquals(FacilitiyCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
+                        ->whereEquals(FacilitiyCategoryTranslationMapper::column('lang_id'), $langId)
                         ->groupBy($this->getColumns())
                         ->orderBy('id')
                         ->desc()

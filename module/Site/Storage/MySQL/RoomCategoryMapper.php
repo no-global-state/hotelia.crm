@@ -28,10 +28,10 @@ final class RoomCategoryMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            RoomCategoryTranslationMapper::getFullColumnName('lang_id'),
-            RoomCategoryTranslationMapper::getFullColumnName('name'),
+            self::column('id'),
+            self::column('order'),
+            RoomCategoryTranslationMapper::column('lang_id'),
+            RoomCategoryTranslationMapper::column('name'),
         ];
     }
 
@@ -47,10 +47,10 @@ final class RoomCategoryMapper extends AbstractMapper
                         ->from(RoomTypeMapper::getTableName())
                         // Room category relation
                         ->leftJoin(self::getTableName(), [
-                            self::getFullColumnName('id') => RoomTypeMapper::getRawColumn('category_id')
+                            self::column('id') => RoomTypeMapper::getRawColumn('category_id')
                         ])
                         // Hotel ID constraint
-                        ->whereEquals(RoomTypeMapper::getFullColumnName('hotel_id'), $hotelId);
+                        ->whereEquals(RoomTypeMapper::column('hotel_id'), $hotelId);
 
         return $db->queryAll($this->getPk());
     }
@@ -76,7 +76,7 @@ final class RoomCategoryMapper extends AbstractMapper
     public function fetchAll(int $langId) : array
     {
         return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(RoomCategoryTranslationMapper::getFullColumnName('lang_id'), $langId)
+                    ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                     ->orderBy($this->getPk())
                     ->desc()
                     ->queryAll();

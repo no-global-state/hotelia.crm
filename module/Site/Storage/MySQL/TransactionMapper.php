@@ -48,7 +48,7 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
                        ->andWhereLike('payment_system', '%'.$input['payment_system'].'%', true)
                        ->andWhereLike('amount', $input['amount'], true)
                        ->andWhereEquals('currency', $input['currency'], true)
-                       ->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
+                       ->orderBy($sortingColumn ? self::column($sortingColumn) : self::column('id'));
 
         if ($desc) {
             $db->desc();

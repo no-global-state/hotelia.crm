@@ -43,27 +43,27 @@ final class PaymentSystemFieldDataMapper extends AbstractMapper
     {
         // Data to be selected
         $columns = [
-            self::getFullColumnName('id'),
-            PaymentSystemFieldMapper::getFullColumnName('id') => 'field_id',
-            self::getFullColumnName('hotel_id'),
-            self::getFullColumnName('value'),
-            PaymentSystemFieldMapper::getFullColumnName('name') => 'field',
-            PaymentSystemMapper::getFullColumnName('name') => 'system'
+            self::column('id'),
+            PaymentSystemFieldMapper::column('id') => 'field_id',
+            self::column('hotel_id'),
+            self::column('value'),
+            PaymentSystemFieldMapper::column('name') => 'field',
+            PaymentSystemMapper::column('name') => 'system'
         ];
 
         return $this->db->select($columns)
                         ->from(PaymentSystemFieldMapper::getTableName())
                         // Field relation
                         ->leftJoin(self::getTableName(), [
-                            PaymentSystemFieldMapper::getFullColumnName('id') => self::getRawColumn('field_id'),
-                            self::getFullColumnName('hotel_id') => new RawSqlFragment((int) $hotelId)
+                            PaymentSystemFieldMapper::column('id') => self::getRawColumn('field_id'),
+                            self::column('hotel_id') => new RawSqlFragment((int) $hotelId)
                         ])
                         // Payment system relation
                         ->leftJoin(PaymentSystemMapper::getTableName(), [
-                            PaymentSystemMapper::getFullColumnName('id') => PaymentSystemFieldMapper::getRawColumn('payment_system_id')
+                            PaymentSystemMapper::column('id') => PaymentSystemFieldMapper::getRawColumn('payment_system_id')
                         ])
                         // Sort them
-                        ->orderBy(PaymentSystemFieldMapper::getFullColumnName('order'))
+                        ->orderBy(PaymentSystemFieldMapper::column('order'))
                         ->queryAll();
     }
 }

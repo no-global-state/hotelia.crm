@@ -21,20 +21,20 @@ final class ServicePriceMapper extends AbstractMapper
     public function findAllPrices(int $hotelId) : array
     {
         return $this->db->select([
-                            ServiceMapper::getFullColumnName('id'),
-                            self::getFullColumnName('price'),
-                            self::getFullColumnName('price_group_id')
+                            ServiceMapper::column('id'),
+                            self::column('price'),
+                            self::column('price_group_id')
                         ])
                         ->from(self::getTableName())
                         // Price relation
                         ->leftJoin(ServiceMapper::getTableName())
                         ->on()
                         ->equals(
-                            ServiceMapper::getFullColumnName('type_id'),
+                            ServiceMapper::column('type_id'),
                             self::getRawColumn('service_id')
                         )
                         // Hotel ID constraint
-                        ->whereEquals(ServiceMapper::getFullColumnName('hotel_id'), $hotelId)
+                        ->whereEquals(ServiceMapper::column('hotel_id'), $hotelId)
                         ->queryAll();
     }
 
@@ -48,11 +48,11 @@ final class ServicePriceMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = [
-            PriceGroupMapper::getFullColumnName('name'),
-            PriceGroupMapper::getFullColumnName('currency'),
-            self::getFullColumnName('price'),
-            self::getFullColumnName('service_id'),
-            self::getFullColumnName('price_group_id') => 'id'
+            PriceGroupMapper::column('name'),
+            PriceGroupMapper::column('currency'),
+            self::column('price'),
+            self::column('service_id'),
+            self::column('price_group_id') => 'id'
         ];
 
         return $this->db->select($columns)
@@ -60,7 +60,7 @@ final class ServicePriceMapper extends AbstractMapper
                         ->leftJoin(PriceGroupMapper::getTableName())
                         ->on()
                         ->equals(
-                            self::getFullColumnName('price_group_id'),
+                            self::column('price_group_id'),
                             PriceGroupMapper::getRawColumn('id')
                         )
                         ->whereEquals('service_id', $serviceId)

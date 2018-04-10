@@ -28,11 +28,11 @@ final class DistrictMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('region_id'),
-            self::getFullColumnName('order'),
-            DistrictTranslationMapper::getFullColumnName('lang_id'),
-            DistrictTranslationMapper::getFullColumnName('name'),
+            self::column('id'),
+            self::column('region_id'),
+            self::column('order'),
+            DistrictTranslationMapper::column('lang_id'),
+            DistrictTranslationMapper::column('name'),
         ];
     }
 
@@ -58,14 +58,14 @@ final class DistrictMapper extends AbstractMapper
     public function fetchAll($regionId = null, int $langId) : array
     {
         $db = $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(DistrictTranslationMapper::getFullColumnName('lang_id'), $langId);
+                    ->whereEquals(DistrictTranslationMapper::column('lang_id'), $langId);
 
         // Optional region ID filter
         if ($regionId !== null) {
-            $db->andWhereEquals(self::getFullColumnName('region_id'), $regionId);
+            $db->andWhereEquals(self::column('region_id'), $regionId);
         }
 
-        return $db->orderBy(self::getFullColumnName('order'))
+        return $db->orderBy(self::column('order'))
                   ->queryAll();
     }
 }

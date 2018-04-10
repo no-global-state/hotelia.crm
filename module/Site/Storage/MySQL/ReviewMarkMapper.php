@@ -22,20 +22,20 @@ final class ReviewMarkMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('review_id'),
-            self::getFullColumnName('review_type_id'),
-            self::getFullColumnName('mark'),
-            ReviewTypeMapper::getFullColumnName('name') => 'type'
+            self::column('id'),
+            self::column('review_id'),
+            self::column('review_type_id'),
+            self::column('mark'),
+            ReviewTypeMapper::column('name') => 'type'
         ];
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
                         // Review type relation
                         ->leftJoin(ReviewTypeMapper::getTableName(), [
-                            ReviewTypeMapper::getFullColumnName('id') => self::getFullColumnName('review_type_id')
+                            ReviewTypeMapper::column('id') => self::column('review_type_id')
                         ])
-                        ->whereEquals(self::getFullColumnName('review_id'), $reviewId)
+                        ->whereEquals(self::column('review_id'), $reviewId)
                         ->queryAll();
     }
 }

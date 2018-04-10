@@ -30,10 +30,10 @@ final class MealsMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            MealsTranslationMapper::getFullColumnName('lang_id'),
-            MealsTranslationMapper::getFullColumnName('name'),
+            self::column('id'),
+            self::column('order'),
+            MealsTranslationMapper::column('lang_id'),
+            MealsTranslationMapper::column('name'),
         ];
     }
 
@@ -85,7 +85,7 @@ final class MealsMapper extends AbstractMapper
             ]);
         }
 
-        $db->whereEquals(MealsTranslationMapper::getFullColumnName('lang_id'), $langId)
+        $db->whereEquals(MealsTranslationMapper::column('lang_id'), $langId)
            ->orderBy($this->getPk())
            ->desc();
 

@@ -21,20 +21,20 @@ final class RoomTypePriceMapper extends AbstractMapper
     public function findAllPrices(int $hotelId) : array
     {
         return $this->db->select([
-                            RoomMapper::getFullColumnName('id'),
-                            self::getFullColumnName('price'),
-                            self::getFullColumnName('price_group_id')
+                            RoomMapper::column('id'),
+                            self::column('price'),
+                            self::column('price_group_id')
                         ])
                         ->from(self::getTableName())
                         // Price relation
                         ->leftJoin(RoomMapper::getTableName())
                         ->on()
                         ->equals(
-                            RoomMapper::getFullColumnName('type_id'),
+                            RoomMapper::column('type_id'),
                             self::getRawColumn('room_type_id')
                         )
                         // Hotel ID constraint
-                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId)
+                        ->whereEquals(RoomMapper::column('hotel_id'), $hotelId)
                         ->queryAll();
     }
 
@@ -48,11 +48,11 @@ final class RoomTypePriceMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = [
-            PriceGroupMapper::getFullColumnName('name'),
-            PriceGroupMapper::getFullColumnName('currency'),
-            self::getFullColumnName('price'),
-            self::getFullColumnName('room_type_id'),
-            self::getFullColumnName('price_group_id') => 'id'
+            PriceGroupMapper::column('name'),
+            PriceGroupMapper::column('currency'),
+            self::column('price'),
+            self::column('room_type_id'),
+            self::column('price_group_id') => 'id'
         ];
 
         return $this->db->select($columns)
@@ -60,7 +60,7 @@ final class RoomTypePriceMapper extends AbstractMapper
                         ->leftJoin(PriceGroupMapper::getTableName())
                         ->on()
                         ->equals(
-                            self::getFullColumnName('price_group_id'),
+                            self::column('price_group_id'),
                             PriceGroupMapper::getRawColumn('id')
                         )
                         ->whereEquals('room_type_id', $roomTypeId)

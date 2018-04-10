@@ -30,14 +30,14 @@ final class FacilitiyItemMapper extends AbstractMapper
     private function getColumns() : array
     {
         return [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('icon'),
-            self::getFullColumnName('front'),
-            self::getFullColumnName('always_free'),
-            self::getFullColumnName('category_id'),
-            FacilitiyItemTranslationMapper::getFullColumnName('name'),
-            FacilitiyItemTranslationMapper::getFullColumnName('description'),
-            FacilitiyItemTranslationMapper::getFullColumnName('lang_id'),
+            self::column('id'),
+            self::column('icon'),
+            self::column('front'),
+            self::column('always_free'),
+            self::column('category_id'),
+            FacilitiyItemTranslationMapper::column('name'),
+            FacilitiyItemTranslationMapper::column('description'),
+            FacilitiyItemTranslationMapper::column('lang_id'),
         ];
     }
 
@@ -107,7 +107,7 @@ final class FacilitiyItemMapper extends AbstractMapper
         if ($hotelId !== null) {
             // Columns to be selected
             $columns = array_merge($columns, [
-                FacilityRelationMapper::getFullColumnName('type'),
+                FacilityRelationMapper::column('type'),
                 new RawSqlFragment(sprintf('(slave_id = %s.id) AS checked', self::getTableName()))
             ]);
         }
@@ -116,7 +116,7 @@ final class FacilitiyItemMapper extends AbstractMapper
                        ->from(self::getTableName())
                        // Translation relation
                        ->leftJoin(FacilitiyItemTranslationMapper::getTableName(), [
-                            FacilitiyItemTranslationMapper::getFullColumnName('id') => self::getRawColumn('id')
+                            FacilitiyItemTranslationMapper::column('id') => self::getRawColumn('id')
                         ]);
 
         // Append hotel ID relation if provided
@@ -126,20 +126,20 @@ final class FacilitiyItemMapper extends AbstractMapper
 
             // Junction relation
             $db->join($joinType, FacilityRelationMapper::getTableName(), [
-                FacilityRelationMapper::getFullColumnName('slave_id') => self::getRawColumn('id'),
-                FacilityRelationMapper::getFullColumnName('master_id') => $hotelId
+                FacilityRelationMapper::column('slave_id') => self::getRawColumn('id'),
+                FacilityRelationMapper::column('master_id') => $hotelId
             ]);
         }
 
         // Language ID filter
-        $db->whereEquals(FacilitiyItemTranslationMapper::getFullColumnName('lang_id'), $langId);
+        $db->whereEquals(FacilitiyItemTranslationMapper::column('lang_id'), $langId);
 
         if ($categoryId !== null) {
-            $db->andWhereEquals(self::getFullColumnName('category_id'), $categoryId);
+            $db->andWhereEquals(self::column('category_id'), $categoryId);
         }
 
         if ($front === true) {
-            $db->andWhereEquals(self::getFullColumnName('front'), '1');
+            $db->andWhereEquals(self::column('front'), '1');
         }
 
         return $db->queryAll();

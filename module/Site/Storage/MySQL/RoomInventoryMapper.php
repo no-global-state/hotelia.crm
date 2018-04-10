@@ -22,13 +22,13 @@ final class RoomInventoryMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('room_id'),
-            self::getFullColumnName('inventory_id'),
-            self::getFullColumnName('code'),
-            self::getFullColumnName('qty'),
-            self::getFullColumnName('comment'),
-            InventoryMapper::getFullColumnName('name') => 'inventory',
+            self::column('id'),
+            self::column('room_id'),
+            self::column('inventory_id'),
+            self::column('code'),
+            self::column('qty'),
+            self::column('comment'),
+            InventoryMapper::column('name') => 'inventory',
         );
 
         return $this->db->select($columns)
@@ -37,7 +37,7 @@ final class RoomInventoryMapper extends AbstractMapper
                         ->innerJoin(InventoryMapper::getTableName())
                         ->on()
                         ->equals(
-                            self::getFullColumnName('inventory_id'),
+                            self::column('inventory_id'),
                             InventoryMapper::getRawColumn('id')
                         )
                         ->whereEquals('room_id', $roomId)

@@ -38,31 +38,31 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     {
         // Columns to be selected
         return array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('hotel_id'),
-            self::getFullColumnName('room_id'),
-            self::getFullColumnName('payment_system_id'),
-            self::getFullColumnName('price_group_id'),
-            self::getFullColumnName('full_name'),
-            self::getFullColumnName('gender'),
-            self::getFullColumnName('country'),
-            self::getFullColumnName('status'),
-            self::getFullColumnName('phone'),
-            self::getFullColumnName('email'),
-            self::getFullColumnName('passport'),
-            self::getFullColumnName('discount'),
-            self::getFullColumnName('state'),
-            self::getFullColumnName('source'),
-            self::getFullColumnName('purpose'),
-            self::getFullColumnName('legal_status'),
-            self::getFullColumnName('arrival'),
-            self::getFullColumnName('departure'),
+            self::column('id'),
+            self::column('hotel_id'),
+            self::column('room_id'),
+            self::column('payment_system_id'),
+            self::column('price_group_id'),
+            self::column('full_name'),
+            self::column('gender'),
+            self::column('country'),
+            self::column('status'),
+            self::column('phone'),
+            self::column('email'),
+            self::column('passport'),
+            self::column('discount'),
+            self::column('state'),
+            self::column('source'),
+            self::column('purpose'),
+            self::column('legal_status'),
+            self::column('arrival'),
+            self::column('departure'),
             new RawSqlFragment('ABS(DATEDIFF(departure, arrival)) AS days'),
-            self::getFullColumnName('comment'),
-            self::getFullColumnName('company'),
-            self::getFullColumnName('tax'),
-            self::getFullColumnName('price'),
-            RoomMapper::getFullColumnName('name') => 'room'
+            self::column('comment'),
+            self::column('company'),
+            self::column('tax'),
+            self::column('price'),
+            RoomMapper::column('name') => 'room'
         );
     }
 
@@ -145,42 +145,42 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     {
         // Columns to be selected
         $columns = array(
-            RoomMapper::getFullColumnName('id'),
-            RoomMapper::getFullColumnName('name'),
-            RoomCategoryTranslationMapper::getFullColumnName('name') => 'type',
-            self::getFullColumnName('arrival'),
-            self::getFullColumnName('departure'),
-            self::getFullColumnName('id') => 'reservation_id'
+            RoomMapper::column('id'),
+            RoomMapper::column('name'),
+            RoomCategoryTranslationMapper::column('name') => 'type',
+            self::column('arrival'),
+            self::column('departure'),
+            self::column('id') => 'reservation_id'
         );
 
         $db = $this->db->select($columns)
                         ->from(RoomMapper::getTableName())
                         // Reservation relation
                         ->leftJoin(self::getTableName(), [
-                            self::getFullColumnName('room_id') => RoomMapper::getRawColumn('id')
+                            self::column('room_id') => RoomMapper::getRawColumn('id')
                         ])
                         // Room type relation
                         ->leftJoin(RoomTypeMapper::getTableName(), [
-                            RoomMapper::getFullColumnName('type_id') => RoomTypeMapper::getRawColumn('id')
+                            RoomMapper::column('type_id') => RoomTypeMapper::getRawColumn('id')
                         ])
                         // Room category relation
                         ->leftJoin(RoomCategoryMapper::getTableName(), [
-                            RoomTypeMapper::getFullColumnName('category_id') => RoomCategoryMapper::getRawColumn('id')
+                            RoomTypeMapper::column('category_id') => RoomCategoryMapper::getRawColumn('id')
                         ])
                         // Room category translation relation
                         ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
-                            RoomCategoryTranslationMapper::getFullColumnName('id') => RoomCategoryMapper::getRawColumn('id')
+                            RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id')
                         ])
                         // Hotel ID constraint
-                        ->whereEquals(RoomMapper::getFullColumnName('hotel_id'), $hotelId);
+                        ->whereEquals(RoomMapper::column('hotel_id'), $hotelId);
 
         // If type is provided, the filter by its ID
         if ($type != null) {
-            $db->andWhereEquals(RoomTypeMapper::getFullColumnName('id'), $type);
+            $db->andWhereEquals(RoomTypeMapper::column('id'), $type);
         }
 
         // Sort by name
-        return $db->orderBy(RoomMapper::getFullColumnName('name'))
+        return $db->orderBy(RoomMapper::column('name'))
                   ->queryAll();
     }
 
@@ -242,8 +242,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     private function findByConstraint(Closure $visitor)
     {
         $columns = array_merge($this->getSharedColumns(), array(
-            PriceGroupMapper::getFullColumnName('currency'),
-            PaymentSystemMapper::getFullColumnName('name') => 'payment_system'
+            PriceGroupMapper::column('currency'),
+            PaymentSystemMapper::column('name') => 'payment_system'
         ));
 
         $db = $this->db->select($columns)
@@ -252,28 +252,28 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         ->leftJoin(RoomMapper::getTableName())
                         ->on()
                         ->equals(
-                            self::getFullColumnName('room_id'),
+                            self::column('room_id'),
                             RoomMapper::getRawColumn('id')
                         )
                         // Room type relation
                         ->leftJoin(RoomTypeMapper::getTableName())
                         ->on()
                         ->equals(
-                            RoomMapper::getFullColumnName('type_id'),
+                            RoomMapper::column('type_id'),
                             RoomTypeMapper::getRawColumn('id')
                         )
                         // Price group mapper
                         ->leftJoin(PriceGroupMapper::getTableName())
                         ->on()
                         ->equals(
-                            PriceGroupMapper::getFullColumnName('id'),
+                            PriceGroupMapper::column('id'),
                             self::getRawColumn('price_group_id')
                         )
                         // Payment system relation
                         ->leftJoin(PaymentSystemMapper::getTableName())
                         ->on()
                         ->equals(
-                            PaymentSystemMapper::getFullColumnName('id'),
+                            PaymentSystemMapper::column('id'),
                             self::getRawColumn('payment_system_id')
                         );
 
@@ -302,8 +302,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     public function fetchByRoomId(int $roomId) : array
     {
         return $this->findByConstraint(function($db) use ($roomId){
-            $db->whereEquals(self::getFullColumnName('room_id'), $roomId)
-               ->andWhere(self::getFullColumnName('departure'), '>=', new RawSqlFragment('CURDATE()'));
+            $db->whereEquals(self::column('room_id'), $roomId)
+               ->andWhere(self::column('departure'), '>=', new RawSqlFragment('CURDATE()'));
         });
     }
 
@@ -316,7 +316,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     public function fetchById($id)
     {
         return $this->findByConstraint(function($db) use ($id){
-            $db->whereEquals(self::getFullColumnName($this->getPk()), $id);
+            $db->whereEquals(self::column($this->getPk()), $id);
         });
     }
 
@@ -348,10 +348,10 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                        ->leftJoin(RoomMapper::getTableName())
                        ->on()
                        ->equals(
-                            self::getFullColumnName('room_id'),
+                            self::column('room_id'),
                             RoomMapper::getRawColumn('id')
                        )
-                       ->whereEquals(self::getFullColumnName('hotel_id'), $parameters['hotel_id'])
+                       ->whereEquals(self::column('hotel_id'), $parameters['hotel_id'])
                        ->andWhereEquals('country', $input['country'], true)
                        ->andWhereLike('full_name', '%'.$input['full_name'].'%', true)
                        ->andWhereEquals('room_id', $input['room_id'], true)
@@ -388,7 +388,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                ->andWhereEquals('departure', $input['departure'], true);
         }
 
-        $db->orderBy($sortingColumn ? self::getFullColumnName($sortingColumn) : self::getFullColumnName('id'));
+        $db->orderBy($sortingColumn ? self::column($sortingColumn) : self::column('id'));
 
         if ($desc) {
             $db->desc();

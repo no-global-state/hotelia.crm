@@ -37,10 +37,10 @@ final class PhotoMapper extends AbstractMapper
     {
         // Columns to be selected
         $columns = [
-            self::getFullColumnName('id'),
-            self::getFullColumnName('hotel_id'),
-            self::getFullColumnName('file'),
-            self::getFullColumnName('order'),
+            self::column('id'),
+            self::column('hotel_id'),
+            self::column('file'),
+            self::column('order'),
             new RawSqlFragment(sprintf('(%s.id = %s.slave_id) as cover', self::getTableName(), PhotoCoverMapper::getTableName()))
         ];
 
@@ -48,7 +48,7 @@ final class PhotoMapper extends AbstractMapper
                         ->from(self::getTableName())
                         // Photo cover relation
                         ->leftJoin(PhotoCoverMapper::getTableName(), [
-                            self::getFullColumnName('id') => PhotoCoverMapper::getRawColumn('slave_id')
+                            self::column('id') => PhotoCoverMapper::getRawColumn('slave_id')
                         ])
                         ->whereEquals('hotel_id', $hotelId);
 
