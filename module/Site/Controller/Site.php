@@ -248,7 +248,7 @@ final class Site extends AbstractSiteController
             'types' => $types,
             'hotel' => $hotel,
             // Similar hotels
-            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), [], 5),
+            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), ['region_id' => $hotel['region_id']], 5),
             'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
             'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
 
