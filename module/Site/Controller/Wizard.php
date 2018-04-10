@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Site\Collection\FacilityTypeCollection;
 use Site\Collection\BreakfastCollection;
+use Site\Collection\ChildrenCountCollection;
 
 final class Wizard extends AbstractCrmController
 {
@@ -74,6 +75,7 @@ final class Wizard extends AbstractCrmController
             // Collections
             'breakfasts' => (new BreakfastCollection())->getAll(),
             'types' => (new FacilityTypeCollection)->getAll(),
+            'children' => (new ChildrenCountCollection())->getAll(),
             'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
             'languageId' => $this->getCurrentLangId(),
             'hotelId' => $this->getHotelId(),

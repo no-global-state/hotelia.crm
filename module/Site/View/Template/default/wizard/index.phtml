@@ -494,6 +494,24 @@ use Krystal\Form\Element;
                                       </div>
                                     </div>
 
+                                    <!-- Capacity -->
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label"><? $this->show('Maximal adults capacity'); ?></label>
+                                        <div class="row">
+                                            <div class="col-lg-3">
+                                                <?= Element::number('room[persons][]', 1, ['class' => 'form-control', 'min' => 1, 'max' => 30]); ?>
+                                            </div>
+
+                                            <div class="col-lg-5">
+                                                <label class="col-lg-5 control-label"><?php $this->show('Children capacity'); ?></label>
+                                                <div class="col-lg-7">
+                                                    <?= Element::select('room[children][]', $this->translateArray($children), null, ['class' => 'form-control']); ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /Capacity -->
+
                                     <?php foreach ($priceGroups as $priceGroup): ?>
                                     <div class="form-group">
                                       <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $priceGroup['currency']; ?>)</strong> <?= $priceGroup['name']; ?></label>

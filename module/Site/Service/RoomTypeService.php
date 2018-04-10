@@ -91,7 +91,8 @@ final class RoomTypeService
             $type = [
                 'hotel_id' => $hotelId,
                 'category_id' => $room['type'],
-                'persons' => 0
+                'persons' => $room['persons'],
+                'children' => $room['children']
             ];
 
             // Translations
