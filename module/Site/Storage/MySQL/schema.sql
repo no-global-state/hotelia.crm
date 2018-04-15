@@ -327,6 +327,7 @@ CREATE TABLE velveto_room_type_prices (
     `room_type_id` INT NOT NULL COMMENT 'Room type ID',
     `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
     `price` FLOAT NOT NULL,
+    `capacity` INT COMMENT 'Attached capacity to the price group',
 
     FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
