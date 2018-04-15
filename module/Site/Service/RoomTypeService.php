@@ -75,6 +75,35 @@ final class RoomTypeService
     }
 
     /**
+     * Parses raw price group
+     * 
+     * @param int $roomTypeId Static ID to be applied for every key
+     * @param array $raw Raw price group
+     * @return array
+     */
+    public static function parseRawPriceGroup(int $roomTypeId, array $raw) : array
+    {
+        $output = [];
+
+        foreach ($raw as $key => $value) {
+            if ($key == 'group') {
+                foreach ($value as $priceGroupId => $prices) {
+                    foreach ($prices as $index => $price) {
+                        $output[] = [
+                            'room_type_id' => $roomTypeId,
+                            'price_group_id' => $priceGroupId, 
+                            'price' => $price,
+                            'capacity' => $raw['capacity'][$index]
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Create from wizard
      * 
      * @param int $hotelId
