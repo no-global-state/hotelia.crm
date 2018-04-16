@@ -258,6 +258,9 @@ final class RoomTypeService
 
             // Find gallery
             $row['gallery'] = $this->createGallery($row['id']);
+
+            // Find attached prices
+            $row['prices'] = $this->findPricesByRoomTypeId($row['id'], $priceGroupId);
         }
 
         return $rows;
