@@ -23,6 +23,7 @@ final class RoomTypePriceMapper extends AbstractMapper
         return $this->db->select([
                             RoomMapper::column('id'),
                             self::column('price'),
+                            self::column('capacity'),
                             self::column('price_group_id')
                         ])
                         ->from(self::getTableName())
@@ -51,6 +52,7 @@ final class RoomTypePriceMapper extends AbstractMapper
             PriceGroupMapper::column('name'),
             PriceGroupMapper::column('currency'),
             self::column('price'),
+            self::column('capacity'),
             self::column('room_type_id'),
             self::column('price_group_id') => 'id'
         ];
@@ -70,39 +72,13 @@ final class RoomTypePriceMapper extends AbstractMapper
     /**
      * Updates room type price
      * 
-     * @param int $roomTypeId
-     * @param array $priceGroupIds
+     * @param array $data
      * @return boolean
      */
-    public function save(int $roomTypeId, array $priceGroupIds)
+    public function save(int $roomTypeId, array $collection)
     {
-        foreach ($priceGroupIds as $priceGroupId => $price) {
-            // Exist counter
-            $exists = $this->db->select()
-                               ->count('id')
-                               ->from(self::getTableName())
-                               ->whereEquals('room_type_id', $roomTypeId)
-                               ->andWhereEquals('price_group_id', $priceGroupId)
-                               ->queryScalar();
-
-            if ($exists) {
-                // Updates
-                $this->db->update(self::getTableName(), [
-                            'price' => $price
-                        ])
-                        ->whereEquals('room_type_id', $roomTypeId)
-                        ->andWhereEquals('price_group_id', $priceGroupId)
-                        ->execute();
-            } else {
-                // Insert
-                $this->persist([
-                    'room_type_id' => $roomTypeId,
-                    'price_group_id' => $priceGroupId,
-                    'price' => $price
-                ]);
-            }
-        }
-
-        return true;
+        // Clear previous if any
+        $this->deleteByColumn('room_type_id', $roomTypeId);
+        return $this->persistMany($collection);
     }
 }
