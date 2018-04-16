@@ -43,9 +43,10 @@ final class RoomTypePriceMapper extends AbstractMapper
      * Find data by room type ID
      * 
      * @param int $roomTypeId
+     * @param mixed $priceGroupId
      * @return array
      */
-    public function findAllByRoomTypeId(int $roomTypeId) : array
+    public function findAllByRoomTypeId(int $roomTypeId, $priceGroupId = null) : array
     {
         // Columns to be selected
         $columns = [
@@ -57,7 +58,7 @@ final class RoomTypePriceMapper extends AbstractMapper
             self::column('price_group_id') => 'id'
         ];
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         ->leftJoin(PriceGroupMapper::getTableName())
                         ->on()
@@ -65,8 +66,14 @@ final class RoomTypePriceMapper extends AbstractMapper
                             self::column('price_group_id'),
                             PriceGroupMapper::getRawColumn('id')
                         )
-                        ->whereEquals('room_type_id', $roomTypeId)
-                        ->queryAll();
+                        ->whereEquals('room_type_id', $roomTypeId);
+
+        // Append optional filter on demand
+        if ($priceGroupId !== null){
+            $db->andWhereEquals('price_group_id', $priceGroupId);
+        }
+
+        return $db->queryAll();
     }
 
     /**

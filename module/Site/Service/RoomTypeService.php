@@ -388,11 +388,12 @@ final class RoomTypeService
      * Find data by room type ID
      * 
      * @param int $roomTypeId
+     * @param mixed $priceGroupId Optional price group ID filter
      * @return array
      */
-    public function findPricesByRoomTypeId(int $roomTypeId) : array
+    public function findPricesByRoomTypeId(int $roomTypeId, $priceGroupId = null) : array
     {
-        return $this->roomTypePriceMapper->findAllByRoomTypeId($roomTypeId);
+        return $this->roomTypePriceMapper->findAllByRoomTypeId($roomTypeId, $priceGroupId);
     }
 
     /**
