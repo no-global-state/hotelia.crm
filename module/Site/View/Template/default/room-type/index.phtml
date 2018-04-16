@@ -45,7 +45,10 @@ use Krystal\Form\Element;
                 </td>
                 <td>
                     <?php foreach ($type['prices'] as $price): ?>
-                    <p><?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?></p>
+                    <p>
+                        <span class="text-muted"><?= str_repeat('<i class="glyphicon glyphicon-user"></i> ', $price['capacity']); ?></span>
+                        <?= sprintf('%s - %s %s', $price['name'], number_format($price['price']), $price['currency']); ?>
+                    </p>
                     <?php endforeach; ?>
                 </td>
                 <td>
