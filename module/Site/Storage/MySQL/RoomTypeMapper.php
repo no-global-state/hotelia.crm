@@ -147,7 +147,6 @@ final class RoomTypeMapper extends AbstractMapper
             RoomCategoryTranslationMapper::column('name'),
             self::column('persons'),
             RoomTypeTranslationMapper::column('description'),
-            RoomTypePriceMapper::column('price'),
             PriceGroupMapper::column('currency'),
             RoomTypeGalleryMapper::column('file') => 'cover',
             RoomTypeGalleryMapper::column('id') => 'cover_id'
