@@ -75,6 +75,22 @@ final class RoomTypeService
     }
 
     /**
+     * Normalizes price grouped entity
+     * 
+     * @param mixed $type
+     * @param array $priceGroups
+     * @return array
+     */
+    public static function normalizeEntity($type, array $priceGroups) : array
+    {
+        if (is_object($type)) {
+            return [1 => $priceGroups];
+        } else {
+            return ArrayUtils::arrayPartition($priceGroups, 'capacity');
+        }
+    }
+
+    /**
      * Parses raw price group
      * 
      * @param int $roomTypeId Static ID to be applied for every key

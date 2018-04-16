@@ -14,6 +14,7 @@ namespace Site\Controller\Architecture;
 use Site\Collection\ChildrenCountCollection;
 use Site\Controller\AbstractCrmController;
 use Site\Collection\FacilityTypeCollection;
+use Site\Service\RoomTypeService;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Validate\Pattern;
@@ -49,7 +50,8 @@ final class RoomType extends AbstractCrmController
             'children' => (new ChildrenCountCollection())->getAll(),
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
-            'priceGroups' => $priceGroups,
+            'priceGroups' => RoomTypeService::normalizeEntity($type, $priceGroups),
+
             // Facilities
             'types' => (new FacilityTypeCollection)->getAll(),
             'checklist' => $this->getModuleService('roomTypeService')->findFacilities($id, $this->getCurrentLangId(), null),
