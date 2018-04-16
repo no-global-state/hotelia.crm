@@ -411,7 +411,8 @@ final class RoomTypeService
         // Get ID
         $id = !empty($input['type']['id']) ? $input['type']['id'] : $this->roomTypeMapper->getMaxId();
 
-        $this->roomTypePriceMapper->save($id, $priceGroupIds);
+        // Save here
+        $this->roomTypePriceMapper->save($id, self::parseRawPriceGroup($id, $priceGroupIds));
 
         $facilities = isset($input['facility']) ? $input['facility'] : [];
 
