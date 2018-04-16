@@ -209,7 +209,32 @@ $(function(){
         $form.attr('action', href);
         $form.submit();
     });
-    
+
+    // Extra privacy handler
+    (function(){
+        var wrapSelector = '.price-policy-wrapper';
+
+        // Append a box
+        $("[data-button='price-policy-add']").click(function(event){
+            event.preventDefault();
+
+            // Make a clone
+            var $clone = $(wrapSelector).first().clone();
+
+            // Clear all values from clone
+            $clone.find('input').val('');
+            $(wrapSelector).last().after($clone);
+        });
+
+        // Removal handler
+        $(document).on('click', "[data-button='price-policy-delete']", function(event){
+            event.preventDefault();
+
+            var $parent = $(this).parents(wrapSelector);
+            $parent.remove();
+        });
+
+    })($);
     
     $("[data-button='back']").click(function(event){
         event.preventDefault();
