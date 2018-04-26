@@ -31,10 +31,11 @@ final class FacilitiyItemMapper extends AbstractMapper
     {
         return [
             self::column('id'),
+            self::column('category_id'),
             self::column('icon'),
             self::column('front'),
             self::column('always_free'),
-            self::column('category_id'),
+            self::column('roomable'),
             FacilitiyItemTranslationMapper::column('name'),
             FacilitiyItemTranslationMapper::column('description'),
             FacilitiyItemTranslationMapper::column('lang_id'),

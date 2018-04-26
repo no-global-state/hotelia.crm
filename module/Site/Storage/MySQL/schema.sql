@@ -199,6 +199,7 @@ CREATE TABLE velveto_facilitiy_items (
     `front` SMALLINT(1) NOT NULL COMMENT 'Whether item must be front or not',
     `category_id` INT NOT NULL,
     `always_free` BOOLEAN NOT NULL COMMENT 'Whether the item is always free',
+    `roomable` BOOLEAN NOT NULL COMMENT 'Whether to display this item in room types'
 
     FOREIGN KEY (category_id) REFERENCES velveto_facilitiy_categories(id) ON DELETE CASCADE
 );
