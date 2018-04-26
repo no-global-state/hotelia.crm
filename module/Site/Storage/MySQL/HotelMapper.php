@@ -134,6 +134,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         // Adults count
         if (isset($filters['adults'])) {
             $columns[RoomCategoryTranslationMapper::column('name')] = 'room';
+            $columns[] = RoomMapper::column('type_id');
         }
 
         $db = $this->db->select($columns, true)
