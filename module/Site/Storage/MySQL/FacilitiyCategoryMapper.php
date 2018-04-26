@@ -55,28 +55,23 @@ final class FacilitiyCategoryMapper extends AbstractMapper
      */
     public function fetchAll(int $langId) : array
     {
-        return $this->db->select($this->getColumns())
+        $db = $this->db->select($this->getColumns())
                         ->count(FacilitiyItemMapper::column('category_id'), 'item_count')
                         ->from(self::getTableName())
                         // Room relation
-                        ->leftJoin(FacilitiyItemMapper::getTableName())
-                        ->on()
-                        ->equals(
-                            self::column('id'),
-                            FacilitiyItemMapper::getRawColumn('category_id')
-                        )
+                        ->leftJoin(FacilitiyItemMapper::getTableName(), [
+                            self::column('id') => FacilitiyItemMapper::getRawColumn('category_id')
+                        ])
                         // Translation relation
-                       ->leftJoin(self::getTranslationTable())
-                       ->on()
-                       ->equals(
-                            self::column(self::PARAM_COLUMN_ID), 
-                            FacilitiyCategoryTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID)
-                        )
+                        ->leftJoin(self::getTranslationTable(), [
+                            self::column(self::PARAM_COLUMN_ID) => FacilitiyCategoryTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID)
+                        ])
                         // Language ID constraint
                         ->whereEquals(FacilitiyCategoryTranslationMapper::column('lang_id'), $langId)
                         ->groupBy($this->getColumns())
                         ->orderBy('id')
-                        ->desc()
-                        ->queryAll();
+                        ->desc();
+
+        return $db->queryAll();
     }
 }
