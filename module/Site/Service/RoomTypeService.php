@@ -219,7 +219,7 @@ final class RoomTypeService
      */
     public function findFacilities($typeId, int $langId, $categoryId = null, $front = false, bool $strict = false) : array
     {
-        $categories = $this->facilityCategoryMapper->fetchAll($langId);
+        $categories = $this->facilityCategoryMapper->fetchAll($langId, true);
 
         foreach ($categories as &$category) {
             $category['items'] = $this->roomTypeMapper->findFacilities($typeId, $langId, $category['id'], false, $strict);

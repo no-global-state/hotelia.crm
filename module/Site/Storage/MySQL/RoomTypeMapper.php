@@ -79,10 +79,11 @@ final class RoomTypeMapper extends AbstractMapper
     {
         $columns = [
             FacilitiyItemMapper::column('id'),
+            FacilitiyItemMapper::column('category_id'),
             FacilitiyItemMapper::column('icon'),
             FacilitiyItemMapper::column('front'),
             FacilitiyItemMapper::column('always_free'),
-            FacilitiyItemMapper::column('category_id'),
+            FacilitiyItemMapper::column('roomable'),
             FacilitiyItemTranslationMapper::column('name'),
             FacilitiyItemTranslationMapper::column('lang_id'),
         ];
@@ -115,7 +116,8 @@ final class RoomTypeMapper extends AbstractMapper
         }
 
         // Language ID filter
-        $db->whereEquals(FacilitiyItemTranslationMapper::column('lang_id'), $langId);
+        $db->whereEquals(FacilitiyItemTranslationMapper::column('lang_id'), $langId)
+           ->andWhereEquals(FacilitiyItemMapper::column('roomable'), new RawSqlFragment('1'));
 
         if ($categoryId !== null) {
             $db->andWhereEquals(FacilitiyItemMapper::column('category_id'), $categoryId);
