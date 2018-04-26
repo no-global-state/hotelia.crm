@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class FacilitiyCategoryMapper extends AbstractMapper
 {
     /**
@@ -51,9 +53,10 @@ final class FacilitiyCategoryMapper extends AbstractMapper
      * Fetch all categories with corresponding count
      * 
      * @param int $langId
+     * @param bool $roomable Whether to fetch only roomable categories
      * @return array
      */
-    public function fetchAll(int $langId) : array
+    public function fetchAll(int $langId, bool $roomable = false) : array
     {
         $db = $this->db->select($this->getColumns())
                         ->count(FacilitiyItemMapper::column('category_id'), 'item_count')
@@ -67,10 +70,16 @@ final class FacilitiyCategoryMapper extends AbstractMapper
                             self::column(self::PARAM_COLUMN_ID) => FacilitiyCategoryTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID)
                         ])
                         // Language ID constraint
-                        ->whereEquals(FacilitiyCategoryTranslationMapper::column('lang_id'), $langId)
-                        ->groupBy($this->getColumns())
-                        ->orderBy('id')
-                        ->desc();
+                        ->whereEquals(FacilitiyCategoryTranslationMapper::column('lang_id'), $langId);
+
+        // Whether to constraint by roomable items
+        if ($roomable === true) {
+            $db->andWhereEquals(FacilitiyItemMapper::column('roomable'), new RawSqlFragment(1));
+        }
+
+        $db->groupBy($this->getColumns())
+           ->orderBy('id')
+           ->desc();
 
         return $db->queryAll();
     }
