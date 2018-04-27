@@ -49,10 +49,16 @@ final class Region extends AbstractCrmController
      * @param mixed $entity
      * @return string
      */
-    private function createForm($region)
+    private function createForm($region) : string
     {
+        // Appends on breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Regions and districts', $this->createUrl('Site:Region@indexAction'))
+                   ->addOne(!is_array($region) ? 'Add new region' : 'Edit the region');
+
         return $this->view->render('region/region', [
-            'region' => $region
+            'region' => $region,
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 
