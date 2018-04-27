@@ -94,7 +94,14 @@ final class Module extends AbstractModule
      */
     public function getTranslations($language)
     {
-        return include(__DIR__ . sprintf('/Translations/%s.php', $language));
+        // Target translation array file to be included
+        $file = __DIR__ . sprintf('/Translations/%s.php', $language);
+
+        if (is_file($file)) {
+            return include($file);
+        } else {
+            return [];
+        }
     }
 
     /**
