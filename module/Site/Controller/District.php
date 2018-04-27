@@ -13,11 +13,17 @@ final class District extends AbstractCrmController
      * @param mixed $district
      * @return string
      */
-    private function createForm($district)
+    private function createForm($district) : string
     {
+        // Appends on breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Regions and districts', $this->createUrl('Site:Region@indexAction'))
+                   ->addOne(!is_array($district) ? 'Add a district' : 'Edit the district');
+
         return $this->view->render('region/district', [
             'district' => $district,
-            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId())
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 
