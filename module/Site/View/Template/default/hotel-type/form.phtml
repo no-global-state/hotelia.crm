@@ -19,15 +19,12 @@ use Site\Service\LanguageService;
                 <div class="tab-content">
                     <?php foreach ($languages as $index => $language): ?>
                     <div class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>" id="<?php printf('language-%s', $language['id']); ?>" role="tabpanel">
-
                         <?php $entity = LanguageService::findByLangId($language['id'], $hotelType); ?>
 
                         <?= Element::hidden(sprintf('translation[%s][id]', $language['id']), $entity['id']); ?>
                         <?= Element::hidden(sprintf('translation[%s][lang_id]', $language['id']), $language['id']); ?>
 
                         <?php $this->loadPartial('language-name', ['language' => $language]); ?>
-
-                        <legend><i class="glyphicon glyphicon-pencil"></i> <? $this->show($entity['id'] ? 'Edit the hotel type' : 'Add new hotel type'); ?></legend>
 
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Name'); ?></label>

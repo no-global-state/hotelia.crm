@@ -14,8 +14,14 @@ final class HotelType extends AbstractCrmController
      */
     private function createForm($hotelType) : string
     {
+        // Appends on breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Hotel types', $this->createUrl('Site:HotelType@indexAction'))
+                   ->addOne(!is_array($hotelType) ? 'Add new hotel type' : 'Edit the hotel type');
+
         return $this->view->render('hotel-type/form', [
-            'hotelType' => $hotelType
+            'hotelType' => $hotelType,
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 
@@ -26,8 +32,13 @@ final class HotelType extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        // Appends on breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Hotel types');
+
         return $this->view->render('hotel-type/index', [
-            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($this->getCurrentLangId())
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($this->getCurrentLangId()),
+            'icon' => 'glyphicon glyphicon-resize-full'
         ]);
     }
 
