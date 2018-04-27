@@ -221,7 +221,7 @@ final class Site extends AbstractSiteController
         $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
         $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
         $hotelId = $this->request->getQuery('hotel_id'); // Hotel ID
-        $type = $this->request->getQuery('type', null);
+        $typeId = $this->request->getQuery('type_id', null);
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
         $kids = $this->request->getQuery('kids', 0);
@@ -231,12 +231,14 @@ final class Site extends AbstractSiteController
         $photoService = $this->getModuleService('photoService');
         $roomTypeService = $this->getModuleService('roomTypeService');
 
-        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $type, true);
+        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $typeId, true);
         $types = $roomTypeService->fetchList($this->getCurrentLangId(), $hotelId);
 
         return $this->view->render('hotel', [
+            'roomTypes' => $this->getModuleService('roomTypeService')->fetchList($this->getCurrentLangId(), $hotelId),
+
             // Renders variables
-            'type' => $type,
+            'typeId' => $typeId,
             'arrival' => $arrival,
             'departure' => $departure,
             'rooms' => $rooms,
