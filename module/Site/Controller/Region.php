@@ -15,6 +15,10 @@ final class Region extends AbstractCrmController
      */
     private function createGrid($regionId) : string
     {
+        // Appends on breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Regions and districts');
+
         return $this->view->render('region/index', [
             'regionId' => $regionId,
             'regions' => $this->getModuleService('regionService')->fetchAll($this->getCurrentLangId()),
