@@ -38,14 +38,16 @@ use Krystal\Form\Element;
             </div>
         </div>
 
+        <?php $category = LanguageService::normalizeEntity($category); ?>
+
         <div class="tab-pane fade" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('category[id]', $entity['id']); ?>
+                <?= Element::hidden('category[id]', $category['id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::number('category[order]', $entity['order'], array('class' => 'form-control', 'min' => 0)); ?>
+                    <?= Element::number('category[order]', $category['order'], array('class' => 'form-control', 'min' => 0)); ?>
                   </div>
                 </div>
             </div>
@@ -54,7 +56,7 @@ use Krystal\Form\Element;
         <div class="form-group">
           <div class="col-lg-10 col-lg-offset-2">
             <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-            <?php if ($entity['id']): ?>
+            <?php if ($category['id']): ?>
             <a href="<?= $this->url('Site:RegionCategory@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
             <?php endif; ?>
           </div>

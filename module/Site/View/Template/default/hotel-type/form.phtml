@@ -38,14 +38,16 @@ use Site\Service\LanguageService;
             </div>
         </div>
 
+        <?php $hotelType = LanguageService::normalizeEntity($hotelType); ?>
+
         <div class="tab-pane fade in" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('type[id]', $entity['id']); ?>
+                <?= Element::hidden('type[id]', $hotelType['id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Order'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::text('type[order]', $entity['order'], array('class' => 'form-control')); ?>
+                    <?= Element::text('type[order]', $hotelType['order'], array('class' => 'form-control')); ?>
                   </div>
                 </div>
             </div>
@@ -59,5 +61,4 @@ use Site\Service\LanguageService;
         <button type="submit" class="btn btn-primary"><? $this->show('Submit'); ?></button>
       </div>
     </div>
-    
 </form>
