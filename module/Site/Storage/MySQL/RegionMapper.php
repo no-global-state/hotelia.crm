@@ -64,7 +64,8 @@ final class RegionMapper extends AbstractMapper
                        // Hotel relation
                        ->leftJoin(HotelMapper::getTableName(), [
                             self::column('id') => HotelMapper::column('region_id'),
-                            HotelMapper::column('active') => new RawSqlFragment('1')
+                            HotelMapper::column('active') => new RawSqlFragment('1'),
+                            HotelMapper::column('closed') => new RawSqlFragment('0')
                        ])
                        ->groupBy([
                             self::column('id'), 
