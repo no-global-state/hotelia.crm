@@ -147,6 +147,22 @@ final class Site extends AbstractSiteController
     }
 
     /**
+     * Tweaks paginator's instance
+     * 
+     * @param \Krystal\Paginate\PaginatorInterface $paginator
+     * @return void
+     */
+    private function tweakPaginator($paginator)
+    {
+        $placeholder = '(:var)';
+
+        $url =  '/search/?'.$this->request->buildQuery(array('page' => $placeholder));
+        $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
+
+        $paginator->setUrl($url);
+    }
+
+    /**
      * Search action
      * 
      * @return string
@@ -180,6 +196,10 @@ final class Site extends AbstractSiteController
         $hotels = $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery(), $sort);
         $hotels = $this->getModuleService('facilitiyService')->appendFacilityMapToHotels($hotels);
 
+        // Paginator instance
+        $paginator = $this->getModuleService('hotelService')->getPaginator();
+        $this->tweakPaginator($paginator);
+
         return $this->view->render('search', [
             'region' => $region,
 
@@ -198,6 +218,7 @@ final class Site extends AbstractSiteController
             'kids' => $kids,
             'sort' => $sort,
 
+            'paginator' => $paginator,
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
             'hotels' => $hotels,
             'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
