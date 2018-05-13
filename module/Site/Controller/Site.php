@@ -182,6 +182,7 @@ final class Site extends AbstractSiteController
         $rooms = $this->request->getQuery('rooms', 1);
         $adults = $this->request->getQuery('adults', 1);
         $kids = $this->request->getQuery('kids', 0);
+        $stars = $this->request->getQuery('stars', []);
 
         // Sorting param
         $sort = $this->request->getQuery('sort', 'discount');
@@ -204,6 +205,7 @@ final class Site extends AbstractSiteController
             'region' => $region,
 
             // Request variables
+            'stars' => $stars,
             'regionId' => $regionId,
             'typeIds' => $typeIds,
             'facilityIds' => $facilityIds,

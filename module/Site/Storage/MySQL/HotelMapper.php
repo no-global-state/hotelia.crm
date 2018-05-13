@@ -215,9 +215,9 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             $db->andWhereEquals(self::column('region_id'), $filters['region_id']);
         }
 
-        // Hotel rate filter
-        if (!empty($filters['rate'])) {
-            $db->andWhereEquals(self::column('rate'), $filters['rate']);
+        // Stars rate filter
+        if (!empty($filters['stars'])) {
+            $db->andWhereIn(self::column('rate'), $filters['stars']);
         }
 
         // Hotel price filter
