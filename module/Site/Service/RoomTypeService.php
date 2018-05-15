@@ -149,7 +149,7 @@ final class RoomTypeService
             $typeId = $this->roomTypeMapper->getMaxId();
 
             // Save related prices
-            $this->roomTypePriceMapper->save($typeId, $room['prices']);
+            $this->roomTypePriceMapper->saveSingular($typeId, $room['prices']);
 
             // Now insert rooms
             for ($i = 0; $i < $room['qty']; $i++) {
