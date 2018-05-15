@@ -103,7 +103,8 @@ final class RoomTypePriceMapper extends AbstractMapper
     /**
      * Updates room type price
      * 
-     * @param array $data
+     * @param int $roomTypeId
+     * @param array $collection
      * @return boolean
      */
     public function save(int $roomTypeId, array $collection)
