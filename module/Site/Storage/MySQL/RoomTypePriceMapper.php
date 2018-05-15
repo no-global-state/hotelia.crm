@@ -77,6 +77,30 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Save singular data
+     * 
+     * @param int $roomTypeId
+     * @param array $prices
+     * @return boolean
+     */
+    public function saveSingular(int $roomTypeId, array $prices) : bool
+    {
+        foreach ($prices as $groupId => $price) {
+            // To be inserted
+            $row = [
+                'room_type_id' => $roomTypeId,
+                'price_group_id' => $groupId,
+                'price' => $price,
+                'capacity' => 1
+            ];
+
+            $this->persist($row);
+        }
+
+        return true;
+    }
+
+    /**
      * Updates room type price
      * 
      * @param array $data
