@@ -13,6 +13,20 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Find a price by its attached ID
+     * 
+     * @param int $id
+     * @return array
+     */
+    public function findPrice(int $id)
+    {
+        return $this->db->select('price')
+                        ->from(self::getTableName())
+                        ->whereEquals('id', $id)
+                        ->queryScalar();
+    }
+
+    /**
      * Fetch all room prices
      * 
      * @param int $hotelId
