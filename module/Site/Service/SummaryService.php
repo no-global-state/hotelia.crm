@@ -50,6 +50,30 @@ final class SummaryService
     }
 
     /**
+     * Returns summary data
+     * 
+     * @return array
+     */
+    public function getSummary() : array
+    {
+        // Defaults
+        $qty = 0;
+        $price = 0;
+
+        foreach ($this->getData() as $target => $params) {
+            foreach ($params as $index => $item) {
+                $qty += $item['qty'];
+                $price += $item['price'];
+            }
+        }
+
+        return [
+            'qty' => $qty,
+            'price' => $price
+        ];
+    }
+    
+    /**
      * Clears the stack
      * 
      * @return void
