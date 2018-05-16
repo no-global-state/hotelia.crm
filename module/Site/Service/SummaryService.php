@@ -130,7 +130,6 @@ final class SummaryService
     public function append(int $roomTypeId, int $id, int $qty, $price)
     {
         $params = $this->getData();
-        $collision = false;
 
         if (!isset($params[$roomTypeId])) {
             $params[$roomTypeId] = [];
@@ -139,24 +138,20 @@ final class SummaryService
         // Collision checking
         foreach ($params as $target => $collection) {
             foreach ($collection as $index => $item) {
-                // Update QTY on collision
+                // Remove on collision
                 if ($item['id'] == $id) {
-                    $params[$target][$index]['qty'] = $qty;
-                    $collision = true;
+                    unset($params[$target][$index]);
                 }
             }
         }
 
-        // If no collision, then just insert
-        if ($collision == false) {
-            // Append
-            $params[$roomTypeId][] = [
-                'price' => $price,
-                'qty' => $qty,
-                'id' => $id,
-                'price' => $price
-            ];
-        }
+        // Append
+        $params[$roomTypeId][] = [
+            'price' => $price,
+            'qty' => $qty,
+            'id' => $id,
+            'price' => $price
+        ];
 
         // And refresh
         $this->sessionBag->set(self::PARAM_STORAGE_KEY, $params);
