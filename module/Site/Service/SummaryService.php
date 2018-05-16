@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Krystal\Session\SessionBagInterface;
+use Krystal\Text\Math;
 
 final class SummaryService
 {
@@ -52,9 +53,10 @@ final class SummaryService
     /**
      * Returns summary data
      * 
+     * @param mixed $discount Optional discount to be applied for the final price
      * @return array
      */
-    public function getSummary() : array
+    public function getSummary($discount = null) : array
     {
         // Defaults
         $qty = 0;
@@ -67,12 +69,19 @@ final class SummaryService
             }
         }
 
-        return [
+        $output = [
             'qty' => $qty,
             'price' => $price
         ];
+
+        // Count if provided
+        if ($discount !== null) {
+            $output['discount_price'] = Math::getDiscount($price, $discount);
+        }
+
+        return $output;
     }
-    
+
     /**
      * Clears the stack
      * 
