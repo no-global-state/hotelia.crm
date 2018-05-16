@@ -75,6 +75,48 @@ final class RoomTypeService
     }
 
     /**
+     * Creates summary data
+     * 
+     * @param array $summary
+     * @param int $priceGroupId
+     * @param int $hotelId
+     * @param int $langId
+     * @return array
+     */
+    public function createSummary(array $summary, int $priceGroupId, int $hotelId, int $langId)
+    {
+        // Internal extractor
+        $extract = function(array $items, $key){
+            $value = 0;
+
+            foreach ($items as $item) {
+                $value += $item[$key];
+            }
+
+            return $value;
+        };
+
+        $output = [];
+
+        foreach ($summary as $target => $params) {
+            $room = $this->findByTypeId($target, $priceGroupId, $hotelId, $langId);
+
+            foreach ($params as $index => $item) {
+                if ($room['id'] == $target){
+                    $output[$target] = [
+                        'qty' => $extract($params, 'qty'),
+                        'price' => $extract($params, 'price'),
+                        'name' => $room['name'],
+                        'cover' => $room['cover']
+                    ];
+                }
+            }
+        }
+
+        return $output;
+    }
+
+    /**
      * Normalizes price grouped entity
      * 
      * @param mixed $type
