@@ -77,6 +77,7 @@ final class SummaryService
         // Count if provided
         if ($discount !== null) {
             $output['discount_price'] = Math::getDiscount($price, $discount);
+            $output['saved_price'] = $price - $output['discount_price'];
         }
 
         return $output;
