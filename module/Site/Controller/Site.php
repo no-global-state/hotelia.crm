@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
+use Site\Service\SummaryService;
 use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
@@ -36,6 +37,29 @@ final class Site extends AbstractSiteController
     {
         $this->setPriceGroupId($priceGroupId);
         $this->response->redirectToPreviousPage();
+    }
+
+    /**
+     * Performs a calculation
+     * 
+     * @return string
+     */
+    public function calculate()
+    {
+        $params = $this->request->getQuery();
+
+        $price = $this->getModuleService('roomTypeService')->countPrice($params['uniq-id'], $params['qty']);
+        $summary = new SummaryService($this->sessionBag);
+
+        // If to remove
+        if ($params['qty'] == 0) {
+            $summary->remove($params['uniq-id']);
+        } else {
+            // Otherwise append
+            $summary->append($params['room-type-id'], $params['uniq-id'], $params['qty'], $price);
+        }
+
+        return $this->json($summary->getSummary());
     }
 
     /**
@@ -239,6 +263,10 @@ final class Site extends AbstractSiteController
         if (!$this->request->hasQuery('hotel_id')) {
             return false;
         }
+
+        // Clear previous summary if any
+        $summary = new SummaryService($this->sessionBag);
+        $summary->clear();
 
         // Request variables
         $arrival = $this->request->getQuery('arrival', ReservationService::getToday());

@@ -370,7 +370,11 @@ return [
     '/payment/(:var)' => [
         'controller' => 'Site@paymentAction'
     ],
-    
+
+    '/calculate/(:var)' => [
+        'controller' => 'Site@calculate'
+    ],
+
     '/search/(:var)' => [
         'controller' => 'Site@searchAction'
     ],
