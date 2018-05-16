@@ -388,6 +388,19 @@ final class RoomTypeService
     }
 
     /**
+     * Counts a price
+     * 
+     * @param int $id
+     * @param int $qty
+     * @return mixed
+     */
+    public function countPrice(int $id, int $qty)
+    {
+        $price = $this->roomTypePriceMapper->findPrice($id);
+        return $price * $qty;
+    }
+
+    /**
      * Find data by room type ID
      * 
      * @param int $roomTypeId
