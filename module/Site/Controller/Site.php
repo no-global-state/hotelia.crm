@@ -84,6 +84,20 @@ final class Site extends AbstractSiteController
     }
 
     /**
+     * Create rooms
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    private function createSummary(int $hotelId)
+    {
+        // Clear previous summary if any
+        $summary = (new SummaryService($this->sessionBag))->getData();
+
+        return $this->getModuleService('roomTypeService')->createSummary($summary, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
+    }
+
+    /**
      * Renders payment page
      * 
      * @return string
@@ -116,6 +130,8 @@ final class Site extends AbstractSiteController
                 'arrival' => $arrival,
                 'departure' => $departure,
                 'room' => $room,
+                'selectedRooms' => $this->createSummary($hotelId),
+                'selectedSummary' => (new SummaryService($this->sessionBag))->getSummary(),
                 'hotel' => $hotel,
                 'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price']),
                 'qty' => $qty
