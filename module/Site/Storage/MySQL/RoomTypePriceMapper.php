@@ -55,7 +55,8 @@ final class RoomTypePriceMapper extends AbstractMapper
             self::column('price'),
             self::column('capacity'),
             self::column('room_type_id'),
-            self::column('price_group_id') => 'id'
+            self::column('price_group_id') => 'id',
+            self::column('id') => 'uniq'
         ];
 
         $db = $this->db->select($columns)
