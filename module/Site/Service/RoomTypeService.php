@@ -434,11 +434,13 @@ final class RoomTypeService
      * 
      * @param int $id
      * @param int $qty
-     * @return mixed
+     * @param string $arrival
+     * @param string $departure
+     * @return float
      */
-    public function countPrice(int $id, int $qty)
+    public function countPrice(int $id, int $qty, string $arrival, string $departure)
     {
-        $price = $this->roomTypePriceMapper->findPrice($id);
+        $price = $this->roomTypePriceMapper->findPrice($id) * ReservationService::getDaysDiff($arrival, $departure);
         return $price * $qty;
     }
 
