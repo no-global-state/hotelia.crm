@@ -48,7 +48,13 @@ final class Site extends AbstractSiteController
     {
         $params = $this->request->getQuery();
 
-        $price = $this->getModuleService('roomTypeService')->countPrice($params['uniq-id'], $params['qty']);
+        $price = $this->getModuleService('roomTypeService')->countPrice(
+            $params['uniq-id'], 
+            $params['qty'], 
+            $params['arrival'], 
+            $params['departure']
+        );
+
         $summary = new SummaryService($this->sessionBag);
 
         // If to remove
