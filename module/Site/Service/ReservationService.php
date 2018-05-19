@@ -316,6 +316,21 @@ final class ReservationService
     }
 
     /**
+     * Gets days difference count
+     * 
+     * @param string $arrival
+     * @param string $departure
+     * @return integer
+     */
+    public static function getDaysDiff(string $arrival, string $departure) : int
+    {
+        $date1 = new DateTime($arrival);
+        $date2 = new DateTime($departure);
+
+        return $date2->diff($date1)->format("%a");
+    }
+
+    /**
      * Calculates stay price based on arrival and departure dates
      * 
      * @param string $arrival
@@ -325,10 +340,7 @@ final class ReservationService
      */
     public static function calculateStayPrice(string $arrival, string $departure, $price) : array
     {
-        $date1 = new DateTime($arrival);
-        $date2 = new DateTime($departure);
-
-        $days = $date2->diff($date1)->format("%a");
+        $days = self::getDaysDiff($arrival, $departure);
 
         return [
             'days' => $days,
