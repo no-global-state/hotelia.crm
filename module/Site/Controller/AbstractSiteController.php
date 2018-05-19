@@ -24,6 +24,18 @@ abstract class AbstractSiteController extends AbstractController
     }
 
     /**
+     * Returns current currency
+     * 
+     * @return string
+     */
+    protected function getCurrency() : string
+    {
+        $group = $this->getModuleService('priceGroupService')->fetchById($this->getPriceGroupId());
+
+        return $group['currency'];
+    }
+
+    /**
      * Returns current price group ID
      * 
      * @return int
@@ -151,6 +163,7 @@ abstract class AbstractSiteController extends AbstractController
             'languages' => $this->getModuleService('languageService')->fetchAll(),
             'language' => $code,
             'dictionary' => $this->createDictionary(),
+            'currency' => $this->getCurrency(),
 
             'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
