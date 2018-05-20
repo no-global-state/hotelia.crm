@@ -353,6 +353,11 @@ final class Site extends AbstractSiteController
     public function homeAction()
     {
         return $this->view->render('home', [
+            // Defaults
+            'adults' => 1,
+            'kids' => 0,
+            'rooms' => 1,
+            
             'home' => true,
             'regions' => $this->getModuleService('regionService')->findHotels($this->getCurrentLangId())
         ]);
