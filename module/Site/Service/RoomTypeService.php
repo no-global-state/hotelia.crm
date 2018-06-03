@@ -105,6 +105,7 @@ final class RoomTypeService
                 if ($room['id'] == $target){
                     $output[$target] = [
                         'qty' => $extract($params, 'qty'),
+                        'guests' => $extract($params, 'guests'),
                         'price' => $extract($params, 'price'),
                         'name' => $room['name'],
                         'cover' => $room['cover']

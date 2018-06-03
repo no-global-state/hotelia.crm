@@ -62,7 +62,7 @@ final class Site extends AbstractSiteController
             $summary->remove($params['uniq-id']);
         } else {
             // Otherwise append
-            $summary->append($params['room-type-id'], $params['uniq-id'], $params['qty'], $price);
+            $summary->append($params['room-type-id'], $params['uniq-id'], $params['qty'], $params['capacity'], $price);
         }
 
         // Get hotel data

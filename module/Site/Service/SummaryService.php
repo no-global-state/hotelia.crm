@@ -62,22 +62,27 @@ final class SummaryService
         $qty = 0;
         $price = 0;
 
+        // Guest counter
+        $guests = 0;
+
         foreach ($this->getData() as $target => $params) {
             foreach ($params as $index => $item) {
                 $qty += $item['qty'];
                 $price += $item['price'];
+                $guests += $item['guests'];
             }
         }
 
         $output = [
             'qty' => $qty,
-            'price' => $price
+            'price' => number_format($price),
+            'guests' => $guests
         ];
 
         // Count if provided
         if ($discount !== null) {
-            $output['discount_price'] = Math::getDiscount($price, $discount);
-            $output['saved_price'] = $price - $output['discount_price'];
+            $output['discount_price'] = number_format(Math::getDiscount($price, $discount));
+            $output['saved_price'] = ($price - $output['discount_price']);
         }
 
         return $output;
@@ -124,10 +129,11 @@ final class SummaryService
      * @param int $roomTypeId Room Type ID
      * @param int $id Price ID
      * @param int $qty Quantity of rooms
+     * @param int $capacity Total capacity of the room
      * @param float $price Counted price
      * @return void
      */
-    public function append(int $roomTypeId, int $id, int $qty, $price)
+    public function append(int $roomTypeId, int $id, int $qty, int $capacity, $price)
     {
         $params = $this->getData();
 
@@ -150,7 +156,9 @@ final class SummaryService
             'price' => $price,
             'qty' => $qty,
             'id' => $id,
-            'price' => $price
+            'price' => $price,
+            'capacity' => $capacity,
+            'guests' => $qty * $capacity
         ];
 
         // And refresh
