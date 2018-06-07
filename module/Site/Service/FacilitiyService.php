@@ -125,12 +125,19 @@ final class FacilitiyService
      * @param int $langId
      * @param bool $front Whether to fetch only front items
      * @param bool $checked Whether to select only checked items
+     * @param bool $asList Whether to return output as a hash map
      * @return array
      */
-    public function getItemList($hotelId, int $langId, bool $front = false, bool $checked = false) : array
+    public function getItemList($hotelId, int $langId, bool $front = false, bool $checked = false, bool $asList = true) : array
     {
+        // Get items
         $items = $this->itemMapper->fetchAll($langId, null, $hotelId, $front, $checked);
-        return ArrayUtils::arrayList($items, 'id', 'name');
+
+        if ($asList === true) {
+            return ArrayUtils::arrayList($items, 'id', 'name');
+        } else {
+            return $items;
+        }
     }
 
     /**
