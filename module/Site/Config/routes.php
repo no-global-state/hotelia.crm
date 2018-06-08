@@ -208,6 +208,11 @@ return [
         'controller' => 'Api@getFilter'
     ],
 
+    // Perform filtering
+    '/api/search' => [
+        'controller' => 'Api@search'
+    ],
+
     // Property
     '/crm/property/(:var)' => [
         'controller' => 'Property@indexAction',

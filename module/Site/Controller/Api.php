@@ -86,6 +86,69 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Performs a filter
+     * 
+     * @return array
+     */
+    public function search()
+    {
+        $request = $this->request->getJsonBody();
+
+        // Request variables
+        $regionId = $request['region_id'] ?? null;
+        $typeIds = $request['type'] ?? [];
+
+        // Main
+        $languageId = $request['lang'] ?? 1;
+        $priceGroupId = $request['price_group_id'] ?? 1;
+
+        // Append one more key
+        $request['facility'] = array_merge($request['facilities'] ?? [], $request['meals'] ?? []);
+
+        // Dates
+        $arrival = $request['arrival'];
+        $departure = $request['departure'];
+
+        // Collection of rates
+        $rates = $request['stars'] ?? [];
+
+        // Counter data
+        $rooms = $request['rooms'] ?? 1;
+        $adults = $request['adults'] ?? 1;
+        $kids = $request['kids'] ?? 0;
+
+        // Sorting param
+        $sort = $request['sort'] ?? 'discount';
+
+        // Create region data based on its ID
+        if ($regionId) {
+            $region = $this->getModuleService('regionService')->fetchById($regionId, $languageId);
+            $region['image'] = $this->appendBaseUrl($region['image']);
+        } else {
+            $region = null;
+        }
+
+        $hotels = $this->getModuleService('hotelService')->findAll($languageId, $priceGroupId, $request, $sort);
+
+        foreach ($hotels as &$hotel) {
+            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+
+            // Dummy
+            $hotel['has_free_rooms'] = true;
+            $hotel['card_required'] = false;
+        }
+
+        $regions = $this->getModuleService('regionService')->fetchAll($languageId);
+
+        return $this->json([
+            'sort' => $sort,
+            'region' => $region,
+            'hotels' => $hotels,
+            'regions' => $regions,
+        ]);
+    }
+
+    /**
      * Checks whether login is already registered
      * 
      * @param string $login
