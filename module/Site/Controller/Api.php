@@ -75,6 +75,7 @@ final class Api extends AbstractCrmController
 
         $data = [
             'prices' => ApiHelper::getPriceRanges($_ENV['prices'], $priceGroupId),
+            'sorting' => ApiHelper::getSortingOptions($dictionaryService, $lang),
             'meals' => $facilitiyService->getItems($lang, 15),
             'rates' => ApiHelper::createStarRates($dictionaryService, $lang),
             'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($lang),
