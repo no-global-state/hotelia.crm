@@ -202,6 +202,11 @@ return [
     '/api/register' => [
         'controller' => 'Api@register'
     ],
+    
+    // Returns filter data
+    '/api/get-filter/(:var)' => [
+        'controller' => 'Api@getFilter'
+    ],
 
     // Property
     '/crm/property/(:var)' => [

@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Krystal\Text\Math;
+use Site\Helpers\ApiHelper;
 
 final class Api extends AbstractCrmController
 {
@@ -12,6 +13,32 @@ final class Api extends AbstractCrmController
      * {@inheritDoc}
      */
     protected $authActive = false;
+
+    /**
+     * Returns filter parameters
+     * 
+     * @return array
+     */
+    public function getFilter()
+    {
+        // Request vars
+        $lang = $this->request->getQuery('lang', 1);
+        $priceGroupId = $this->request->getQuery('price_group_id', 1);
+
+        // Services
+        $facilitiyService = $this->getModuleService('facilitiyService');
+        $dictionaryService = $this->getModuleService('dictionaryService');
+
+        $data = [
+            'prices' => ApiHelper::getPriceRanges($_ENV['prices'], $priceGroupId),
+            'meals' => $facilitiyService->getItems($lang, 15),
+            'rates' => ApiHelper::createStarRates($dictionaryService, $lang),
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($lang),
+            'facilities' => $facilitiyService->getItemList(null, $lang, true, false, false)
+        ];
+
+        return $this->json($data);
+    }
 
     /**
      * Checks whether login is already registered
