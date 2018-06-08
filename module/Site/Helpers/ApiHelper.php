@@ -7,6 +7,38 @@ use Site\Service\DictionaryService;
 final class ApiHelper
 {
     /**
+     * Returns sorting options
+     * 
+     * @param \Site\Service\DictionaryService $dictionaryService
+     * @param int $languageId
+     * @return array
+     */
+    public static function getSortingOptions(DictionaryService $dictionaryService, int $languageId) : array
+    {
+        return [
+            [
+                'name' => $dictionaryService->findByAlias('SORT_PRICE', $languageId),
+                'value' => 'price'
+            ],
+
+            [
+                'name' => $dictionaryService->findByAlias('SORT_DISCOUNT', $languageId),
+                'value' => 'discount'
+            ],
+
+            [
+                'name' => $dictionaryService->findByAlias('SORT_REVIEWS_PRICE', $languageId),
+                'value' => 'reviews'
+            ],
+
+            [
+                'name' => $dictionaryService->findByAlias('SORT_DISTANCE', $languageId),
+                'value' => 'distance'
+            ]
+        ];
+    }
+
+    /**
      * Returns price range
      * 
      * @param array $collection
