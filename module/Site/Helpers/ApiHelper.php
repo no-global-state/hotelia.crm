@@ -9,13 +9,12 @@ final class ApiHelper
     /**
      * Returns price range
      * 
+     * @param array $collection
      * @param int $priceGroupId
      * @return array
      */
-    public static function getPriceRanges(int $priceGroupId) : array
+    public static function getPriceRanges(array $collection, int $priceGroupId) : array
     {
-        $collection = $_ENV['prices'];
-
         // If price group ID is defined
         if (isset($collection[$priceGroupId])) {
             // Current group
