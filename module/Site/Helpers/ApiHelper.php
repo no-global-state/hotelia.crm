@@ -7,6 +7,46 @@ use Site\Service\DictionaryService;
 final class ApiHelper
 {
     /**
+     * Returns price range
+     * 
+     * @param int $priceGroupId
+     * @return array
+     */
+    public static function getPriceRanges(int $priceGroupId) : array
+    {
+        $collection = $_ENV['prices'];
+
+        // If price group ID is defined
+        if (isset($collection[$priceGroupId])) {
+            // Current group
+            $group = $collection[$priceGroupId];
+
+            // Items count
+            $count = count($group['items']);
+
+            // Elements
+            $first = reset($group['items']);
+            $last = end($group['items']);
+
+            // Values
+            $min = $first['start'];
+            $max = isset($last['end']) ? $last['end'] : $group['items'][($count - 1) - 1]['end'];
+
+            return [
+                'currency' => $group['currency'],
+                'min' => [
+                    'value' => $min,
+                    'title' => number_format($min)
+                ],
+                'max' => [
+                    'value' => $max,
+                    'title' => number_format($max)
+                ]
+            ];
+        }
+    }
+
+    /**
      * Create star rates
      * 
      * @param \Site\Service\DictionaryService $dictionaryService
