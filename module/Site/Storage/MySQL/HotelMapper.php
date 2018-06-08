@@ -272,6 +272,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             self::column('rate'),
             self::column('discount'),
             self::column('center_distance'),
+            self::column('penality_enabled') => 'cancellation',
             self::column('lat'),
             self::column('lng'),
             HotelTranslationMapper::column('name'),
