@@ -59,6 +59,29 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Returns shared filter data
+     * 
+     * @param int $lang
+     * @param int $priceGroupId
+     * @return array
+     */
+    private function getSharedFilter($lang, $priceGroupId) : array
+    {
+        // Services
+        $facilitiyService = $this->getModuleService('facilitiyService');
+        $dictionaryService = $this->getModuleService('dictionaryService');
+
+        return [
+            'prices' => ApiHelper::getPriceRanges($_ENV['prices'], $priceGroupId),
+            'sorting' => ApiHelper::getSortingOptions($dictionaryService, $lang),
+            'meals' => $facilitiyService->getItems($lang, 15),
+            'rates' => ApiHelper::createStarRates($dictionaryService, $lang),
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($lang),
+            'facilities' => $facilitiyService->getItemList(null, $lang, true, false, false)
+        ];
+    }
+    
+    /**
      * Returns filter parameters
      * 
      * @return array
@@ -69,18 +92,7 @@ final class Api extends AbstractCrmController
         $lang = $this->request->getQuery('lang', 1);
         $priceGroupId = $this->request->getQuery('price_group_id', 1);
 
-        // Services
-        $facilitiyService = $this->getModuleService('facilitiyService');
-        $dictionaryService = $this->getModuleService('dictionaryService');
-
-        $data = [
-            'prices' => ApiHelper::getPriceRanges($_ENV['prices'], $priceGroupId),
-            'sorting' => ApiHelper::getSortingOptions($dictionaryService, $lang),
-            'meals' => $facilitiyService->getItems($lang, 15),
-            'rates' => ApiHelper::createStarRates($dictionaryService, $lang),
-            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAll($lang),
-            'facilities' => $facilitiyService->getItemList(null, $lang, true, false, false)
-        ];
+        $data = $this->getSharedFilter($lang, $priceGroupId);
 
         return $this->json($data);
     }
@@ -90,7 +102,7 @@ final class Api extends AbstractCrmController
      * 
      * @return array
      */
-    public function search()
+    public function filter()
     {
         $request = $this->request->getJsonBody();
 
@@ -141,6 +153,7 @@ final class Api extends AbstractCrmController
         $regions = $this->getModuleService('regionService')->fetchAll($languageId);
 
         return $this->json([
+            'filter' => $this->getSharedFilter($languageId, $priceGroupId),
             'sort' => $sort,
             'region' => $region,
             'hotels' => $hotels,

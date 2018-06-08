@@ -209,8 +209,8 @@ return [
     ],
 
     // Perform filtering
-    '/api/search' => [
-        'controller' => 'Api@search'
+    '/api/filter' => [
+        'controller' => 'Api@filter'
     ],
 
     // Property
