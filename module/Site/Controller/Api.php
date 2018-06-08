@@ -15,6 +15,50 @@ final class Api extends AbstractCrmController
     protected $authActive = false;
 
     /**
+     * Appends base URL
+     * 
+     * @param string $target
+     * @return mixed
+     */
+    private function appendBaseUrl($target)
+    {
+        if (!empty($target)) {
+            return sprintf('%s/%s/%s', $this->request->getBaseUrl(), '/module/Site/View/Template/site/', $target);
+        }
+    }
+
+    /**
+     * Appends base URL
+     * 
+     * @param string $target
+     * @return mixed
+     */
+    private function appendUploadUrl($target)
+    {
+        if (!empty($target)) {
+            return sprintf('%s/%s', $this->request->getBaseUrl(), $target);
+        }
+    }
+
+    /**
+     * Normalizes image collection
+     * 
+     * @param array $collection
+     * @param string $key
+     * @return array
+     */
+    private function normalizeImagePath(array $collection, string $key) : array
+    {
+        foreach ($collection as &$item) {
+            if (isset($item[$key])) {
+                $item[$key] = $this->appendUploadUrl($item[$key]);
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
      * Returns filter parameters
      * 
      * @return array
