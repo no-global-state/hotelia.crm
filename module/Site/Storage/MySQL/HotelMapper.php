@@ -220,6 +220,11 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             $db->andWhereIn(self::column('rate'), $filters['stars']);
         }
 
+        // If free cancellation is supported
+        if (!empty($filters['cancellation']) && $filters['cancellation'] == true) {
+            $db->andWhereEquals(self::column('penality_enabled'), (string) $filters['cancellation']);
+        }
+
         // Hotel price filter
         if (isset($filters['price-start'], $filters['price-stop'])) {
             $db->andWhereBetween(RoomTypePriceMapper::column('price'), $filters['price-start'], $filters['price-stop']);
