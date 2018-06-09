@@ -56,7 +56,7 @@ final class RoomTypeBedMapper extends AbstractMapper
     public function fetchAll(int $langId) : array
     {
         return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(DictionaryTranslationMapper::column('lang_id'), $langId)
+                    ->whereEquals(RoomTypeBedTranslationMapper::column('lang_id'), $langId)
                     ->orderBy($this->getPk())
                     ->desc()
                     ->queryAll();
