@@ -16,11 +16,12 @@ final class RoomBed extends AbstractCrmController
     {
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()
-                   ->addOne('Room beds', $this->createUrl('Site:RoomBed@indexAction'))
-                   ->addOne(!is_array($entity) ? 'Add bed' : 'Edit bed');
+                   ->addOne('Beds', $this->createUrl('Site:RoomBed@indexAction'))
+                   ->addOne(!is_array($entity) ? 'Add new bed' : 'Edit the bed');
 
         return $this->view->render('room-bed/form', [
-            'bed' => $entity
+            'bed' => $entity,
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
 
@@ -32,7 +33,7 @@ final class RoomBed extends AbstractCrmController
     public function indexAction()
     {
         $this->view->getBreadcrumbBag()
-                   ->addOne('Room beds');
+                   ->addOne('Beds');
 
         return $this->view->render('room-bed/index', [
             'beds' => $this->getModuleService('bedService')->fetchAll($this->getCurrentLangId())

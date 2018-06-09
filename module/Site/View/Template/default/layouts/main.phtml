@@ -88,7 +88,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                 <li>
                   <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
                   <ul id="menu-admin" class="collapse">
-                    <li><a href="<?= $this->url('Site:RoomBed@indexAction'); ?>"><i class="glyphicon glyphicon-bed"></i> <? $this->show('Room beds'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:RoomBed@indexAction'); ?>"><i class="glyphicon glyphicon-bed"></i> <? $this->show('Beds'); ?></a></li>
                     <li><a href="<?= $this->url('Site:RoomCategory@indexAction'); ?>"><i class="glyphicon glyphicon-align-right"></i> <? $this->show('Room categories'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Property@indexAction', null); ?>"><i class="glyphicon glyphicon-tasks"></i> <? $this->show('Properties'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>"><i class="glyphicon glyphicon-star"></i> <? $this->show('Review types'); ?></a></li>
