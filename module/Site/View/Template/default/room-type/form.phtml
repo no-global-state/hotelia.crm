@@ -104,8 +104,8 @@ use Site\Service\LanguageService;
             <div class="well">
                 <?php foreach ($beds as $bed): ?>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label"><?= $bed['name']; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label"><?= $bed['name']; ?></label>
+                  <div class="col-lg-9">
                     <?= Element::number(sprintf('beds[%s]', $bed['id']), $bed['qty'] ?? null, ['class' => 'form-control', 'min' => 0]); ?>
                   </div>
                 </div>
