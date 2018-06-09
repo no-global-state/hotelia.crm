@@ -51,7 +51,7 @@ final class RoomType extends AbstractCrmController
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
             'priceGroups' => RoomTypeService::normalizeEntity($type, $priceGroups),
-
+            'beds' => $this->getModuleService('bedService')->fetchRelation($id, $this->getCurrentLangId()),
             // Facilities
             'types' => (new FacilityTypeCollection)->getAll(),
             'checklist' => $this->getModuleService('roomTypeService')->findFacilities($id, $this->getCurrentLangId(), null),
@@ -89,6 +89,16 @@ final class RoomType extends AbstractCrmController
         $service = $this->getModuleService('roomTypeService');
         $service->save($data);
 
+        // Update
+        if ($data['type']['id']) {
+            $id = $data['type']['id'];
+        } else {
+            // Insert
+            $id = $service->getLastId();
+        }
+
+        $bedService = $this->getModuleService('bedService')->updateRelation($id, $data['beds']);
+        
         $this->flashBag->set('success', $data['type']['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');
         return 1;
     }
