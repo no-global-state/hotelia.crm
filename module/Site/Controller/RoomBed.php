@@ -36,7 +36,8 @@ final class RoomBed extends AbstractCrmController
                    ->addOne('Beds');
 
         return $this->view->render('room-bed/index', [
-            'beds' => $this->getModuleService('bedService')->fetchAll($this->getCurrentLangId())
+            'beds' => $this->getModuleService('bedService')->fetchAll($this->getCurrentLangId()),
+            'icon' => 'glyphicon glyphicon-bed'
         ]);
     }
 
