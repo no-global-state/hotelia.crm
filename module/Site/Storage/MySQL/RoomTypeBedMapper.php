@@ -72,7 +72,7 @@ final class RoomTypeBedMapper extends AbstractMapper
             RoomTypeBedRelationMapper::column('qty')
         ];
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
                         // Translation relation
                         ->leftJoin(RoomTypeBedTranslationMapper::getTableName(), [
@@ -84,8 +84,13 @@ final class RoomTypeBedMapper extends AbstractMapper
                             RoomTypeBedRelationMapper::column('room_type_id') => $roomTypeId
                         ])
                         // Constraints
-                        ->whereEquals(RoomTypeBedTranslationMapper::column('lang_id'), $langId)
-                        ->queryAll();
+                        ->whereEquals(RoomTypeBedTranslationMapper::column('lang_id'), $langId);
+
+        if ($exclude === true) {
+            $db->andWhereNotEquals(RoomTypeBedRelationMapper::column('qty'), 0);
+        }
+
+        return $db->queryAll();
     }
 
     /**
