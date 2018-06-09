@@ -109,8 +109,6 @@ final class RoomTypeBedMapper extends AbstractMapper
     {
         return $this->createEntitySelect($this->getColumns())
                     ->whereEquals(RoomTypeBedTranslationMapper::column('lang_id'), $langId)
-                    ->orderBy($this->getPk())
-                    ->desc()
                     ->queryAll();
     }
 }
