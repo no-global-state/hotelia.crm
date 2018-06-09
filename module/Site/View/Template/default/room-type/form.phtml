@@ -91,6 +91,10 @@ use Site\Service\LanguageService;
             </section>
 
             <?php endforeach; ?>
+
+            <br />
+            <button type="button" class="btn btn-success" data-button="price-policy-add"><i class="glyphicon glyphicon-share"></i> <? $this->show('Add price policy'); ?></button>
+            
           </div>
         </div>
 
@@ -117,7 +121,6 @@ use Site\Service\LanguageService;
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-        <button type="button" class="btn btn-success" data-button="price-policy-add"><i class="glyphicon glyphicon-share"></i> <? $this->show('Add price policy'); ?></button>
         <a href="<?= $this->url($entity['id'] ? 'Site:Architecture:RoomType@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
       </div>
     </div>
