@@ -36,6 +36,58 @@ final class RoomTypeBedMapper extends AbstractMapper
     }
 
     /**
+     * Update relations
+     * 
+     * @param int $roomTypeId
+     * @param array $data
+     * @return boolean
+     */
+    public function updateRelation(int $roomTypeId, array $data) : bool
+    {
+        // Remove previous if any
+        $this->db->delete()
+                 ->from(RoomTypeBedRelationMapper::getTableName())
+                 ->whereEquals('room_type_id', $roomTypeId)
+                 ->execute();
+
+        // Now insert
+        return $this->db->insertMany(RoomTypeBedRelationMapper::getTableName(), ['room_type_id', 'bed_id', 'qty'], $data)
+                        ->execute();
+    }
+
+    /**
+     * Fetch relational data
+     * 
+     * @param int $roomTypeId
+     * @param int $langId
+     * @return array
+     */
+    public function fetchRelation(int $roomTypeId, int $langId) : array
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            RoomTypeBedTranslationMapper::column('name'),
+            RoomTypeBedRelationMapper::column('qty')
+        ];
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Translation relation
+                        ->leftJoin(RoomTypeBedTranslationMapper::getTableName(), [
+                            RoomTypeBedTranslationMapper::column('id') => self::getRawColumn('id')
+                        ])
+                        // Relation
+                        ->leftJoin(RoomTypeBedRelationMapper::getTableName(), [
+                            RoomTypeBedRelationMapper::column('bed_id') => self::getRawColumn('id'),
+                            RoomTypeBedRelationMapper::column('room_type_id') => $roomTypeId
+                        ])
+                        // Constraints
+                        ->whereEquals(RoomTypeBedTranslationMapper::column('lang_id'), $langId)
+                        ->queryAll();
+    }
+
+    /**
      * Fetch bed entry by its ID
      * 
      * @param int $id Entry ID

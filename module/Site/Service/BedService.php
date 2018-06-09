@@ -25,6 +25,40 @@ final class BedService
     }
 
     /**
+     * Update relations
+     * 
+     * @param int $roomTypeId
+     * @param array $relation
+     * @return boolean
+     */
+    public function updateRelation(int $roomTypeId, array $relation) : bool
+    {
+        $data = [];
+
+        foreach ($relation as $bedId => $qty) {
+            $data[] = [$roomTypeId, $bedId, $qty];
+        }
+
+        return $this->roomTypeBedMapper->updateRelation($roomTypeId, $data);
+    }
+
+    /**
+     * Fetch relational data
+     * 
+     * @param mixed $roomTypeId
+     * @param int $langId
+     * @return array
+     */
+    public function fetchRelation($roomTypeId, int $langId) : array
+    {
+        if ($roomTypeId !== null) {
+            return $this->roomTypeBedMapper->fetchRelation($roomTypeId, $langId);
+        } else {
+            return $this->roomTypeBedMapper->fetchAll($langId);
+        }
+    }
+
+    /**
      * Fetch all beds
      * 
      * @param int $languageId
