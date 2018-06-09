@@ -642,6 +642,27 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
+    // Room bed
+    '/crm/room-bed' => [
+        'controller' => 'RoomBed@indexAction'
+    ],
+    
+    '/crm/room-bed/add' => [
+        'controller' => 'RoomBed@addAction'
+    ],
+    
+    '/crm/room-bed/edit/(:var)' => [
+        'controller' => 'RoomBed@editAction'
+    ],
+
+    '/crm/room-bed/delete/(:var)' => [
+        'controller' => 'RoomBed@deleteAction'
+    ],
+
+    '/crm/room-bed/save' => [
+        'controller' => 'RoomBed@saveAction'
+    ],
+
     '/crm/architecture/room-type' => [
         'controller' => 'Architecture:RoomType@indexAction'
     ],
