@@ -374,6 +374,16 @@ CREATE TABLE velveto_room_type_beds_translations (
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_room_type_beds_relation (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `room_type_id` INT NOT NULL COMMENT 'Attached room type ID',
+    `bed_id` INT NOT NULL COMMENT 'Attached bed ID',
+    `qty` INT NOT NULL COMMENT 'Quantity of beds',
+
+    FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
+    FOREIGN KEY (bed_id) REFERENCES velveto_room_type_beds(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
