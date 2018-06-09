@@ -75,6 +75,16 @@ final class RoomTypeService
     }
 
     /**
+     * Returns last ID
+     * 
+     * @return int
+     */
+    public function getLastId() : int
+    {
+        return $this->roomTypeMapper->getMaxId();
+    }
+
+    /**
      * Creates summary data
      * 
      * @param array $summary
