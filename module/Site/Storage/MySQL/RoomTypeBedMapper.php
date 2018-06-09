@@ -60,9 +60,10 @@ final class RoomTypeBedMapper extends AbstractMapper
      * 
      * @param int $roomTypeId
      * @param int $langId
+     * @param bool $exclude Whether to return only matching rows or all
      * @return array
      */
-    public function fetchRelation(int $roomTypeId, int $langId) : array
+    public function fetchRelation(int $roomTypeId, int $langId, bool $exclude) : array
     {
         // Columns to be selected
         $columns = [
@@ -78,7 +79,7 @@ final class RoomTypeBedMapper extends AbstractMapper
                             RoomTypeBedTranslationMapper::column('id') => self::getRawColumn('id')
                         ])
                         // Relation
-                        ->leftJoin(RoomTypeBedRelationMapper::getTableName(), [
+                        ->join($exclude ? 'INNER' : 'LEFT', RoomTypeBedRelationMapper::getTableName(), [
                             RoomTypeBedRelationMapper::column('bed_id') => self::getRawColumn('id'),
                             RoomTypeBedRelationMapper::column('room_type_id') => $roomTypeId
                         ])

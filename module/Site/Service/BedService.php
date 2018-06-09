@@ -47,12 +47,13 @@ final class BedService
      * 
      * @param mixed $roomTypeId
      * @param int $langId
+     * @param bool $exclude Whether to return only matching rows or all
      * @return array
      */
-    public function fetchRelation($roomTypeId, int $langId) : array
+    public function fetchRelation($roomTypeId, int $langId, bool $exclude = false) : array
     {
         if ($roomTypeId !== null) {
-            return $this->roomTypeBedMapper->fetchRelation($roomTypeId, $langId);
+            return $this->roomTypeBedMapper->fetchRelation($roomTypeId, $langId, $exclude);
         } else {
             return $this->roomTypeBedMapper->fetchAll($langId);
         }
