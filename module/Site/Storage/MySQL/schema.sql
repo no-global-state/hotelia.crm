@@ -360,6 +360,20 @@ CREATE TABLE velveto_room_type_facility (
     FOREIGN KEY (slave_id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_room_type_beds (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `order` INT NOT NULL COMMENT 'Sorting order'
+);
+
+CREATE TABLE velveto_room_type_beds_translations (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL COMMENT 'Bed name',
+
+    FOREIGN KEY (id) REFERENCES velveto_room_type_beds(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
