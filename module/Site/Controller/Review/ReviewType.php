@@ -35,7 +35,7 @@ final class ReviewType extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('review/review-type', [
+        return $this->view->render('review-type/index', [
             'entity' => $entity,
             'reviewTypes' => $this->getReviewTypeMapper()->fetchAll()
         ]);
