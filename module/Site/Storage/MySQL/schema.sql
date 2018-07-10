@@ -139,6 +139,15 @@ CREATE TABLE velveto_reviews_types (
     `name` varchar(255)
 );
 
+CREATE TABLE velveto_reviews_types_translation (
+    `id` INT NOT NULL,
+    `lang_id` INT NOT NULL,
+    `name` varchar(255) NOT NULL,
+
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE,
+    FOREIGN KEY (id) REFERENCES velveto_reviews_types(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_reviews (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `lang_id` INT NOT NULL,
