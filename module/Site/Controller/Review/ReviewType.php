@@ -24,8 +24,12 @@ final class ReviewType extends AbstractCrmController
      */
     public function indexAction()
     {
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()->addOne('Review types');
+
         return $this->view->render('review-type/index', [
-            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll()
+            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll(),
+            'icon' => 'glyphicon glyphicon-resize-full'
         ]);
     }
 
