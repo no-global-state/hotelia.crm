@@ -28,7 +28,7 @@ final class ReviewType extends AbstractCrmController
         $this->view->getBreadcrumbBag()->addOne('Review types');
 
         return $this->view->render('review-type/index', [
-            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll(),
+            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll($this->getCurrentLangId()),
             'icon' => 'glyphicon glyphicon-resize-full'
         ]);
     }
@@ -46,7 +46,7 @@ final class ReviewType extends AbstractCrmController
                                        ->addOne(!is_array($entity) ? 'Add review type' : 'Edit review type');
 
         return $this->view->render('review-type/form', [
-            'entity' => $entity,
+            'reviewType' => $entity,
             'icon' => 'glyphicon glyphicon-pencil'
         ]);
     }
@@ -69,7 +69,7 @@ final class ReviewType extends AbstractCrmController
      */
     public function editAction(int $id)
     {
-        $entity = $this->getReviewTypeMapper()->findByPk($id);
+        $entity = $this->getReviewTypeMapper()->fetchById($id);
 
         if ($entity !== false) {
             return $this->createForm($entity);
@@ -86,9 +86,9 @@ final class ReviewType extends AbstractCrmController
     public function saveAction()
     {
         $data = $this->request->getPost();
-        $this->getReviewTypeMapper()->persist($data);
+        $this->getReviewTypeMapper()->saveEntity($data['reviewType'], $data['translation']);
 
-        $this->flashBag->set('success', $data['id'] ? 'The review type has been updated successfully' : 'The review type has been added successfully');
+        $this->flashBag->set('success', $data['reviewType']['id'] ? 'The review type has been updated successfully' : 'The review type has been added successfully');
         return 1;
     }
 
