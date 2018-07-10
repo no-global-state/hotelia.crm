@@ -135,8 +135,7 @@ CREATE TABLE velveto_regions_districts_translation (
 CREATE TABLE velveto_reviews_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `mark` SMALLINT NOT NULL COMMENT 'Default review type mark',
-    `order` INT NOT NULL COMMENT 'Sorting order',
-    `name` varchar(255)
+    `order` INT NOT NULL COMMENT 'Sorting order'
 );
 
 CREATE TABLE velveto_reviews_types_translation (
