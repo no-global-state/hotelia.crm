@@ -320,6 +320,11 @@ return [
         'controller' => 'Review:ReviewType@indexAction',
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
+    
+    '/crm/review-type/add' => [
+        'controller' => 'Review:ReviewType@addAction',
+        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+    ],
 
     '/crm/review-type/edit/(:var)' => [
         'controller' => 'Review:ReviewType@editAction',

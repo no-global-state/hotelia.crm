@@ -1,80 +1,33 @@
-<?php
-
-use Krystal\Form\Element;
-
-?>
 
 <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Review types'); ?> <small>(<?= count($reviewTypes); ?>)</small></h2>
 
-<div class="row">
-    <div class="col-lg-6">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th><?php $this->show('Name'); ?></th>
-                    <th><?php $this->show('Order'); ?></th>
-                    <th><?php $this->show('Mark'); ?></th>
-                    <th><?php $this->show('Actions'); ?></th>
-                </tr>
-            </thead>
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('Site:Review:ReviewType@addAction'); ?>"><? $this->show('Add review type'); ?></a>
+</p>
 
-            <tbody>
-                <?php foreach ($reviewTypes as $reviewType): ?>
-                <tr class="<?= $reviewType['id'] == $entity['id'] ? 'success' : null; ?>">
-                    <td><?= $reviewType['id']; ?></td>
-                    <td><?= $reviewType['name']; ?></td>
-                    <td><?= $reviewType['order']; ?></td>
-                    <td><?= $reviewType['mark']; ?></td>
-                    <td>
-                        <a href="<?= $this->url('Site:Review:ReviewType@editAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a href="<?= $this->url('Site:Review:ReviewType@deleteAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th><?php $this->show('Name'); ?></th>
+            <th><?php $this->show('Order'); ?></th>
+            <th><?php $this->show('Mark'); ?></th>
+            <th><?php $this->show('Actions'); ?></th>
+        </tr>
+    </thead>
 
-    <div class="col-lg-6">
-        <form class="form-horizontal" action="<?= $this->url('Site:Review:ReviewType@saveAction'); ?>">
-          <fieldset>
-            <legend><i class="glyphicon glyphicon-pencil"></i> <?php $this->show(!$entity['id'] ? 'Add review type' : 'Edit review type'); ?></legend>
-
-            <?= Element::hidden('id', $entity['id']); ?>
-
-            <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::text('order', $entity['order'], array('class' => 'form-control')); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label class="col-lg-2 control-label"><?php $this->show('Mark'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::text('mark', $entity['mark'], array('class' => 'form-control', 'min' => 1, 'placeholder' => $this->translate('Default mark'))); ?>
-              </div>
-            </div>
-
-            <div class="form-group">
-              <div class="col-lg-10 col-lg-offset-2">
-                <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-
-                <?php if ($entity['id']): ?>
-                <a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
-                <?php endif; ?>
-
-              </div>
-            </div>
-          </fieldset>
-        </form>
-    </div>
-</div>
+    <tbody>
+        <?php foreach ($reviewTypes as $reviewType): ?>
+        <tr class="<?= $reviewType['id'] == $entity['id'] ? 'success' : null; ?>">
+            <td><?= $reviewType['id']; ?></td>
+            <td><?= $reviewType['name']; ?></td>
+            <td><?= $reviewType['order']; ?></td>
+            <td><?= $reviewType['mark']; ?></td>
+            <td>
+                <a href="<?= $this->url('Site:Review:ReviewType@editAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                <a href="<?= $this->url('Site:Review:ReviewType@deleteAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

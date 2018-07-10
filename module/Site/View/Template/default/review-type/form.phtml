@@ -1,0 +1,43 @@
+<?php
+
+use Krystal\Form\Element;
+
+?>
+
+<form class="form-horizontal" action="<?= $this->url('Site:Review:ReviewType@saveAction'); ?>">
+  <fieldset>
+    <?= Element::hidden('id', $entity['id']); ?>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('name', $entity['name'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('order', $entity['order'], array('class' => 'form-control')); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="col-lg-2 control-label"><?php $this->show('Mark'); ?></label>
+      <div class="col-lg-10">
+        <?= Element::text('mark', $entity['mark'], array('class' => 'form-control', 'min' => 1, 'placeholder' => $this->translate('Default mark'))); ?>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
+
+        <?php if ($entity['id']): ?>
+        <a href="<?= $this->url('Site:Review:ReviewType@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+        <?php endif; ?>
+
+      </div>
+    </div>
+  </fieldset>
+</form>

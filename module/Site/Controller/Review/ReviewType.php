@@ -24,7 +24,9 @@ final class ReviewType extends AbstractCrmController
      */
     public function indexAction()
     {
-        return $this->createForm(new InputDecorator());
+        return $this->view->render('review-type/index', [
+            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll()
+        ]);
     }
 
     /**
@@ -35,10 +37,24 @@ final class ReviewType extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
-        return $this->view->render('review-type/index', [
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()->addOne('Review types', $this->createUrl('Site:Review:ReviewType@indexAction'))
+                                       ->addOne(!is_array($entity) ? 'Add review type' : 'Edit review type');
+
+        return $this->view->render('review-type/form', [
             'entity' => $entity,
-            'reviewTypes' => $this->getReviewTypeMapper()->fetchAll()
+            'icon' => 'glyphicon glyphicon-pencil'
         ]);
+    }
+
+    /**
+     * Renders adding form
+     * 
+     * @return string
+     */
+    public function addAction() : string
+    {
+        return $this->createForm(new InputDecorator());
     }
 
     /**
