@@ -39,28 +39,30 @@ use Site\Service\LanguageService;
             </div>
         </div>
 
+        <?php $options = LanguageService::normalizeEntity($type); ?>
+
         <div class="tab-pane fade in active" id="configuration" role="tabpanel">
           <div class="well">
-            <?= Element::hidden('type[id]', $entity['id']); ?>
+            <?= Element::hidden('type[id]', $options['id']); ?>
 
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Type'); ?></label>
               <div class="col-lg-10">
-                <?= Element::select('type[category_id]', $categories, $entity['category_id'], ['class' => 'form-control']); ?>
+                <?= Element::select('type[category_id]', $categories, $options['category_id'], ['class' => 'form-control']); ?>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Persons'); ?></label>
               <div class="col-lg-10">
-                <?= Element::number('type[persons]', $entity['persons'], ['min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Maximal capacity')]); ?>
+                <?= Element::number('type[persons]', $options['persons'], ['min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Maximal capacity')]); ?>
               </div>
             </div>
 
             <div class="form-group">
               <label class="col-lg-2 control-label"><?php $this->show('Children capacity'); ?></label>
               <div class="col-lg-10">
-                <?= Element::select('type[children]', $this->translateArray($children), $entity['children'], ['class' => 'form-control']); ?>
+                <?= Element::select('type[children]', $this->translateArray($children), $options['children'], ['class' => 'form-control']); ?>
               </div>
             </div>
 
@@ -121,7 +123,7 @@ use Site\Service\LanguageService;
     <div class="form-group">
       <div class="col-lg-10 col-lg-offset-2">
         <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-        <a href="<?= $this->url($entity['id'] ? 'Site:Architecture:RoomType@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
+        <a href="<?= $this->url($options['id'] ? 'Site:Architecture:RoomType@indexAction' : 'Site:Architecture:Grid@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
       </div>
     </div>
 </form>

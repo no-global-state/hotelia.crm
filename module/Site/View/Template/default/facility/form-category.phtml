@@ -29,13 +29,13 @@ use Site\Service\LanguageService;
         <?php endforeach; ?>
     </div>
 
-    <?php $category = LanguageService::normalizeEntity($category); ?>
-    <?= Element::hidden('category[id]', $category['id']); ?>
+    <?php $options = LanguageService::normalizeEntity($category); ?>
+    <?= Element::hidden('category[id]', $options['id']); ?>
 
     <div class="form-group">
       <label class="col-lg-2 control-label"><? $this->show('Order'); ?></label>
       <div class="col-lg-10">
-        <?= Element::text('category[order]', $category['order'], array('class' => 'form-control')); ?>
+        <?= Element::text('category[order]', $options['order'], array('class' => 'form-control')); ?>
       </div>
     </div>
 

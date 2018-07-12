@@ -38,16 +38,16 @@ use Site\Service\LanguageService;
             </div>
         </div>
 
-        <?php $hotelType = LanguageService::normalizeEntity($hotelType); ?>
+        <?php $options = LanguageService::normalizeEntity($hotelType); ?>
 
         <div class="tab-pane fade in" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('type[id]', $hotelType['id']); ?>
+                <?= Element::hidden('type[id]', $options['id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Order'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::text('type[order]', $hotelType['order'], array('class' => 'form-control')); ?>
+                    <?= Element::text('type[order]', $options['order'], array('class' => 'form-control')); ?>
                   </div>
                 </div>
             </div>

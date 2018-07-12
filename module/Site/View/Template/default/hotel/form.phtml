@@ -70,21 +70,21 @@ use Site\Service\LanguageService;;
             <div class="form-horizontal">
                 <fieldset>
                     <br />
-                    <?php $entity = LanguageService::normalizeEntity($hotel); ?>
+                    <?php $options = LanguageService::normalizeEntity($hotel); ?>
 
-                    <?= Element::hidden('hotel[id]', $entity['id']); ?>
+                    <?= Element::hidden('hotel[id]', $options['id']); ?>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[type_id]', $hotelTypes, $entity['type_id'], ['class' => 'form-control']); ?>
+                        <?= Element::select('hotel[type_id]', $hotelTypes, $options['type_id'], ['class' => 'form-control']); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Region'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[region_id]', $regions, $entity['region_id'], ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
+                        <?= Element::select('hotel[region_id]', $regions, $options['region_id'], ['data-select' => 'region', 'class' => 'form-control'], false, function($key, $value){
                             return [
                                 'data-region-id' => $key,
                             ];
@@ -97,7 +97,7 @@ use Site\Service\LanguageService;;
                       <div class="col-lg-10">
                         <select name="hotel[district_id]" class="form-control" data-select="district">
                         <?php foreach ($districts as $district): ?>
-                        <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id'], 'selected' => $district['id'] == $entity['district_id']]); ?>
+                        <?= Element::option($district['id'], $district['name'], ['data-region-id' => $district['region_id'], 'selected' => $district['id'] == $options['district_id']]); ?>
                         <?php endforeach; ?>
                         </select>
                       </div>
@@ -106,84 +106,84 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Phone'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[phone]', $entity['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
+                        <?= Element::text('hotel[phone]', $options['phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the phone'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Fax'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[fax]', $entity['fax'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the fax'))); ?>
+                        <?= Element::text('hotel[fax]', $options['fax'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the fax'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('ZIP code'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[zip]', $entity['zip'], array('class' => 'form-control', 'placeholder' => $this->translate('Type your ZIP code'))); ?>
+                        <?= Element::text('hotel[zip]', $options['zip'], array('class' => 'form-control', 'placeholder' => $this->translate('Type your ZIP code'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Legal name'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[legal_name]', $entity['legal_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the legal organization name'))); ?>
+                        <?= Element::text('hotel[legal_name]', $options['legal_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the legal organization name'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Legal address'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::textarea('hotel[legal_address]', $entity['legal_address'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the legal organization address'))); ?>
+                        <?= Element::textarea('hotel[legal_address]', $options['legal_address'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the legal organization address'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Discount'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::number('hotel[discount]', $entity['discount'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Discount loyalty if available'))); ?>
+                        <?= Element::number('hotel[discount]', $options['discount'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Discount loyalty if available'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Web-site'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[website]', $entity['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)'))); ?>
+                        <?= Element::text('hotel[website]', $options['website'], array('min' => 1, 'class' => 'form-control', 'placeholder' => $this->translate('Hotel web-site (if available)'))); ?>
                       </div>
                     </div>
                     
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[email]', $entity['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Hotel email'))); ?>
+                        <?= Element::text('hotel[email]', $options['email'], array('class' => 'form-control', 'placeholder' => $this->translate('Hotel email'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Hotel closed'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::checkbox('hotel[closed]', $entity['closed'], ['class' => 'form-control']); ?>
+                        <?= Element::checkbox('hotel[closed]', $options['closed'], ['class' => 'form-control']); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('City tax is included in room price by default'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::checkbox('hotel[city_tax_include]', $entity['city_tax_include'], ['class' => 'form-control']); ?>
+                        <?= Element::checkbox('hotel[city_tax_include]', $options['city_tax_include'], ['class' => 'form-control']); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Rate'); ?></label>
                       <div class="col-lg-10">
-                          <?= Element::select('hotel[rate]', $rates, $entity['rate'], ['class' => 'form-control']); ?>
+                          <?= Element::select('hotel[rate]', $rates, $options['rate'], ['class' => 'form-control']); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Approximate distance from the center of the city'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::number('hotel[center_distance]', $entity['center_distance'], ['class' => 'form-control', 'min' => 0, 'step' => 'any']); ?>
+                        <?= Element::number('hotel[center_distance]', $options['center_distance'], ['class' => 'form-control', 'min' => 0, 'step' => 'any']); ?>
                       </div>
                     </div>
 
@@ -191,8 +191,8 @@ use Site\Service\LanguageService;;
                       <label class="col-lg-2 control-label"><? $this->show('Pick your location on map'); ?></label>
                       <div class="col-lg-10">
                         <? $this->loadPartial('map', [
-                            'lat' => $entity['lat'],
-                            'lng' => $entity['lng']
+                            'lat' => $options['lat'],
+                            'lng' => $options['lng']
                         ]); ?>
                       </div>
                     </div>
@@ -278,35 +278,35 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Full name'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[contact_full_name]', $entity['contact_full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the the full name'))); ?>
+                        <?= Element::text('hotel[contact_full_name]', $options['contact_full_name'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the the full name'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Position'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[contact_position]', $entity['contact_position'], array('class' => 'form-control', 'placeholder' => $this->translate('Type a position'))); ?>
+                        <?= Element::text('hotel[contact_position]', $options['contact_position'], array('class' => 'form-control', 'placeholder' => $this->translate('Type a position'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Email'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[contact_email]', $entity['contact_email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the email'))); ?>
+                        <?= Element::text('hotel[contact_email]', $options['contact_email'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the email'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('First phone'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[contact_first_phone]', $entity['contact_first_phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the first phone'))); ?>
+                        <?= Element::text('hotel[contact_first_phone]', $options['contact_first_phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the first phone'))); ?>
                       </div>
                     </div>
 
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Second phone'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[contact_second_phone]', $entity['contact_second_phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the second phone if available'))); ?>
+                        <?= Element::text('hotel[contact_second_phone]', $options['contact_second_phone'], array('class' => 'form-control', 'placeholder' => $this->translate('Type the second phone if available'))); ?>
                       </div>
                     </div>
                 </fieldset>
@@ -321,7 +321,7 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Payment time'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::text('hotel[payment_time]', $entity['payment_time'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                        <?= Element::text('hotel[payment_time]', $options['payment_time'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
                       </div>
                     </div>
 
@@ -331,14 +331,14 @@ use Site\Service\LanguageService;;
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Check-in from'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[checkin_from]', $entity['checkin_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                            <?= Element::text('hotel[checkin_from]', $options['checkin_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Check-in to'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[checkin_to]', $entity['checkin_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                            <?= Element::text('hotel[checkin_to]', $options['checkin_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
                           </div>
                         </div>
                     </section>
@@ -349,14 +349,14 @@ use Site\Service\LanguageService;;
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Check-out from'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[checkout_from]', $entity['checkout_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                            <?= Element::text('hotel[checkout_from]', $options['checkout_from'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Check-out to'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[checkout_to]', $entity['checkout_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
+                            <?= Element::text('hotel[checkout_to]', $options['checkout_to'], array('class' => 'form-control', 'data-plugin' => 'timepicker')); ?>
                           </div>
                         </div>
                     </section>
@@ -371,7 +371,7 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Do your offer breakfast to your guests?'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), $entity['breakfast'], array('class' => 'form-control'), false, function($key, $value){
+                        <?= Element::select('hotel[breakfast]', $this->translateArray($breakfasts), $options['breakfast'], array('class' => 'form-control'), false, function($key, $value){
                             $map = [
                                 1 => 'breakfast-included',
                                 2 => 'breakfast-extra',
@@ -423,7 +423,7 @@ use Site\Service\LanguageService;;
                     <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Do your offer restaurant services to your guests?'); ?></label>
                       <div class="col-lg-10">
-                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['has_restaurant'], ['class' => 'form-control'], false, function($key, $value){
+                        <?= Element::select('hotel[has_restaurant]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $options['has_restaurant'], ['class' => 'form-control'], false, function($key, $value){
                             $map = [
                                 0 => 'restaurant-none',
                                 1 => 'restaurant-exists'
@@ -440,14 +440,14 @@ use Site\Service\LanguageService;;
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Opening'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[restaurant_opening]', $entity['restaurant_opening'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                            <?= Element::text('hotel[restaurant_opening]', $options['restaurant_opening'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
                           </div>
                         </div>
 
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Closing'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::text('hotel[restaurant_closing]', $entity['restaurant_closing'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
+                            <?= Element::text('hotel[restaurant_closing]', $options['restaurant_closing'], ['class' => 'form-control', 'data-plugin' => 'timepicker']); ?>
                           </div>
                         </div>
                     </section>
@@ -462,7 +462,7 @@ use Site\Service\LanguageService;;
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Do your refund money on cancellation?'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::select('hotel[penality_enabled]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $entity['penality_enabled'], ['class' => 'form-control'], false, function($key, $value){
+                    <?= Element::select('hotel[penality_enabled]', $this->translateArray(['0' => 'No', '1' => 'Yes']), $options['penality_enabled'], ['class' => 'form-control'], false, function($key, $value){
                         $map = [
                             0 => 'refund-no',
                             1 => 'refund-yes'
@@ -478,30 +478,30 @@ use Site\Service\LanguageService;;
                 <section data-group="refund-yes">
                     <div class="form-group">
                         <label><? $this->show('The penalty is not being withheld when canceling after (hours after making reservation)'); ?></label>
-                        <?= Element::number('hotel[penality_not_taken_after]', $entity['penality_not_taken_after'], ['class' => 'form-control', 'min' => 1]); ?>
+                        <?= Element::number('hotel[penality_not_taken_after]', $options['penality_not_taken_after'], ['class' => 'form-control', 'min' => 1]); ?>
                     </div>
 
                     <div class="form-group">
                         <label><? $this->show('But made not later (hours before arrival)'); ?></label>
-                        <?= Element::text('hotel[penality_not_later_arrival]', $entity['penality_not_later_arrival'], ['class' => 'form-control']); ?>
+                        <?= Element::text('hotel[penality_not_later_arrival]', $options['penality_not_later_arrival'], ['class' => 'form-control']); ?>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label><? $this->show('Before making a cancellation of the reservation'); ?></label>
-                                <?= Element::text('hotel[penality_cancelation_item]', $entity['penality_cancelation_item'], ['class' => 'form-control']); ?>
+                                <?= Element::text('hotel[penality_cancelation_item]', $options['penality_cancelation_item'], ['class' => 'form-control']); ?>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="well">
                                 <label class="radio-inline">
-                                    <?= Element::radio('hotel[penality_cancelation_type]', 'hr', $entity['penality_cancelation_type'] == 'hr'); ?> <? $this->show('Hours'); ?>
+                                    <?= Element::radio('hotel[penality_cancelation_type]', 'hr', $options['penality_cancelation_type'] == 'hr'); ?> <? $this->show('Hours'); ?>
                                 </label>
 
                                 <label class="radio-inline">
-                                    <?= Element::radio('hotel[penality_cancelation_type]', 'd', $entity['penality_cancelation_type'] == 'd'); ?> <? $this->show('Days'); ?>
+                                    <?= Element::radio('hotel[penality_cancelation_type]', 'd', $options['penality_cancelation_type'] == 'd'); ?> <? $this->show('Days'); ?>
                                 </label>
                             </div>
                         </div>
@@ -511,7 +511,7 @@ use Site\Service\LanguageService;;
                         <div class="col-lg-6">
                             <div class="form-group">
                               <label><? $this->show('A penalty will be withheld'); ?> % </label>
-                              <?= Element::number('hotel[penality_percentage]', $entity['penality_percentage'], ['class' => 'form-control', 'min' => 1, 'max' => 100]); ?>
+                              <?= Element::number('hotel[penality_percentage]', $options['penality_percentage'], ['class' => 'form-control', 'min' => 1, 'max' => 100]); ?>
                             </div>
                         </div>
 
@@ -519,13 +519,13 @@ use Site\Service\LanguageService;;
                             <div class="well">
                                 <div class="radio">
                                     <label>
-                                        <?= Element::radio('hotel[penality_percentage_type]', 'T', $entity['penality_percentage_type'] == 'T'); ?> <? $this->show('From total reservation price'); ?>
+                                        <?= Element::radio('hotel[penality_percentage_type]', 'T', $options['penality_percentage_type'] == 'T'); ?> <? $this->show('From total reservation price'); ?>
                                     </label>
                                 </div>
 
                                 <div class="radio">
                                     <label>
-                                        <?= Element::radio('hotel[penality_percentage_type]', 'N', $entity['penality_percentage_type'] == 'N'); ?> <? $this->show('From price of the first night'); ?>
+                                        <?= Element::radio('hotel[penality_percentage_type]', 'N', $options['penality_percentage_type'] == 'N'); ?> <? $this->show('From price of the first night'); ?>
                                     </label>
                                 </div>
                             </div>

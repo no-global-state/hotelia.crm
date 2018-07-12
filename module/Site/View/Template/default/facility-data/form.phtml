@@ -38,17 +38,17 @@ use Site\Service\LanguageService;
             </div>
         </div>
 
-        <?php $data = LanguageService::normalizeEntity($data); ?>
+        <?php $options = LanguageService::normalizeEntity($data); ?>
 
         <div class="tab-pane fade" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('item[id]', $data['id']); ?>
-                <?= Element::hidden('item[item_id]', $data['item_id']); ?>
+                <?= Element::hidden('item[id]', $options['id']); ?>
+                <?= Element::hidden('item[item_id]', $options['item_id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Order'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::text('item[order]', $data['order'], array('class' => 'form-control')); ?>
+                    <?= Element::text('item[order]', $options['order'], array('class' => 'form-control')); ?>
                   </div>
                 </div>
             </div>

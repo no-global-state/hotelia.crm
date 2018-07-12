@@ -45,44 +45,44 @@ use Site\Service\LanguageService;
             </div>
         </div>
 
-        <?php $item = LanguageService::normalizeEntity($item); ?>
+        <?php $options = LanguageService::normalizeEntity($item); ?>
 
         <div class="tab-pane fade" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('item[id]', $item['id']); ?>
+                <?= Element::hidden('item[id]', $options['id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Icon'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::text('item[icon]', $item['icon'], array('class' => 'form-control')); ?>
+                    <?= Element::text('item[icon]', $options['icon'], array('class' => 'form-control')); ?>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Always free'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::checkbox('item[always_free]', $item['always_free']); ?>
+                    <?= Element::checkbox('item[always_free]', $options['always_free']); ?>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Display in room types'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::checkbox('item[roomable]', $item['roomable']); ?>
+                    <?= Element::checkbox('item[roomable]', $options['roomable']); ?>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Front'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::checkbox('item[front]', $item['front']); ?>
+                    <?= Element::checkbox('item[front]', $options['front']); ?>
                   </div>
                 </div>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><? $this->show('Category'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::select('item[category_id]', $categories, $item['category_id'], array('class' => 'form-control')); ?>
+                    <?= Element::select('item[category_id]', $categories, $options['category_id'], array('class' => 'form-control')); ?>
                   </div>
                 </div>
             </div>

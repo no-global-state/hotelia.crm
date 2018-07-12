@@ -38,16 +38,16 @@ use Krystal\Form\Element;
             </div>
         </div>
 
-        <?php $meal = LanguageService::normalizeEntity($meal); ?>
+        <?php $options = LanguageService::normalizeEntity($meal); ?>
 
         <div class="tab-pane fade" id="configuration" role="tabpanel">
             <div class="well">
-                <?= Element::hidden('meal[id]', $meal['id']); ?>
+                <?= Element::hidden('meal[id]', $options['id']); ?>
 
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
                   <div class="col-lg-10">
-                    <?= Element::text('meal[order]', $meal['order'], ['class' => 'form-control']); ?>
+                    <?= Element::text('meal[order]', $options['order'], ['class' => 'form-control']); ?>
                   </div>
                 </div>
             </div>
@@ -56,7 +56,7 @@ use Krystal\Form\Element;
         <div class="form-group">
           <div class="col-lg-10 col-lg-offset-2">
             <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-            <?php if ($meal['id']): ?>
+            <?php if ($options['id']): ?>
             <a href="<?= $this->url('Site:Meals@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
             <?php endif; ?>
           </div>
