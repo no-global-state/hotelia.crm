@@ -107,9 +107,9 @@ final class LanguageService
      * @param mixed $entity
      * @return array
      */
-    public static function normalizeEntity($entity)
+    public static function normalizeEntity($collection)
     {
-        return $entity instanceof ArrayAccess ? $entity : $entity[0];
+        return isset($collection[0]) ? $collection[0] : new InputDecorator();
     }
 
     /**
