@@ -45,6 +45,18 @@ final class ReviewService
     }
 
     /**
+     * Fetch averages
+     * 
+     * @param int $hotelId
+     * @param int $langId
+     * @return array
+     */
+    public function fetchAverages(int $hotelId, int $langId) : array
+    {
+        return $this->reviewMapper->fetchAverages($hotelId, $langId);
+    }
+
+    /**
      * Find all review types
      * 
      * @return array
@@ -62,13 +74,7 @@ final class ReviewService
      */
     public function fetchAll(int $hotelId) : array
     {
-        $reviews = $this->reviewMapper->fetchAll($hotelId);
-
-        foreach ($reviews as &$review) {
-            $review['marks'] = $this->reviewMarkMapper->findAllByReviewId($review['id']);
-        }
-
-        return $reviews;
+        return $this->reviewMapper->fetchAll($hotelId);
     }
 
     /**
@@ -77,7 +83,7 @@ final class ReviewService
      * @param int $langId
      * @param int $hotelId
      * @param array $input
-     * @return bool
+     * @return boolean
      */
     public function add(int $langId, int $hotelId, array $input) : bool
     {
@@ -85,14 +91,15 @@ final class ReviewService
         $data = [
             'lang_id' => $langId,
             'hotel_id' => $hotelId,
-            'title' => $input['review-title'],
-            'review' => $input['review-text']
+            'title' => '',
+            'review' => $input['review']
         ];
 
         // Persist a review
         $this->reviewMapper->persist($data);
         $id = $this->reviewMapper->getMaxId();
 
+        // Insert marks
         foreach ($input['mark'] as $typeId => $mark) {
             $this->reviewMarkMapper->persist([
                 'review_id' => $id,
