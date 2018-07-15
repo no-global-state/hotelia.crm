@@ -10,6 +10,41 @@ use Krystal\Iso\ISO3166\Country;
 final class Site extends AbstractSiteController
 {
     /**
+     * Renders feedback form
+     * 
+     * @return string
+     */
+    public function feedbackAction() : string
+    {
+        // Request variable
+        $hotelId = $this->request->getQuery('hotel_id');
+        $reviewService = $this->getModuleService('reviewService');
+
+        if ($this->request->isPost()) {
+            $input = $this->request->getPost();
+
+            // Append the review
+            $reviewService->add($this->getCurrentLangId(), $hotelId, $input);
+
+            $this->flashBag->set('success', 'Your review has been added successfully');
+            $this->response->refresh();
+        }
+
+        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId());
+        $rates = $reviewService->fetchAverages($hotelId, $this->getCurrentLangId());
+        $reviews= $reviewService->fetchAll($hotelId);
+        $mapper = $this->createMapper('\Site\Storage\MySQL\ReviewTypeMapper');
+        $items = $mapper->fetchAll($this->getCurrentLangId());
+
+        return $this->view->render('feedback', [
+            'reviewTypes' => $items,
+            'rates' => $rates,
+            'hotel' => $hotel,
+            'reviews' => $reviews
+        ]);
+    }
+
+    /**
      * Switches a language
      * 
      * @param string $code

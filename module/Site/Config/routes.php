@@ -382,6 +382,10 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
     
+    '/feedback/(:var)' => [
+        'controller' => 'Site@feedbackAction'
+    ],
+    
     '/payment/(:var)' => [
         'controller' => 'Site@paymentAction'
     ],
