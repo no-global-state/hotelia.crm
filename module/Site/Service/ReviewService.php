@@ -59,11 +59,12 @@ final class ReviewService
     /**
      * Find all review types
      * 
+     * @param int $langId Language ID filter
      * @return array
      */
-    public function findTypes() : array
+    public function findTypes(int $langId) : array
     {
-        return $this->reviewTypeMapper->fetchAll();
+        return $this->reviewTypeMapper->fetchAll($langId);
     }
 
     /**

@@ -1,4 +1,12 @@
 
+CREATE TABLE velveto_bookings (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `hotel_id` INT NOT NULL,
+    `status` SMALLINT,
+
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_meals (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL
