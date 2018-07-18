@@ -13,6 +13,23 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Updates status by token
+     * 
+     * @param string $token
+     * @param int $status
+     * @return boolean Depending on success
+     */
+    public function updateStatusByToken(string $token, int $status) : bool
+    {
+        // Affected row count
+        $rowCount = $this->db->update(self::getTableName(), ['status' => $status])
+                             ->whereEquals('token', $token)
+                             ->execute(true);
+
+        return (bool) $rowCount;
+    }
+
+    /**
      * Count rows by status code
      * 
      * @param int $status Status code

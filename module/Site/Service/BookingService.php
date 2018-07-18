@@ -73,6 +73,18 @@ final class BookingService
     }
 
     /**
+     * Updates status by token
+     * 
+     * @param string $token
+     * @param int $status
+     * @return boolean Depending on success
+     */
+    public function updateStatusByToken(string $token, int $status) : bool
+    {
+        return $this->bookingMapper->updateStatusByToken($token, $status);
+    }
+
+    /**
      * Saves a booking
      * 
      * @param array $params Booking parameters
