@@ -1,0 +1,58 @@
+<?php
+
+use Krystal\Grid\Grid;
+
+?>
+
+<div class="table-responsive">
+    <?= Grid::render($bookings, [
+        // A column to be considered as a primary key
+        'pk' => 'id',
+        'batch' => false,
+        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+        'columns' => [
+            [
+                'column' => 'id',
+                'type' => 'text',
+                'label' => 'ID'
+            ],
+            
+            [
+                'column' => 'datetime',
+                'type' => 'text',
+                'label' => 'Date and time'
+            ],
+
+            [
+                'column' => 'status',
+                'type' => 'text'
+            ],
+
+            [
+                'column' => 'arrival',
+                'type' => 'text'
+            ],
+            
+            [
+                'column' => 'departure',
+                'type' => 'text'
+            ],
+            
+            [
+                'column' => 'email',
+                'type' => 'text'
+            ],
+
+            [
+                'column' => 'mobile',
+                'type' => 'text'
+            ],
+            
+            [
+                'column' => 'comment',
+                'type' => 'text'
+            ]
+        ],
+
+    ], $this->translator); ?>
+</div>
