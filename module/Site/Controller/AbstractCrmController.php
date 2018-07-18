@@ -218,8 +218,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'admin' => $this->sessionBag->get('admin'),
 
             // New bookings
-            'newBookingsCount' => $bookingService->countByStatus(BookingService::STATUS_NEW),
-            'newBookings' => $bookingService->findByStatus(BookingService::STATUS_NEW)
+            'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingService::STATUS_NEW),
+            'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingService::STATUS_NEW)
         ));
 
         // Define the main layout

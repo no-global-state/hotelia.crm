@@ -32,27 +32,31 @@ final class BookingMapper extends AbstractMapper
     /**
      * Count rows by status code
      * 
+     * @param int $hotelId Attached hotel ID
      * @param int $status Status code
      * @return int
      */
-    public function countByStatus(int $status) : int
+    public function countByStatus(int $hotelId, int $status) : int
     {
         return $this->db->select()
                         ->count($this->getPk())
                         ->from(self::getTableName())
                         ->whereEquals('status', $status)
+                        ->andWhereEquals('hotel_id', $hotelId)
                         ->queryScalar();
     }
 
     /**
      * Find all booking rows
      * 
+     * @param int $hotelId Attached hotel ID
      * @return array
      */
-    public function findAll() : array
+    public function findAll(int $hotelId) : array
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
+                        ->whereEquals('hotel_id', $hotelId)
                         ->orderBy($this->getPk())
                         ->desc()
                         ->queryAll();
@@ -61,14 +65,16 @@ final class BookingMapper extends AbstractMapper
     /**
      * Find rows by status
      * 
+     * @param int $hotelId Attached hotel ID
      * @param int $status Status code
      * @return array
      */
-    public function findByStatus(int $status) : array
+    public function findByStatus(int $hotelId, int $status) : array
     {
         return $this->db->select('*')
                         ->from(self::getTableName())
                         ->whereEquals('status', $status)
+                        ->andWhereEquals('hotel_id', $hotelId)
                         ->queryAll();
     }
 }

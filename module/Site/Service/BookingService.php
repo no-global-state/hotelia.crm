@@ -53,33 +53,36 @@ final class BookingService
     /**
      * Count rows by status code
      * 
+     * @param int $hotelId Attached hotel ID
      * @param int $status Status code
      * @return int
      */
-    public function countByStatus(int $status) : int
+    public function countByStatus(int $hotelId, int $status) : int
     {
-        return $this->bookingMapper->countByStatus($status);
+        return $this->bookingMapper->countByStatus($hotelId, $status);
     }
 
     /**
      * Find all booking rows
      * 
+     * @param int $hotelId Attached hotel ID
      * @return array
      */
-    public function findAll() : array
+    public function findAll(int $hotelId) : array
     {
-        return $this->bookingMapper->findAll();
+        return $this->bookingMapper->findAll($hotelId);
     }
 
     /**
      * Find rows by status
      * 
+     * @param int $hotelId Attached hotel ID
      * @param int $status Status code
      * @return array
      */
-    public function findByStatus(int $status) : array
+    public function findByStatus(int $hotelId, int $status) : array
     {
-        return $this->bookingMapper->findByStatus($status);
+        return $this->bookingMapper->findByStatus($hotelId, $status);
     }
 
     /**

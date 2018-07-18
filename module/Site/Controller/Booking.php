@@ -17,7 +17,7 @@ final class Booking extends AbstractCrmController
 
         return $this->view->render('booking/index', [
             'icon' => 'glyphicon glyphicon-envelope',
-            'bookings' => $this->getModuleService('bookingService')->findAll()
+            'bookings' => $this->getModuleService('bookingService')->findAll($this->getHotelId())
         ]);
     }
 }
