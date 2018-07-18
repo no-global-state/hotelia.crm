@@ -10,6 +10,7 @@ CREATE TABLE velveto_bookings (
     `email` varchar(50) NOT NULL,
     `comment` TEXT NOT NULL,
     `near_preferred` BOOLEAN NOT NULL,
+    `token` varchar(32) NOT NULL,
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );

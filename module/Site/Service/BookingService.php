@@ -2,6 +2,7 @@
 
 namespace Site\Service;
 
+use Krystal\Text\TextUtils;
 use Site\Storage\MySQL\BookingMapper;
 use Site\Storage\MySQL\BookingGuestsMapper;
 use Site\Storage\MySQL\BookingRoomMapper;
@@ -81,6 +82,9 @@ final class BookingService
      */
     public function save(array $params, array $guests, array $rooms) : bool
     {
+        // Append a token
+        $params['token'] = TextUtils::uniqueString();
+
         // Insert new booking
         $this->bookingMapper->persist($params);
 
