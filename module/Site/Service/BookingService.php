@@ -43,4 +43,42 @@ final class BookingService
         $this->bookingGuestsMapper = $bookingGuestsMapper;
         $this->bookingRoomMapper = $bookingRoomMapper;
     }
+
+    /**
+     * Saves a booking
+     * 
+     * @param int $hotelId
+     * @param array $guests Guests
+     * @param array $rooms Rooms
+     * @return boolean
+     */
+    public function save(int $hotelId, array $guests, array $rooms) : bool
+    {
+        // Insert new booking
+        $this->bookingMapper->persist([
+            'hotel_id' => $hotelId,
+            'status' => 0
+        ]);
+
+        // Get last booking ID
+        $bookingId = $this->bookingMapper->getMaxId();
+
+        // Append booking ID to guests and insert them
+        foreach ($guests as $guest) {
+            $guest['booking_id'] = $bookingId;
+            $this->bookingGuestsMapper->persist($guest);
+        }
+
+        // Append rooms
+        foreach ($rooms as $roomTypeId => $room) {
+            $this->bookingRoomMapper->persist([
+                'booking_id' => $bookingId,
+                'room_type_id' => $roomTypeId,
+                'guests' => $room['guests'],
+                'qty' => $room['qty']
+            ]);
+        }
+
+        return true;
+    }
 }
