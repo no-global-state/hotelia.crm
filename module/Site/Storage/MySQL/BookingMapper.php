@@ -45,6 +45,20 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Find all booking rows
+     * 
+     * @return array
+     */
+    public function findAll() : array
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->orderBy($this->getPk())
+                        ->desc()
+                        ->queryAll();
+    }
+
+    /**
      * Find rows by status
      * 
      * @param int $status Status code

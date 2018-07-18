@@ -62,6 +62,16 @@ final class BookingService
     }
 
     /**
+     * Find all booking rows
+     * 
+     * @return array
+     */
+    public function findAll() : array
+    {
+        return $this->bookingMapper->findAll();
+    }
+
+    /**
      * Find rows by status
      * 
      * @param int $status Status code
