@@ -2,7 +2,7 @@
 
 namespace Site\Storage\MySQL;
 
-final class BookingGuests extends AbstractMapper
+final class BookingGuestsMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}
