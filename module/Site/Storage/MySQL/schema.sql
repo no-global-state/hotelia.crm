@@ -3,6 +3,7 @@
 CREATE TABLE velveto_bookings (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL,
+    `datetime` DATETIME NOT NULL,
     `status` SMALLINT NOT NULL,
     `arrival` DATE NOT NULL,
     `departure` DATE NOT NULL,

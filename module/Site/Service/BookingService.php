@@ -97,6 +97,9 @@ final class BookingService
         // Append a token
         $params['token'] = TextUtils::uniqueString();
 
+        // Append current date and time
+        $params['datetime'] = date('Y-m-d H:i:s');
+
         // Insert new booking
         $this->bookingMapper->persist($params);
 
