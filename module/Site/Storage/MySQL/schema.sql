@@ -1,8 +1,15 @@
 
+/* Bookings */
 CREATE TABLE velveto_bookings (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL,
-    `status` SMALLINT,
+    `status` SMALLINT NOT NULL,
+    `arrival` DATE NOT NULL,
+    `departure` DATE NOT NULL,
+    `mobile` varchar(255) NOT NULL,
+    `email` varchar(50) NOT NULL,
+    `comment` TEXT NOT NULL,
+    `near_preferred` BOOLEAN NOT NULL,
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
@@ -28,6 +35,7 @@ CREATE TABLE velveto_bookings_rooms (
     FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
     FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE
 );
+/* Bookings */
 
 CREATE TABLE velveto_meals (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
