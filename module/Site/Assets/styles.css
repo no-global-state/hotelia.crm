@@ -1,4 +1,8 @@
 
+.menu-item-new {
+    background: #a70000;
+}
+
 .navbar-inverse,
 .top-nav>.open>.dropdown-menu {
   background: #232629  !important;  

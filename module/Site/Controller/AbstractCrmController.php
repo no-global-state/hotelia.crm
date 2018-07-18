@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
+use Site\Service\BookingService;
 
 abstract class AbstractCrmController extends AbstractAuthAwareController
 {
@@ -200,6 +201,9 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
+        // Grab booking service
+        $bookingService = $this->getModuleService('bookingService');
+
         // Add shared variables
         $this->view->addVariables(array(
             'extended' => true,
@@ -212,6 +216,10 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'languages' => $this->createMapper('\Site\Storage\MySQL\LanguageMapper')->fetchAll(),
             'code' => $code,
             'admin' => $this->sessionBag->get('admin'),
+
+            // New bookings
+            'newBookingsCount' => $bookingService->countByStatus(BookingService::STATUS_NEW),
+            'newBookings' => $bookingService->findByStatus(BookingService::STATUS_NEW)
         ));
 
         // Define the main layout
