@@ -4,6 +4,10 @@ use Site\Service\UserService;
 
 return [
 
+    '/crm/booking' => [
+        'controller' => 'Booking@indexAction'
+    ],
+    
     // Meals
     '/crm/meals' => [
         'controller' => 'Meals@indexAction'
