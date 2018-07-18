@@ -28,6 +28,7 @@ use Site\Service\PriceGroupService;
 use Site\Service\DictionaryService;
 use Site\Service\MealsService;
 use Site\Service\BedService;
+use Site\Service\BookingService;
 
 final class Module extends AbstractModule
 {
@@ -129,6 +130,12 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'bookingService' => new BookingService(
+                $this->createMapper('\Site\Storage\MySQL\BookingMapper'),
+                $this->createMapper('\Site\Storage\MySQL\BookingGuestsMapper'),
+                $this->createMapper('\Site\Storage\MySQL\BookingRoomMapper')
+            ),
+            
             'bedService' => new BedService(
                 $this->createMapper('\Site\Storage\MySQL\RoomTypeBedMapper')
             ),
