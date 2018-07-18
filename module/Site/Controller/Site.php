@@ -179,11 +179,22 @@ final class Site extends AbstractSiteController
             ]);
 
         } elseif ($this->request->isPost()) {
-            
-            $summ = $this->createSummary($_GET['hotel_id']);
-            
-            d($summ);
-            
+            // Request parameters
+            $params = [
+                'hotel_id' => $this->request->getQuery('hotel_id'),
+                'arrival' => $this->request->getQuery('arrival'),
+                'departure' => $this->request->getQuery('departure'),
+                'mobile' => $this->request->getPost('mobile'),
+                'email' => $this->request->getPost('email'),
+                'comment' => $this->request->getPost('comment')
+            ];
+
+            // Grab booking service and insert
+            $bs = $this->getModuleService('bookingService');
+            $bs->save($params, $this->request->getPost('guest'), $this->createSummary($this->request->getQuery('hotel_id')));
+
+            return $this->view->render('thank-you');
+
         } else {
             // Invalid request
             die('Invalid');
