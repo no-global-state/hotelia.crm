@@ -146,7 +146,7 @@ final class Site extends AbstractSiteController
     public function paymentAction()
     {
         // Validate request
-        if ($this->request->hasQuery('type_id', 'hotel_id', 'arrival', 'departure')) {
+        if ($this->request->hasQuery('type_id', 'hotel_id', 'arrival', 'departure') && !$this->request->isPost()) {
 
             // Request variables
             $typeId = $this->request->getQuery('type_id');
@@ -178,6 +178,12 @@ final class Site extends AbstractSiteController
                 'qty' => $qty
             ]);
 
+        } elseif ($this->request->isPost()) {
+            
+            $summ = $this->createSummary($_GET['hotel_id']);
+            
+            d($summ);
+            
         } else {
             // Invalid request
             die('Invalid');

@@ -7,6 +7,17 @@ CREATE TABLE velveto_bookings (
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_bookings_guests (
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `booking_id` INT NOT NULL,
+    `first_name` varchar(255),
+    `last_name` varchar(255),
+    `gender` varchar(1),
+    `country` varchar(1),
+
+    FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_meals (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL
