@@ -8,6 +8,11 @@ use Site\Storage\MySQL\BookingRoomMapper;
 
 final class BookingService
 {
+    /* Statuses */
+    const STATUS_NEW = 0;
+    const STATUS_CONFIRMED = 1;
+    const STATUS_REJECTED = 2;
+
     /**
      * Any compliant booking mapper
      * 
@@ -42,6 +47,28 @@ final class BookingService
         $this->bookingMapper = $bookingMapper;
         $this->bookingGuestsMapper = $bookingGuestsMapper;
         $this->bookingRoomMapper = $bookingRoomMapper;
+    }
+
+    /**
+     * Count rows by status code
+     * 
+     * @param int $status Status code
+     * @return int
+     */
+    public function countByStatus(int $status) : int
+    {
+        return $this->bookingMapper->countByStatus($status);
+    }
+
+    /**
+     * Find rows by status
+     * 
+     * @param int $status Status code
+     * @return array
+     */
+    public function findByStatus(int $status) : array
+    {
+        return $this->bookingMapper->findByStatus($status);
     }
 
     /**
