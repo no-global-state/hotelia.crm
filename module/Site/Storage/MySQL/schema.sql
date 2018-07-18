@@ -22,7 +22,8 @@ CREATE TABLE velveto_bookings_rooms (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `booking_id` INT NOT NULL,
     `room_type_id` INT NOT NULL,
-    `persons` INT NOT NULL,
+    `guests` INT NOT NULL,
+    `qty` INT NOT NULL,
 
     FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
     FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE
