@@ -47,6 +47,20 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Find booking row by its associated ID
+     * 
+     * @param int $id Booking ID
+     * @return array
+     */
+    public function findById($id)
+    {
+        return $this->db->select('*')
+                        ->from(self::getTableName())
+                        ->whereEquals('id', $id)
+                        ->query();
+    }
+
+    /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID
