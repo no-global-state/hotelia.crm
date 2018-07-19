@@ -3,6 +3,7 @@
 CREATE TABLE velveto_bookings (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL,
+    `price_group_id` INT COMMENT 'Attached price group ID',
     `datetime` DATETIME NOT NULL,
     `status` SMALLINT NOT NULL,
     `arrival` DATE NOT NULL,
@@ -11,9 +12,11 @@ CREATE TABLE velveto_bookings (
     `email` varchar(50) NOT NULL,
     `comment` TEXT NOT NULL,
     `near_preferred` BOOLEAN NOT NULL,
+    `amount` FLOAT NOT NULL COMMENT 'Total charged amount',
     `token` varchar(32) NOT NULL,
 
-    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_bookings_guests (
