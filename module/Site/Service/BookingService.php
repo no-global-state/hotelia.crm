@@ -51,6 +51,33 @@ final class BookingService
     }
 
     /**
+     * Find details by booking ID
+     * 
+     * @param int $id Booking ID
+     * @param int $langId
+     * @return array|boolean
+     */
+    public function findDetails(int $id, int $langId)
+    {
+        $booking = $this->bookingMapper->findById($id);
+
+        if ($booking) {
+            // The rest
+            $guests = $this->bookingGuestsMapper->findByBookingId($id);
+            $rooms = $this->bookingRoomMapper->findDetailsByBookingId($id, $langId);
+
+            return [
+                'booking' => $booking,
+                'guests' => $guests,
+                'rooms' => $rooms
+            ];
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Count rows by status code
      * 
      * @param int $hotelId Attached hotel ID
