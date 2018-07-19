@@ -90,6 +90,17 @@ final class BookingService
     }
 
     /**
+     * Find booking row by its associated ID
+     * 
+     * @param int $id Booking ID
+     * @return array
+     */
+    public function findById(int $id)
+    {
+        return $this->bookingMapper->findById($id);
+    }
+
+    /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID

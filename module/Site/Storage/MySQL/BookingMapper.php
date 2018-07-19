@@ -86,7 +86,7 @@ final class BookingMapper extends AbstractMapper
      * @param int $id Booking ID
      * @return array
      */
-    public function findById($id)
+    public function findById(int $id)
     {
         return $this->createSharedSelect()
                     ->whereEquals(self::column('id'), $id)
