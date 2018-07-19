@@ -25,7 +25,7 @@ CREATE TABLE velveto_bookings_guests (
     `first_name` varchar(255),
     `last_name` varchar(255),
     `gender` varchar(1),
-    `country` varchar(1),
+    `country` varchar(5),
 
     FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE
 );
