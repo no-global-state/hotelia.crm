@@ -4,8 +4,13 @@ use Site\Service\UserService;
 
 return [
 
+    // Booking
     '/crm/booking' => [
         'controller' => 'Booking@indexAction'
+    ],
+    
+    '/crm/booking/details/(:var)' => [
+        'controller' => 'Booking@detailsAction'
     ],
     
     // Meals
