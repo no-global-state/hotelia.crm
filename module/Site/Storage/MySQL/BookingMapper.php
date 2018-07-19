@@ -13,6 +13,40 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Creates shared select
+     * 
+     * @return \Krystal\Db\Sql\Db
+     */
+    private function createSharedSelect()
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('hotel_id'),
+            self::column('price_group_id'),
+            self::column('datetime'),
+            self::column('status'),
+            self::column('arrival'),
+            self::column('departure'),
+            self::column('mobile'),
+            self::column('email'),
+            self::column('comment'),
+            self::column('near_preferred'),
+            self::column('amount'),
+            self::column('token'),
+            PriceGroupMapper::column('name') => 'price_group',
+            PriceGroupMapper::column('currency'),
+        ];
+
+        return $this->db->select($columns)
+                        ->from(self::getTableName())
+                        // Price group relation
+                        ->leftJoin(PriceGroupMapper::getTableName(), [
+                            self::column('price_group_id') => PriceGroupMapper::getRawColumn('id')
+                        ]);
+    }
+
+    /**
      * Updates status by token
      * 
      * @param string $token
@@ -54,10 +88,9 @@ final class BookingMapper extends AbstractMapper
      */
     public function findById($id)
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->whereEquals('id', $id)
-                        ->query();
+        return $this->createSharedSelect()
+                    ->whereEquals(self::column('id'), $id)
+                    ->query();
     }
 
     /**
@@ -68,12 +101,11 @@ final class BookingMapper extends AbstractMapper
      */
     public function findAll(int $hotelId) : array
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->whereEquals('hotel_id', $hotelId)
-                        ->orderBy($this->getPk())
-                        ->desc()
-                        ->queryAll();
+        return $this->createSharedSelect()
+                    ->whereEquals('hotel_id', $hotelId)
+                    ->orderBy($this->getPk())
+                    ->desc()
+                    ->queryAll();
     }
 
     /**
@@ -85,10 +117,9 @@ final class BookingMapper extends AbstractMapper
      */
     public function findByStatus(int $hotelId, int $status) : array
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->whereEquals('status', $status)
-                        ->andWhereEquals('hotel_id', $hotelId)
-                        ->queryAll();
+        return $this->createSharedSelect()
+                    ->whereEquals('status', $status)
+                    ->andWhereEquals('hotel_id', $hotelId)
+                    ->queryAll();
     }
 }
