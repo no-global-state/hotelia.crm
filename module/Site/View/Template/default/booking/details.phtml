@@ -96,20 +96,56 @@ use Site\Collection\GenderCollection;
     </div>
 
     <div id="guests" class="tab-pane fade">
-        <br />
-        <ul class="nav nav-tabs">
-            <?php foreach ($details['guests'] as $index => $guest): ?>
-            <li class="<?= $index == 0 ? 'active' : null; ?>"><a data-toggle="tab" href="<?= sprintf('#guest-%s', $index); ?>"><?php $this->show('Guest'); ?> #<?= $index + 1; ?></a></li>
-            <?php endforeach; ?>
-        </ul>
+        <form method="POST">
+            <br />
+            <ul class="nav nav-tabs">
+                <?php foreach ($details['guests'] as $index => $guest): ?>
+                <li class="<?= $index == 0 ? 'active' : null; ?>"><a data-toggle="tab" href="<?= sprintf('#guest-%s', $index); ?>"><?php $this->show('Guest'); ?> #<?= $index + 1; ?></a></li>
+                <?php endforeach; ?>
+            </ul>
 
-        <div class="tab-content">
-            <?php foreach ($details['guests'] as $index => $guest): ?>
-            <div id="<?= sprintf('guest-%s', $index); ?>" class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>">
-                <h3>HOME <?= $index; ?></h3>
-                <p>Some content.</p>
+            <div class="tab-content">
+                <?php foreach ($details['guests'] as $index => $guest): ?>
+                <div id="<?= sprintf('guest-%s', $index); ?>" class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>">
+                    <fieldset class="form-horizontal">
+                        <h3 class="text-muted"><i class="glyphicon glyphicon-import"></i> <? $this->show('Select room for accommodation'); ?></h3>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::select(sprintf('guest[%s][room_type]', $index), $rooms, null, ['class' => 'form-control']); ?>
+                          </div>
+                        </div>
+
+                        <h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
+                        <br />
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::text(sprintf('guest[%s][full_name]', $index), $guest['first_name'] . ' ' . $guest['last_name'], ['class' => 'form-control']); ?>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::select(sprintf('guest[%s][gender]', $index), $this->translateArray($genders), $guest['gender'], ['class' => 'form-control']); ?>
+                          </div>
+                        </div>
+
+                        <div class="form-group">
+                          <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
+                          <div class="col-lg-10">
+                            <?= Element::select(sprintf('guest[%s][country]', $index), $countries, $guest['country'], ['class' => 'form-control', 'data-plugin' => 'chosen']); ?>
+                          </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <?php endforeach; ?>
             </div>
-            <?php endforeach; ?>
-        </div>
+
+            <button class="btn btn-success" type="submit"><?php $this->show('Finish booking'); ?></button>
+        </form>
     </div>
 </div>

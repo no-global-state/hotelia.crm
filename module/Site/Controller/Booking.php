@@ -2,6 +2,9 @@
 
 namespace Site\Controller;
 
+use Site\Collection\GenderCollection;
+use Krystal\Iso\ISO3166\Country;
+
 final class Booking extends AbstractCrmController
 {
     /**
@@ -27,7 +30,7 @@ final class Booking extends AbstractCrmController
      * @param int $id Booking ID
      * @return mixed
      */
-    public function detailsAction($id)
+    public function detailsAction(int $id)
     {
         $details = $this->getModuleService('bookingService')->findDetails($id, $this->getCurrentLangId());
 
@@ -39,7 +42,12 @@ final class Booking extends AbstractCrmController
 
             return $this->view->render('booking/details', [
                 'details' => $details,
-                'icon' => 'glyphicon glyphicon-search'
+                'icon' => 'glyphicon glyphicon-search',
+                'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+
+                // From collection
+                'genders' => (new GenderCollection)->getAll(),
+                'countries' => (new Country)->getAll()
             ]);
 
         } else {
