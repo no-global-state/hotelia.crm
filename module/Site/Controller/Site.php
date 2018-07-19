@@ -187,7 +187,7 @@ final class Site extends AbstractSiteController
                 'price_group_id' => $this->getPriceGroupId(),
                 'arrival' => $this->request->getQuery('arrival'),
                 'departure' => $this->request->getQuery('departure'),
-                'mobile' => $this->request->getPost('mobile'),
+                'phone' => $this->request->getPost('phone'),
                 'email' => $this->request->getPost('email'),
                 'comment' => $this->request->getPost('comment'),
                 'amount' => $summary['price']

@@ -8,7 +8,7 @@ CREATE TABLE velveto_bookings (
     `status` SMALLINT NOT NULL,
     `arrival` DATE NOT NULL,
     `departure` DATE NOT NULL,
-    `mobile` varchar(255) NOT NULL,
+    `phone` varchar(255) NOT NULL,
     `email` varchar(50) NOT NULL,
     `comment` TEXT NOT NULL,
     `near_preferred` BOOLEAN NOT NULL,

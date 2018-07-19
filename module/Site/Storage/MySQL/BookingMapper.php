@@ -28,7 +28,7 @@ final class BookingMapper extends AbstractMapper
             self::column('status'),
             self::column('arrival'),
             self::column('departure'),
-            self::column('mobile'),
+            self::column('phone'),
             self::column('email'),
             self::column('comment'),
             self::column('near_preferred'),
