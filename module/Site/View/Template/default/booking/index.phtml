@@ -1,6 +1,7 @@
 <?php
 
 use Krystal\Grid\Grid;
+use Krystal\Form\Element;
 
 ?>
 
@@ -53,6 +54,12 @@ use Krystal\Grid\Grid;
                 'type' => 'text'
             ]
         ],
+        
+        'actions' => [
+            'details' => function($row){
+                return Element::link('<i class="glyphicon glyphicon-search"></i>', $this->url('Site:Booking@detailsAction', $row['id']), ['class' => 'btn btn-primary']);
+            }
+        ]
 
     ], $this->translator); ?>
 </div>

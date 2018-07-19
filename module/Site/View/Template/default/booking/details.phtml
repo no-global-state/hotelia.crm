@@ -1,0 +1,83 @@
+<?php
+
+use Krystal\Iso\ISO3166\Country;
+use Krystal\Grid\Grid;
+use Krystal\Grid\ListView;
+use Krystal\Form\Element;
+use Site\Collection\GenderCollection;
+
+?>
+
+<div class="row">
+    <div class="col-lg-6">
+        <h4><?php $this->show('Basic'); ?></h4>
+
+        <?= (new ListView($details['booking'], [
+            'columns' => [
+                ['column' => 'id', 'title' => '#'],
+                ['column' => 'status'],
+                ['column' => 'arrival'],
+                ['column' => 'departure'],
+                ['column' => 'mobile'],
+                ['column' => 'email'],
+                ['column' => 'comment'],
+                ['column' => 'near_preferred'],
+                ['column' => 'datetime', 'title' => 'Date and time'],
+            ]
+        ], $this->translator))->render(); ?>
+    </div>
+
+    <div class="col-lg-6">
+        <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
+
+        <?= Grid::render($details['guests'], [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'first_name'
+                ],
+                
+                [
+                    'column' => 'last_name'
+                ],
+
+                [
+                    'column' => 'gender',
+                    'translateable' => true,
+                    'value' => function($row){
+                        return (new GenderCollection)->findByKey($row['gender']);
+                    }
+                ],
+
+                [
+                    'column' => 'country',
+                    'value' => function($row){
+                        return (new Country())->getCountryByCode($row['country']);
+                    }
+                ]
+            ]
+
+        ], $this->translator); ?>
+        
+        <br />
+
+        <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
+
+        <?= Grid::render($details['rooms'], [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                ['column' => 'category'],
+                ['column' => 'guests'],
+                ['column' => 'qty']
+            ]
+
+        ], $this->translator); ?>
+        
+    </div>
+</div>
