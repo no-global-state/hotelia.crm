@@ -8,76 +8,108 @@ use Site\Collection\GenderCollection;
 
 ?>
 
-<div class="row">
-    <div class="col-lg-6">
-        <h4><?php $this->show('Basic'); ?></h4>
+<ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home"><?php $this->show('Basic'); ?></a></li>
+    <li><a data-toggle="tab" href="#guests"><?php $this->show('Guests'); ?></a></li>
+</ul>
 
-        <?= (new ListView($details['booking'], [
-            'columns' => [
-                ['column' => 'id', 'title' => '#'],
-                ['column' => 'status'],
-                ['column' => 'arrival'],
-                ['column' => 'departure'],
-                ['column' => 'mobile'],
-                ['column' => 'email'],
-                ['column' => 'comment'],
-                ['column' => 'near_preferred'],
-                ['column' => 'datetime', 'title' => 'Date and time'],
-            ]
-        ], $this->translator))->render(); ?>
+<div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4><?php $this->show('Basic'); ?></h4>
+
+                <?= (new ListView($details['booking'], [
+                    'columns' => [
+                        ['column' => 'id', 'title' => '#'],
+                        ['column' => 'status'],
+                        ['column' => 'arrival'],
+                        ['column' => 'departure'],
+                        ['column' => 'mobile'],
+                        ['column' => 'email'],
+                        ['column' => 'comment'],
+                        ['column' => 'near_preferred'],
+                        ['column' => 'datetime', 'title' => 'Date and time'],
+                        ['column' => 'price_group'],
+                        ['column' => 'amount', 'value' => function() use ($details){
+                            return $details['booking']['amount'] . PHP_EOL . $details['booking']['currency'];
+                        }],
+                    ]
+
+                ], $this->translator))->render(); ?>
+            </div>
+
+            <div class="col-lg-6">
+                <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
+
+                <?= Grid::render($details['guests'], [
+                    // A column to be considered as a primary key
+                    'pk' => 'id',
+                    'batch' => false,
+                    'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                    'columns' => [
+                        [
+                            'column' => 'first_name'
+                        ],
+                        
+                        [
+                            'column' => 'last_name'
+                        ],
+
+                        [
+                            'column' => 'gender',
+                            'translateable' => true,
+                            'value' => function($row){
+                                return (new GenderCollection)->findByKey($row['gender']);
+                            }
+                        ],
+
+                        [
+                            'column' => 'country',
+                            'value' => function($row){
+                                return (new Country())->getCountryByCode($row['country']);
+                            }
+                        ]
+                    ]
+
+                ], $this->translator); ?>
+                
+                <br />
+
+                <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
+
+                <?= Grid::render($details['rooms'], [
+                    // A column to be considered as a primary key
+                    'pk' => 'id',
+                    'batch' => false,
+                    'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                    'columns' => [
+                        ['column' => 'category'],
+                        ['column' => 'guests'],
+                        ['column' => 'qty']
+                    ]
+
+                ], $this->translator); ?>
+                
+            </div>
+        </div>
     </div>
 
-    <div class="col-lg-6">
-        <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
-
-        <?= Grid::render($details['guests'], [
-            // A column to be considered as a primary key
-            'pk' => 'id',
-            'batch' => false,
-            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-            'columns' => [
-                [
-                    'column' => 'first_name'
-                ],
-                
-                [
-                    'column' => 'last_name'
-                ],
-
-                [
-                    'column' => 'gender',
-                    'translateable' => true,
-                    'value' => function($row){
-                        return (new GenderCollection)->findByKey($row['gender']);
-                    }
-                ],
-
-                [
-                    'column' => 'country',
-                    'value' => function($row){
-                        return (new Country())->getCountryByCode($row['country']);
-                    }
-                ]
-            ]
-
-        ], $this->translator); ?>
-        
+    <div id="guests" class="tab-pane fade">
         <br />
+        <ul class="nav nav-tabs">
+            <?php foreach ($details['guests'] as $index => $guest): ?>
+            <li class="<?= $index == 0 ? 'active' : null; ?>"><a data-toggle="tab" href="<?= sprintf('#guest-%s', $index); ?>"><?php $this->show('Guest'); ?> #<?= $index + 1; ?></a></li>
+            <?php endforeach; ?>
+        </ul>
 
-        <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
-
-        <?= Grid::render($details['rooms'], [
-            // A column to be considered as a primary key
-            'pk' => 'id',
-            'batch' => false,
-            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-            'columns' => [
-                ['column' => 'category'],
-                ['column' => 'guests'],
-                ['column' => 'qty']
-            ]
-
-        ], $this->translator); ?>
-        
+        <div class="tab-content">
+            <?php foreach ($details['guests'] as $index => $guest): ?>
+            <div id="<?= sprintf('guest-%s', $index); ?>" class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>">
+                <h3>HOME <?= $index; ?></h3>
+                <p>Some content.</p>
+            </div>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>

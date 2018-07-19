@@ -50,8 +50,15 @@ use Krystal\Form\Element;
             ],
             
             [
-                'column' => 'comment',
+                'column' => 'price_group',
                 'type' => 'text'
+            ],
+
+            [
+                'column' => 'amount',
+                'value' => function($row){
+                    return $row['amount'] . PHP_EOL . $row['currency'];
+                }
             ]
         ],
         
