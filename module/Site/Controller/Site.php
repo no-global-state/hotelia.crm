@@ -179,14 +179,18 @@ final class Site extends AbstractSiteController
             ]);
 
         } elseif ($this->request->isPost()) {
+            $summary = (new SummaryService($this->sessionBag))->getSummary();
+
             // Request parameters
             $params = [
                 'hotel_id' => $this->request->getQuery('hotel_id'),
+                'price_group_id' => $this->getPriceGroupId(),
                 'arrival' => $this->request->getQuery('arrival'),
                 'departure' => $this->request->getQuery('departure'),
                 'mobile' => $this->request->getPost('mobile'),
                 'email' => $this->request->getPost('email'),
-                'comment' => $this->request->getPost('comment')
+                'comment' => $this->request->getPost('comment'),
+                'amount' => $summary['price']
             ];
 
             // Grab booking service and insert
