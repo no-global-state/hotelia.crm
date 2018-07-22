@@ -119,6 +119,19 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Find booking row by its associated token
+     * 
+     * @param string $token
+     * @return array
+     */
+    public function findByToken(string $token)
+    {
+        return $this->createSharedSelect()
+                    ->whereEquals(self::column('token'), $token)
+                    ->query();
+    }
+
+    /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID

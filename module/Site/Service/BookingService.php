@@ -142,6 +142,17 @@ final class BookingService
     }
 
     /**
+     * Find booking row by its associated token
+     * 
+     * @param string $token
+     * @return array
+     */
+    public function findByToken(string $token)
+    {
+        return $this->bookingMapper->findByToken($token);
+    }
+
+    /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID
