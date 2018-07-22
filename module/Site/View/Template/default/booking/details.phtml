@@ -8,146 +8,164 @@ use Site\Collection\GenderCollection;
 
 ?>
 
-<ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#home"><?php $this->show('Basic'); ?></a></li>
-    <li><a data-toggle="tab" href="#guests"><?php $this->show('Guests'); ?></a></li>
-</ul>
+<section>
+    <div class="wizard">
+        <div class="wizard-inner">
+            <div class="connecting-line"></div>
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active">
+                    <a href="#step1" data-toggle="tab" aria-controls="step1" role="tab" title="<? $this->show('Step'); ?> 1">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-bed"></i>
+                        </span>
+                    </a>
+                </li>
 
-<div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-        <div class="row">
-            <div class="col-lg-6">
-                <h4><?php $this->show('Basic'); ?></h4>
-
-                <?= (new ListView($details['booking'], [
-                    'columns' => [
-                        ['column' => 'id', 'title' => '#'],
-                        ['column' => 'status'],
-                        ['column' => 'arrival'],
-                        ['column' => 'departure'],
-                        ['column' => 'phone'],
-                        ['column' => 'email'],
-                        ['column' => 'comment'],
-                        ['column' => 'near_preferred'],
-                        ['column' => 'datetime', 'title' => 'Date and time'],
-                        ['column' => 'price_group'],
-                        ['column' => 'amount', 'value' => function() use ($details){
-                            return $details['booking']['amount'] . PHP_EOL . $details['booking']['currency'];
-                        }],
-                    ]
-
-                ], $this->translator))->render(); ?>
-            </div>
-
-            <div class="col-lg-6">
-                <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
-
-                <?= Grid::render($details['guests'], [
-                    // A column to be considered as a primary key
-                    'pk' => 'id',
-                    'batch' => false,
-                    'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-                    'columns' => [
-                        [
-                            'column' => 'first_name'
-                        ],
-                        
-                        [
-                            'column' => 'last_name'
-                        ],
-
-                        [
-                            'column' => 'gender',
-                            'translateable' => true,
-                            'value' => function($row){
-                                return (new GenderCollection)->findByKey($row['gender']);
-                            }
-                        ],
-
-                        [
-                            'column' => 'country',
-                            'value' => function($row){
-                                return (new Country())->getCountryByCode($row['country']);
-                            }
-                        ]
-                    ]
-
-                ], $this->translator); ?>
-                
-                <br />
-
-                <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
-
-                <?= Grid::render($details['rooms'], [
-                    // A column to be considered as a primary key
-                    'pk' => 'id',
-                    'batch' => false,
-                    'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-                    'columns' => [
-                        ['column' => 'category'],
-                        ['column' => 'guests'],
-                        ['column' => 'qty']
-                    ]
-
-                ], $this->translator); ?>
-                
-            </div>
-        </div>
-    </div>
-
-    <div id="guests" class="tab-pane fade">
-        <form method="POST" action="<?= $this->url('Site:Booking@reserveAction'); ?>">
-            <?= Element::hidden('id', $details['booking']['id']); ?>
-
-            <br />
-            <ul class="nav nav-tabs">
-                <?php foreach ($details['guests'] as $index => $guest): ?>
-                <li class="<?= $index == 0 ? 'active' : null; ?>"><a data-toggle="tab" href="<?= sprintf('#guest-%s', $index); ?>"><?php $this->show('Guest'); ?> #<?= $index + 1; ?></a></li>
-                <?php endforeach; ?>
+                <li role="presentation" class="">
+                    <a href="#step2" data-toggle="tab" aria-controls="step2" role="tab" title="<? $this->show('Step'); ?> 2">
+                        <span class="round-tab">
+                            <i class="glyphicon glyphicon-ok"></i>
+                        </span>
+                    </a>
+                </li>
             </ul>
+        </div>
 
+        <form method="POST" class="form-horizontal" role="form" action="<?= $this->url('Site:Booking@reserveAction'); ?>">
             <div class="tab-content">
-                <?php foreach ($details['guests'] as $index => $guest): ?>
-                <div id="<?= sprintf('guest-%s', $index); ?>" class="tab-pane fade in <?= $index == 0 ? 'active' : null; ?>">
-                    <fieldset class="form-horizontal">
-                        <h3 class="text-muted"><i class="glyphicon glyphicon-import"></i> <? $this->show('Select room for accommodation'); ?></h3>
+                <div class="tab-pane active" role="tabpanel" id="step1">
+                  <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <h4><?php $this->show('Basic'); ?></h4>
 
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
-                          <div class="col-lg-10">
-                            <?= Element::select(sprintf('guest[%s][room_id]', $index), $rooms, null, ['class' => 'form-control']); ?>
-                          </div>
+                            <?= (new ListView($details['booking'], [
+                                'columns' => [
+                                    ['column' => 'id', 'title' => '#'],
+                                    ['column' => 'status'],
+                                    ['column' => 'arrival'],
+                                    ['column' => 'departure'],
+                                    ['column' => 'phone'],
+                                    ['column' => 'email'],
+                                    ['column' => 'comment'],
+                                    ['column' => 'near_preferred'],
+                                    ['column' => 'datetime', 'title' => 'Date and time'],
+                                    ['column' => 'price_group'],
+                                    ['column' => 'amount', 'value' => function() use ($details){
+                                        return $details['booking']['amount'] . PHP_EOL . $details['booking']['currency'];
+                                    }],
+                                ]
+
+                            ], $this->translator))->render(); ?>
                         </div>
 
-                        <h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
-                        <br />
+                        <div class="col-lg-6">
+                            <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
 
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
-                          <div class="col-lg-10">
-                            <?= Element::text(sprintf('guest[%s][full_name]', $index), $guest['first_name'] . ' ' . $guest['last_name'], ['class' => 'form-control']); ?>
-                          </div>
-                        </div>
+                            <?= Grid::render($details['guests'], [
+                                // A column to be considered as a primary key
+                                'pk' => 'id',
+                                'batch' => false,
+                                'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                                'columns' => [
+                                    [
+                                        'column' => 'first_name'
+                                    ],
+                                    
+                                    [
+                                        'column' => 'last_name'
+                                    ],
 
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
-                          <div class="col-lg-10">
-                            <?= Element::select(sprintf('guest[%s][gender]', $index), $this->translateArray($genders), $guest['gender'], ['class' => 'form-control']); ?>
-                          </div>
-                        </div>
+                                    [
+                                        'column' => 'gender',
+                                        'translateable' => true,
+                                        'value' => function($row){
+                                            return (new GenderCollection)->findByKey($row['gender']);
+                                        }
+                                    ],
 
-                        <div class="form-group">
-                          <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
-                          <div class="col-lg-10">
-                            <?= Element::select(sprintf('guest[%s][country]', $index), $countries, $guest['country'], ['class' => 'form-control', 'data-plugin' => 'chosen']); ?>
-                          </div>
+                                    [
+                                        'column' => 'country',
+                                        'value' => function($row){
+                                            return (new Country())->getCountryByCode($row['country']);
+                                        }
+                                    ]
+                                ]
+
+                            ], $this->translator); ?>
+
+                            <br />
+
+                            <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
+
+                            <?= Grid::render($details['rooms'], [
+                                // A column to be considered as a primary key
+                                'pk' => 'id',
+                                'batch' => false,
+                                'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                                'columns' => [
+                                    ['column' => 'category'],
+                                    ['column' => 'guests'],
+                                    ['column' => 'qty']
+                                ]
+
+                            ], $this->translator); ?>
                         </div>
-                    </fieldset>
+                    </div>
+                  </div>
                 </div>
-                <?php endforeach; ?>
-            </div>
 
-            <button class="btn btn-success" type="submit"><?php $this->show('Finish booking'); ?></button>
+                <div class="tab-pane" role="tabpanel" id="step2">
+                    <h3><? $this->show('Guest information'); ?></h3>
+                    <br />
+                    <?= Element::hidden('id', $details['booking']['id']); ?>
+
+                    <?php foreach ($details['guests'] as $index => $guest): ?>
+                    <div>
+                        <h4><?php $this->show('Guest'); ?> <?= $index + 1; ?></h4>
+
+                        <fieldset class="form-horizontal">
+                            <h3 class="text-muted"><i class="glyphicon glyphicon-import"></i> <? $this->show('Select room for accommodation'); ?></h3>
+
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select(sprintf('guest[%s][room_id]', $index), $rooms, null, ['class' => 'form-control']); ?>
+                              </div>
+                            </div>
+
+                            <h3 class="text-muted"><i class="glyphicon glyphicon-user"></i> <? $this->show('Client information'); ?></h3>
+                            <br />
+
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::text(sprintf('guest[%s][full_name]', $index), $guest['first_name'] . ' ' . $guest['last_name'], ['class' => 'form-control']); ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select(sprintf('guest[%s][gender]', $index), $this->translateArray($genders), $guest['gender'], ['class' => 'form-control']); ?>
+                              </div>
+                            </div>
+
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select(sprintf('guest[%s][country]', $index), $countries, $guest['country'], ['class' => 'form-control', 'data-plugin' => 'chosen']); ?>
+                              </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <?php endforeach; ?>
+
+                    <ul class="list-inline pull-right">
+                        <li><button type="submit" class="btn btn-success btn-info-full next-step"><?php $this->show('Finish booking'); ?></button></li>
+                    </ul>
+                </div>
+            </div>
         </form>
     </div>
-</div>
+</section>
