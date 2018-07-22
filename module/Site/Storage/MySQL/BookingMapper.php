@@ -47,6 +47,36 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Updates status by column and value
+     * 
+     * @param string $column
+     * @param string $value
+     * @param int $status
+     * @return boolean Depending on success
+     */
+    private function updateStatusByColumn(string $column, string $value, int $status) : bool
+    {
+        // Affected row count
+        $rowCount = $this->db->update(self::getTableName(), ['status' => $status])
+                             ->whereEquals($column, $value)
+                             ->execute(true);
+
+        return (bool) $rowCount;
+    }
+
+    /**
+     * Updates status by booking ID
+     * 
+     * @param int $id
+     * @param int $status
+     * @return boolean Depending on success
+     */
+    public function updateStatusById(int $id, int $status) : bool
+    {
+        return $this->updateStatusByColumn('id', $id, $status);
+    }
+
+    /**
      * Updates status by token
      * 
      * @param string $token
@@ -55,12 +85,7 @@ final class BookingMapper extends AbstractMapper
      */
     public function updateStatusByToken(string $token, int $status) : bool
     {
-        // Affected row count
-        $rowCount = $this->db->update(self::getTableName(), ['status' => $status])
-                             ->whereEquals('token', $token)
-                             ->execute(true);
-
-        return (bool) $rowCount;
+        return $this->updateStatusByColumn('token', $token, $status);
     }
 
     /**
