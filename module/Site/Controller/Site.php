@@ -10,6 +10,29 @@ use Krystal\Iso\ISO3166\Country;
 final class Site extends AbstractSiteController
 {
     /**
+     * Confirms payment by its token
+     * 
+     * @param string $token
+     * @return void
+     */
+    public function confirmPaymentAction(string $token)
+    {
+        $bookingService = $this->getModuleService('bookingService');
+        $booking = $bookingService->findByToken($token);
+
+        // If found such token
+        if ($booking) {
+            // Update status as well
+            $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
+
+            return $this->view->render('payment-confirm');
+        } else {
+            // Trigger 404
+            return false;
+        }
+    }
+
+    /**
      * Renders feedback form
      * 
      * @return string
