@@ -202,7 +202,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $this->loadTranslations($code);
 
         // Grab booking service
-        $bookingService = $this->getModuleService('bookingService');
+        $bookingService = $this->getService('Site', 'bookingService');
 
         // Add shared variables
         $this->view->addVariables(array(
