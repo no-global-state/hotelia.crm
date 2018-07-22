@@ -5,6 +5,7 @@ use Krystal\Grid\Grid;
 use Krystal\Grid\ListView;
 use Krystal\Form\Element;
 use Site\Collection\GenderCollection;
+use Site\Collection\BookingStatusCollection;
 
 ?>
 
@@ -42,7 +43,9 @@ use Site\Collection\GenderCollection;
                             <?= (new ListView($details['booking'], [
                                 'columns' => [
                                     ['column' => 'id', 'title' => '#'],
-                                    ['column' => 'status'],
+                                    ['column' => 'status', 'translate' => true, 'value' => function() use ($details){
+                                        return (new BookingStatusCollection)->findByKey($details['booking']['status']);
+                                    }],
                                     ['column' => 'arrival'],
                                     ['column' => 'departure'],
                                     ['column' => 'phone'],
@@ -55,7 +58,6 @@ use Site\Collection\GenderCollection;
                                         return $details['booking']['amount'] . PHP_EOL . $details['booking']['currency'];
                                     }],
                                 ]
-
                             ], $this->translator))->render(); ?>
                         </div>
 
