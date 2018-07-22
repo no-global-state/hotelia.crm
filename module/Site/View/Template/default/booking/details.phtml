@@ -96,7 +96,9 @@ use Site\Collection\GenderCollection;
     </div>
 
     <div id="guests" class="tab-pane fade">
-        <form method="POST">
+        <form method="POST" action="<?= $this->url('Site:Booking@reserveAction'); ?>">
+            <?= Element::hidden('id', $details['booking']['id']); ?>
+
             <br />
             <ul class="nav nav-tabs">
                 <?php foreach ($details['guests'] as $index => $guest): ?>
@@ -113,7 +115,7 @@ use Site\Collection\GenderCollection;
                         <div class="form-group">
                           <label class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
                           <div class="col-lg-10">
-                            <?= Element::select(sprintf('guest[%s][room_type]', $index), $rooms, null, ['class' => 'form-control']); ?>
+                            <?= Element::select(sprintf('guest[%s][room_id]', $index), $rooms, null, ['class' => 'form-control']); ?>
                           </div>
                         </div>
 
