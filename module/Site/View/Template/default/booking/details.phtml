@@ -7,6 +7,8 @@ use Krystal\Form\Element;
 use Site\Collection\GenderCollection;
 use Site\Collection\BookingStatusCollection;
 
+$disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_CONFIRMED;
+
 ?>
 
 <section>
@@ -132,7 +134,7 @@ use Site\Collection\BookingStatusCollection;
                             <div class="form-group">
                               <label class="col-lg-2 control-label"><? $this->show('Room'); ?></label>
                               <div class="col-lg-10">
-                                <?= Element::select(sprintf('guest[%s][room_id]', $index), $rooms, null, ['class' => 'form-control']); ?>
+                                <?= Element::select(sprintf('guest[%s][room_id]', $index), $rooms, null, ['class' => 'form-control', 'disabled' => $disabled]); ?>
                               </div>
                             </div>
 
@@ -142,30 +144,32 @@ use Site\Collection\BookingStatusCollection;
                             <div class="form-group">
                               <label class="col-lg-2 control-label"><? $this->show('Full Name'); ?></label>
                               <div class="col-lg-10">
-                                <?= Element::text(sprintf('guest[%s][full_name]', $index), $guest['first_name'] . ' ' . $guest['last_name'], ['class' => 'form-control']); ?>
+                                <?= Element::text(sprintf('guest[%s][full_name]', $index), $guest['first_name'] . ' ' . $guest['last_name'], ['class' => 'form-control', 'disabled' => $disabled]); ?>
                               </div>
                             </div>
 
                             <div class="form-group">
                               <label class="col-lg-2 control-label"><? $this->show('Gender'); ?></label>
                               <div class="col-lg-10">
-                                <?= Element::select(sprintf('guest[%s][gender]', $index), $this->translateArray($genders), $guest['gender'], ['class' => 'form-control']); ?>
+                                <?= Element::select(sprintf('guest[%s][gender]', $index), $this->translateArray($genders), $guest['gender'], ['class' => 'form-control', 'disabled' => $disabled]); ?>
                               </div>
                             </div>
 
                             <div class="form-group">
                               <label class="col-lg-2 control-label"><? $this->show('Country'); ?></label>
                               <div class="col-lg-10">
-                                <?= Element::select(sprintf('guest[%s][country]', $index), $countries, $guest['country'], ['class' => 'form-control', 'data-plugin' => 'chosen']); ?>
+                                <?= Element::select(sprintf('guest[%s][country]', $index), $countries, $guest['country'], ['class' => 'form-control', 'data-plugin' => 'chosen', 'disabled' => $disabled]); ?>
                               </div>
                             </div>
                         </fieldset>
                     </div>
                     <?php endforeach; ?>
 
+                    <?php if (!$disabled): ?>
                     <ul class="list-inline pull-right">
                         <li><button type="submit" class="btn btn-success btn-info-full next-step"><?php $this->show('Finish booking'); ?></button></li>
                     </ul>
+                    <?php endif; ?>
                 </div>
             </div>
         </form>
