@@ -110,6 +110,21 @@ final class ReservationService
     }
 
     /**
+     * Save many reservations at once
+     * 
+     * @param array $reservations
+     * @return boolean
+     */
+    public function saveMany(array $reservations) : bool
+    {
+        foreach ($reservations as $reservation) {
+            $this->save($reservation);
+        }
+
+        return true;
+    }
+
+    /**
      * Saves a reservation
      * 
      * @param array $data
