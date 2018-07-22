@@ -51,6 +51,52 @@ final class BookingService
     }
 
     /**
+     * Create reservation details
+     * 
+     * @param int $id Booking ID
+     * @param array $guests
+     * @return array|boolean
+     */
+    public function createReservationDetails(int $id, array $guests)
+    {
+        $booking = $this->findById($id);
+
+        // If booking ID is valid 
+        if ($booking) {
+            $reservations = [];
+
+            foreach ($guests as $guest) {
+                $reservations[] = [
+                    'hotel_id' => $booking['hotel_id'],
+                    'room_id' => $guest['room_id'],
+                    'price_group_id' => $booking['price_group_id'],
+                    'payment_system_id' => 1,
+                    'full_name' => $guest['full_name'],
+                    'gender' => $guest['gender'],
+                    'country' => $guest['country'],
+                    'status' => 2,
+                    'purpose' => 1,
+                    'source' => 1,
+                    'legal_status' => 1,
+                    'phone' => $booking['phone'],
+                    'email' => $booking['email'],
+                    'passport' => '',
+                    'comment' => $booking['comment'],
+                    'tax' => 0,
+                    'price' => $booking['amount'],
+                    'arrival' => $booking['arrival'],
+                    'departure' => $booking['departure']
+                ];
+            }
+
+            return $reservations;
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Find details by booking ID
      * 
      * @param int $id Booking ID
