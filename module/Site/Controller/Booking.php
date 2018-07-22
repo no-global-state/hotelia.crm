@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Site\Collection\GenderCollection;
+use Site\Service\BookingService;
 use Krystal\Iso\ISO3166\Country;
 
 final class Booking extends AbstractCrmController
@@ -22,6 +23,33 @@ final class Booking extends AbstractCrmController
             'icon' => 'glyphicon glyphicon-envelope',
             'bookings' => $this->getModuleService('bookingService')->findAll($this->getHotelId())
         ]);
+    }
+
+    /**
+     * Makes actual reservation
+     * 
+     * @return string
+     */
+    public function reserveAction()
+    {
+        // Grab POST data
+        $data = $this->request->getPost();
+
+        $bookingService = $this->getModuleService('bookingService');
+
+        // Parse into required format
+        $reservations = $bookingService->createReservationDetails($data['id'], $data['guest']);
+
+        if ($reservations !== false) {
+            // Update status as well
+            $bookingService->updateStatusById($data['id'], BookingService::STATUS_CONFIRMED);
+
+            // And finally, do save
+            $this->getModuleService('reservationService')->saveMany($reservations);
+
+            $this->flashBag->set('success', 'Reservation has been made');
+            return 1;
+        }
     }
 
     /**

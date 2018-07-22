@@ -5,6 +5,10 @@ use Site\Service\UserService;
 return [
 
     // Booking
+    '/crm/booking/reserve' => [
+        'controller' => 'Booking@reserveAction'
+    ],
+    
     '/crm/booking' => [
         'controller' => 'Booking@indexAction'
     ],
