@@ -3,6 +3,7 @@
 namespace Site\Controller;
 
 use Site\Collection\GenderCollection;
+use Site\Collection\BookingStatusCollection;
 use Site\Service\BookingService;
 use Krystal\Iso\ISO3166\Country;
 
@@ -42,7 +43,7 @@ final class Booking extends AbstractCrmController
 
         if ($reservations !== false) {
             // Update status as well
-            $bookingService->updateStatusById($data['id'], BookingService::STATUS_CONFIRMED);
+            $bookingService->updateStatusById($data['id'], BookingStatusCollection::STATUS_AWAITING_PAYMENT);
 
             // And finally, do save
             $this->getModuleService('reservationService')->saveMany($reservations);

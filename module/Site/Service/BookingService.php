@@ -9,11 +9,6 @@ use Site\Storage\MySQL\BookingRoomMapper;
 
 final class BookingService
 {
-    /* Statuses */
-    const STATUS_NEW = 0;
-    const STATUS_CONFIRMED = 1;
-    const STATUS_REJECTED = 2;
-
     /**
      * Any compliant booking mapper
      * 

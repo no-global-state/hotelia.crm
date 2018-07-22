@@ -4,7 +4,7 @@ namespace Site\Controller;
 
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
-use Site\Service\BookingService;
+use Site\Collection\BookingStatusCollection;
 
 abstract class AbstractCrmController extends AbstractAuthAwareController
 {
@@ -218,8 +218,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'admin' => $this->sessionBag->get('admin'),
 
             // New bookings
-            'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingService::STATUS_NEW),
-            'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingService::STATUS_NEW)
+            'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW),
+            'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW)
         ));
 
         // Define the main layout
