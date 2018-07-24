@@ -113,15 +113,19 @@ final class ReservationService
      * Save many reservations at once
      * 
      * @param array $reservations
-     * @return boolean
+     * @return array IDs of saved reservations
      */
-    public function saveMany(array $reservations) : bool
+    public function saveMany(array $reservations) : array
     {
+        // To be returned
+        $ids = [];
+
         foreach ($reservations as $reservation) {
-            $this->save($reservation);
+            $row = $this->save($reservation);
+            $ids[] = $row['id'];
         }
 
-        return true;
+        return $ids;
     }
 
     /**
