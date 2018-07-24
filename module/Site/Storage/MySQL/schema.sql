@@ -42,11 +42,11 @@ CREATE TABLE velveto_bookings_rooms (
 );
 
 CREATE TABLE velveto_bookings_reservations (
-    `booking_id` INT NOT NULL,
-    `reservation_id` INT NOT NULL,
+    `master_id` INT NOT NULL COMMENT 'Booking ID',
+    `slave_id` INT NOT NULL COMMENT 'Reservation ID',
 
-    FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
-    FOREIGN KEY (reservation_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE
+    FOREIGN KEY (master_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE
 );
 
 /* Bookings */
