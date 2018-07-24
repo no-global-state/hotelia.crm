@@ -46,6 +46,28 @@ final class BookingService
     }
 
     /**
+     * Returns last booking ID
+     * 
+     * @return int
+     */
+    public function getLastId()
+    {
+        return $this->bookingMapper->getMaxId();
+    }
+
+    /**
+     * Inserts relation
+     * 
+     * @param int $bookingId
+     * @param array $ids Reservation IDs
+     * @return boolean
+     */
+    public function insertRelation(int $bookingId, array $ids) : bool
+    {
+        return $this->bookingMapper->insertRelation($bookingId, $ids);
+    }
+
+    /**
      * Create reservation details
      * 
      * @param int $id Booking ID
@@ -219,7 +241,7 @@ final class BookingService
         $this->bookingMapper->persist($params);
 
         // Get last booking ID
-        $bookingId = $this->bookingMapper->getMaxId();
+        $bookingId = $this->getLastId();
 
         // Append booking ID to guests and insert them
         foreach ($guests as $guest) {
