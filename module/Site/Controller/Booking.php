@@ -46,7 +46,9 @@ final class Booking extends AbstractCrmController
             $bookingService->updateStatusById($data['id'], BookingStatusCollection::STATUS_AWAITING_PAYMENT);
 
             // And finally, do save
-            $this->getModuleService('reservationService')->saveMany($reservations);
+            $ids = $this->getModuleService('reservationService')->saveMany($reservations);
+
+            $bookingService->insertRelation($bookingService->getLastId(), $ids);
 
             $this->flashBag->set('success', 'Reservation has been made');
             return 1;
