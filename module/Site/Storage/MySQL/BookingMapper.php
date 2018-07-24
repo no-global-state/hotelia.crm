@@ -65,6 +65,18 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Inserts relation
+     * 
+     * @param int $bookingId
+     * @param array $ids Reservation IDs
+     * @return boolean
+     */
+    public function insertRelation(int $bookingId, array $ids) : bool
+    {
+        return $this->insertIntoJunction(BookingReservationRelation::getTableName(), $bookingId, $ids);
+    }
+
+    /**
      * Updates status by booking ID
      * 
      * @param int $id
