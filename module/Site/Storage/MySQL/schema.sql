@@ -40,6 +40,15 @@ CREATE TABLE velveto_bookings_rooms (
     FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
     FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE
 );
+
+CREATE TABLE velveto_bookings_reservations (
+    `booking_id` INT NOT NULL,
+    `reservation_id` INT NOT NULL,
+
+    FOREIGN KEY (booking_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE,
+    FOREIGN KEY (reservation_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE
+);
+
 /* Bookings */
 
 CREATE TABLE velveto_meals (
