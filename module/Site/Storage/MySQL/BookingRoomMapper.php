@@ -21,13 +21,15 @@ final class BookingRoomMapper extends AbstractMapper
      */
     public function findDetailsByBookingId(int $bookingId, int $langId) : array
     {
+        // Columns to be selected
         $columns = [
             self::column('qty'),
             self::column('guests'),
-            RoomCategoryTranslationMapper::column('name') => 'category'
+            RoomCategoryTranslationMapper::column('name') => 'category',
+            ReservationMapper::column('room_id')
         ];
 
-        return $this->db->select($columns)
+        $db = $this->db->select($columns, true)
                         ->from(self::getTableName())
                         // Room type relation
                         ->innerJoin(RoomTypeMapper::getTableName(), [
@@ -41,9 +43,23 @@ final class BookingRoomMapper extends AbstractMapper
                         ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
                             RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id')
                         ])
+                        // Room Relation
+                        ->leftJoin(RoomMapper::getTableName(), [
+                            RoomMapper::column('type_id') => self::getRawColumn('room_type_id')
+                        ])
+                        // Reservation relation
+                        ->innerJoin(ReservationMapper::getTableName(), [
+                            ReservationMapper::column('room_id') => RoomMapper::getRawColumn('id')
+                        ])
+                        // Junction relation
+                        ->leftJoin(BookingReservationRelation::getTableName(), [
+                            BookingReservationRelation::column('master_id') => self::getRawColumn('booking_id'),
+                            BookingReservationRelation::column('slave_id') => ReservationMapper::getRawColumn('id')
+                        ])
                         // Constraints
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
-                        ->andWhereEquals(self::column('booking_id'), $bookingId)
-                        ->queryAll();
+                        ->andWhereEquals(self::column('booking_id'), $bookingId);
+
+        return $db->queryAll();
     }
 }
