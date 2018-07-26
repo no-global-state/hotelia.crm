@@ -33,6 +33,7 @@ body,
     background: #ececec;
     padding-left: 244px;
     padding-top: 21px;
+    padding-bottom: 25px;
     padding-right: 21px;
 }
 
@@ -335,7 +336,7 @@ div[role='main'] {
 /* Table overrides */
 .table > thead,
 .table > tfoot {
- background: #0074d9;
+ background: #4c739a;
  color: #fff;
  font-family: Tahoma;
 }
@@ -405,7 +406,7 @@ div[role='main'] {
 }
 
 .floor-row > div.free {
- background: #20905d;
+ background: #333f4f;
 }
 
 .floor-row > div.leaving {
