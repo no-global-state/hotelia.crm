@@ -19,10 +19,11 @@ use Krystal\Form\Element;
             <tr>
                 <th>#</th>
                 <th><?php $this->show('Name'); ?></th>
+                <th class="col-lg-1"><?php $this->show('Room count'); ?></th>
                 <th class="col-lg-3"><?php $this->show('Description'); ?></th>
                 <th><?php $this->show('Persons'); ?></th>
                 <th><?php $this->show('Children capacity'); ?></th>
-                <th><?php $this->show('Prices'); ?></th>
+                <th class="col-lg-3"><?php $this->show('Prices'); ?></th>
                 <th><?php $this->show('Actions'); ?></th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@ use Krystal\Form\Element;
             <tr>
                 <td><?= $index + 1; ?></td>
                 <td><?= $type['name']; ?></td>
+                <td><?= $type['room_count']; ?></td>
                 <td class="col-lg-3"><?= $type['description']; ?></td>
                 <td>
                     <?= str_repeat('<i class="glyphicon glyphicon-user"></i> ', $type['persons']); ?>
