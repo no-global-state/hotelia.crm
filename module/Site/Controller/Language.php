@@ -37,8 +37,11 @@ final class Language extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Languages');
 
+        $languages = $this->getModuleService('languageService')->fetchAll();
+
         return $this->view->render('languages/index', [
-            'languages' => $this->getModuleService('languageService')->fetchAll(),
+            'languages' => $languages,
+            'count' => count($languages),
             'icon' => 'glyphicon glyphicon-flag',
             'entity' => $entity
         ]);
