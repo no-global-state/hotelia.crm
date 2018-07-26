@@ -2,16 +2,19 @@
 
 use Krystal\Form\Element;
 
-?>
-
-<? $this->loadPartial('hint', [
+$this->loadPartial('hint', [
     'lines' => [
         'Add all possible room types and their prices available in your hotel.',
         'You can then attach created types to rooms to be created.'
     ]
-]); ?>
+]);
 
-<p><a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@addAction'); ?>"><? $this->show('Add room type'); ?></a></p>
+?>
+
+<p>
+    <a class="btn btn-primary" href="<?= $this->url('Site:Architecture:RoomType@addAction'); ?>"><? $this->show('Add room type'); ?></a>
+    <a class="btn btn-success" href="<?= $this->url('Site:Architecture:Room@indexAction'); ?>"><? $this->show('Architecture'); ?></a>
+</p>
 
 <div class="table-responsive">
     <table class="table table-bordered">
