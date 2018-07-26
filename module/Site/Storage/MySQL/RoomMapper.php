@@ -366,7 +366,7 @@ final class RoomMapper extends AbstractMapper
             new RawSqlFragment('DATEDIFF(departure, CURDATE()) AS left_days'),
         ];
 
-        return $this->db->select($columns)
+        return $this->db->select($columns, true)
                         ->from(self::getTableName())
                         // Type relation
                         ->leftJoin(RoomTypeMapper::getTableName(), [
