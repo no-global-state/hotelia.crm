@@ -20,7 +20,7 @@ final class Service extends AbstractCrmController
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Services');
-        
+
         return $this->view->render('helpers/services', array(
             'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
             'entity' => $entity,
@@ -38,8 +38,7 @@ final class Service extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
-        return $this->createGrid(new InputDecorator(), $priceGroups);
+        return $this->createGrid(new InputDecorator(), $this->getModuleService('priceGroupService')->fetchAll());
     }
 
     /**
@@ -54,8 +53,7 @@ final class Service extends AbstractCrmController
         $entity = $this->getModuleService('serviceManager')->fetchById($id);
 
         if ($entity) {
-            $priceGroups = $this->createMapper('\Site\Storage\MySQL\PriceGroupMapper')->fetchAll(false);
-            $priceGroups = array_replace_recursive($priceGroups, $service->findPricesServiceId($id));
+            $priceGroups = $this->getModuleService('priceGroupService')->fetchPopulated($service->findPricesServiceId($id));
 
             return $this->createGrid($entity, $priceGroups);
         } else {
