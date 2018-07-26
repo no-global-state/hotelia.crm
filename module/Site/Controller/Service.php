@@ -21,8 +21,11 @@ final class Service extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Services');
 
+        $services = $this->getModuleService('serviceManager')->fetchAll($this->getHotelId());
+
         return $this->view->render('helpers/services', array(
-            'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
+            'services' => $services,
+            'count' => count($services),
             'entity' => $entity,
             'id' => $entity['id'],
             'unitCollection' => new UnitCollection,
