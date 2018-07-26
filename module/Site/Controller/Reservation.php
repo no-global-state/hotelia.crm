@@ -186,6 +186,10 @@ final class Reservation extends AbstractCrmController
      */
     public function tableAction()
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Desktop');
+
         $period = $this->request->getQuery('period', 7);
         $type = $this->request->getQuery('type', null);
 
@@ -198,7 +202,8 @@ final class Reservation extends AbstractCrmController
             'periods' => (new DaysCollection())->getAll(),
             'period' => $period,
             'dates' => ReservationService::createPeriodRange($period),
-            'table' => $this->getModuleService('roomService')->createTable($this->getCurrentLangId(), $this->getHotelId())
+            'table' => $this->getModuleService('roomService')->createTable($this->getCurrentLangId(), $this->getHotelId()),
+            'icon' => 'glyphicon glyphicon-blackboard'
         ));
     }
 
