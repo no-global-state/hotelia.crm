@@ -14,10 +14,13 @@ final class PaymentField extends AbstractCrmController
      */
     private function createForm($entity) : string
     {
+        // Find name by ID
+        $name = $this->getModuleService('paymentSystemService')->findNameById($entity['payment_system_id']);
+
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Payment systems', $this->createUrl('Site:PaymentSystem@indexAction'))
-                   ->addOne($this->translator->translate('Payment fields for') . $this->getModuleService('paymentSystemService')->findNameById($entity['payment_system_id']));
+                   ->addOne($this->translator->translate('Payment fields for') . PHP_EOL . $name);
 
         return $this->view->render('payment-system/field', [
             'icon' => 'glyphicon glyphicon-list-alt',
