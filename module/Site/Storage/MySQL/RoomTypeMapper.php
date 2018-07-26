@@ -309,6 +309,7 @@ final class RoomTypeMapper extends AbstractMapper
         ]);
 
         $db = $this->db->select($columns)
+                        ->count(RoomMapper::column('id'), 'room_count')
                         ->from(self::getTableName())
                         // Room category relation
                         ->leftJoin(RoomCategoryMapper::getTableName(), [
@@ -323,10 +324,16 @@ final class RoomTypeMapper extends AbstractMapper
                             self::column(self::PARAM_COLUMN_ID) => RoomTypeTranslationMapper::getRawColumn(self::PARAM_COLUMN_ID),
                             RoomTypeTranslationMapper::column('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
                         ])
+                        // Room relation (purely for couting)
+                        ->leftJoin(RoomMapper::getTableName(), [
+                            RoomMapper::column('type_id') => self::getRawColumn('id'),
+                            RoomMapper::column('hotel_id') => self::getRawColumn('hotel_id')
+                        ])
                         // Hotel ID constraint
                         ->whereEquals(self::column('hotel_id'), $hotelId)
                         // Language ID constraint
                         ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                        ->groupBy($columns)
                         ->orderBy($this->getPk())
                         ->desc();
 
