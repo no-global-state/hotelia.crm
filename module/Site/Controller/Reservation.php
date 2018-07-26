@@ -210,16 +210,16 @@ final class Reservation extends AbstractCrmController
     /**
      * View info by associated room ID
      * 
-     * @param string $roomId
+     * @param int $roomId
      * @return string
      */
-    public function viewTakenAction($roomId)
+    public function viewTakenAction(int $roomId) : string
     {
-        $entity = $this->getModuleService('reservationService')->fetchByRoomId($id);
+        $entity = $this->getModuleService('reservationService')->fetchByRoomId($roomId);
 
-        return $this->view->disableLayout()->render('reservation/view', array(
+        return $this->view->disableLayout()->render('reservation/view', [
             'entity' => $entity
-        ));
+        ]);
     }
 
     /**
