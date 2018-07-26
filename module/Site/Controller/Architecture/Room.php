@@ -77,7 +77,7 @@ final class Room extends AbstractCrmController
      */
     public function viewAction(int $id)
     {
-        $entity = $this->getModuleService('roomService')->fetchById($id, $this->getCurrentLangId());
+        $entity = $this->getModuleService('roomService')->getById($id, $this->getCurrentLangId());
 
         return $this->view->disableLayout()->render('architecture/room-view', array(
             'entity' => $entity,
