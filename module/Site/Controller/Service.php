@@ -17,12 +17,17 @@ final class Service extends AbstractCrmController
      */
     private function createGrid($entity, array $priceGroups) : string
     {
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Services');
+        
         return $this->view->render('helpers/services', array(
             'services' => $this->getModuleService('serviceManager')->fetchAll($this->getHotelId()),
             'entity' => $entity,
             'id' => $entity['id'],
             'unitCollection' => new UnitCollection,
-            'priceGroups' => $priceGroups
+            'priceGroups' => $priceGroups,
+            'icon' => 'glyphicon glyphicon-tags',
         ));
     }
 
