@@ -17,9 +17,12 @@ final class Dictionary extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Dictionary');
 
+        $entries = $this->getModuleService('dictionaryService')->fetchAll($this->getCurrentLangId());
+
         return $this->view->render('dictionary/index', [
             'icon' => 'glyphicon glyphicon-book',
-            'entries' => $this->getModuleService('dictionaryService')->fetchAll($this->getCurrentLangId())
+            'entries' => $entries,
+            'count' => count($entries)
         ]);
     }
 
