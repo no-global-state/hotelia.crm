@@ -19,9 +19,12 @@ final class Discount extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Discounts');
 
+        $discounts = $this->getModuleService('discountService')->fetchAll($this->getHotelId());
+
         return $this->view->render('helpers/discount', [
             'icon' => 'glyphicon glyphicon-retweet',
-            'discounts' => $this->getModuleService('discountService')->fetchAll($this->getHotelId()),
+            'discounts' => $discounts,
+            'count' => count($discounts),
             'entity' => $entity
         ]);
     }
