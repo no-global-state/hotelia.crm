@@ -39,9 +39,12 @@ final class Room extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Architecture');
 
+        $rooms = $this->createRoomMapper()->fetchAll($this->getCurrentLangId(), $this->getHotelId());
+
         return $this->view->render('room/index', array(
             'icon' => 'glyphicon glyphicon-home',
-            'rooms' => $this->createRoomMapper()->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
+            'rooms' => $rooms,
+            'count' => count($rooms),
             'cleaningCollection' => new CleaningCollection(),
             'roomQualityCollection' => new RoomQualityCollection()
         ));
