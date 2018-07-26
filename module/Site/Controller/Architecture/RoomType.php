@@ -69,10 +69,12 @@ final class RoomType extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Room types');
 
+        $types = $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId());
+
         return $this->view->render('room-type/index', array(
             'icon' => 'glyphicon glyphicon-link',
-            'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
-            'categories' => $this->getModuleService('roomCategoryService')->fetchList($this->getCurrentLangId()),
+            'types' => $types,
+            'count' => count($types)
         ));
     }
 
