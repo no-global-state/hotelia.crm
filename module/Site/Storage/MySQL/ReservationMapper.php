@@ -96,21 +96,34 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     /**
      * Gets sum count (price, tax, id) based on period
      * 
-     * @param array $values
-     * @param string $func SQL function
+     * @param int $year
+     * @param array $months
+     * @param array $roomIds
+     * @param int $priceGroupId
      * @return array
      */
-    public function getSumCount(int $year, array $months, array $roomIds) : array
+    public function getSumCount(int $year, array $months, array $roomIds, int $priceGroupId) : array
     {
-        return $this->db->select()
+        // Columns to be selected
+        $columns = [
+            PriceGroupMapper::column('currency')
+        ];
+
+        return $this->db->select($columns)
                         // Calculate functions
-                        ->sum('price', 'price')
-                        ->sum('tax', 'tax')
-                        ->count('id', 'id')
+                        ->sum(self::column('price'), 'price')
+                        ->sum(self::column('tax'), 'tax')
+                        ->count(self::column('id'), 'id')
                         ->from(self::getTableName())
+                        // Price group relation
+                        ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => self::getRawColumn('price_group_id')
+                        ])
+                        // Constraints
                         ->whereIn('MONTH(arrival)', new RawBinding($months))
                         ->andWhereIn('room_id', $roomIds)
                         ->andWhereEquals('YEAR(arrival)', $year)
+                        ->andWhereEquals('price_group_id', $priceGroupId)
                         ->query();
     }
 
