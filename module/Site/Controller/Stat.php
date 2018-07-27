@@ -26,9 +26,13 @@ final class Stat extends AbstractCrmController
             ]);
 
         } else {
+
+            // Configure view
             $this->view->getPluginBag()->load('chart');
+            $this->view->getBreadcrumbBag()->addOne('Statistic');
 
             return $this->view->render('stat/index', [
+                'icon' => 'glyphicon glyphicon-stats',
                 'stat' => true,
                 'months' => TimeHelper::getMonths(),
                 'year' => date('Y'),
