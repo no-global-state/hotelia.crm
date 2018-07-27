@@ -10,7 +10,7 @@ use Krystal\Form\Element;
     </div>
 
     <div class="col-lg-6">
-        <form class="form-horizontal">
+        <form class="form-horizontal" action="<?= $this->url('Site:Stat@reportAction'); ?>">
             <div class="form-group">
               <label class="col-lg-2 control-label"><? $this->show('Price group'); ?></label>
               <div class="col-lg-10">

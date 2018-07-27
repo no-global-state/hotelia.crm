@@ -763,5 +763,10 @@ return [
 
     '/crm/stat' => [
         'controller' => 'Stat@indexAction'
+    ],
+
+    '/crm/stat/report' => [
+        'controller' => 'Stat@reportAction'
     ]
+    
 ];
