@@ -38,15 +38,24 @@ final class RoomInventory extends AbstractCrmController
      */
     private function createGrid(int $roomId, $entity) : string
     {
+        // Room name
+        $name = $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchNameById($roomId);
+
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()->addOne('Architecture', $this->createUrl('Site:Architecture:Room@indexAction'))
+                                       ->addOne($this->translator->translate('Room inventory') . ' - ' . $name);
+
         $collection = ArrayUtils::arrayList($this->createInventoryMapper()->fetchAll($this->getHotelId()), 'id', 'name');
+        $inventories = $this->createRoomInventoryMapper()->fetchAll($roomId);
 
         return $this->view->render('architecture/room-inventory', array(
-            'inventories' => $this->createRoomInventoryMapper()->fetchAll($roomId),
-            'name' => $this->createMapper('\Site\Storage\MySQL\RoomMapper')->fetchNameById($roomId), // Room name
+            'inventories' => $inventories,
+            'count' => count($inventories),
             'entity' => $entity,
             'id' => $entity['id'],
             'collection' => $collection,
-            'roomId' => $roomId
+            'roomId' => $roomId,
+            'icon' => 'glyphicon glyphicon-eject'
         ));
     }
 
