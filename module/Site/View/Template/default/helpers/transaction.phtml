@@ -7,83 +7,81 @@ use Krystal\Iso\ISO3166\Country;
 ?>
 
 <form action="<?= $route; ?>">
+    <div class="summary">
+        <h4 class="page-header">
+            <?php if ($paginator->getSummary() != 0): ?>
+            <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
+            <?php endif; ?>
+        </h4>
 
-<div class="summary">
-    <h4 class="page-header">
-        <?php if ($paginator->getSummary() != 0): ?>
-        <small> (<?php $this->show('Displayed'); ?> <?= $paginator->getSummary(); ?> <?php $this->show('of'); ?> <?= $paginator->getTotalAmount(); ?>) </small>
-        <?php endif; ?>
-    </h4>
+        <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+    </div>
 
-    <button class="btn btn-primary" type="submit" onclick="this.form.submit()"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
-</div>
+    <div class="table-responsive">
+        <?= Grid::render($data, [
+            // A column to be considered as a primary key
+            'pk' => 'id',
+            'batch' => false,
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => [
+                [
+                    'column' => 'id',
+                    'label' => 'ID'
+                ],
 
-<div class="table-responsive">
-    <?= Grid::render($data, [
-        // A column to be considered as a primary key
-        'pk' => 'id',
-        'batch' => false,
-        'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-        'columns' => [
-            [
-                'column' => 'id',
-                'label' => 'ID'
-            ],
+                [
+                    'column' => 'hotel',
+                    'type' => 'text',
+                    'filter' => true,
+                    'hidden' => !$shared
+                ],
 
-            [
-                'column' => 'hotel',
-                'type' => 'text',
-                'filter' => true,
-                'hidden' => !$shared
-            ],
+                [
+                    'column' => 'datetime',
+                    'type' => 'text',
+                    'filter' => true,
+                    'label' => 'Date and time',
+                ],
 
-            [
-                'column' => 'datetime',
-                'type' => 'text',
-                'filter' => true,
-                'label' => 'Date and time',
-            ],
+                [
+                    'column' => 'holder',
+                    'type' => 'text',
+                    'filter' => true,
+                    'label' => 'Card holder'
+                ],
 
-            [
-                'column' => 'holder',
-                'type' => 'text',
-                'filter' => true,
-                'label' => 'Card holder'
-            ],
+                [
+                    'column' => 'payment_system',
+                    'type' => 'text',
+                    'filter' => true
+                ],
 
-            [
-                'column' => 'payment_system',
-                'type' => 'text',
-                'filter' => true
-            ],
+                [
+                    'column' => 'amount',
+                    'type' => 'text',
+                    'filter' => true,
+                    'value' => function($row){
+                        return number_format($row['amount']);
+                    }
+                ],
 
-            [
-                'column' => 'amount',
-                'type' => 'text',
-                'filter' => true,
-                'value' => function($row){
-                    return number_format($row['amount']);
-                }
-            ],
+                [
+                    'column' => 'currency',
+                    'type' => 'text',
+                    'filter' => true
+                ],
 
-            [
-                'column' => 'currency',
-                'type' => 'text',
-                'filter' => true
-            ],
-
-            [
-                'column' => 'comment',
-                'filter' => false
+                [
+                    'column' => 'comment',
+                    'filter' => false
+                ]
             ]
-        ]
 
-    ], $this->translator, $route, $query); ?>
+        ], $this->translator, $route, $query); ?>
 
-</div>
+    </div>
 
-<? $this->loadPartial('pagination'); ?>
-
+    <? $this->loadPartial('pagination'); ?>
 </form>
 
 <? $this->loadPartial('client-modal'); ?>
