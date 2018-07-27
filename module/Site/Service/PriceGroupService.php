@@ -92,6 +92,6 @@ final class PriceGroupService
      */
     public function fetchList() : array
     {
-        return ArrayUtils::arrayList($this->fetchAll());
+        return ArrayUtils::arrayList($this->fetchAll(), 'id', 'name');
     }
 }
