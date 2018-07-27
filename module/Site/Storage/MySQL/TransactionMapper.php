@@ -50,7 +50,7 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
             self::column('amount'),
             self::column('currency'),
             self::column('comment'),
-            HotelTranslationMapper::column('name')
+            HotelTranslationMapper::column('name') => 'hotel'
         ];
 
         $db = $this->db->select($columns)
@@ -77,6 +77,8 @@ final class TransactionMapper extends AbstractMapper implements FilterableServic
            ->andWhereLike('payment_system', '%'.$input['payment_system'].'%', true)
            ->andWhereLike('amount', $input['amount'], true)
            ->andWhereEquals('currency', $input['currency'], true)
+           // Hotel name filter
+           ->andWhereLike(HotelTranslationMapper::column('name'), '%'.$input['hotel'].'%', true)
            ->orderBy($sortingColumn ? self::column($sortingColumn) : self::column('id'));
 
         if ($desc) {
