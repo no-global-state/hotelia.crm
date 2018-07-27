@@ -15,16 +15,16 @@ use Krystal\Grid\ListView;
         [
             'column' => 'price',
             'title' => $this->translate('Total incoming'),
-            'value' => function() use ($sum, $currency){
-                return number_format($sum['price']) . ' ' . $currency;
+            'value' => function() use ($sum){
+                return number_format($sum['price']) . ' ' . $sum['currency'];
             }
         ],
 
         [
             'column' => 'tax',
             'title' => $this->translate('Total tax'),
-            'value' => function() use ($sum, $currency){
-                return number_format($sum['tax']) . ' ' . $currency;
+            'value' => function() use ($sum){
+                return number_format($sum['tax']) . ' ' . $sum['currency'];
             }
         ]
     ]
