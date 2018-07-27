@@ -23,13 +23,21 @@ final class Inventory extends AbstractCrmController
      * @param mixed $entity
      * @return string
      */
-    private function createForm($entity) : string
+    private function createGrid($entity) : string
     {
-        return $this->view->render('helpers/inventory', array(
-            'inventories' => $this->createInventoryMapper()->fetchAll($this->getHotelId()),
+        // Append a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Inventories');
+
+        $inventories = $this->createInventoryMapper()->fetchAll($this->getHotelId());
+
+        return $this->view->render('helpers/inventory', [
+            'inventories' => $inventories,
             'id' => $entity['id'],
-            'entity' => $entity
-        ));
+            'entity' => $entity,
+            'icon' => 'glyphicon glyphicon-resize-full',
+            'count' => count($inventories)
+        ]);
     }
 
     /**
@@ -39,7 +47,7 @@ final class Inventory extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        return $this->createForm(new InputDecorator());
+        return $this->createGrid(new InputDecorator());
     }
 
     /**
@@ -53,7 +61,7 @@ final class Inventory extends AbstractCrmController
         $entity = $this->createInventoryMapper()->findByPk($id);
 
         if ($entity) {
-            return $this->createForm($entity);
+            return $this->createGrid($entity);
         } else {
             return false;
         }
