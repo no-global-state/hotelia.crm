@@ -540,8 +540,14 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
     ],
 
+    // Hotel-specific transactions
     '/crm/transaction/index/(:var)' => [
         'controller' => 'Transaction@indexAction'
+    ],
+    
+    // All transactions
+    '/crm/transaction/list/(:var)' => [
+        'controller' => 'Transaction@listAction'
     ],
 
     '/crm/hotel' => [
