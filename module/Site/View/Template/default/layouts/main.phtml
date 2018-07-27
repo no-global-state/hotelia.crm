@@ -111,16 +111,22 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                 <li><a href="<?= $this->url('Site:Reservation@indexAction', null); ?>"><i class="glyphicon glyphicon-user"></i> <?php $this->show('Clients'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Reservation@addAction', null); ?>"><i class="glyphicon glyphicon-pencil"></i> <?php $this->show('New reservation'); ?></a></li>
                 <li class="<?= $newBookingsCount ? 'menu-item-new' : null; ?>"><a href="<?= $this->url('Site:Booking@indexAction', null); ?>" class="text-danger"><i class="glyphicon glyphicon-envelope"></i> <?php $this->show('Bookings from the site'); ?> <?php if ($newBookingsCount > 0): ?><span>(<?= $newBookingsCount; ?>)</span><?php endif; ?></a></li>
-                <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Find a free room'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Hotel information'); ?></a></li>
-                <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
                 <li><a href="<?= $this->url('Site:Review:Review@indexAction'); ?>"><i class="glyphicon glyphicon-signal"></i> <? $this->show('Customer reviews'); ?></a></li>
 
                 <li>
-                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-hotel"><? $this->show('Helpers'); ?> <span class="caret"></span></a>
-                  <ul id="menu-hotel" class="collapse">
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-architecture"><? $this->show('Architecture'); ?> <span class="caret"></span></a>
+                  <ul id="menu-architecture" class="collapse">
                     <li><a href="<?= $this->url('Site:Architecture:RoomType@indexAction'); ?>"><i class="glyphicon glyphicon-link"></i> <? $this->show('Room types'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Architecture:Room@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Find a free room'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
+                  </ul>
+                </li>
+                
+                <li>
+                  <a href="javascript:;" data-toggle="collapse" data-target="#menu-hotel"><? $this->show('Helpers'); ?> <span class="caret"></span></a>
+                  <ul id="menu-hotel" class="collapse">
                     <li><a href="<?= $this->url('Site:Service@indexAction'); ?>"><i class="glyphicon glyphicon-tags"></i> <? $this->show('Services'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Discount@indexAction'); ?>"><i class="glyphicon glyphicon-retweet"></i> <? $this->show('Discounts'); ?></a></li>
                   </ul>
