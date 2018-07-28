@@ -38,6 +38,53 @@ final class BehaviorService
     }
 
     /**
+     * Returns included languages
+     * 
+     * @param array $languages
+     * @param array $active Active item
+     * @return array
+     */
+    public function getIncludedLanguages(array $languages, array $active) : array
+    {
+        // Shared generator
+        $generator = function(array $constraints, bool $pluck) use ($languages){
+            $output = [];
+
+            foreach ($languages as $language) {
+                // Language code
+                $code = strtolower($language['code']);
+
+                // Whether in collection
+                $in = in_array($code, $constraints);
+                
+                if ($pluck) {
+                    if ($in) {
+                        $output[] = $language;
+                    }
+                } else {
+                    if (!$in) {
+                        $output[] = $language;
+                    }
+                }
+            }
+
+            return $output;
+        };
+
+        // Languages to be shown only
+        if (isset($active['languages'])) {
+            return $generator($active['languages'], true);
+        }
+
+        // Languages to be excluded
+        if (isset($active['except'])) {
+            return $generator($active['except'], false);
+        }
+
+        // Fatal error by default
+    }
+
+    /**
      * Find out information by IP
      * 
      * @return array
