@@ -213,7 +213,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'locale' => $this->paramBag->has('locale') ? $this->paramBag->get('locale') : $this->appConfig->getLanguage(),
             'active' => (bool) $hotel['active'],
             'appName' => $this->paramBag->get('appName'),
-            'languages' => $this->createMapper('\Site\Storage\MySQL\LanguageMapper')->fetchAll(),
+            'languages' => $this->getModuleService('languageService')->fetchAll(true),
             'code' => $code,
             'admin' => $this->sessionBag->get('admin'),
 
