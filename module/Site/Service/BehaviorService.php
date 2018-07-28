@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Krystal\Http\Client\CurlHttplCrawler;
 use Krystal\Http\PersistentStorageInterface;
+use Krystal\Stdlib\VirtualEntity;
 
 /**
  * Based on client's IP it can return configuration values
@@ -38,13 +39,37 @@ final class BehaviorService
     }
 
     /**
+     * Returns defaults
+     * 
+     * @param \Krystal\Http\PersistentStorageInterface $session
+     * @param array $languages Raw collection of languages to be filtered
+     * @return \Krystal\Stdlib\VirtualEntity
+     */
+    public function getDefaults(PersistentStorageInterface $session = null, array $languages) : VirtualEntity
+    {
+        // Find active item
+        $active = $this->findActive($session);
+
+        // Filter languages
+        $filteredLanguages = self::getIncludedLanguages($languages, $active);
+
+        $entity = new VirtualEntity();
+        $entity->setLanguages($filteredLanguages)
+               ->setResident($active['resident'])
+               ->setCountry($active['country'])
+               ->setPriceGroupId($active['price_group_id']);
+
+        return $entity;
+    }
+
+    /**
      * Returns included languages
      * 
      * @param array $languages
      * @param array $active Active item
      * @return array
      */
-    public function getIncludedLanguages(array $languages, array $active) : array
+    private static function getIncludedLanguages(array $languages, array $active) : array
     {
         // Shared generator
         $generator = function(array $constraints, bool $pluck) use ($languages){
@@ -141,7 +166,7 @@ final class BehaviorService
      * @param \Krystal\Http\PersistentStorageInterface $session
      * @return array
      */
-    public function findActive(PersistentStorageInterface $session = null) : array
+    private function findActive(PersistentStorageInterface $session = null) : array
     {
         $key = 'country';
 
