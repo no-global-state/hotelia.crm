@@ -166,7 +166,12 @@ use Site\Service\LanguageService;
             <?php else: ?>
 
             <br />
-            <p><?php $this->show('To upload photos, you first need to save changes'); ?></p>
+
+            <?php $this->loadPartial('hint', [
+                'lines' => [
+                    'To upload photos, you first need to save changes'
+                ]
+            ]);?>
 
             <?php endif; ?>
         </div>
