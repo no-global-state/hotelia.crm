@@ -227,7 +227,8 @@ CREATE TABLE velveto_languages (
     `name` varchar(255) NOT NULL COMMENT 'Language name',
     `code` varchar(5) NOT NULL COMMENT 'Language code',
     `order` INT DEFAULT 0 COMMENT 'Sorting order',
-    `image` varchar(255) COMMENT 'Optional image path'
+    `image` varchar(255) COMMENT 'Optional image path',
+    `system` BOOLEAN COMMENT 'Whether this language is system'
 );
 
 CREATE TABLE velveto_facilitiy_relations (
