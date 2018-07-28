@@ -30,6 +30,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
 </head>
 <body>
     <div id="<?= $extended && !isset($login) ? 'wrapper' : null; ?>">
+        <?php if (!isset($login)): ?>
         <!-- Navigation -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -44,7 +45,6 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                 <a class="navbar-brand" href="<?= $homeUrl; ?>"><?= $appName; ?></a>
             </div>
 
-            <?php if (!isset($login)): ?>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
                 <li><a href="/" target="_blank"><? $this->show('Open a site'); ?></a></li>
@@ -77,7 +77,6 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                     </ul>
                 </li>
             </ul>
-            <?php endif; ?>
 
             <?php if ($extended): ?>
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
@@ -146,10 +145,11 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
             <!-- /.navbar-collapse -->
             <?php endif; ?>
         </nav>
+        <?php endif; ?>
 
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <?php if ($extended): ?>
+        <div id="<?= !isset($login) ? 'page-wrapper' : null; ?>">
+            <div class="<?= !isset($login) ? 'container-fluid' : null; ?>">
+                <?php if ($extended && !isset($login)): ?>
                 <!-- Page Heading -->
                 <div class="row">
                     <div class="col-lg-12">

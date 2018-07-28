@@ -1,32 +1,32 @@
+<?php
 
-<h2 class="page-header"><i class="glyphicon glyphicon-user"></i> <?php $this->show('Login'); ?></h2>
+use Krystal\Form\Element;
 
-<form class="form-horizontal">
-  <fieldset class="col-lg-5">
-    <div class="form-group">
-      <label for="inputEmail" class="col-lg-2 control-label"><?php $this->show('Your login'); ?></label>
-      <div class="col-lg-10">
-        <input type="text" class="form-control" name="login" id="inputEmail" placeholder="<?php $this->show('Type your login'); ?>" />
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <label for="inputPassword" class="col-lg-2 control-label"><?php $this->show('Password'); ?></label>
-      <div class="col-lg-10">
-        <input type="password" class="form-control" name="password" id="inputPassword" placeholder="<?php $this->show('Type your password'); ?>" />
-        <div class="checkbox">
-          <label>
-            <input type="hidden" name="remember" value="0" />
-            <input type="checkbox" name="remember" value="1" /> <?php $this->show('Remember me'); ?>
-          </label>
+?>
+
+<div class="background-wrapper">
+    <form class="form-horizontal" autocomplete="off">
+      <p><img src="/data/uploads/logo.png" /></p>
+      <br />
+
+      <fieldset>
+        <div class="form-group">
+            <?= Element::text('login', null, ['class' => 'form-control input-lg', 'placeholder' => $this->translate('Your login')]); ?>
         </div>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-lg-10 col-lg-offset-2">
-        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-ok"></i> <?php $this->show('Login'); ?></button>
-      </div>
-    </div>
-  </fieldset>
-</form>
+        
+        <div class="form-group">
+            <?= Element::password('password', null, ['class' => 'form-control input-lg', 'placeholder' => $this->translate('Password')]); ?>
+            <div class="checkbox">
+              <label>
+                <?= Element::checkbox('remember', false); ?>
+                <?php $this->show('Remember me'); ?>
+              </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg"><?php $this->show('Login'); ?></button>
+        </div>
+      </fieldset>
+    </form>
+</div>

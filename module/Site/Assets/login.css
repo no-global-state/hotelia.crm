@@ -1,0 +1,68 @@
+
+/* Styles for login page */
+
+.background-wrapper:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #3f74d6;
+    background: -webkit-linear-gradient(bottom, #000000, #3f74d6);
+    background: -o-linear-gradient(bottom, #000000, #3f74d6);
+    background: -moz-linear-gradient(bottom, #000000, #3f74d6);
+    background: linear-gradient(bottom, #000000, #3f74d6);
+    opacity: 0.9;
+}
+
+.background-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    z-index: 1;
+    background-image: url(/data/uploads/login-background.jpg);
+}
+
+.form-control {
+    border-radius: 15px;
+}
+
+.btn {
+    width: 100%;
+    background: #3722de;
+    border: none;
+    text-transform: uppercase;
+    border-radius: 19px;
+}
+
+.btn:hover {
+    background: #1d0d9c;
+}
+
+body {
+    margin: 0;
+}
+
+.checkbox label {
+    color: #fff;
+    text-transform: uppercase;
+    margin: 11px auto 1px 0px;
+    text-align: center;
+    display: block;
+}
+

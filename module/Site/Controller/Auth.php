@@ -51,6 +51,10 @@ final class Auth extends AbstractCrmController
             // Then simply go home
             return $this->response->redirect('/crm');
         } else {
+            // Append styles for login page
+            $this->view->getPluginBag()
+                       ->appendStylesheet('@Site/login.css');
+            
             return $this->view->render('login', [
                 'login' => true
             ]);
