@@ -12,6 +12,7 @@ use Krystal\Form\Element;
                     <th>#</th>
                     <th><?php $this->show('Name'); ?></th>
                     <th><?php $this->show('Code'); ?></th>
+                    <th><?php $this->show('System'); ?></th>
                     <th><?php $this->show('Actions'); ?></th>
                 </tr>
             </thead>
@@ -22,6 +23,7 @@ use Krystal\Form\Element;
                     <td><?= $language['id']; ?></td>
                     <td><?= $language['name']; ?></td>
                     <td><?= $language['code']; ?></td>
+                    <td><?php $this->show($language['system'] ? 'Yes' : 'No'); ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Language@editAction', $language['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                         <a data-button="delete" href="<?= $this->url('Site:Language@deleteAction', $language['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
@@ -57,6 +59,13 @@ use Krystal\Form\Element;
               <label class="col-lg-2 control-label"><?php $this->show('Image'); ?></label>
               <div class="col-lg-10">
                 <?= Element::text('image', $entity['image'], array('class' => 'form-control')); ?>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-lg-2 control-label"><?php $this->show('System'); ?></label>
+              <div class="col-lg-10">
+                <?= Element::checkbox('system', $entity['system'], array('class' => 'form-control')); ?>
               </div>
             </div>
 
