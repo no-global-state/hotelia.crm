@@ -57,7 +57,6 @@ $this->loadPartial('hint', [
                 </td>
                 <td class="col-lg-3"><?= $type['description']; ?></td>
                 <td>
-                    <a href="<?php echo $this->url('Site:Architecture:RoomTypeGallery@indexAction', $type['id']); ?>"><i class="glyphicon glyphicon-picture"></i></a>
                     <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>

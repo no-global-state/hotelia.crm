@@ -19,35 +19,13 @@ final class RoomTypeGallery extends AbstractCrmController
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
-                   ->addOne('Gallery', $this->createUrl('Site:Architecture:RoomTypeGallery@indexAction', [$roomId]))
+                   ->addOne('Gallery', $this->createUrl('Site:Architecture:RoomType@editAction', [$roomId]))
                    ->addOne(is_array($entity) ? 'Edit the photo' : 'Add a photo');
 
         return $this->view->render('room-type-gallery/form', [
             'entity' => $entity,
             'roomId' => $roomId,
             'icon' => 'glyphicon glyphicon-pencil'
-        ]);
-    }
-
-    /**
-     * Renders main
-     * 
-     * @param int $roomId Room ID
-     * @return string
-     */
-    public function indexAction(int $roomId)
-    {
-        $room = $this->getModuleService('roomTypeService')->findById($roomId, $this->getCurrentLangId());
-
-        // Append a breadcrumb
-        $this->view->getBreadcrumbBag()
-                   ->addOne('Room types', $this->createUrl('Site:Architecture:RoomType@indexAction'))
-                   ->addOne('Gallery');
-
-        return $this->view->render('room-type-gallery/index', [
-            'icon' => 'glyphicon glyphicon-picture',
-            'images' => $this->getModuleService('roomTypeGalleryService')->fetchAll($roomId),
-            'roomId' => $roomId
         ]);
     }
 

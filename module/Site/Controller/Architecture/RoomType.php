@@ -52,9 +52,14 @@ final class RoomType extends AbstractCrmController
             'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
             'priceGroups' => RoomTypeService::normalizeEntity($type, $priceGroups),
             'beds' => $this->getModuleService('bedService')->fetchRelation($id, $this->getCurrentLangId()),
+
             // Facilities
             'types' => (new FacilityTypeCollection)->getAll(),
             'checklist' => $this->getModuleService('roomTypeService')->findFacilities($id, $this->getCurrentLangId(), null),
+
+            // Room images
+            'images' => $id ? $this->getModuleService('roomTypeGalleryService')->fetchAll($id) : [],
+            'id' => $id
         ]);
     }
 

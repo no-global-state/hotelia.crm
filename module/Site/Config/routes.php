@@ -259,10 +259,6 @@ return [
     ],
     
     // Room gallery
-    '/crm/architecture/room/gallery/index/(:var)' => [
-        'controller' => 'Architecture:RoomTypeGallery@indexAction'
-    ],
-
     '/crm/architecture/room/gallery/add/(:var)' => [
         'controller' => 'Architecture:RoomTypeGallery@addAction'
     ],
