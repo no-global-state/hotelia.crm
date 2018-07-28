@@ -104,6 +104,18 @@ final class RoomType extends AbstractCrmController
             $id = $service->getLastId();
         }
 
+        // Cover image
+        if ($this->request->hasPost('cover')) {
+            $covers = $this->request->getPost('cover');
+
+            // Extra selected values
+            $roomTypeId = array_keys($covers)[0];
+            $imageId = array_values($covers)[0];
+
+            // Update a cover
+            $this->getModuleService('roomTypeGalleryService')->updateCover($roomTypeId, $imageId);
+        }
+        
         $bedService = $this->getModuleService('bedService')->updateRelation($id, $data['beds']);
         
         $this->flashBag->set('success', $data['type']['id'] ? 'Room type has been updated successfully' : 'Room type has added updated successfully');

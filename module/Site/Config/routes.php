@@ -275,10 +275,6 @@ return [
         'controller' => 'Architecture:RoomTypeGallery@saveAction'
     ],
 
-    '/crm/architecture/room/gallery/tweak' => [
-        'controller' => 'Architecture:RoomTypeGallery@tweakAction'
-    ],
-    
     // Regions
     '/crm/regions' => [
         'controller' => 'Region@indexAction',
