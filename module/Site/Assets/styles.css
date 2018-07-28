@@ -5,12 +5,12 @@
 
 .navbar-inverse,
 .top-nav>.open>.dropdown-menu {
-  background: #232629  !important;  
+  background: #4c739a !important;  
 }
 
 body,
 .side-nav {
-  background-color: #232629;
+  background-color: #333f4f;
 }
 
 
@@ -279,7 +279,7 @@ div[role='main'] {
 }
 
 .chess-grid > thead .chess-grid-col-today {
-  background: #5668a9;
+  background: #152767;
 }
 
 .chess-grid > tbody > tr > td .room-name > small {
