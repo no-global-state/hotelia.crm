@@ -4,7 +4,6 @@ namespace Site\Service;
 
 use Krystal\Http\Client\CurlHttplCrawler;
 use Krystal\Http\PersistentStorageInterface;
-use Krystal\Stdlib\VirtualEntity;
 
 /**
  * Based on client's IP it can return configuration values
@@ -43,23 +42,17 @@ final class BehaviorService
      * 
      * @param \Krystal\Http\PersistentStorageInterface $session
      * @param array $languages Raw collection of languages to be filtered
-     * @return \Krystal\Stdlib\VirtualEntity
+     * @return array
      */
-    public function getDefaults(PersistentStorageInterface $session = null, array $languages) : VirtualEntity
+    public function getDefaults(PersistentStorageInterface $session = null, array $languages) : array
     {
         // Find active item
         $active = $this->findActive($session);
 
-        // Filter languages
-        $filteredLanguages = self::getIncludedLanguages($languages, $active);
+        // Filter and override languages
+        $active['languages'] = self::getIncludedLanguages($languages, $active);
 
-        $entity = new VirtualEntity();
-        $entity->setLanguages($filteredLanguages)
-               ->setResident($active['resident'])
-               ->setCountry($active['country'])
-               ->setPriceGroupId($active['price_group_id']);
-
-        return $entity;
+        return $active;
     }
 
     /**
@@ -132,7 +125,7 @@ final class BehaviorService
     {
         $data = $this->getInformationByIp();
 
-        return $data['country']['code'];
+        return $data['country']['code'] ?? '*';
     }
 
     /**
