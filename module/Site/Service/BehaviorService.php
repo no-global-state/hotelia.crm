@@ -18,14 +18,23 @@ final class BehaviorService
     private $ip;
 
     /**
+     * Configuration data
+     * 
+     * @var array
+     */
+    private $configuration;
+
+    /**
      * State initialization
      * 
      * @param string $ip
+     * @param array $configuration
      * @return void
      */
-    public function __construct(string $ip)
+    public function __construct(string $ip, array $configuration)
     {
         $this->ip = $ip;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -55,13 +64,37 @@ final class BehaviorService
     }
 
     /**
+     * Performs linear search
+     * 
+     * @param string $key
+     * @param string $value
+     * @return array
+     */
+    private function findLinear($key, $value) : array
+    {
+        // Current value
+        foreach ($this->configuration as $item) {
+            // Make sure both codes are in uppercase
+            if (strtoupper($item[$key]) == strtoupper($value)) {
+                return $item;
+            }
+        }
+
+        // Default on no match
+        foreach ($this->configuration as $item) {
+            if ($item[$key] == '*') {
+                return $item;
+            }
+        }
+    }
+
+    /**
      * Parse configuration array
      * 
      * @param \Krystal\Http\PersistentStorageInterface $session
-     * @param array $configuration
      * @return array
      */
-    public function findActive(PersistentStorageInterface $session = null, array $configuration) : array
+    public function findActive(PersistentStorageInterface $session = null) : array
     {
         $key = 'country';
 
@@ -74,19 +107,6 @@ final class BehaviorService
             $country = $this->getCountryCode();
         }
 
-        // Current country
-        foreach ($configuration as $item) {
-            // Make sure both codes are in uppercase
-            if (strtoupper($item[$key]) == strtoupper($country)) {
-                return $item;
-            }
-        }
-
-        // Default on no match
-        foreach ($configuration as $item) {
-            if ($item[$key] == '*') {
-                return $item;
-            }
-        }
+        return $this->findLinear($key, $country);
     }
 }
