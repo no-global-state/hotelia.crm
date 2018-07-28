@@ -5,12 +5,76 @@ namespace Site\Controller;
 use Krystal\Application\Controller\AbstractController;
 use Krystal\Validate\Renderer;
 use Site\Service\Dictionary;
+use Site\Service\BehaviorService;
 
 abstract class AbstractSiteController extends AbstractController
 {
-    const PARAM_SESSION_PRICE_GROUP = 'price_group';
+    const PARAM_SESSION_PRICE_GROUP = 'price_group_id';
     const PARAM_COOKIE_LANG_ID = 'language_id';
     const PARAM_COOKIE_LANG_CODE = 'language_code';
+
+    /**
+     * Returns behavior defaults
+     * 
+     * @return array
+     */
+    protected function getBehaviorDefaults() : array
+    {
+        static $call = null;
+
+        if (is_null($call)) {
+            if (isset($_ENV['behavior'])) {
+                $ip = $this->request->getClientIp();
+                $session = $this->sessionBag;
+
+                $service = new BehaviorService($ip, $_ENV['behavior']);
+                $call = $service->getDefaults($session, $this->getModuleService('languageService')->fetchAll());
+
+            } else {
+                $call = [];
+            }
+        }
+        
+        return $call;
+    }
+
+    /**
+     * Returns shared parameter
+     * 
+     * @param string $key
+     * @param boolean $default Default value to be returned
+     * @return mixed
+     */
+    protected function getSharedParam(string $key, $default = false)
+    {
+        $defaults = $this->getBehaviorDefaults();
+
+        // Priority #1 - Query string
+        if ($this->request->hasQuery($key)) {
+            $value = $this->request->getQuery($key);
+
+            $this->sessionBag->set($key, $value);
+            return $value;
+
+        // Priority #2 - Session
+        } else if ($this->sessionBag->has($key)) {
+            return $this->sessionBag->get($key);
+
+        // Priority #3 - Cookies
+        } else if ($this->request->getCookieBag()->has($key)) {
+            return $this->request->getCookieBag()->get($key);
+
+        // Priority #4 - Defaults
+        } else if (isset($defaults[$key])) {
+            $value = $defaults[$key];
+
+            $this->sessionBag->set($key, $value);
+            return $value;
+        // Nothing of the above
+        } else {
+            return $default;
+        }
+    }
 
     /**
      * Sets price group id
@@ -42,11 +106,7 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function getPriceGroupId() : int
     {
-        if ($this->sessionBag->has(self::PARAM_SESSION_PRICE_GROUP)) {
-            return $this->sessionBag->get(self::PARAM_SESSION_PRICE_GROUP);
-        }
-
-        return 1;
+        return $this->getSharedParam(self::PARAM_SESSION_PRICE_GROUP, 1);
     }
 
     /**
@@ -82,13 +142,7 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function getCurrentLangId() : int
     {
-        $bag = $this->request->getCookieBag();
-
-        if ($bag->has(self::PARAM_COOKIE_LANG_ID)) {
-            return $bag->get(self::PARAM_COOKIE_LANG_ID);
-        }
-
-        return 1;
+        return $this->getSharedParam(self::PARAM_COOKIE_LANG_ID, 1);
     }
 
     /**
@@ -127,6 +181,29 @@ abstract class AbstractSiteController extends AbstractController
     }
 
     /**
+     * Load defaults
+     * 
+     * @return array
+     */
+    protected function loadDefaults()
+    {
+        // Get defaults
+        $defaults = $this->getBehaviorDefaults();
+
+        if (!empty($defaults)) {
+            // Filtered languages
+            $languages = $defaults['languages'];
+
+            $this->view->addVariable('country', $defaults['country']);
+        } else {
+            // All languages
+            $languages = $this->getModuleService('languageService')->fetchAll();
+        }
+
+        $this->view->addVariable('languages', $languages);
+    }
+
+    /**
      * This method automatically gets called when this controller executes
      * 
      * @return void
@@ -160,7 +237,6 @@ abstract class AbstractSiteController extends AbstractController
         // Add shared variables
         $this->view->addVariables(array(
             // Languages
-            'languages' => $this->getModuleService('languageService')->fetchAll(),
             'language' => $code,
             'dictionary' => $this->createDictionary(),
             'currency' => $this->getCurrency(),
@@ -172,6 +248,9 @@ abstract class AbstractSiteController extends AbstractController
             'activePriceGroupId' => $this->getPriceGroupId(),
         ));
 
+        // Load defaults
+        $this->loadDefaults();
+        
         // Load language if explicitly provided
         if ($this->paramBag->has('siteLanguage')) {
             $siteLanguage = $this->paramBag->get('siteLanguage');
