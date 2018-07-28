@@ -58,13 +58,20 @@ final class LanguageMapper extends AbstractMapper
     /**
      * Fetch all languages
      * 
+     * @param boolean $system Whether to fetch only system languages
      * @return array
      */
-    public function fetchAll() : array
+    public function fetchAll(bool $system) : array
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->orderBy($this->getPk())
-                        ->queryAll();
+        $db = $this->db->select('*')
+                       ->from(self::getTableName());
+
+        // Append constraint if set explicitly
+        if ($system === true) {
+            $db->whereEquals('system', 1);
+        }
+
+        return $db->orderBy($this->getPk())
+                  ->queryAll();
     }
 }

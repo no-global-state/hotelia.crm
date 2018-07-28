@@ -94,11 +94,12 @@ final class LanguageService
     /**
      * Fetch all languages
      * 
+     * @param boolean $system Whether to fetch only system languages
      * @return array
      */
-    public function fetchAll() : array
+    public function fetchAll(bool $system = false) : array
     {
-        return $this->languageMapper->fetchAll();
+        return $this->languageMapper->fetchAll($system);
     }
 
     /**
