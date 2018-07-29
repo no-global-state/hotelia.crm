@@ -330,7 +330,6 @@ CREATE TABLE velveto_users (
     `login` varchar(255) NOT NULL,
     `password` varchar(100) NOT NULL,
     `role` varchar(1) NOT NULL,
-    `wizard_finished` BOOLEAN DEFAULT 0 COMMENT 'Whether wizard has been finished'
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
 );
@@ -527,6 +526,8 @@ CREATE TABLE velveto_hotels (
     `penality_cancelation_type` varchar(5),
     `penality_percentage` INT,
     `penality_percentage_type` varchar(5),
+
+    `wizard_finished` BOOLEAN DEFAULT 0 COMMENT 'Whether wizard has been finished',
 
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
