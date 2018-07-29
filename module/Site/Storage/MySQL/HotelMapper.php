@@ -33,6 +33,35 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     }
 
     /**
+     * Checks whether wizard is finished
+     * 
+     * @param int $hotelId Hotel Id
+     * @return boolean
+     */
+    public function isWizardFinished(int $hotelId) : bool
+    {
+        return (bool) $this->db->select()
+                               ->count('id')
+                               ->from(self::getTableName())
+                               ->whereEquals('id', $hotelId)
+                               ->andWhereEquals('wizard_finished', 1)
+                               ->queryScalar();
+    }
+
+    /**
+     * Makes wizard as finished
+     * 
+     * @param int $hotelId Hotel Id
+     * @return boolean
+     */
+    public function markWizardAsFinished(int $hotelId)
+    {
+        return $this->db->update(self::getTableName(), ['wizard_finished' => 1])
+                        ->whereEquals('id', $hotelId)
+                        ->execute();
+    }
+
+    /**
      * Update settings
      * 
      * @param array $settings

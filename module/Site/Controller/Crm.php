@@ -27,7 +27,7 @@ final class Crm extends AbstractCrmController
         $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
 
         // If wizard is not finished, then redirect to it
-        if (!$this->getModuleService('userService')->isWizardFinished($this->getUserId())) {
+        if (!$this->getModuleService('hotelService')->isWizardFinished($this->getHotelId())) {
             // Redirect to Wizard URL
             $this->response->redirect($this->createUrl('Site:Wizard@indexAction'));
         }

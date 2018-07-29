@@ -51,7 +51,7 @@ final class Wizard extends AbstractCrmController
         $this->getModuleService('paymentFieldService')->updateGateways($this->getHotelId(), $data['payment']);
 
         // Mark wizard as finished
-        $this->getModuleService('userService')->markWizardAsFinished($this->getUserId());
+        $this->getModuleService('hotelService')->markWizardAsFinished($this->getHotelId());
 
         return json_encode([
             'successUrl' => $this->createUrl('Site:Architecture:RoomType@indexAction')

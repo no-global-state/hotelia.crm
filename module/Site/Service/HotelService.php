@@ -36,6 +36,28 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Checks whether wizard is finished
+     * 
+     * @param int $hotelId Hotel Id
+     * @return boolean
+     */
+    public function isWizardFinished(int $hotelId) : bool
+    {
+        return $this->hotelMapper->isWizardFinished($hotelId);
+    }
+
+    /**
+     * Makes wizard as finished
+     * 
+     * @param int $hotelId Hotel Id
+     * @return boolean
+     */
+    public function markWizardAsFinished(int $hotelId) : bool
+    {
+        return $this->hotelMapper->markWizardAsFinished($hotelId);
+    }
+
+    /**
      * Deletes a hotel by its ID
      * 
      * @param int $id Hotel ID
