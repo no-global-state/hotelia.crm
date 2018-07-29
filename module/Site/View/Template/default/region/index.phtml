@@ -30,7 +30,9 @@ use Krystal\Form\Element;
                     <td><?= $region['order']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Region@editAction', $region['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <?php if (!$isTranslator): ?>
                         <a data-button="delete" href="<?= $this->url('Site:Region@deleteAction', $region['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -63,7 +65,9 @@ use Krystal\Form\Element;
                     <td><?= $district['order']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:District@editAction', $district['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <?php if (!$isTranslator): ?>
                         <a data-button="delete" href="<?= $this->url('Site:District@deleteAction', $district['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

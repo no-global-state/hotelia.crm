@@ -72,7 +72,12 @@ use Krystal\Form\Element;
                 'enter' => function($row){
                     return Element::link('<i class="glyphicon glyphicon-download-alt"></i>', $this->url('Site:Crm@hotelSwitchAction', $row['id']), ['class' => 'btn btn-success']);
                 },
-               'delete' => function($row){
+
+                'delete' => function($row) use ($isTranslator){
+                    if ($isTranslator === true) {
+                        return null;
+                    }
+
                     return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Hotel@deleteAction', $row['id']), ['class' => 'btn btn-danger']);
                 }
             ]

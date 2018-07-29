@@ -29,7 +29,10 @@ use Krystal\Form\Element;
                 <td><?= $category['order']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:RoomCategory@editAction', $category['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                    <?php if (!$isTranslator): ?>
                     <a data-button="delete" href="<?= $this->url('Site:RoomCategory@deleteAction', $category['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>

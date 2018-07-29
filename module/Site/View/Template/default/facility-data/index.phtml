@@ -22,7 +22,9 @@
                 <td><?= $item['order']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:Facility:ItemData@editAction', $item['item_id'], $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                    <?php if (!$isTranslator): ?>
                     <a data-button="delete" href="<?= $this->url('Site:Facility:ItemData@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>

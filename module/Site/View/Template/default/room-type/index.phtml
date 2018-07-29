@@ -60,7 +60,11 @@ $this->loadPartial('hint', [
                 <td class="col-lg-3"><?= $type['description']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:Architecture:RoomType@editAction', $type['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                    <?php if (!$isTranslator): ?>
                     <a data-button="delete" href="<?= $this->url('Site:Architecture:RoomType@deleteAction', $type['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                    <?php endif; ?>
+
                 </td>
             </tr>
             <?php endforeach; ?>

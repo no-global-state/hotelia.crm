@@ -37,7 +37,11 @@ use Krystal\Form\Element;
                 return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:RoomBed@editAction', $row['id']));
             },
 
-            'delete' => function($row){
+            'delete' => function($row) use ($isTranslator){
+                if ($isTranslator === true) {
+                    return null;
+                }
+
                 return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:RoomBed@deleteAction', $row['id']), ['data-button' => 'delete']);
             }
         ]

@@ -32,7 +32,10 @@
                     <td>
                         <a href="<?= $this->url('Site:Facility:ItemData@indexAction', $item['id']); ?>"><i class="glyphicon glyphicon-check"></i></a>
                         <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                        <?php if (!$isTranslator): ?>
                         <a data-button="delete" href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -65,7 +68,9 @@
                     <td><?= $category['item_count']; ?></td>
                     <td>
                         <a href="<?= $this->url('Site:Facility:Category@editAction', $category['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                        <?php if (!$isTranslator): ?>
                         <a href="<?= $this->url('Site:Facility:Category@deleteAction', $category['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        <?php endif; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

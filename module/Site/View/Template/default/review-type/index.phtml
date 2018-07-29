@@ -25,7 +25,10 @@
             <td><?= $reviewType['mark']; ?></td>
             <td>
                 <a href="<?= $this->url('Site:Review:ReviewType@editAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+
+                <?php if (!$isTranslator): ?>
                 <a href="<?= $this->url('Site:Review:ReviewType@deleteAction', $reviewType['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                <?php endif; ?>
             </td>
         </tr>
         <?php endforeach; ?>
