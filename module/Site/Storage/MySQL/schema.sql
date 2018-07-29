@@ -533,6 +533,14 @@ CREATE TABLE velveto_hotels (
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_hotels_users (
+    `master_id` INT NOT NULL COMMENT 'User ID',
+    `slave_id` INT NOT NULL COMMENT 'Hotel ID',
+
+    FOREIGN KEY (master_id) REFERENCES velveto_users(id) ON DELETE CASCADE,
+    FOREIGN KEY (slave_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+);
+
 CREATE TABLE velveto_hotels_translation (
     `id` INT NOT NULL,
     `lang_id` INT NOT NULL,
