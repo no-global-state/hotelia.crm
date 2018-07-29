@@ -83,7 +83,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
             <div class="collapse navbar-collapse navbar-ex1-collapse">
               <?php if ($isLoggedIn): ?>
               <ul class="nav navbar-nav side-nav">
-                <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true): ?>
+                <?php if ($role == UserService::USER_ROLE_ADMIN || $admin == true || $isTranslator): ?>
                 <li>
                   <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
                   <ul id="menu-admin" class="collapse">
@@ -109,7 +109,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                 </li>
                 <?php endif; ?>
 
-                <?php if ($role == UserService::USER_ROLE_USER || $admin == true): ?>
+                <?php if ($role == UserService::USER_ROLE_USER || $admin == true || $isTranslator): ?>
                 
                 <?php if (!$isTranslator): ?>
                 <li><a href="<?= $this->url('Site:Reservation@tableAction', null); ?>"><i class="glyphicon glyphicon-blackboard"></i> <?php $this->show('Desktop'); ?></a></li>

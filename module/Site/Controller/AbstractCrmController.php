@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
 use Site\Collection\BookingStatusCollection;
+use Site\Service\UserService;
 
 abstract class AbstractCrmController extends AbstractAuthAwareController
 {
@@ -206,6 +207,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
 
         // Add shared variables
         $this->view->addVariables(array(
+            'isTranslator' => $this->getAuthService()->getRole() == UserService::USER_ROLE_TRANSLATOR,
+
             'extended' => true,
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'role' => $this->getAuthService()->getRole(),
