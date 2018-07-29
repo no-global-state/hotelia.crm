@@ -1,4 +1,9 @@
 
+.alert-info {
+    background-color: #4e7faf;
+    border: none;
+}
+
 .menu-item-new {
     background: #a70000;
 }
