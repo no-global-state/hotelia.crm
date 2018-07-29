@@ -1,6 +1,9 @@
+
+<?php if (!$isTranslator): ?>
 <p>
     <a class="btn btn-primary" href="<?= $this->url('Site:HotelType@addAction'); ?>"><? $this->show('Add hotel type'); ?></a>
 </p>
+<?php endif; ?>
 
 <div class="table-responsive">
     <table class="table table-bordered">

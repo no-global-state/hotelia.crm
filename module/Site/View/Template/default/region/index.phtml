@@ -7,7 +7,10 @@ use Krystal\Form\Element;
 <div class="row">
     <div class="col-lg-6">
         <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Regions'); ?> <small>(<?= count($regions); ?>)</small></h2>
+
+        <?php if (!$isTranslator): ?>
         <p><a class="btn btn-primary" href="<?= $this->url('Site:Region@addAction'); ?>"><? $this->show('Add a region'); ?></a></p>
+        <?php endif; ?>
 
         <table class="table table-bordered">
             <thead>
@@ -37,8 +40,11 @@ use Krystal\Form\Element;
 
     <div class="col-lg-6">
         <h2 class="page-header"><i class="glyphicon glyphicon-resize-full"></i> <? $this->show('Districts'); ?> <small>(<?= count($districts); ?>)</small></h2>
+
+        <?php if (!$isTranslator): ?>
         <p><a class="btn btn-primary" href="<?= $this->url('Site:District@addAction'); ?>"><? $this->show('Add a district'); ?></a></p>
-    
+        <?php endif; ?>
+
         <table class="table table-bordered">
             <thead>
                 <tr>

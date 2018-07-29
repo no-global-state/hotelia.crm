@@ -5,9 +5,11 @@ use Krystal\Form\Element;
 
 ?>
 
+<?php if (!$isTranslator): ?>
 <p>
     <a class="btn btn-success" href="<?= $this->url('Site:Dictionary@addAction'); ?>"><i class="glyphicon glyphicon-floppy-disk"></i> <? $this->show('Add'); ?></a>
 </p>
+<?php endif; ?>
 
 <div class="table-responsive">
     <?= Grid::render($entries, [

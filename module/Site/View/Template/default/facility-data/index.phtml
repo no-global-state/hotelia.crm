@@ -1,5 +1,8 @@
+
 <div class="table-responsive">
+    <?php if (!$isTranslator): ?>
     <p><a href="<?= $this->url('Site:Facility:ItemData@addAction', $itemId); ?>" class="btn btn-success"><? $this->show('Add item data'); ?></a></p>
+    <?php endif; ?>
 
     <table class="table table-bordered table-striped table-hover">
         <thead>

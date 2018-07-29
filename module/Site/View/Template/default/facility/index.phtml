@@ -2,7 +2,10 @@
 <div class="row">
     <div class="col-lg-7">
         <h2><i class="glyphicon glyphicon-check"></i> <? $this->show('Items'); ?> <small class="text-muted">(<?= count($items); ?>)</small></h2>
+
+        <?php if (!$isTranslator): ?>
         <p><a href="<?= $this->url('Site:Facility:Item@addAction'); ?>" class="btn btn-success"><? $this->show('Add an item'); ?></a></p>
+        <?php endif; ?>
 
         <table class="table table-bordered table-striped table-hover">
             <thead>
@@ -39,7 +42,10 @@
 
     <div class="col-lg-5">
         <h2><i class="glyphicon glyphicon-th-list"></i> <? $this->show('Categories'); ?> <small class="text-muted">(<?= count($categories); ?>)</small></h2>
+
+        <?php if (!$isTranslator): ?>
         <p><a href="<?= $this->url('Site:Facility:Category@addAction'); ?>" class="btn btn-success"><? $this->show('Add a category'); ?></a></p>
+        <?php endif; ?>
 
         <table class="table table-bordered table-striped table-hover">
             <thead>

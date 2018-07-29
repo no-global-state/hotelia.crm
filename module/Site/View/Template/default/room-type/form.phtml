@@ -10,9 +10,12 @@ use Site\Service\LanguageService;
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
         <li role="presentation"><a href="#category" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Description'); ?></a></li>
+
+        <?php if (!$isTranslator): ?>
         <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
         <li role="presentation"><a href="#beds" data-toggle="tab"><i class="glyphicon glyphicon-bed"></i> <? $this->show('Beds'); ?></a></li>
         <li role="presentation"><a href="#photos" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
+        <?php endif; ?>
 	</ul>
 
     <div class="tab-content">

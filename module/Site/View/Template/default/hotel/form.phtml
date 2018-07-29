@@ -7,6 +7,7 @@ use Site\Service\LanguageService;;
 ?>
 
 <form action="<?= $this->url('Site:Hotel@saveAction'); ?>">
+    <?php if (!$isTranslator): ?>
     <ul class="nav nav-tabs">
         <li class="nav active"><a href="#data" data-toggle="tab"><i class="glyphicon glyphicon-pencil"></i> <? $this->show('General information'); ?></a></li>
         <li class="nav"><a href="#basic" data-toggle="tab"><i class="glyphicon glyphicon-bookmark"></i> <? $this->show('Basic'); ?></a></li>
@@ -18,6 +19,7 @@ use Site\Service\LanguageService;;
         <li class="nav"><a href="#meals" data-toggle="tab"><i class="glyphicon glyphicon-glass"></i> <? $this->show('Meals'); ?></a></li>
         <li class="nav"><a href="#penalties" data-toggle="tab"><i class="glyphicon glyphicon-usd"></i> <? $this->show('Penalties for cancellations'); ?></a></li>
     </ul>
+    <?php endif; ?>
 
     <!-- Tab panes -->
     <div class="tab-content">

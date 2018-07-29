@@ -6,10 +6,12 @@ use Site\Service\LanguageService;
 ?>
 
 <form action="<?= $this->url('Site:HotelType@saveAction'); ?>">
+    <?php if (!$isTranslator): ?>
     <ul class="nav nav-tabs" role="tablist">
         <li role="presentation" class="active"><a href="#type" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Type'); ?></a></li>
         <li role="presentation"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
 	</ul>
+    <?php endif; ?>
 
     <div class="tab-content">
         <div class="tab-pane fade in active" id="type" role="tabpanel">
