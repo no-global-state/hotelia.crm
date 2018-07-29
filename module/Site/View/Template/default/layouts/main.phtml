@@ -54,6 +54,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                     <ul class="dropdown-menu alert-dropdown">
                         <li>
                             <?php foreach ($languages as $language): ?>
+                            <?php if ((bool) $language['system']): ?>
                             <li>
                                 <a href="<?= $this->url('Site:Language@switchAction', $language['code']); ?>">
                                     <?php if ($code == $language['code']): ?>
@@ -62,6 +63,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                                     <?= $language['name']; ?>
                                 </a>
                             </li>
+                            <?php endif; ?>
                             <?php endforeach; ?>
                         </li>
                     </ul>

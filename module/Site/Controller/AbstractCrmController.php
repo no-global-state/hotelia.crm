@@ -208,7 +208,6 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         // Add shared variables
         $this->view->addVariables(array(
             'isTranslator' => $this->getAuthService()->getRole() == UserService::USER_ROLE_TRANSLATOR,
-
             'extended' => true,
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
             'role' => $this->getAuthService()->getRole(),
@@ -216,7 +215,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'locale' => $this->paramBag->has('locale') ? $this->paramBag->get('locale') : $this->appConfig->getLanguage(),
             'active' => (bool) $hotel['active'],
             'appName' => $this->paramBag->get('appName'),
-            'languages' => $this->getModuleService('languageService')->fetchAll(true),
+            'languages' => $this->getModuleService('languageService')->fetchAll(),
             'code' => $code,
             'admin' => $this->sessionBag->get('admin'),
 
