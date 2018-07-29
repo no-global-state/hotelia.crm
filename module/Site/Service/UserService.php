@@ -13,6 +13,7 @@ class UserService implements UserAuthServiceInterface
     const USER_ROLE_GUEST = '0';
     const USER_ROLE_USER = '1';
     const USER_ROLE_ADMIN = '2';
+    const USER_ROLE_TRANSLATOR = '3';
 
     /**
      * Authorization manager
