@@ -88,13 +88,14 @@ final class ReservationService
     /**
      * Find reservations
      * 
-     * @param string $type Optional room type filter
      * @param int $hotelId
+     * @param int $langId Language ID constraint
+     * @param string $type Optional room type filter
      * @return array
      */
-    public function fetchReservations(int $hotelId, $type = null) : array
+    public function fetchReservations(int $hotelId, int $langId, $type = null) : array
     {
-        $rows = $this->reservationMapper->findReservations($hotelId, $type);
+        $rows = $this->reservationMapper->findReservations($hotelId, $langId, $type);
         return self::parseRooms($rows);
     }
 

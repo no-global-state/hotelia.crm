@@ -193,7 +193,7 @@ final class Reservation extends AbstractCrmController
         $period = $this->request->getQuery('period', 7);
         $type = $this->request->getQuery('type', null);
 
-        $rooms = $this->getModuleService('reservationService')->fetchReservations($this->getHotelId(), $type);
+        $rooms = $this->getModuleService('reservationService')->fetchReservations($this->getHotelId(), $this->getCurrentLangId(), $type);
 
         return $this->view->render('reservation/table', array(
             'types' => $this->getModuleService('roomService')->getRoomTypes($this->getCurrentLangId(), $this->getHotelId()),
