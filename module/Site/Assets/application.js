@@ -1,6 +1,28 @@
 
 $(function(){
 
+    // Reservation tabs (toggle filter tab button)
+    $('.nav-reservation > .nav-tabs a').on('shown.bs.tab', function(event){
+        // Grab links
+        var $link = $(event.target);
+        var $li = $link.parent();
+        var $wrapper = $li.parent();
+        var $dropdown = $wrapper.find('.dropdown');
+        var $toggler = $dropdown.find('a');
+        var disabledClass = 'disabled';
+
+        if ($link.attr('href') === '#rooms') {
+            // Disable filter
+            $dropdown.addClass(disabledClass);
+            $toggler.attr('data-toggle', '');
+
+        } else {
+            // Enable filter
+            $dropdown.removeClass(disabledClass);
+            $toggler.attr('data-toggle', 'dropdown');
+        }
+    });
+
     $(".wizard .next-step").click(function(event){
         $("html, body").animate({ scrollTop: 200 }, "slow");
         return false;

@@ -11,29 +11,31 @@ use Krystal\Form\Element;
   <?= Element::hidden('type', $type); ?>
 </form>
 
-<ul class="nav nav-tabs">
-  <li class="active"><a href="#rooms" data-toggle="tab" aria-expanded="true"><i class="glyphicon glyphicon-home"></i> <? $this->show('Rooms'); ?></a></li>
-  <li class=""><a href="#chess" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-tower"></i> <? $this->show('Chessboard'); ?></a></li>
-  <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
-      <i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?> <span class="caret"></span>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="divider"></li>
-      <li class="dropdown-header"><? $this->show('Period'); ?></li>
-      <?php foreach ($this->translateArray($periods) as $id => $name): ?>
-      <li><a href="#" data-input="[name='period']" data-value="<?= $id; ?>"><?php if ($id == $period): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
-      <?php endforeach; ?>
-      <li class="divider"></li>
+<div class="nav-reservation">
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#rooms" data-toggle="tab" aria-expanded="true"><i class="glyphicon glyphicon-home"></i> <? $this->show('Rooms'); ?></a></li>
+      <li class=""><a href="#chess" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-tower"></i> <? $this->show('Chessboard'); ?></a></li>
+      <li class="dropdown disabled">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+          <i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?> <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li class="divider"></li>
+          <li class="dropdown-header"><? $this->show('Period'); ?></li>
+          <?php foreach ($this->translateArray($periods) as $id => $name): ?>
+          <li><a href="#" data-input="[name='period']" data-value="<?= $id; ?>"><?php if ($id == $period): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
+          <?php endforeach; ?>
+          <li class="divider"></li>
 
-      <li class="dropdown-header"><? $this->show('Type'); ?></li>
-      <li><a href="#" data-input="[name='type']" data-value=""><?php if (!$type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('All'); ?></a></li>
-      <?php foreach ($types as $id => $name): ?>
-      <li><a href="#" data-input="[name='type']" data-value="<?= $id; ?>"><?php if ($id == $type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
-      <?php endforeach; ?>
+          <li class="dropdown-header"><? $this->show('Type'); ?></li>
+          <li><a href="#" data-input="[name='type']" data-value=""><?php if (!$type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <? $this->show('All'); ?></a></li>
+          <?php foreach ($types as $id => $name): ?>
+          <li><a href="#" data-input="[name='type']" data-value="<?= $id; ?>"><?php if ($id == $type): ?><i class="glyphicon glyphicon-ok"></i><?php endif; ?> <?= $name; ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </li>
     </ul>
-  </li>
-</ul>
+</div>
 
 <div id="myTabContent" class="tab-content">  
   <div class="tab-pane fade active in" id="rooms">
