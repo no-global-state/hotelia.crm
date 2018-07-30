@@ -9,6 +9,7 @@ use LogicException;
 use Site\Storage\MySQL\ReservationMapper;
 use Site\Collection\ReservationCollection;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\I18n\TranslatorInterface;
 
 final class ReservationService
 {
@@ -307,6 +308,35 @@ final class ReservationService
         $endDate = new DateTime($end);
 
         return $date >= $startDate && $date <= $endDate;
+    }
+
+    /**
+     * Create period title based on date range
+     * 
+     * @param array $dates
+     * @param \Krystal\I18n\TranslatorInterface $translator
+     * @return string
+     */
+    public static function createPeriodTitle(array $dates, TranslatorInterface $translator) : string
+    {
+        // First and last weekdays
+        $first = array_shift($dates);
+        $last = array_pop($dates);
+
+        $dtStart = new DateTime($first['date']);
+        $dtEnd = new DateTime($last['date']);
+
+        return sprintf('%s %s, %s - %s %s, %s', 
+            // Begin
+            $dtStart->format('d'), 
+            $translator->translate($first['month']), 
+            $translator->translate($first['year']), 
+
+            // End
+            $dtEnd->format('d'), 
+            $translator->translate($last['month']),
+            $translator->translate($last['year'])
+        );
     }
 
     /**
