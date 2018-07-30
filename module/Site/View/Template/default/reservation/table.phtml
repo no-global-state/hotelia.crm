@@ -171,12 +171,12 @@ use Krystal\Form\Element;
                                 $background = ReservationService::getRandomColor()['background'];
                             ?>
                             <tr>
-                                <?php foreach ($dates as $date): ?>
+                                <?php foreach ($dates as $index => $date): ?>
                                 <?php $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']); ?>
                                 <td>
-                                    <?php if (ReservationService::isDateInRanges($date['date'], $room['reservations']['arrival'], $room['reservations']['departure'])): ?>
+                                    <?php if ($rsvId = ReservationService::findPkInDateRanges($date['date'], $room['reservations']['arrival'], $room['reservations']['departure'])): ?>
                                     <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken" data-background-color="<?= $background; ?>" data-background-hover="<?= $hover; ?>">
-                                        <a data-button="view" href="<?= $this->url('Site:Reservation@viewAction', $room['reservation_id']); ?>"></a>
+                                        <a data-button="view" href="<?= $this->url('Site:Reservation@viewAction', $rsvId); ?>"></a>
                                     </span>
                                     <?php else: ?>
                                     <span data-toggle="tooltip" title="<?php echo $title; ?>"class="room-free">

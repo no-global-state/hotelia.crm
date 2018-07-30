@@ -162,6 +162,8 @@ final class ReservationService
      */
     private static function findReservations(string $pk, array $rows, array $columns) : array
     {
+        $fk = 'reservation_id';
+        
         $seen = [];
 
         foreach ($rows as $row) {
@@ -176,7 +178,7 @@ final class ReservationService
                     $seen[$id][$column] = [];
                 }
 
-                $seen[$id][$column][] = $row[$column];
+                $seen[$id][$column][$row[$fk]] = $row[$column];
             }
         }
 
@@ -262,15 +264,15 @@ final class ReservationService
     }
 
     /**
-     * Checks whether two dates
+     * Finds primary key by date within collections
      * 
      * @param string $date
      * @param array $arrival Arrival dates
      * @param array $departures Departure dates
      * @throws \LogicException If count of items in arrivals and departures is different
-     * @return boolean
+     * @return string|boolean False on failure
      */
-    public static function isDateInRanges(string $date, array $arrivals, array $departures) : bool
+    public static function findPkInDateRanges(string $date, array $arrivals, array $departures)
     {
         $arrivalCount = count($arrivals);
         $departureCount = count($departures);
@@ -279,11 +281,11 @@ final class ReservationService
             throw new LogicException('Arrival and departure dates must have the same count of items');
         }
 
-        $count = $arrivalCount; // Or $departureCount, it doesn't matter because their count is equal
+        $targets = array_combine($arrivals, $departures);
 
-        for ($i = 0; $i < $count; ++$i) {
-            if (self::isDateInRange($date, $arrivals[$i], $departures[$i])) {
-                return true;
+        foreach ($targets as $arrival => $departure) {
+            if (self::isDateInRange($date, $arrival, $departure)) {
+                return array_search($arrival, $arrivals); // Or departures, doesn't matter, they hold the same IDs
             }
         }
 
