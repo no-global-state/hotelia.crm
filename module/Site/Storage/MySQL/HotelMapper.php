@@ -486,11 +486,15 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         ]);
 
         $db = $this->createEntitySelect($columns)
-                   // User relation
-                   ->leftJoin(UserMapper::getTableName(), [
-                        UserMapper::column('hotel_id') => self::column('id')
+                   // Junction relation
+                   ->leftJoin(HotelUserRelationMapper::getTableName(), [
+                        HotelUserRelationMapper::column('slave_id') => self::getRawColumn('id')
                     ])
-                   // Language ID constraint
+                    // User relation
+                    ->leftJoin(UserMapper::getTableName(), [
+                        UserMapper::column('id') => HotelUserRelationMapper::getRawColumn('master_id')
+                    ])
+                    // Language ID constraint
                    ->whereEquals(self::getDynamicAttribute('lang_id'), $parameters['lang_id'])
                    ->andWhereLike(self::getDynamicAttribute('name'), '%'.$input['name'].'%', true)
                    ->andWhereLike(self::getDynamicAttribute('address'), '%'.$input['address'].'%', true)

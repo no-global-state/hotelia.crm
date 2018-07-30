@@ -202,9 +202,6 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
-        // Grab booking service
-        $bookingService = $this->getService('Site', 'bookingService');
-
         // Add shared variables
         $this->view->addVariables(array(
             'isTranslator' => $this->getAuthService()->getRole() == UserService::USER_ROLE_TRANSLATOR,
@@ -218,11 +215,19 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'languages' => $this->getModuleService('languageService')->fetchAll(),
             'code' => $code,
             'admin' => $this->sessionBag->get('admin'),
-
-            // New bookings
-            'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW),
-            'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW)
         ));
+
+        // If logged as a hotel owner
+        if ($this->getHotelId() !== null) {
+            // Grab booking service
+            $bookingService = $this->getService('Site', 'bookingService');
+
+            $this->view->addVariables([
+                // New bookings
+                'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW),
+                'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW)
+            ]);
+        }
 
         // Define the main layout
         $this->view->setLayout('layouts/main');

@@ -89,13 +89,15 @@ final class HotelService implements FilterableServiceInterface
 
             // Insert relational data for user
             $this->userMapper->persist([
-                'hotel_id' => $this->hotelMapper->getMaxId(),
                 'email' => $data['email'],
                 'name' => $data['name'],
                 'role' => UserService::USER_ROLE_USER,
                 'login' => $data['login'],
                 'password' => sha1($data['password'])
             ]);
+
+            // Insert relation
+            $this->userMapper->insertRelation($this->userMapper->getMaxId(), $this->hotelMapper->getMaxId());
 
             return true;
         }

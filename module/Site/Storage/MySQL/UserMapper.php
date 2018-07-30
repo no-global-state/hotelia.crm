@@ -24,6 +24,18 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
     }
 
     /**
+     * Inserts hotel relation
+     * 
+     * @param int $userId
+     * @param int $hotelId
+     * @return boolean
+     */
+    public function insertRelation(int $userId, int $hotelId) : bool
+    {
+        return $this->insertIntoJunction(HotelUserRelationMapper::getTableName(), $userId, [$hotelId]);
+    }
+
+    /**
      * Checks whether login exists
      * 
      * @param string $login
@@ -58,10 +70,25 @@ final class UserMapper extends AbstractMapper implements UserMapperInterface
      */
     public function fetchByCredentials(string $login, string $password)
     {
-        return $this->db->select('*')
+        // To be selected
+        $columns = [
+            self::column('id'),
+            self::column('name'),
+            self::column('email'),
+            self::column('login'),
+            self::column('role'),
+            HotelUserRelationMapper::column('slave_id') => 'hotel_id',
+        ];
+
+        $db = $this->db->select($columns)
                         ->from(self::getTableName())
+                        // Junction relation
+                        ->leftJoin(HotelUserRelationMapper::getTableName(), [
+                            HotelUserRelationMapper::column('master_id') => self::column('id')
+                        ])
                         ->whereEquals('login', $login)
-                        ->andWhereEquals('password', new RawBinding($password))
-                        ->query();
+                        ->andWhereEquals('password', new RawBinding($password));
+
+        return $db->query();
     }
 }
