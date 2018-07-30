@@ -258,6 +258,14 @@ div[role='main'] {
 }
 
 /* Chess */
+.chess-title {
+    display: block;
+    text-align: right;
+    padding: 12px 0px 12px 0px;
+    text-transform: uppercase;
+    color: #756767;
+}
+
 .chess-grid {
  table-layout: fixed;
 }

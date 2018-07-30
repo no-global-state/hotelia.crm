@@ -125,7 +125,8 @@ use Krystal\Form\Element;
   
   <div class="tab-pane fade" id="chess">
     <div class="container-fluid">
-        <br />
+        <span class="chess-title"><?= ReservationService::createPeriodTitle($dates, $this->translator); ?></span>
+
         <div class="row chess-grid-row">
             <div class="col-lg-2">
                 <table class="table chess-grid">
