@@ -16,7 +16,7 @@ use Krystal\Form\Element;
       <li class="active"><a href="#rooms" data-toggle="tab" aria-expanded="true"><i class="glyphicon glyphicon-home"></i> <? $this->show('Rooms'); ?></a></li>
       <li class=""><a href="#chess" data-toggle="tab" aria-expanded="false"><i class="glyphicon glyphicon-tower"></i> <? $this->show('Chessboard'); ?></a></li>
       <li class="dropdown disabled">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+        <a class="dropdown-toggle" data-toggle="" href="#" aria-expanded="false">
           <i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?> <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
@@ -172,9 +172,7 @@ use Krystal\Form\Element;
                             ?>
                             <tr>
                                 <?php foreach ($dates as $date): ?>
-                                <?php
-                                    $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']);
-                                ?>
+                                <?php $title = sprintf('%s - %s', $this->translate($date['weekday']), $date['date']); ?>
                                 <td>
                                     <?php if (ReservationService::isDateInRanges($date['date'], $room['reservations']['arrival'], $room['reservations']['departure'])): ?>
                                     <span data-toggle="tooltip" title="<?php echo $title; ?>" class="room-taken" data-background-color="<?= $background; ?>" data-background-hover="<?= $hover; ?>">
