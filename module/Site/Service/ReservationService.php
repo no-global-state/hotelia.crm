@@ -330,6 +330,8 @@ final class ReservationService
         foreach ($period as $dt) {
             $output[] = array(
                 'weekday' => $dt->format('l'),
+                'month' => $dt->format('F'),
+                'year' => $dt->format('Y'),
                 'date' => $dt->format(self::PARAM_TIME_FORMAT),
             );
         }
