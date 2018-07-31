@@ -16,11 +16,22 @@ final class ReservationService extends AbstractCrmController
      */
     private function createGrid(int $id, $entity) : string
     {
+        // Find full name by reservation ID
+        $fullName = $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findFullNameById($id);
+
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Reservations', $this->createUrl('Site:Reservation@indexAction', [null]))
+                   ->addOne($this->translator->translate('Edit reservation by "%s"', $fullName), $this->createUrl('Site:Reservation@editAction', [$id]))
+                   ->addOne('Services');
+
         $reservationServiceManager = $this->getModuleService('reservationServiceManager');
         $services = $reservationServiceManager->findAllByReservationId($id);
 
         return $this->view->render('reservation/services', [
-            'fullName' => $this->createMapper('\Site\Storage\MySQL\ReservationMapper')->findFullNameById($id),
+            'icon' => 'glyphicon glyphicon-tags',
+            'count' => count($services['services']),
+            'fullName' => $fullName,
             'reservationId' => $id,
             'currency' => $reservationServiceManager->findCurrencyByReservationId($id),
             'services' => $services['services'],
