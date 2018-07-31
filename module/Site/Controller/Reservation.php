@@ -118,7 +118,7 @@ final class Reservation extends AbstractCrmController
             'data' => $data,
             'paginator' => $mapper->getPaginator(),
             'countries' => (new Country)->getAll(),
-            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId(), $this->translator),
             'showRooms' => $showRooms,
             'reservationCollection' => new ReservationCollection
         ));
