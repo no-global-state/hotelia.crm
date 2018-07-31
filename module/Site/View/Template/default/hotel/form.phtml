@@ -77,6 +77,13 @@ use Site\Service\LanguageService;;
                     <?= Element::hidden('hotel[id]', $options['id']); ?>
 
                     <div class="form-group">
+                      <label class="col-lg-2 control-label"><? $this->show('Online booking'); ?></label>
+                      <div class="col-lg-10">
+                        <?= Element::select('hotel[card_required]', $this->translateArray($cardOptions), $options['card_required'], ['class' => 'form-control']); ?>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
                       <label class="col-lg-2 control-label"><? $this->show('Hotel type'); ?></label>
                       <div class="col-lg-10">
                         <?= Element::select('hotel[type_id]', $hotelTypes, $options['type_id'], ['class' => 'form-control']); ?>

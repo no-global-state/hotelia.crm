@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Collection\FacilityTypeCollection;
 use Site\Collection\RateCollection;
 use Site\Collection\BreakfastCollection;
+use Site\Collection\CardRequirmentCollection;
 
 final class Hotel extends AbstractCrmController
 {
@@ -40,6 +41,7 @@ final class Hotel extends AbstractCrmController
             'types' => (new FacilityTypeCollection)->getAll(),
             'rates' => (new RateCollection)->getAll(),
             'breakfasts' => (new BreakfastCollection())->getAll(),
+            'cardOptions' => (new CardRequirmentCollection)->getAll(),
 
             'icon' => 'glyphicon glyphicon-list-alt',
             'hotel' => $this->getModuleService('hotelService')->fetchById($this->getHotelId()),

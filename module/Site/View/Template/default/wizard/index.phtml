@@ -229,6 +229,11 @@ use Krystal\Form\Element;
                                         <?= Element::checkbox('hotel[city_tax_include]', null, ['id' => 'city_tax_include']); ?>
                                         <label for="city_tax_include"><? $this->show('City tax is included in room price by default'); ?></label>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label><? $this->show('Online booking'); ?></label>
+                                        <?= Element::select('hotel[card_required]', $this->translateArray($cardOptions), 1, ['class' => 'form-control']); ?>
+                                    </div>
                                   </fieldset><!-- .Misc -->
 
                                   <!--Payment time & Arrival -->
