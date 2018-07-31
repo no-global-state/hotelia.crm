@@ -148,7 +148,7 @@ use Krystal\Iso\ISO3166\Country;
                     return Element::link('<i class="glyphicon glyphicon-search"></i>', $this->url('Site:Reservation@viewAction', $row['id']), ['data-button' => 'view']);
                 },
                 'print' => function($row){
-                    return Element::link('<i class="glyphicon glyphicon-tags"></i>', $this->url('Site:Reservation@printAction', $row['id']));
+                    return Element::link('<i class="glyphicon glyphicon-print"></i>', $this->url('Site:Reservation@printAction', $row['id']));
                 },
                 'update' => function($row){
                     return Element::link('<i class="glyphicon glyphicon-pencil"></i>', $this->url('Site:Reservation@editAction', $row['id']));
