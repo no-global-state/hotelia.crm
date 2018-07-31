@@ -528,6 +528,7 @@ CREATE TABLE velveto_hotels (
     `penality_percentage_type` varchar(5),
 
     `wizard_finished` BOOLEAN DEFAULT 0 COMMENT 'Whether wizard has been finished',
+    `card_required` BOOLEAN DEFAULT 0 COMMENT 'Whether online booking can be done without credit card',
 
     FOREIGN KEY (district_id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE,
     FOREIGN KEY (region_id) REFERENCES velveto_regions(id) ON DELETE CASCADE
