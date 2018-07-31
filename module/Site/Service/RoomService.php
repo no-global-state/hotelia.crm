@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Text\Math;
+use Krystal\I18n\TranslatorInterface;
 use Site\Storage\MySQL\FloorMapper;
 use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
@@ -244,14 +245,20 @@ final class RoomService
      * 
      * @param int $langId
      * @param integer $hotelId
+     * @param \Krystal\I18n\TranslatorInterface $translator
      * @return array
      */
-    public function createRooms(int $langId, int $hotelId)
+    public function createRooms(int $langId, int $hotelId, TranslatorInterface $translator) : array
     {
-        $output = [];
-
         foreach ($this->createTable($langId, $hotelId) as $floor => $room) {
-            $output[$floor] = ArrayUtils::arrayList($room, 'id', 'name');
+            $data = ArrayUtils::arrayList($room, 'id', 'name');
+
+            // If floor is not undefined
+            if ($floor) {
+                $output[sprintf('%s %s', $floor, $translator->translate('Floor'))] = $data;
+            } else {
+                $output = array_replace($output, $data);
+            }
         }
 
         return $output;

@@ -56,7 +56,7 @@ final class Reservation extends AbstractCrmController
             'priceGroupList' => ArrayUtils::arrayList($priceGroups, 'id', 'name'),
             'priceGroups' => $priceGroups,
 
-            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+            'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId(), $this->translator),
             'prices' => $this->getModuleService('roomTypeService')->findAllPrices($this->getHotelId()),
             'discounts' => $this->getModuleService('discountService')->createDiscounts($this->getHotelId(), $this->translator),
 
