@@ -30,6 +30,14 @@ final class Reservation extends AbstractCrmController
      */
     private function createForm($client, $arrival = null, $departure = null)
     {
+        // Edit caption for breadcrumb
+        $editTitle = $this->translator->translate('Edit reservation by "%s"', $client['full_name']);
+
+        // Add a breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Reservations', $this->createUrl('Site:Reservation@indexAction'))
+                   ->addOne(is_array($client) ? $editTitle : 'New reservation');
+
         // Load view plugins
         $this->view->getPluginBag()
                    ->load(array('chosen', 'datetimepicker'));
@@ -322,10 +330,6 @@ final class Reservation extends AbstractCrmController
 
             $entity['arrival'] = $dates['today'];
             $entity['departure'] = $dates['tomorrow'];
-
-            // Add a breadcrumb
-            $this->view->getBreadcrumbBag()
-                       ->addOne('New reservation');
 
             return $this->createForm($entity);
         }
