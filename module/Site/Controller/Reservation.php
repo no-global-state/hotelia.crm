@@ -253,6 +253,11 @@ final class Reservation extends AbstractCrmController
      */
     public function printAction($id)
     {
+        // Append breadcrumbs
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Reservations', $this->createUrl('Site:Reservation@indexAction'))
+                   ->addOne($this->translator->translate('Invoice') . ' # ' . $id);
+        
         $entity = $this->getModuleService('reservationService')->fetchById($id, $this->getCurrentLangId());
 
         return $this->view->render('reservation/print', array(
