@@ -362,6 +362,8 @@ final class ReservationService
                 'weekday' => $dt->format('l'),
                 'month' => $dt->format('F'),
                 'year' => $dt->format('Y'),
+                'day' => $dt->format('d'),
+                'wk' => $dt->format('D'), // Weekday short
                 'date' => $dt->format(self::PARAM_TIME_FORMAT),
             );
         }

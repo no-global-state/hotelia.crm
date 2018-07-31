@@ -157,9 +157,9 @@ use Krystal\Form\Element;
                             <tr>
                                 <?php foreach ($dates as $index => $date): ?>
                                 <td class="text-center <?php echo $index == 0 ? 'chess-grid-col-today' : null; ?>">
-                                    <?php $this->show($date['weekday']); ?>
+                                    <?php $this->show($date['wk']); ?>
                                     <br />
-                                    <?php echo $date['date']; ?>
+                                    <?php echo $date['day']; ?>
                                 </td>
                                 <?php endforeach; ?>
                             </tr>
