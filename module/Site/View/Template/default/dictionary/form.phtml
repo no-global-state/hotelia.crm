@@ -58,9 +58,7 @@ use Krystal\Form\Element;
         <div class="form-group">
           <div class="col-lg-10 col-lg-offset-2">
             <button type="submit" class="btn btn-primary"><?php $this->show('Submit'); ?></button>
-            <?php if ($options['id']): ?>
             <a href="<?= $this->url('Site:Dictionary@indexAction'); ?>" class="btn btn-danger"><?php $this->show('Cancel'); ?></a>
-            <?php endif; ?>
           </div>
         </div>
     </div>
