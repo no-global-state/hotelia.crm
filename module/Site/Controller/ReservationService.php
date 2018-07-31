@@ -36,7 +36,7 @@ final class ReservationService extends AbstractCrmController
             'currency' => $reservationServiceManager->findCurrencyByReservationId($id),
             'services' => $services['services'],
             'sum' => $services['sum'],
-            'types' => $reservationServiceManager->findOptionsByReservationId($id),
+            'types' => $reservationServiceManager->findOptionsByReservationId($id, $this->getHotelId()),
             'entity' => $entity,
             'unitCollection' => new UnitCollection()
         ]);

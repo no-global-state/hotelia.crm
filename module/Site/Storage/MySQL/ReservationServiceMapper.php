@@ -69,32 +69,42 @@ final class ReservationServiceMapper extends AbstractMapper
      * Find all services attached to reservation id
      * 
      * @param int $id Reservation ID
+     * @param int $hotelId
      * @return array
      */
-    public function findOptionsByReservationId(int $id) : array
+    public function findOptionsByReservationId(int $id, int $hotelId) : array
     {
-        return $this->db->select([
-                            ServiceMapper::column('id'),
-                            ServiceMapper::column('name') => 'service',
-                            PriceGroupMapper::column('currency'),
-                            ServiceMapper::column('unit'),
-                            ServicePriceMapper::column('price') => 'rate'
+        // Columns to be selected
+        $columns = [
+            ServiceMapper::column('id'),
+            ServiceMapper::column('name') => 'service',
+            ServiceMapper::column('unit'),
+            ServicePriceMapper::column('price') => 'rate',
+            PriceGroupMapper::column('currency')
+        ];
+
+        $db = $this->db->select($columns, true)
+                        ->from(ServiceMapper::getTableName())
+                        
+                        // Service prices
+                        ->leftJoin(ServicePriceMapper::getTableName(), [
+                            ServicePriceMapper::column('service_id') => ServiceMapper::getRawColumn('id')
                         ])
-                        ->from(ReservationMapper::getTableName())
+                        
+                        // Reservation relation
+                        ->leftJoin(ReservationMapper::getTableName(), [
+                            ReservationMapper::column('price_group_id') => ServicePriceMapper::getRawColumn('price_group_id'),
+                            ReservationMapper::column('hotel_id') => ServiceMapper::getRawColumn('hotel_id')
+                        ])
+                        
                         // Price group relation
                         ->leftJoin(PriceGroupMapper::getTableName(), [
                             PriceGroupMapper::column('id') => ReservationMapper::getRawColumn('price_group_id')
                         ])
-                        // Price relation
-                        ->leftJoin(ServicePriceMapper::getTableName(), [
-                            ServicePriceMapper::column('price_group_id') => ReservationMapper::getRawColumn('price_group_id')
-                        ])
-                        // Service relation
-                        ->leftJoin(ServiceMapper::getTableName(), [
-                            ServiceMapper::column('id') => ServicePriceMapper::getRawColumn('service_id')
-                        ])
-                        // Reservation constraint
+                        // Constraint
                         ->whereEquals(ReservationMapper::column('id'), $id)
-                        ->queryAll();
+                        ->andWhereEquals(ReservationMapper::column('hotel_id'), $hotelId);
+
+        return $db->queryAll();
     }
 }

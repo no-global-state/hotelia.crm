@@ -76,11 +76,12 @@ final class ReservationServiceManager
      * Find all services attached to reservation id
      * 
      * @param int $id Reservation ID
+     * @param int $hotelId
      * @return array
      */
-    public function findOptionsByReservationId(int $id) : array
+    public function findOptionsByReservationId(int $id, int $hotelId) : array
     {
-        return $this->reservationServiceMapper->findOptionsByReservationId($id);
+        return $this->reservationServiceMapper->findOptionsByReservationId($id, $hotelId);
     }
 
     /**
