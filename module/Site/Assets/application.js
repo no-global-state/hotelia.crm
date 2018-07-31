@@ -1,6 +1,16 @@
 
 $(function(){
 
+    // Show/hide loading modal if available
+    $.ajaxSetup({
+        beforeSend: function(){
+            $("#loadingModal").modal('show');
+        },
+        complete: function(){
+            $("#loadingModal").modal('hide');
+        }
+    });
+
     // Reservation tabs (toggle filter tab button)
     $('.nav-reservation > .nav-tabs a').on('shown.bs.tab', function(event){
         // Grab links

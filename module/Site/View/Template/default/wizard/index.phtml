@@ -631,3 +631,18 @@ use Krystal\Form\Element;
         </section>
     </div>
 </div>
+
+<div id="loadingModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><? $this->show('Please wait'); ?>...</h4>
+      </div>
+
+      <div class="modal-body">
+        <img src="/data/ajax.gif" class="center-block" />
+      </div>
+    </div>
+  </div>
+</div>
