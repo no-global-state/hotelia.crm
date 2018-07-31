@@ -48,7 +48,7 @@ final class RoomInventory extends AbstractCrmController
         $collection = ArrayUtils::arrayList($this->createInventoryMapper()->fetchAll($this->getHotelId()), 'id', 'name');
         $inventories = $this->createRoomInventoryMapper()->fetchAll($roomId);
 
-        return $this->view->render('architecture/room-inventory', array(
+        return $this->view->render('room/inventory', array(
             'inventories' => $inventories,
             'count' => count($inventories),
             'entity' => $entity,

@@ -82,7 +82,7 @@ final class Room extends AbstractCrmController
     {
         $entity = $this->getModuleService('roomService')->getById($id, $this->getCurrentLangId());
 
-        return $this->view->disableLayout()->render('architecture/room-view', array(
+        return $this->view->disableLayout()->render('room/view', array(
             'entity' => $entity,
             'inventory' => $this->createMapper('\Site\Storage\MySQL\RoomInventoryMapper')->fetchAll($id)
         ));
