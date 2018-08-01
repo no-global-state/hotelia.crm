@@ -158,9 +158,10 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
     /**
      * This method automatically gets called when this controller executes
      * 
+     * @param string $action Action to be invoked
      * @return void
      */
-    protected function bootstrap()
+    protected function bootstrap($action)
     {
         // Validate the request on demand
         $this->validateRequest();

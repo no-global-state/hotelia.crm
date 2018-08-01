@@ -7,7 +7,19 @@ use Krystal\Db\Filter\FilterInvoker;
 final class Property extends AbstractCrmController
 {
     /**
-     * Update propery settings
+     * {@inheritDoc}
+     */
+    protected function bootstrap($action)
+    {
+        if ($action === 'indexAction') {
+            $this->stopBeingAdmin();
+        }
+
+        parent::bootstrap($action);
+    }
+
+    /**
+     * Update property settings
      * 
      * @return void
      */
@@ -33,8 +45,6 @@ final class Property extends AbstractCrmController
      */
     public function indexAction() : string
     {
-        $this->stopBeingAdmin();
-
         $service = $this->getModuleService('hotelService');
 
         $route = $this->createUrl('Site:Property@indexAction', [null]);
