@@ -136,15 +136,14 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public function hasAvailability(string $date, int $roomId) : bool
     {
-        $result = $this->db->select()
-                        ->count($this->getPk())
-                        ->from(self::getTableName())
-                        ->where('arrival', '<=', $date)
-                        ->andWhere('departure', '>=', $date)
-                        ->andWhere('room_id', '=', $roomId)
-                        ->queryScalar();
+        $db = $this->db->select()
+                       ->count($this->getPk())
+                       ->from(self::getTableName())
+                       ->where('arrival', '<=', $date)
+                       ->andWhere('departure', '>=', $date)
+                       ->andWhere('room_id', '=', $roomId);
 
-        return boolval(!$result);
+        return boolval(!$db->queryScalar());
     }
 
     /**
