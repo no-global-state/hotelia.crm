@@ -366,7 +366,7 @@ final class RoomMapper extends AbstractMapper
             new RawSqlFragment('DATEDIFF(departure, CURDATE()) AS left_days'),
         ];
 
-        return $this->db->select($columns, true)
+        $db = $this->db->select($columns, true)
                         ->from(self::getTableName())
                         // Type relation
                         ->leftJoin(RoomTypeMapper::getTableName(), [
@@ -382,16 +382,19 @@ final class RoomMapper extends AbstractMapper
                         ])
                         // Reservation relation
                         ->leftJoin(ReservationMapper::getTableName(), [
-                            self::column('id') => ReservationMapper::getRawColumn('room_id')
+                            ReservationMapper::column('room_id') => self::getRawColumn('id')
                         ])
                         // Remove duplicates in case pre-reservation is done
                         ->rawAnd()
                         ->compare('arrival', '<=', new RawSqlFragment('CURDATE()'))
+                        ->rawAnd()
+                        ->compare('DATEDIFF(departure, CURDATE())', '>=', new RawSqlFragment(0))
                         ->whereEquals(self::column('hotel_id'), $hotelId)
                         // Language ID constraint
                         ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                         ->orderBy(self::column('id'))
-                        ->desc()
-                        ->queryAll();
+                        ->desc();
+
+        return $db->queryAll();
     }
 }
