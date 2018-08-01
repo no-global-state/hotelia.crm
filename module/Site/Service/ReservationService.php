@@ -40,7 +40,7 @@ final class ReservationService
      * @param int $hotelId
      * @return array
      */
-    public function getStatistic(int $hotelId) : array
+    public function getStatistic(int $hotelId, bool $drop = true) : array
     {
         $output = [];
 
@@ -68,14 +68,23 @@ final class ReservationService
                 // Otherwise, append nulls
                 $output[] = [
                     'month' => $month,
-                    'price' => 0,
+                    'sum' => 0,
                     'tax' => 0,
                     'reservations' => 0
                 ];
             }
         }
 
-        return $output;
+        if ($drop === true) {
+            return [
+                'month' => array_column($output, 'month'),
+                'sum' => array_column($output, 'sum'),
+                'tax' => array_column($output, 'tax'),
+                'reservations' => array_column($output, 'reservations')
+            ];
+        } else {
+            return $output;
+        }
     }
 
     /**
