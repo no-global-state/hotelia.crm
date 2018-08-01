@@ -107,6 +107,8 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
 
         $db = $this->db->select($columns)
                        ->sum('price', 'sum')
+                       ->sum('tax', 'tax')
+                       ->count('id', 'reservations')
                        ->from(self::getTableName())
                        ->whereEquals('hotel_id', new RawBinding($hotelId))
                        ->groupBy('month');

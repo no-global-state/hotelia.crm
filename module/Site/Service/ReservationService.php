@@ -68,7 +68,9 @@ final class ReservationService
                 // Otherwise, append nulls
                 $output[] = [
                     'month' => $month,
-                    'price' => 0
+                    'price' => 0,
+                    'tax' => 0,
+                    'reservations' => 0
                 ];
             }
         }
