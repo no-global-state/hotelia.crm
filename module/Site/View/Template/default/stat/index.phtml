@@ -1,8 +1,23 @@
 <?php
 
 use Krystal\Form\Element;
+use Krystal\Date\TimeHelper;
 
 ?>
+
+<script>
+    // Statistic
+    window.stat = {
+        data: <?= json_encode($data); ?>,
+        months: <?= json_encode($this->translateArray(array_values(TimeHelper::getMonths()))); ?>,
+        label: {
+            totalReservations: "<?php $this->show('Total reservations'); ?>",
+            totalIncoming: "<?php $this->show('Total incoming'); ?>",
+            totalTax: "<?php $this->show('Total tax'); ?>",
+            summary: "<?php $this->show('Summary statistic for year'); ?>"
+        }
+    };
+</script>
 
 <div class="row">
     <div class="col-lg-6">

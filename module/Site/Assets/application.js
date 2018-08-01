@@ -1,5 +1,48 @@
 
 $(function(){
+    // Stat
+    if (window.stat) {
+        var config = {
+            type: 'line',
+            data: {
+                labels: window.stat.months,
+                datasets: [{
+                    label: window.stat.label.totalReservations,
+                    borderColor: window.chartColors.red,
+                    backgroundColor: window.chartColors.red,
+                    data: window.stat.data.reservations,
+                }, {
+                    label: window.stat.label.totalIncoming,
+                    borderColor: window.chartColors.blue,
+                    backgroundColor: window.chartColors.blue,
+                    data: window.stat.data.sum,
+                },  {
+                    label: window.stat.label.totalTax,
+                    borderColor: window.chartColors.yellow,
+                    backgroundColor: window.chartColors.yellow,
+                    data: window.stat.data.tax,
+                }]
+            },
+            options: {
+                responsive: true,
+                title: {
+                    display:true,
+                    text: window.stat.label.summary
+                },
+                tooltips: {
+                    mode: 'index',
+                },
+                hover: {
+                    mode: 'index'
+                }
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById("canvas").getContext("2d");
+            window.myLine = new Chart(ctx, config);
+        };
+    }
 
     // Show/hide loading modal if available
     $.ajaxSetup({

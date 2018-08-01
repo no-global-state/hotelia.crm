@@ -19,7 +19,6 @@ final class Stat extends AbstractCrmController
 
         return $this->view->render('stat/index', [
             'icon' => 'glyphicon glyphicon-stats',
-            'stat' => true,
             'data' => $this->getModuleService('reservationService')->getStatistic($this->getHotelId()),
             'months' => TimeHelper::getMonths(),
             'year' => date('Y'),
