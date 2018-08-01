@@ -8,7 +8,9 @@ use Krystal\Form\Element;
 <form action="<?= $route; ?>">
     <p>
         <button class="btn btn-primary" data-form-method="GET" data-form-action="<?= $route; ?>"><i class="glyphicon glyphicon-search"></i> <? $this->show('Filter'); ?></button>
+        <?php if (!$isTranslator): ?>
         <button class="btn btn-success" data-form-method="POST" data-form-action="<?= $this->url('Site:Property@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-disk"></i> <? $this->show('Save'); ?></button>
+        <?php endif; ?>
     </p>
 
     <div class="table-responsive">
@@ -50,6 +52,7 @@ use Krystal\Form\Element;
 
                 [
                     'column' => 'website',
+                    'label' => 'Web-site',
                     'type' => 'text',
                     'filter' => true
                 ],
@@ -57,6 +60,7 @@ use Krystal\Form\Element;
                 [
                     'column' => 'active',
                     'type' => 'select',
+                    'hidden' => $isTranslator,
                     'translateable' => true,
                     'filter' => $this->translateArray([
                         '0' => 'No',

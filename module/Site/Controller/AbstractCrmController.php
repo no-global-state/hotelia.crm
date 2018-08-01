@@ -207,6 +207,7 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'isTranslator' => $this->getAuthService()->getRole() == UserService::USER_ROLE_TRANSLATOR,
             'extended' => true,
             'isLoggedIn' => $this->getAuthService()->isLoggedIn(),
+            'hasCurrentHotel' => $this->getHotelId() !== null,
             'role' => $this->getAuthService()->getRole(),
             'name' => $this->getAuthService()->getName(),
             'locale' => $this->paramBag->has('locale') ? $this->paramBag->get('locale') : $this->appConfig->getLanguage(),

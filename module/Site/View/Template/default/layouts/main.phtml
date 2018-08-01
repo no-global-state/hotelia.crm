@@ -121,8 +121,8 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                 <li><a href="<?= $this->url('Site:Review:Review@indexAction'); ?>"><i class="glyphicon glyphicon-signal"></i> <? $this->show('Customer reviews'); ?></a></li>
                 <?php endif; ?>
                 
+                <?php if ($hasCurrentHotel): ?>
                 <li><a href="<?= $this->url('Site:Hotel@indexAction'); ?>"><i class="glyphicon glyphicon-list-alt"></i> <? $this->show('Hotel information'); ?></a></li>
-
                 <li>
                   <a href="javascript:;" data-toggle="collapse" data-target="#menu-architecture"><? $this->show('Architecture'); ?> <span class="caret"></span></a>
                   <ul id="menu-architecture" class="collapse">
@@ -134,6 +134,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                     <?php endif; ?>
                   </ul>
                 </li>
+                <?php endif; ?>
                 
                 <?php if (!$isTranslator): ?>
                 <li>

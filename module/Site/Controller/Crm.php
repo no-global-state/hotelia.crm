@@ -45,7 +45,7 @@ final class Crm extends AbstractCrmController
 
         } else {
 
-            return $this->response->redirect($this->createUrl('Site:Property@indexAction'));
+            return $this->response->redirect($this->createUrl('Site:Property@indexAction', [null]));
         }
     }
 }
