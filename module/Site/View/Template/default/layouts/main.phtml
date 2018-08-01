@@ -279,6 +279,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
     <?php $months = json_encode($this->translateArray(array_values(TimeHelper::getMonths()))); ?>
 
     <script>
+        var data = <?= json_encode($data); ?>;
         var MONTHS = <?= $months; ?>;
         var config = {
             type: 'line',
@@ -288,45 +289,17 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                     label: "<? $this->show('Total reservations'); ?>",
                     borderColor: window.chartColors.red,
                     backgroundColor: window.chartColors.red,
-                    data: [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
+                    data: data.reservations,
                 }, {
                     label: "<? $this->show('Total incoming'); ?>",
                     borderColor: window.chartColors.blue,
                     backgroundColor: window.chartColors.blue,
-                    data: [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
+                    data: data.sum,
                 },  {
                     label: "<? $this->show('Total tax'); ?>",
                     borderColor: window.chartColors.yellow,
                     backgroundColor: window.chartColors.yellow,
-                    data: [
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
+                    data: data.tax,
                 }]
             },
             options: {
