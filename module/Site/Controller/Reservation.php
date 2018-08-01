@@ -198,7 +198,7 @@ final class Reservation extends AbstractCrmController
         $this->view->getBreadcrumbBag()
                    ->addOne('Desktop');
 
-        $period = $this->request->getQuery('period', 7);
+        $period = $this->request->getQuery('period', DaysCollection::PARAM_MONTH);
         $type = $this->request->getQuery('type', null);
 
         $rooms = $this->getModuleService('reservationService')->fetchReservations($this->getHotelId(), $this->getCurrentLangId(), $type);
