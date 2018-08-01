@@ -38,6 +38,7 @@ final class ReservationService
      * Returns statistic dropped by available months
      * 
      * @param int $hotelId
+     * @param bool $drop Whether to drop result-set in columns
      * @return array
      */
     public function getStatistic(int $hotelId, bool $drop = true) : array
