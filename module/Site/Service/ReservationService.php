@@ -10,6 +10,7 @@ use Site\Storage\MySQL\ReservationMapper;
 use Site\Collection\ReservationCollection;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\I18n\TranslatorInterface;
+use Krystal\Date\TimeHelper;
 
 final class ReservationService
 {
@@ -31,6 +32,48 @@ final class ReservationService
     public function __construct(ReservationMapper $reservationMapper)
     {
         $this->reservationMapper = $reservationMapper;
+    }
+
+    /**
+     * Returns statistic dropped by available months
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function getStatistic(int $hotelId) : array
+    {
+        $output = [];
+
+        // Target values
+        $months = array_keys(TimeHelper::getMonths());
+        $stats = $this->reservationMapper->getStatistic($hotelId);
+
+        // Internal finder
+        $find = function($month) use ($stats) {
+            foreach ($stats as $stat) {
+                // Linear search
+                if ($stat['month'] === $month) {
+                    return $stat;
+                }
+            }
+
+            return false;
+        };
+
+        foreach ($months as $month) {
+            if ($data = $find($month)) {
+                // Append what found
+                $output[] = $data;
+            } else {
+                // Otherwise, append nulls
+                $output[] = [
+                    'month' => $month,
+                    'price' => 0
+                ];
+            }
+        }
+
+        return $output;
     }
 
     /**
