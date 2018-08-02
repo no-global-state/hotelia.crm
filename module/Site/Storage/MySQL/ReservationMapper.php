@@ -102,17 +102,23 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      */
     public function getStatistic(int $hotelId, int $priceGroupId) : array
     {
+        // Columns to be selected
         $columns = [
+            PriceGroupMapper::column('currency'),
             new RawSqlFragment(sprintf("LPAD(MONTH(`arrival`), 2, '0') AS month")),
         ];
 
         $db = $this->db->select($columns)
-                       ->sum('price', 'sum')
-                       ->sum('tax', 'tax')
-                       ->count('id', 'reservations')
+                       ->sum(self::column('price'), 'sum')
+                       ->sum(self::column('tax'), 'tax')
+                       ->count(self::column('id'), 'reservations')
                        ->from(self::getTableName())
-                       ->whereEquals('hotel_id', new RawBinding($hotelId))
-                       ->andWhereEquals('price_group_id', new RawBinding($priceGroupId))
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => self::getRawColumn('price_group_id')
+                       ])
+                       ->whereEquals(self::column('hotel_id'), new RawBinding($hotelId))
+                       ->andWhereEquals(self::column('price_group_id'), new RawBinding($priceGroupId))
                        ->groupBy('month');
 
         return $db->queryAll();
