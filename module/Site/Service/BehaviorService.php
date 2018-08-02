@@ -113,7 +113,11 @@ final class BehaviorService
         $url = sprintf('http://geoip.nekudo.com/api/%s', $this->ip);
         $response = (new CurlHttplCrawler())->get($url);
 
-        return json_decode($response, true);
+        if ($response !== false){
+            return json_decode($response, true);
+        } else {
+            return [];
+        }
     }
 
     /**
