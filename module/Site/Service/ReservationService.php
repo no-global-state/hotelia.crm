@@ -50,6 +50,9 @@ final class ReservationService
         $months = array_keys(TimeHelper::getMonths());
         $stats = $this->reservationMapper->getStatistic($hotelId, $priceGroupId);
 
+        // Grab currency
+        $currency = $stats[0]['currency'] ?? null;
+
         // Internal finder
         $find = function($month) use ($stats) {
             foreach ($stats as $stat) {
@@ -72,13 +75,15 @@ final class ReservationService
                     'month' => $month,
                     'sum' => 0,
                     'tax' => 0,
-                    'reservations' => 0
+                    'reservations' => 0,
+                    'currency' => $currency
                 ];
             }
         }
 
         if ($drop === true) {
             return [
+                'currency' => $currency,
                 'month' => array_column($output, 'month'),
                 'sum' => array_column($output, 'sum'),
                 'tax' => array_column($output, 'tax'),

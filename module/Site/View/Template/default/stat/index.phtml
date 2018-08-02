@@ -9,11 +9,12 @@ use Krystal\Form\Element;
     window.stat = {
         data: <?= json_encode($data); ?>,
         months: <?= json_encode($this->translateArray(array_values($months))); ?>,
+        currency: "<?= $data['currency']; ?>",
         label: {
             totalReservations: "<?php $this->show('Total reservations'); ?>",
             totalIncoming: "<?php $this->show('Total incoming'); ?>",
             totalTax: "<?php $this->show('Total tax'); ?>",
-            summary: "<?php $this->show('Summary statistic for year'); ?>"
+            summary: "<?php $this->show('Summary statistic for year'); ?>",
         }
     };
 </script>

@@ -12,12 +12,12 @@ $(function(){
                     backgroundColor: window.chartColors.red,
                     data: window.stat.data.reservations,
                 }, {
-                    label: window.stat.label.totalIncoming,
+                    label: window.stat.label.totalIncoming + ' - ' + window.stat.currency,
                     borderColor: window.chartColors.blue,
                     backgroundColor: window.chartColors.blue,
                     data: window.stat.data.sum,
                 },  {
-                    label: window.stat.label.totalTax,
+                    label: window.stat.label.totalTax  + ' - ' + window.stat.currency,
                     borderColor: window.chartColors.yellow,
                     backgroundColor: window.chartColors.yellow,
                     data: window.stat.data.tax,
