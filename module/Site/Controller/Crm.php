@@ -34,9 +34,16 @@ final class Crm extends AbstractCrmController
                 $this->response->redirect($this->createUrl('Site:Wizard@indexAction'));
             }
 
+            $reservationService = $this->getModuleService('reservationService');
+
+            // Load charts plugin
+            $this->view->getPluginBag()
+                       ->load('chart');
+            
             return $this->view->render('home', array(
-                'states' => $this->getModuleService('reservationService')->countStates($this->getHotelId()),
-                'reservations' => $this->getModuleService('reservationService')->fetchLatest($this->getHotelId()),
+                'states' => $reservationService->countStates($this->getHotelId()),
+                'reservations' => $reservationService->fetchLatest($this->getHotelId()),
+                'priceGroupReservations' => $reservationService->getReservationCountByGroups($this->getHotelId()),
                 'transactions' => $mapper->fetchLast($this->getHotelId()),
                 'stat' => $this->getModuleService('roomService')->createStat($this->getHotelId()),
                 'pageTitle' => 'My property',

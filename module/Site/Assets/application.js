@@ -1,5 +1,42 @@
 
 $(function(){
+
+    // Price group stat
+    if (window.priceGroupStat) {
+        var config = {
+            type: 'doughnut',
+            data: {
+                datasets: [{
+                    data: window.priceGroupStat.reservations,
+                    backgroundColor: [
+                        window.chartColors.orange,
+                        window.chartColors.yellow
+                    ]
+                }],
+                labels: window.priceGroupStat.groups
+            },
+            options: {
+                responsive: true,
+				legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: window.priceGroupStat.title
+                },
+                animation: {
+                    animateScale: true,
+                    animateRotate: true
+                }
+            }
+        };
+
+        window.onload = function() {
+            var ctx = document.getElementById('chart-area').getContext('2d');
+            window.myDoughnut = new Chart(ctx, config);
+        };
+    }
+
     // Stat
     if (window.stat) {
         var config = {

@@ -4,6 +4,16 @@ use Site\Service\UserService;
 
 ?>
 
+<script>
+
+window.priceGroupStat = {
+    title: "<?php $this->show('Reservations by price groups'); ?>",
+    reservations: <?= json_encode(array_column($priceGroupReservations, 'reservations')); ?>,
+    groups: <?= json_encode(array_column($priceGroupReservations, 'currency')); ?>
+};
+
+</script>
+
 <?php if (!$active && $isLoggedIn && $role != UserService::USER_ROLE_ADMIN): ?>
 <div class="alert alert-dismissible alert-danger">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -117,15 +127,7 @@ use Site\Service\UserService;
             </div>
 
             <div class="panel-body">
-                <div id="morris-donut-chart">
-                    <svg height="372" version="1.1" width="306" xmlns="http://www.w3.org/2000/svg" style="overflow: hidden; position: relative;">
-                        <desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with RaphaÃ«l 2.1.2</desc>
-                        <defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs>
-                        <path fill="none" stroke="#0b62a4" d="M153,283.8333333333333A95.33333333333333,95.33333333333333,0,0,0,243.10368304650171,219.6411423345388" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#0b62a4" stroke="#ffffff" d="M153,286.8333333333333A98.33333333333333,98.33333333333333,0,0,0,245.93911363188113,220.62110835205925L283.4298069274535,233.5784368059408A138,138,0,0,1,153,326.5Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#3980b5" d="M243.10368304650171,219.6411423345388A95.33333333333333,95.33333333333333,0,0,0,67.48942206387726,146.35281141671817" stroke-width="2" opacity="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;"></path><path fill="#3980b5" stroke="#ffffff" d="M245.93911363188113,220.62110835205925A98.33333333333333,98.33333333333333,0,0,0,64.79852975120207,145.02650128647502L24.734133095815878,125.27921712507725A143,143,0,0,1,288.1555245697525,235.21171350180822Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><path fill="none" stroke="#679dc6" d="M67.48942206387726,146.35281141671817A95.33333333333333,95.33333333333333,0,0,0,152.97005015052835,283.83332862882196" stroke-width="2" opacity="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;"></path><path fill="#679dc6" stroke="#ffffff" d="M64.79852975120207,145.02650128647502A98.33333333333333,98.33333333333333,0,0,0,152.96910767274778,286.8333284807779L152.9566460220935,326.499993189973A138,138,0,0,1,29.218953616941192,127.48973400881582Z" stroke-width="3" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="153" y="178.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: 800; font-stretch: normal; font-size: 15px; line-height: normal; font-family: Arial;" font-size="15px" font-weight="800" transform="matrix(1.4924,0,0,1.4924,-75.3298,-93.3054)" stroke-width="0.6700721153846154"><tspan dy="6" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><? $this->show(date('F')); ?></tspan></text><text x="153" y="198.5" text-anchor="middle" font="10px &quot;Arial&quot;" stroke="none" fill="#000000" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-style: normal; font-variant: normal; font-weight: normal; font-stretch: normal; font-size: 14px; line-height: normal; font-family: Arial;" font-size="14px" transform="matrix(1.9861,0,0,1.9861,-150.9674,-187.8542)" stroke-width="0.5034965034965035">
-                        <tspan dy="5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><?= $states[1]; ?></tspan>
-                        </text>
-                    </svg>
-                </div>
+                <canvas id="chart-area"></canvas>
             </div>
         </div>
     </div>
