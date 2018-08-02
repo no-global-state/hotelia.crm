@@ -97,9 +97,10 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
      * Returns statistic dropped by available months
      * 
      * @param int $hotelId
+     * @param int $priceGroupId Price group ID
      * @return array
      */
-    public function getStatistic(int $hotelId) : array
+    public function getStatistic(int $hotelId, int $priceGroupId) : array
     {
         $columns = [
             new RawSqlFragment(sprintf("LPAD(MONTH(`arrival`), 2, '0') AS month")),
@@ -111,6 +112,7 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                        ->count('id', 'reservations')
                        ->from(self::getTableName())
                        ->whereEquals('hotel_id', new RawBinding($hotelId))
+                       ->andWhereEquals('price_group_id', new RawBinding($priceGroupId))
                        ->groupBy('month');
 
         return $db->queryAll();

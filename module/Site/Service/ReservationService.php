@@ -38,16 +38,17 @@ final class ReservationService
      * Returns statistic dropped by available months
      * 
      * @param int $hotelId
+     * @param int $priceGroupId Price group ID
      * @param bool $drop Whether to drop result-set in columns
      * @return array
      */
-    public function getStatistic(int $hotelId, bool $drop = true) : array
+    public function getStatistic(int $hotelId, int $priceGroupId, bool $drop = true) : array
     {
         $output = [];
 
         // Target values
         $months = array_keys(TimeHelper::getMonths());
-        $stats = $this->reservationMapper->getStatistic($hotelId);
+        $stats = $this->reservationMapper->getStatistic($hotelId, $priceGroupId);
 
         // Internal finder
         $find = function($month) use ($stats) {
