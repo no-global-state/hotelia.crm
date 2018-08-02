@@ -395,6 +395,10 @@ return [
         'controller' => 'Site@feedbackAction'
     ],
     
+    '/gateway/(:var)' => [
+        'controller' => 'Site@gatewayAction'
+    ],
+    
     '/payment/(:var)' => [
         'controller' => 'Site@paymentAction'
     ],

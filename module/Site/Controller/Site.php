@@ -5,15 +5,49 @@ namespace Site\Controller;
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Site\Service\SummaryService;
+use Site\Gateway\GatewayFactory;
 use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
 {
     /**
-     * Confirms payment by its token
+     * Redirects to payment gateway
      * 
      * @param string $token
-     * @return void
+     * @return string|boolean
+     */
+    public function gatewayAction(string $token)
+    {
+        // Grab booking service
+        $bookingService = $this->getModuleService('bookingService');
+        $booking = $bookingService->findByToken($token);
+
+        if ($booking) {
+            // Create payment gateway
+            $gateway = GatewayFactory::build(
+                $booking['id'],
+                $booking['price_group_id'],
+                $booking['amount'],
+                // Payment fields of target hotel
+                $this->getModuleService('paymentFieldService')->findAllByHotelId($booking['hotel_id']),
+                // URL on successful payment
+                $this->createUrl('Site:Site@confirmPaymentAction', [$token])
+            );
+
+            return $this->view->disableLayout()->render('gateway', [
+                'gateway' => $gateway
+            ]);
+
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Confirms payment by its token when payment is done
+     * 
+     * @param string $token
+     * @return string|boolean
      */
     public function confirmPaymentAction(string $token)
     {
