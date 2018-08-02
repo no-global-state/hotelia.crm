@@ -7,40 +7,42 @@
         <p><a href="<?= $this->url('Site:Facility:Item@addAction'); ?>" class="btn btn-success"><? $this->show('Add an item'); ?></a></p>
         <?php endif; ?>
 
-        <table class="table table-bordered table-striped table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th><? $this->show('Icon'); ?></th>
-                    <th><? $this->show('Name'); ?></th>
-                    <th><? $this->show('Front'); ?></th>
-                    <th><? $this->show('Always free'); ?></th>
-                    <th><? $this->show('Display in rooms'); ?></th>
-                    <th><? $this->show('Actions'); ?></th>
-                </tr>
-            </thead>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><? $this->show('Icon'); ?></th>
+                        <th><? $this->show('Name'); ?></th>
+                        <th><? $this->show('Front'); ?></th>
+                        <th><? $this->show('Always free'); ?></th>
+                        <th><? $this->show('Display in rooms'); ?></th>
+                        <th><? $this->show('Actions'); ?></th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <?php foreach ($items as $item): ?>
-                <tr>
-                    <td><?= $item['id']; ?></td>
-                    <td><i class="<?= $item['icon']; ?>"></i></td>
-                    <td><?= $item['name']; ?></td>
-                    <td><? $this->show($item['front'] ? 'Yes' : 'No'); ?></td>
-                    <td><? $this->show($item['always_free'] ? 'Yes' : 'No'); ?></td>
-                    <td><? $this->show($item['roomable'] ? 'Yes' : 'No'); ?></td>
-                    <td>
-                        <a href="<?= $this->url('Site:Facility:ItemData@indexAction', $item['id']); ?>"><i class="glyphicon glyphicon-check"></i></a>
-                        <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                <tbody>
+                    <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td><?= $item['id']; ?></td>
+                        <td><i class="<?= $item['icon']; ?>"></i></td>
+                        <td><?= $item['name']; ?></td>
+                        <td><? $this->show($item['front'] ? 'Yes' : 'No'); ?></td>
+                        <td><? $this->show($item['always_free'] ? 'Yes' : 'No'); ?></td>
+                        <td><? $this->show($item['roomable'] ? 'Yes' : 'No'); ?></td>
+                        <td>
+                            <a href="<?= $this->url('Site:Facility:ItemData@indexAction', $item['id']); ?>"><i class="glyphicon glyphicon-check"></i></a>
+                            <a href="<?= $this->url('Site:Facility:Item@editAction', $item['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
 
-                        <?php if (!$isTranslator): ?>
-                        <a data-button="delete" href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                            <?php if (!$isTranslator): ?>
+                            <a data-button="delete" href="<?= $this->url('Site:Facility:Item@deleteAction', $item['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="col-lg-5">

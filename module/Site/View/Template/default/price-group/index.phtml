@@ -6,34 +6,36 @@ use Krystal\Form\Element;
 
 <div class="row">
     <div class="col-lg-6">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th><?php $this->show('Name'); ?></th>
-                    <th><?php $this->show('Order'); ?></th>
-                    <th><?php $this->show('Currency'); ?></th>
-                    <th><?php $this->show('Daily tax'); ?></th>
-                    <th><?php $this->show('Actions'); ?></th>
-                </tr>
-            </thead>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th><?php $this->show('Name'); ?></th>
+                        <th><?php $this->show('Order'); ?></th>
+                        <th><?php $this->show('Currency'); ?></th>
+                        <th><?php $this->show('Daily tax'); ?></th>
+                        <th><?php $this->show('Actions'); ?></th>
+                    </tr>
+                </thead>
 
-            <tbody>
-                <?php foreach ($priceGroups as $priceGroup): ?>
-                <tr class="<?= $priceGroup['id'] == $entity['id'] ? 'success' : null; ?>">
-                    <td><?= $priceGroup['id']; ?></td>
-                    <td><?= $priceGroup['name']; ?></td>
-                    <td><?= $priceGroup['order']; ?></td>
-                    <td><?= $priceGroup['currency']; ?></td>
-                    <td><?= $priceGroup['daily_tax']; ?></td>
-                    <td>
-                        <a href="<?= $this->url('Site:PriceGroup@editAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-                        <a data-button="delete" href="<?= $this->url('Site:PriceGroup@deleteAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                <tbody>
+                    <?php foreach ($priceGroups as $priceGroup): ?>
+                    <tr class="<?= $priceGroup['id'] == $entity['id'] ? 'success' : null; ?>">
+                        <td><?= $priceGroup['id']; ?></td>
+                        <td><?= $priceGroup['name']; ?></td>
+                        <td><?= $priceGroup['order']; ?></td>
+                        <td><?= $priceGroup['currency']; ?></td>
+                        <td><?= $priceGroup['daily_tax']; ?></td>
+                        <td>
+                            <a href="<?= $this->url('Site:PriceGroup@editAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+                            <a data-button="delete" href="<?= $this->url('Site:PriceGroup@deleteAction', $priceGroup['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="col-lg-6" role="box">
