@@ -10,6 +10,8 @@ use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
 {
+    use MailerTrait;
+
     /**
      * Redirects to payment gateway
      * 
