@@ -753,12 +753,11 @@ return [
         'controller' => 'Architecture:RoomInventory@deleteAction'
     ],
 
-    '/crm/stat' => [
+    '/crm/stat/(:var)' => [
         'controller' => 'Stat@indexAction'
     ],
 
-    '/crm/stat/report' => [
+    '/crm/stat/get/report' => [
         'controller' => 'Stat@reportAction'
     ]
-    
 ];
