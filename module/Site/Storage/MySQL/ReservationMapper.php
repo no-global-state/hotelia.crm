@@ -94,6 +94,32 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
     }
 
     /**
+     * Gets reservation count dropped by groups
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function getReservationCountByGroups(int $hotelId) : array
+    {
+        // Columns to be selected
+        $columns = [
+            PriceGroupMapper::column('currency')
+        ];
+
+        $db = $this->db->select($columns)
+                       ->count(self::column('id'), 'reservations')
+                       ->from(self::getTableName())
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => self::getRawColumn('price_group_id')
+                       ])
+                       ->whereEquals(self::column('hotel_id'), new RawBinding($hotelId))
+                       ->groupBy($columns);
+
+        return $db->queryAll();
+    }
+
+    /**
      * Returns statistic dropped by available months
      * 
      * @param int $hotelId

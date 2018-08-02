@@ -35,6 +35,17 @@ final class ReservationService
     }
 
     /**
+     * Gets reservation count dropped by groups
+     * 
+     * @param int $hotelId
+     * @return array
+     */
+    public function getReservationCountByGroups(int $hotelId) : array
+    {
+        return $this->reservationMapper->getReservationCountByGroups($hotelId);
+    }
+
+    /**
      * Returns statistic dropped by available months
      * 
      * @param int $hotelId
