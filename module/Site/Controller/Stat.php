@@ -13,16 +13,19 @@ final class Stat extends AbstractCrmController
      */
     public function indexAction() : string
     {
+        $priceGroupId = $this->request->getQuery('price_group_id', 1);
+
         // Configure view
         $this->view->getPluginBag()->load('chart');
         $this->view->getBreadcrumbBag()->addOne('Statistic');
 
         return $this->view->render('stat/index', [
             'icon' => 'glyphicon glyphicon-stats',
-            'data' => $this->getModuleService('reservationService')->getStatistic($this->getHotelId()),
+            'data' => $this->getModuleService('reservationService')->getStatistic($this->getHotelId(), $priceGroupId),
             'months' => TimeHelper::getMonths(),
             'year' => date('Y'),
             'priceGroups' => $this->getModuleService('priceGroupService')->fetchList(),
+            'priceGroupId' => $priceGroupId,
             'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId(), $this->translator)
         ]);
     }

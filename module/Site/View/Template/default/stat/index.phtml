@@ -18,6 +18,12 @@ use Krystal\Form\Element;
     };
 </script>
 
+<p>
+    <?php foreach ($priceGroups as $id => $name): ?>
+    <a href="<?= $this->createQueryUrl('Site:Stat@indexAction', ['price_group_id' => $id]); ?>"><span class="label <?= $priceGroupId != $id ? 'label-success' : 'label-info'; ?>"><?= $name; ?></span></a>
+    <?php endforeach; ?>
+</p>
+
 <div class="row">
     <div class="col-lg-6">
         <canvas id="canvas"></canvas>
@@ -25,12 +31,7 @@ use Krystal\Form\Element;
 
     <div class="col-lg-6">
         <form class="form-horizontal" action="<?= $this->url('Site:Stat@reportAction'); ?>">
-            <div class="form-group">
-              <label class="col-lg-2 control-label"><? $this->show('Price group'); ?></label>
-              <div class="col-lg-10">
-                <?= Element::select('price_group_id', $priceGroups, null, ['class' => 'form-control']); ?>
-              </div>
-            </div>
+            <?= Element::hidden('price_group_id', $priceGroupId); ?>
 
             <div class="form-group">
               <label class="col-lg-2 control-label"><? $this->show('Year'); ?></label>
