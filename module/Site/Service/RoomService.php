@@ -49,6 +49,18 @@ final class RoomService
     }
 
     /**
+     * Fetches cleaning data of rooms
+     * 
+     * @param int $langId
+     * @param integer $hotelId
+     * @return array
+     */
+    public function fetchCleaning(int $langId, int $hotelId) : array
+    {
+        return $this->roomMapper->fetchCleaning($langId, $hotelId);
+    }
+
+    /**
      * Updated cleaned attribute
      * 
      * @param int $ids Room ID or IDs

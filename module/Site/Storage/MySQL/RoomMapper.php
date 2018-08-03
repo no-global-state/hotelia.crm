@@ -255,7 +255,7 @@ final class RoomMapper extends AbstractMapper
      * @param integer $hotelId
      * @return array
      */
-    public function fetchCleaning(int $langId, int $hotelId)
+    public function fetchCleaning(int $langId, int $hotelId) : array
     {
         // Columns to be selected
         $columns = array(
