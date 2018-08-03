@@ -12,7 +12,6 @@
 namespace Site\Controller\Architecture;
 
 use Site\Controller\AbstractCrmController;
-use Site\Collection\CleaningCollection;
 use Krystal\Stdlib\ArrayUtils;
 
 final class RoomCleaning extends AbstractCrmController
@@ -44,20 +43,12 @@ final class RoomCleaning extends AbstractCrmController
      * @param string $type
      * @return void
      */
-    public function markAction($id, $type)
+    public function markAction(int $id, int $type)
     {
-        $collection = new CleaningCollection();
+        $this->getModuleService('roomService')->updateCleaned($id, $type);
+        $this->flashBag->set('success', 'Successfully updated');
 
-        if ($collection->hasKey($type)) {
-            $mapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
-            $mapper->updateColumnByPk($id, 'cleaned', $type);
-
-            $this->flashBag->set('success', 'Successfully updated');
-            return $this->response->redirectToPreviousPage();
-
-        } else {
-            // Invalid request
-        }
+        return $this->response->redirectToPreviousPage();
     }
 
     /**
@@ -66,24 +57,12 @@ final class RoomCleaning extends AbstractCrmController
      * @param string $type
      * @return void
      */
-    public function markBatchAction($type)
+    public function markBatchAction(int $type)
     {
-        $collection = new CleaningCollection();
+        $ids = array_keys($this->request->getPost('batch'));
+        $this->getModuleService('roomService')->updateCleaned($ids, $type);
 
-        if ($collection->hasKey($type)) {
-            $mapper = $this->createMapper('\Site\Storage\MySQL\RoomMapper');
-
-            $ids = array_keys($this->request->getPost('batch'));
-
-            foreach ($ids as $id) {
-                $mapper->updateColumnByPk($id, 'cleaned', $type);
-            }
-
-            $this->flashBag->set('success', 'Successfully updated');
-            return $this->response->redirectToPreviousPage();
-
-        } else {
-            // Invalid request
-        }
+        $this->flashBag->set('success', 'Successfully updated');
+        return $this->response->redirectToPreviousPage();
     }
 }
