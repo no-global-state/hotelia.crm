@@ -129,7 +129,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                     <?php if (!$isTranslator): ?>
                     <li><a href="<?= $this->url('Site:Architecture:Room@indexAction'); ?>"><i class="glyphicon glyphicon-home"></i> <? $this->show('Architecture'); ?></a></li>
                     <li><a href="<?= $this->url('Site:Reservation@findAction'); ?>"><i class="glyphicon glyphicon-search"></i> <?php $this->show('Find a free room'); ?></a></li>
-                    <li><a href="<?= $this->url('Site:Architecture:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
+                    <li><a href="<?= $this->url('Site:RoomCleaning@indexAction'); ?>"><i class="glyphicon glyphicon-refresh"></i> <? $this->show('Room cleaning'); ?></a></li>
                     <?php endif; ?>
                   </ul>
                 </li>

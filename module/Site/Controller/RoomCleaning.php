@@ -9,7 +9,7 @@
  * the license file that was distributed with this source code.
  */
 
-namespace Site\Controller\Architecture;
+namespace Site\Controller;
 
 use Site\Controller\AbstractCrmController;
 use Krystal\Stdlib\ArrayUtils;

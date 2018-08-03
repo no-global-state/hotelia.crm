@@ -656,17 +656,17 @@ return [
     ],
 
     // Room cleaning
-    '/crm/architecture/room-cleaning' => [
-        'controller' => 'Architecture:RoomCleaning@indexAction'
+    '/crm/room-cleaning' => [
+        'controller' => 'RoomCleaning@indexAction'
     ],
 
-    '/crm/architecture/room-cleaning/room/(:var)/mark/(:var)' => [
-        'controller' => 'Architecture:RoomCleaning@markAction',
+    '/crm/room-cleaning/room/(:var)/mark/(:var)' => [
+        'controller' => 'RoomCleaning@markAction',
         'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
-    '/crm/architecture/room-cleaning/mark-batch/(:var)' => [
-        'controller' => 'Architecture:RoomCleaning@markBatchAction',
+    '/crm/room-cleaning/mark-batch/(:var)' => [
+        'controller' => 'RoomCleaning@markBatchAction',
         'disallow' => [UserService::USER_ROLE_GUEST],
     ],
 
