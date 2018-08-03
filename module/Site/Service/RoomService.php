@@ -9,6 +9,7 @@ use Site\Storage\MySQL\FloorMapper;
 use Site\Storage\MySQL\RoomMapper;
 use Site\Storage\MySQL\RoomTypeMapper;
 use DateTime;
+use Site\Collection\CleaningCollection;
 
 final class RoomService
 {
@@ -45,6 +46,34 @@ final class RoomService
     {
         $this->roomMapper = $roomMapper;
         $this->roomTypeMapper = $roomTypeMapper;
+    }
+
+    /**
+     * Updated cleaned attribute
+     * 
+     * @param int $ids Room ID or IDs
+     * @param int $type Cleaning status constant
+     * @return boolean
+     */
+    public function updateCleaned($ids, int $type) : bool
+    {
+        if (!is_array($ids)) {
+            $ids = (array) $ids;
+        }
+
+        $collection = new CleaningCollection();
+
+        if ($collection->hasKey($type)) {
+            foreach ($ids as $id) {
+                $this->roomMapper->updateColumnByPk($id, 'cleaned', $type);
+            }
+
+            return true;
+
+        } else {
+            // Invalid request
+            return false;
+        }
     }
 
     /**

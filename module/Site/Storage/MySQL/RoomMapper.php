@@ -16,6 +16,18 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Updated cleaned attribute
+     * 
+     * @param int $id Room ID
+     * @param int $type Cleaning status constant
+     * @return boolean
+     */
+    public function updateCleaned(int $id, int $type)
+    {
+        return $this->updateColumnByPk($id, 'cleaned', $type);
+    }
+
+    /**
      * Gets floor count by associated hotel ID
      * 
      * @param int $hotelId
