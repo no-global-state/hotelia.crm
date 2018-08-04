@@ -46,6 +46,12 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
 
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
+                <?php if (isset($_ENV['menu'])): ?>
+                <?php foreach($_ENV['menu'] as $item): ?>
+                <li><a href="<?= $item['url']; ?>" target="_blank"><i class="<?= $item['icon']; ?>"></i> <?php $this->show($item['name']); ?></a></li>
+                <?php endforeach; ?>
+                <?php endif; ?>
+
                 <li><a href="/" target="_blank"><? $this->show('Open a site'); ?></a></li>
                 <?php if ($hasSystemLanguage === true): ?>
                 <li class="dropdown">
