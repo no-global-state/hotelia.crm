@@ -16,10 +16,12 @@ final class Language extends AbstractCrmController
      */
     public function switchAction(string $code)
     {
-        $exists = $this->getModuleService('languageService')->exists($code);
+        $cookie = $this->request->getCookieBag();
+        $language = $this->getModuleService('languageService')->fetchByCode($code);
 
-        if ($exists) {
-            $this->request->getCookieBag()->set('language', $code);
+        if ($language !== false) {
+            $cookie->set('language', $language['code']);
+            $cookie->set('language_id', $language['id']);
         }
 
         $this->response->redirectToPreviousPage();

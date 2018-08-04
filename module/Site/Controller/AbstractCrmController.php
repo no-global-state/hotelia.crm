@@ -17,7 +17,9 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
      */
     protected function getCurrentLangId() : int
     {
-        return 1;
+        $cookie = $this->request->getCookieBag();
+
+        return $cookie->has('language_id') ? $cookie->get('language_id') : 1;
     }
 
     /**
