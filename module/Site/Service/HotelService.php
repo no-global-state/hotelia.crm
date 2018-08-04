@@ -36,6 +36,17 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Finds hotel email by its associated ID
+     * 
+     * @param int $hotelId
+     * @return mixed
+     */
+    public function findEmailById(int $hotelId)
+    {
+        return $this->hotelMapper->findEmailById($hotelId);
+    }
+
+    /**
      * Checks whether wizard is finished
      * 
      * @param int $hotelId Hotel Id
