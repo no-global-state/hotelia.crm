@@ -36,6 +36,18 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Finds hotel name by its associated ID
+     * 
+     * @param int $hotelId
+     * @param int $langId
+     * @return string
+     */
+    public function findNameById(int $hotelId, int $langId)
+    {
+        return $this->hotelMapper->findNameById($hotelId, $langId);
+    }
+
+    /**
      * Finds hotel email by its associated ID
      * 
      * @param int $hotelId

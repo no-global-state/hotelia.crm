@@ -33,6 +33,21 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     }
 
     /**
+     * Finds hotel name by its associated ID
+     * 
+     * @param int $hotelId
+     * @param int $langId
+     * @return string
+     */
+    public function findNameById(int $hotelId, int $langId)
+    {
+        $columns = [HotelTranslationMapper::column('name')];
+        $row = $this->findEntity($columns, $hotelId, $langId);
+
+        return $row['name'] ?? null;
+    }
+
+    /**
      * Finds hotel email by its associated ID
      * 
      * @param int $hotelId
