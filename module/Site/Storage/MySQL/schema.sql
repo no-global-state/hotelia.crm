@@ -422,6 +422,7 @@ CREATE TABLE velveto_room_type_facility (
     FOREIGN KEY (slave_id) REFERENCES velveto_facilitiy_items(id) ON DELETE CASCADE
 );
 
+/* Room beds */
 CREATE TABLE velveto_room_type_beds (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `order` INT NOT NULL COMMENT 'Sorting order'
@@ -445,6 +446,7 @@ CREATE TABLE velveto_room_type_beds_relation (
     FOREIGN KEY (room_type_id) REFERENCES velveto_room_types(id) ON DELETE CASCADE,
     FOREIGN KEY (bed_id) REFERENCES velveto_room_type_beds(id) ON DELETE CASCADE
 );
+/* Room beds */
 
 CREATE TABLE velveto_inventory (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
