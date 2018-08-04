@@ -17,7 +17,9 @@ function d($var) {
 }
 
 require('vendor/autoload.php');
-require('environment.php');
+
+// Append custom variables
+$_ENV = array_replace($_ENV, require('environment.php'));
 
 // Return prepared application's instance
 return \Krystal\Application\KernelFactory::build(require('app.php'));
