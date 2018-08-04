@@ -56,6 +56,17 @@ final class LanguageMapper extends AbstractMapper
     }
 
     /**
+     * Fetch language by its code
+     * 
+     * @param string $code
+     * @return mixed
+     */
+    public function fetchByCode(string $code)
+    {
+        return $this->fetchByColumn('code', $code);
+    }
+
+    /**
      * Fetch all languages
      * 
      * @param boolean $system Whether to fetch only system languages

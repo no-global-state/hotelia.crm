@@ -111,6 +111,17 @@ final class LanguageService
     }
 
     /**
+     * Fetch language by its code
+     * 
+     * @param string $code
+     * @return mixed
+     */
+    public function fetchByCode(string $code)
+    {
+        return $this->languageMapper->fetchByCode($code);
+    }
+
+    /**
      * Fetch all languages
      * 
      * @param boolean $system Whether to fetch only system languages
