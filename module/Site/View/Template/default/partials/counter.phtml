@@ -11,11 +11,11 @@
 
   <a href="#" class="list-group-item">
     <h4 class="list-group-item-heading"><? $this->show('Daily tax'); ?></h4>
-    <p class="list-group-item-text"><span data-count="daily-tax"><?= isset($entity['tax']) ? $entity['tax'] : 0; ?></span> <span data-count="currency"><?= isset($entity['currency']) ? $entity['currency'] : null; ?></span></p>
+    <p class="list-group-item-text"><span data-count="daily-tax"><?= isset($entity['tax']) ? number_format($entity['tax']) : 0; ?></span> <span data-count="currency"><?= isset($entity['currency']) ? $entity['currency'] : null; ?></span></p>
   </a>
   
   <a href="#" class="list-group-item">
     <h4 class="list-group-item-heading"><? $this->show('Total price'); ?></h4>
-    <p class="list-group-item-text"><span data-count="price"><?= isset($entity['price']) ? $entity['price'] : 0; ?></span> <span data-count="currency"><?= isset($entity['currency']) ? $entity['currency'] : null; ?></span></p>
+    <p class="list-group-item-text"><span data-count="price"><?= isset($entity['price']) ? number_format($entity['price']) : 0; ?></span> <span data-count="currency"><?= isset($entity['currency']) ? $entity['currency'] : null; ?></span></p>
   </a>
 </div>

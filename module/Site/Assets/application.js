@@ -283,7 +283,7 @@ $(function(){
             // Inputs
             $("[name='tax']").val(dailyTax);
             $("[name='discount']").val(discount);
-            $("[name='price']").val(totalPrice.toLocaleString());
+            $("[name='price']").val(totalPrice);
         };
 
         // Watchers
