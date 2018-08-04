@@ -27,6 +27,25 @@ final class LanguageService
     }
 
     /**
+     * Checks whether collection has at least one system language
+     * 
+     * @param array $languages
+     * @return boolean
+     */
+    public static function hasSystem(array $languages) : bool
+    {
+        // Linear search
+        foreach ($languages as $language) {
+            if (isset($language['system']) && $language['system'] == 1) {
+                return true;
+            }
+        }
+
+        // By default
+        return false;
+    }
+
+    /**
      * Find IDs
      * 
      * @return array
