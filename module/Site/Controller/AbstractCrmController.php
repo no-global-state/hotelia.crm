@@ -6,6 +6,7 @@ use Krystal\Application\Controller\AbstractAuthAwareController;
 use Krystal\Validate\Renderer;
 use Site\Collection\BookingStatusCollection;
 use Site\Service\UserService;
+use Site\Service\LanguageService;
 
 abstract class AbstractCrmController extends AbstractAuthAwareController
 {
@@ -203,6 +204,9 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
         $code = $bag->has('language') ? $bag->get('language') : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
+        // Language collection
+        $languages = $this->getModuleService('languageService')->fetchAll();
+
         // Add shared variables
         $this->view->addVariables(array(
             'isTranslator' => $this->getAuthService()->getRole() == UserService::USER_ROLE_TRANSLATOR,
@@ -214,7 +218,8 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'locale' => $this->paramBag->has('locale') ? $this->paramBag->get('locale') : $this->appConfig->getLanguage(),
             'active' => (bool) $hotel['active'],
             'appName' => $this->paramBag->get('appName'),
-            'languages' => $this->getModuleService('languageService')->fetchAll(),
+            'languages' => $languages,
+            'hasSystemLanguage' => LanguageService::hasSystem($languages),
             'code' => $code,
             'admin' => $this->sessionBag->get('admin'),
         ));
