@@ -184,6 +184,7 @@ CREATE TABLE velveto_regions_districts_translation (
     FOREIGN KEY (id) REFERENCES velveto_regions_districts(id) ON DELETE CASCADE
 );
 
+/* Reviews */
 CREATE TABLE velveto_reviews_types (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `mark` SMALLINT NOT NULL COMMENT 'Default review type mark',
@@ -221,6 +222,7 @@ CREATE TABLE velveto_reviews_marks (
     FOREIGN KEY (review_id) REFERENCES velveto_reviews(id) ON DELETE CASCADE,
     FOREIGN KEY (review_type_id) REFERENCES velveto_reviews_types(id) ON DELETE CASCADE
 );
+/* Reviews */
 
 CREATE TABLE velveto_languages (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
