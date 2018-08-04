@@ -9,6 +9,8 @@ use Krystal\Iso\ISO3166\Country;
 
 final class Booking extends AbstractCrmController
 {
+    use MailerTrait;
+
     /**
      * Renders main grid
      * 
@@ -39,16 +41,19 @@ final class Booking extends AbstractCrmController
         $bookingService = $this->getModuleService('bookingService');
 
         // Parse into required format
-        $reservations = $bookingService->createReservationDetails($data['id'], $data['guest']);
+        $data = $bookingService->createReservationDetails($data['id'], $data['guest']);
 
-        if ($reservations !== false) {
+        if ($data !== false) {
             // Update status as well
             $bookingService->updateStatusById($data['id'], BookingStatusCollection::STATUS_AWAITING_PAYMENT);
 
             // And finally, do save
-            $ids = $this->getModuleService('reservationService')->saveMany($reservations);
+            $ids = $this->getModuleService('reservationService')->saveMany($data['reservations']);
 
             $bookingService->insertRelation($bookingService->getLastId(), $ids);
+
+            // Notify about the need to confirm payment
+            $this->paymentNeedsConfirmNotify($data['booking']['email'], $this->createUrl('Site:Site@gatewayAction', [$booking['token']]));
 
             $this->flashBag->set('success', 'Reservation has been made');
             return 1;

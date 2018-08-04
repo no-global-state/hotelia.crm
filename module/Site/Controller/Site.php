@@ -61,6 +61,10 @@ final class Site extends AbstractSiteController
             // Update status as well
             $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
 
+            // Send email about successful confirmation
+            $this->paymentSuccessNotify($booking['email']);
+            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id']), 1);
+
             return $this->view->render('payment-confirm');
         } else {
             // Trigger 404
@@ -84,6 +88,10 @@ final class Site extends AbstractSiteController
 
             // Append the review
             $reviewService->add($this->getCurrentLangId(), $hotelId, $input);
+
+            // Notify about new feedback
+            $email = $this->getModuleService('hotelService')->findEmailById($hotelId);
+            $this->feedbackNewNotify($email);
 
             $this->flashBag->set('success', 'Your review has been added successfully');
             $this->response->refresh();
@@ -240,9 +248,11 @@ final class Site extends AbstractSiteController
         } elseif ($this->request->isPost()) {
             $summary = (new SummaryService($this->sessionBag))->getSummary();
 
+            $hotelId = $this->request->getQuery('hotel_id');
+
             // Request parameters
             $params = [
-                'hotel_id' => $this->request->getQuery('hotel_id'),
+                'hotel_id' => $hotelId,
                 'price_group_id' => $this->getPriceGroupId(),
                 'arrival' => $this->request->getQuery('arrival'),
                 'departure' => $this->request->getQuery('departure'),
@@ -254,7 +264,16 @@ final class Site extends AbstractSiteController
 
             // Grab booking service and insert
             $bs = $this->getModuleService('bookingService');
-            $bs->save($params, $this->request->getPost('guest'), $this->createSummary($this->request->getQuery('hotel_id')));
+            $bs->save($params, $this->request->getPost('guest'), $this->createSummary($hotelId));
+
+            // Send user notification
+            $this->bookingProcessedNotify($this->request->getPost('email'));
+
+            // Notify owner
+            $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
+
+            // Notify admin
+            $this->bookingAdminNotify($this->getModuleService('hotelService')->findNameById($hotelId, 1));
 
             return $this->view->render('thank-you');
 
