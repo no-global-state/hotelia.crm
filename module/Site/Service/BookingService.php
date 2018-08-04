@@ -106,7 +106,10 @@ final class BookingService
                 ];
             }
 
-            return $reservations;
+            return [
+                'reservations' => $reservations,
+                'booking' => $booking
+            ];
 
         } else {
             return false;
