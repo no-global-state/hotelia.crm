@@ -212,10 +212,6 @@ return [
         'controller' => 'Api@getInitial'
     ],
     
-    '/api/all/(:var)' => [
-        'controller' => 'Api@all'
-    ],
-    
     '/api/search/(:var)' => [
         'controller' => 'Api@search'
     ],
@@ -224,10 +220,6 @@ return [
         'controller' => 'Api@hotel'
     ],
     
-    '/api/detail/(:var)' => [
-        'controller' => 'Api@details'
-    ],
-
     '/api/register' => [
         'controller' => 'Api@register'
     ],
