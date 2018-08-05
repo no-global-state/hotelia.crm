@@ -200,12 +200,28 @@ return [
     ],
 
     // API
+    '/api/payment' => [
+        'controller' => 'Api@payment'
+    ],
+    
     '/api/available/(:var)' => [
         'controller' => 'Api@available'
     ],
 
+    '/api/get-initial/(:var)' => [
+        'controller' => 'Api@getInitial'
+    ],
+    
     '/api/all/(:var)' => [
         'controller' => 'Api@all'
+    ],
+    
+    '/api/search/(:var)' => [
+        'controller' => 'Api@search'
+    ],
+    
+    '/api/hotel/(:var)' => [
+        'controller' => 'Api@hotel'
     ],
     
     '/api/detail/(:var)' => [
@@ -220,7 +236,7 @@ return [
     '/api/get-filter/(:var)' => [
         'controller' => 'Api@getFilter'
     ],
-
+    
     // Perform filtering
     '/api/filter' => [
         'controller' => 'Api@filter'
