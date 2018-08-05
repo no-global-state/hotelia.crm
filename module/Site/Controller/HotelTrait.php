@@ -52,6 +52,98 @@ trait HotelTrait
     }
 
     /**
+     * Tweaks paginator's instance
+     * 
+     * @param \Krystal\Paginate\PaginatorInterface $paginator
+     * @return void
+     */
+    protected function tweakPaginator($paginator)
+    {
+        $placeholder = '(:var)';
+
+        $url =  '/search/?'.$this->request->buildQuery(array('page' => $placeholder));
+        $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
+
+        $paginator->setUrl($url);
+    }
+
+    /**
+     * Search hotels
+     * 
+     * @param int $priceGroupId
+     * @param int $langId
+     * @return array
+     */
+    protected function searchAll(int $priceGroupId, int $langId) : array
+    {
+        // Request variables
+        $regionId = $this->request->getQuery('region_id');
+        $typeIds = $this->request->getQuery('type', []);
+        $facilityIds = $this->request->getQuery('facility', []);
+        $pricesIds = $this->request->getQuery('prices', []);
+        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
+        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
+        $rate = $this->request->getQuery('rate', 0);
+        $priceStart = $this->request->getQuery('price-start', 10);
+        $priceStop = $this->request->getQuery('price-stop', 100);
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 0);
+        $stars = $this->request->getQuery('stars', []);
+
+        // Sorting param
+        $sort = $this->request->getQuery('sort', 'discount');
+
+        // Create region data based on its ID
+        if ($regionId) {
+            $region = $this->getModuleService('regionService')->fetchById($regionId, $langId);
+        } else {
+            $region = null;
+        }
+
+        $hotels = $this->getModuleService('hotelService')->findAll($langId, $priceGroupId, $this->request->getQuery(), $sort);
+        $hotels = $this->getModuleService('facilitiyService')->appendFacilityMapToHotels($hotels);
+
+        foreach ($hotels as &$hotel) {
+            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+
+            // Dummy
+            $hotel['penality_enabled'] = true;
+            $hotel['has_free_rooms'] = true;
+        }
+
+        // Paginator instance
+        $paginator = $this->getModuleService('hotelService')->getPaginator();
+        $this->tweakPaginator($paginator);
+
+        return [
+            'region' => $region,
+
+            // Request variables
+            'stars' => $stars,
+            'regionId' => $regionId,
+            'typeIds' => $typeIds,
+            'facilityIds' => $facilityIds,
+            'priceIds' => $pricesIds,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'rate' => $rate,
+            'priceStart' => $priceStart,
+            'priceStop' => $priceStop,
+            'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
+            'sort' => $sort,
+
+            'paginator' => $paginator,
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($langId),
+            'hotels' => $hotels,
+            'regions' => $this->getModuleService('regionService')->fetchList($langId),
+            'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $langId, true)
+        ];
+    }
+
+    /**
      * Finds hotel data
      * 
      * @param int $priceGroupId
