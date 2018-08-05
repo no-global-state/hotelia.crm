@@ -9,54 +9,12 @@ use Site\Helpers\ApiHelper;
 
 final class Api extends AbstractCrmController
 {
+    use HotelTrait;
+
     /**
      * {@inheritDoc}
      */
     protected $authActive = false;
-
-    /**
-     * Appends base URL
-     * 
-     * @param string $target
-     * @return string
-     */
-    private function appendBaseUrl($target)
-    {
-        if (!empty($target)){
-            return sprintf('%s/%s/%s', $this->request->getBaseUrl(), '/module/Site/View/Template/site/', $target);
-        }
-    }
-    
-    /**
-     * Appends base URL
-     * 
-     * @param string $target
-     * @return mixed
-     */
-    public function appendUploadUrl($target)
-    {
-        if (!empty($target)){
-            return sprintf('%s/%s', $this->request->getBaseUrl(), $target);
-        }
-    }
-
-    /**
-     * Normalizes image collection
-     * 
-     * @param array $collection
-     * @param string $key
-     * @return array
-     */
-    private function normalizeImagePath(array $collection, string $key) : array
-    {
-        foreach ($collection as &$item) {
-            if (isset($item[$key])) {
-                $item[$key] = $this->appendUploadUrl($item[$key]);
-            }
-        }
-
-        return $collection;
-    }
 
     /**
      * Returns language parameter from query string
@@ -87,61 +45,12 @@ final class Api extends AbstractCrmController
      */
     public function hotel()
     {
-        // Hotel ID is a must
-        if (!$this->request->hasQuery('hotel_id')) {
-            return false;
-        }
-
-        // Request variables
-        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
-        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
-        $hotelId = $this->request->getQuery('hotel_id'); // Hotel ID
-        $type = $this->request->getQuery('type', null);
-        $rooms = $this->request->getQuery('rooms', 1);
-        $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 0);
         $priceGroupId = $this->request->getQuery('price_group_id', 1);
         $lang = $this->request->getQuery('lang', 1);
 
-        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $lang, $priceGroupId);
+        $data = $this->findHotel($priceGroupId, $lang);
 
-        if (isset($hotel['cover'])) {
-            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
-        }
-
-        $photoService = $this->getModuleService('photoService');
-        $roomTypeService = $this->getModuleService('roomTypeService');
-
-        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $priceGroupId, $lang, $hotelId, $type, true);
-        $types = $roomTypeService->fetchList($this->getLang(), $hotelId);
-
-        return $this->json([
-            // Renders variables
-            'type' => $type,
-            'arrival' => $arrival,
-            'departure' => $departure,
-            'rooms' => $rooms,
-            'adults' => $adults,
-            'kids' => $kids,
-
-            'regions' => $this->getModuleService('regionService')->fetchList($lang),
-            'availableRooms' => $availableRooms,
-            'types' => $types,
-            'hotel' => $hotel,
-            // Similar hotels
-            'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
-            'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
-
-            'hotelId' => $hotelId,
-            'regionId' => $hotel['region_id'],
-
-            'facilities' => $this->getModuleService('facilitiyService')->getCollection($lang, true, $hotelId, true),
-            // Hotel images
-            'images' => [
-                'large' => $this->normalizeImagePath($photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE), 'file'),
-                'small' => $this->normalizeImagePath($photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_SMALL), 'file')
-            ]
-        ]);
+        return $this->json($data);
     }
 
     /**

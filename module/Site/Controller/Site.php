@@ -11,6 +11,7 @@ use Krystal\Iso\ISO3166\Country;
 final class Site extends AbstractSiteController
 {
     use MailerTrait;
+    use HotelTrait;
 
     /**
      * Redirects to payment gateway
@@ -419,65 +420,17 @@ final class Site extends AbstractSiteController
      */
     public function hotelAction()
     {
-        // Hotel ID is a must
-        if (!$this->request->hasQuery('hotel_id')) {
+        $params = $this->findHotel($this->getPriceGroupId(), $this->getCurrentLangId());
+
+        if ($params === false) {
+            // Clear previous summary if any
+            $summary = new SummaryService($this->sessionBag);
+            $summary->clear();
+
             return false;
+        } else {
+            return $this->view->render('hotel', $params);
         }
-
-        // Clear previous summary if any
-        $summary = new SummaryService($this->sessionBag);
-        $summary->clear();
-
-        // Request variables
-        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
-        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
-        $hotelId = $this->request->getQuery('hotel_id'); // Hotel ID
-        $typeId = $this->request->getQuery('type_id', null);
-        $rooms = $this->request->getQuery('rooms', 1);
-        $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 0);
-
-        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
-
-        $photoService = $this->getModuleService('photoService');
-        $roomTypeService = $this->getModuleService('roomTypeService');
-
-        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $this->getPriceGroupId(), $this->getCurrentLangId(), $hotelId, $typeId, true);
-        $types = $roomTypeService->fetchList($this->getCurrentLangId(), $hotelId);
-
-        return $this->view->render('hotel', [
-            'roomTypes' => $this->getModuleService('roomTypeService')->fetchList($this->getCurrentLangId(), $hotelId),
-
-            // Renders variables
-            'typeId' => $typeId,
-            'arrival' => $arrival,
-            'departure' => $departure,
-            'rooms' => $rooms,
-            'adults' => $adults,
-            'kids' => $kids,
-
-            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
-            'availableRooms' => $availableRooms,
-            'types' => $types,
-            'hotel' => $hotel,
-
-            // Similar hotels
-            'hotels' => $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), ['region_id' => $hotel['region_id']], 5),
-            'reviewTypes' => $this->getModuleService('reviewService')->findTypes($this->getCurrentLangId()),
-            'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
-
-            'hotelId' => $hotelId,
-            'regionId' => $hotel['region_id'],
-
-            'facilities' => $this->getModuleService('facilitiyService')->getCollection($this->getCurrentLangId(), true, $hotelId, true),
-            'facilityMap' => $this->getModuleService('facilitiyService')->fetchSingleRelation($hotelId),
-
-            // Hotel images
-            'images' => [
-                'large' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE),
-                'small' => $photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_SMALL)
-            ]
-        ]);
     }
 
     /**
