@@ -332,85 +332,15 @@ final class Site extends AbstractSiteController
     }
 
     /**
-     * Tweaks paginator's instance
-     * 
-     * @param \Krystal\Paginate\PaginatorInterface $paginator
-     * @return void
-     */
-    private function tweakPaginator($paginator)
-    {
-        $placeholder = '(:var)';
-
-        $url =  '/search/?'.$this->request->buildQuery(array('page' => $placeholder));
-        $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
-
-        $paginator->setUrl($url);
-    }
-
-    /**
      * Search action
      * 
      * @return string
      */
     public function searchAction()
     {
-        // Request variables
-        $regionId = $this->request->getQuery('region_id');
-        $typeIds = $this->request->getQuery('type', []);
-        $facilityIds = $this->request->getQuery('facility', []);
-        $pricesIds = $this->request->getQuery('prices', []);
-        $arrival = $this->request->getQuery('arrival');
-        $departure = $this->request->getQuery('departure');
-        $rate = $this->request->getQuery('rate', 0);
-        $priceStart = $this->request->getQuery('price-start', 10);
-        $priceStop = $this->request->getQuery('price-stop', 100);
-        $rooms = $this->request->getQuery('rooms', 1);
-        $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 0);
-        $stars = $this->request->getQuery('stars', []);
+        $hotels = $this->searchAll($this->getPriceGroupId(), $this->getCurrentLangId());
 
-        // Sorting param
-        $sort = $this->request->getQuery('sort', 'discount');
-
-        // Create region data based on its ID
-        if ($regionId) {
-            $region = $this->getModuleService('regionService')->fetchById($regionId, $this->getCurrentLangId());
-        } else {
-            $region = null;
-        }
-
-        $hotels = $this->getModuleService('hotelService')->findAll($this->getCurrentLangId(), $this->getPriceGroupId(), $this->request->getQuery(), $sort);
-        $hotels = $this->getModuleService('facilitiyService')->appendFacilityMapToHotels($hotels);
-
-        // Paginator instance
-        $paginator = $this->getModuleService('hotelService')->getPaginator();
-        $this->tweakPaginator($paginator);
-
-        return $this->view->render('search', [
-            'region' => $region,
-
-            // Request variables
-            'stars' => $stars,
-            'regionId' => $regionId,
-            'typeIds' => $typeIds,
-            'facilityIds' => $facilityIds,
-            'priceIds' => $pricesIds,
-            'arrival' => $arrival,
-            'departure' => $departure,
-            'rate' => $rate,
-            'priceStart' => $priceStart,
-            'priceStop' => $priceStop,
-            'rooms' => $rooms,
-            'adults' => $adults,
-            'kids' => $kids,
-            'sort' => $sort,
-
-            'paginator' => $paginator,
-            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getCurrentLangId()),
-            'hotels' => $hotels,
-            'regions' => $this->getModuleService('regionService')->fetchList($this->getCurrentLangId()),
-            'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getCurrentLangId(), true)
-        ]);
+        return $this->view->render('search', $hotels);
     }
 
     /**
@@ -445,7 +375,7 @@ final class Site extends AbstractSiteController
             'adults' => 1,
             'kids' => 0,
             'rooms' => 1,
-            
+
             'home' => true,
             'regions' => $this->getModuleService('regionService')->findHotels($this->getCurrentLangId())
         ]);

@@ -163,67 +163,10 @@ final class Api extends AbstractCrmController
      */
     public function search()
     {
-        // Request variables
-        $regionId = $this->request->getQuery('region_id');
-        $typeIds = $this->request->getQuery('type', []);
-        $facilityIds = $this->request->getQuery('facility', []);
-        $pricesIds = $this->request->getQuery('prices', []);
-        $arrival = $this->request->getQuery('arrival');
-        $departure = $this->request->getQuery('departure');
-        $rate = $this->request->getQuery('rate', 0);
-        $priceStart = $this->request->getQuery('price-start', 10);
-        $priceStop = $this->request->getQuery('price-stop', 100);
-        $rooms = $this->request->getQuery('rooms', 1);
-        $adults = $this->request->getQuery('adults', 1);
-        $kids = $this->request->getQuery('kids', 0);
-        $priceGroupId = $this->request->getQuery('price_group_id');
+        $priceGroupId = $this->request->getQuery('price_group_id', 1);
+        $hotels = $this->searchAll($priceGroupId, $this->getLang());
 
-        // Sorting param
-        $sort = $this->request->getQuery('sort', 'discount');
-
-        // Create region data based on its ID
-        if ($regionId) {
-            $region = $this->getModuleService('regionService')->fetchById($regionId, $this->getLang());
-            $region['image'] = $this->appendBaseUrl($region['image']);
-            
-        } else {
-            $region = null;
-        }
-
-        $hotels = $this->getModuleService('hotelService')->findAll($this->getLang(), $priceGroupId, $this->request->getQuery(), $sort);
-        
-        foreach ($hotels as &$hotel) {
-            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
-            
-            // Dummy
-            $hotel['penality_enabled'] = true;
-            $hotel['has_free_rooms'] = true;
-            $hotel['card_required'] = false;
-        }
-        
-        return $this->json([
-            'region' => $region,
-
-            // Request variables
-            'regionId' => $regionId,
-            'typeIds' => $typeIds,
-            'facilityIds' => $facilityIds,
-            'priceIds' => $pricesIds,
-            'arrival' => $arrival,
-            'departure' => $departure,
-            'rate' => $rate,
-            'priceStart' => $priceStart,
-            'priceStop' => $priceStop,
-            'rooms' => $rooms,
-            'adults' => $adults,
-            'kids' => $kids,
-            'sort' => $sort,
-
-            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getLang()),
-            'hotels' => $hotels,
-            'regions' => $this->getModuleService('regionService')->fetchList($this->getLang()),
-            'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getLang(), true)
-        ]);
+        return $this->json($hotels);
     }
 
     /**
