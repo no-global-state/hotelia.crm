@@ -29,6 +29,7 @@ final class RoomTypeBedMapper extends AbstractMapper
     {
         return [
             self::column('id'),
+            self::column('alias'),
             self::column('order'),
             RoomTypeBedTranslationMapper::column('lang_id'),
             RoomTypeBedTranslationMapper::column('name'),
@@ -68,6 +69,7 @@ final class RoomTypeBedMapper extends AbstractMapper
         // Columns to be selected
         $columns = [
             self::column('id'),
+            self::column('alias'),
             RoomTypeBedTranslationMapper::column('name'),
             RoomTypeBedRelationMapper::column('qty')
         ];

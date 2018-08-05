@@ -425,6 +425,7 @@ CREATE TABLE velveto_room_type_facility (
 /* Room beds */
 CREATE TABLE velveto_room_type_beds (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `alias` varchar(255) NOT NULL COMMENT 'Alternate identification',
     `order` INT NOT NULL COMMENT 'Sorting order'
 );
 
