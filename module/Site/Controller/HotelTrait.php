@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Site\Service\ReservationService;
 use Site\Service\PhotoService;
+use Site\Service\BedService;
 
 trait HotelTrait
 {
@@ -179,6 +180,11 @@ trait HotelTrait
         // Find available rooms
         $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $priceGroupId, $langId, $hotelId, $typeId, true);
         $availableRooms = $this->normalizeImagePath($availableRooms, 'cover');
+
+        // Append beds
+        foreach ($availableRooms as &$availableRoom) {
+            $availableRoom['beds'] = $this->getModuleService('bedService')->fetchRelation($availableRoom['id'], $langId, true);
+        }
 
         $types = $roomTypeService->fetchList($langId, $hotelId);
 
