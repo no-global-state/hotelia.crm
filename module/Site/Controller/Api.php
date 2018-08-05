@@ -18,24 +18,24 @@ final class Api extends AbstractCrmController
      * Appends base URL
      * 
      * @param string $target
-     * @return mixed
+     * @return string
      */
     private function appendBaseUrl($target)
     {
-        if (!empty($target)) {
+        if (!empty($target)){
             return sprintf('%s/%s/%s', $this->request->getBaseUrl(), '/module/Site/View/Template/site/', $target);
         }
     }
-
+    
     /**
      * Appends base URL
      * 
      * @param string $target
      * @return mixed
      */
-    private function appendUploadUrl($target)
+    public function appendUploadUrl($target)
     {
-        if (!empty($target)) {
+        if (!empty($target)){
             return sprintf('%s/%s', $this->request->getBaseUrl(), $target);
         }
     }
@@ -56,6 +56,92 @@ final class Api extends AbstractCrmController
         }
 
         return $collection;
+    }
+
+    /**
+     * Returns language parameter from query string
+     * 
+     * @return int
+     */
+    private function getLang() : int
+    {
+        return $this->request->getQuery('lang', 1);
+    }
+
+    /**
+     * Dummy payment action
+     * 
+     * @return string
+     */
+    public function payment()
+    {
+        return $this->json([
+            'url' => '#'
+        ]);
+    }
+    
+    /**
+     * Renders hotel page
+     * 
+     * @return string
+     */
+    public function hotel()
+    {
+        // Hotel ID is a must
+        if (!$this->request->hasQuery('hotel_id')) {
+            return false;
+        }
+
+        // Request variables
+        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
+        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
+        $hotelId = $this->request->getQuery('hotel_id'); // Hotel ID
+        $type = $this->request->getQuery('type', null);
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 0);
+        $priceGroupId = $this->request->getQuery('price_group_id', 1);
+        $lang = $this->request->getQuery('lang', 1);
+
+        $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $lang, $priceGroupId);
+
+        if (isset($hotel['cover'])) {
+            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+        }
+
+        $photoService = $this->getModuleService('photoService');
+        $roomTypeService = $this->getModuleService('roomTypeService');
+
+        $availableRooms = $roomTypeService->findAvailableTypes($arrival, $departure, $priceGroupId, $lang, $hotelId, $type, true);
+        $types = $roomTypeService->fetchList($this->getLang(), $hotelId);
+
+        return $this->json([
+            // Renders variables
+            'type' => $type,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
+
+            'regions' => $this->getModuleService('regionService')->fetchList($lang),
+            'availableRooms' => $availableRooms,
+            'types' => $types,
+            'hotel' => $hotel,
+            // Similar hotels
+            'reviewTypes' => $this->getModuleService('reviewService')->findTypes(),
+            'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
+
+            'hotelId' => $hotelId,
+            'regionId' => $hotel['region_id'],
+
+            'facilities' => $this->getModuleService('facilitiyService')->getCollection($lang, true, $hotelId, true),
+            // Hotel images
+            'images' => [
+                'large' => $this->normalizeImagePath($photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_LARGE), 'file'),
+                'small' => $this->normalizeImagePath($photoService->fetchAll($hotelId, PhotoService::PARAM_IMAGE_SIZE_SMALL), 'file')
+            ]
+        ]);
     }
 
     /**
@@ -96,7 +182,7 @@ final class Api extends AbstractCrmController
 
         return $this->json($data);
     }
-
+    
     /**
      * Performs a filter
      * 
@@ -108,21 +194,21 @@ final class Api extends AbstractCrmController
 
         // Request variables
         $regionId = $request['region_id'] ?? null;
-        $typeIds = $request['type'] ?? [];
+        $typeIds = $request['type_id'] ?? [];
 
         // Main
         $languageId = $request['lang'] ?? 1;
         $priceGroupId = $request['price_group_id'] ?? 1;
 
         // Append one more key
-        $request['facility'] = array_merge($request['facilities'] ?? [], $request['meals'] ?? []);
+        $request['facility'] = array_merge($request['facility_id'] ?? [], $request['meals_id'] ?? []);
 
         // Dates
         $arrival = $request['arrival'];
         $departure = $request['departure'];
 
         // Collection of rates
-        $rates = $request['stars'] ?? [];
+        $rates = $request['stars_id'] ?? [];
 
         // Counter data
         $rooms = $request['rooms'] ?? 1;
@@ -159,6 +245,92 @@ final class Api extends AbstractCrmController
             'hotels' => $hotels,
             'regions' => $regions,
         ]);
+    }
+
+    /**
+     * Performs a search
+     * 
+     * @return string
+     */
+    public function search()
+    {
+        // Request variables
+        $regionId = $this->request->getQuery('region_id');
+        $typeIds = $this->request->getQuery('type', []);
+        $facilityIds = $this->request->getQuery('facility', []);
+        $pricesIds = $this->request->getQuery('prices', []);
+        $arrival = $this->request->getQuery('arrival');
+        $departure = $this->request->getQuery('departure');
+        $rate = $this->request->getQuery('rate', 0);
+        $priceStart = $this->request->getQuery('price-start', 10);
+        $priceStop = $this->request->getQuery('price-stop', 100);
+        $rooms = $this->request->getQuery('rooms', 1);
+        $adults = $this->request->getQuery('adults', 1);
+        $kids = $this->request->getQuery('kids', 0);
+        $priceGroupId = $this->request->getQuery('price_group_id');
+
+        // Sorting param
+        $sort = $this->request->getQuery('sort', 'discount');
+
+        // Create region data based on its ID
+        if ($regionId) {
+            $region = $this->getModuleService('regionService')->fetchById($regionId, $this->getLang());
+            $region['image'] = $this->appendBaseUrl($region['image']);
+            
+        } else {
+            $region = null;
+        }
+
+        $hotels = $this->getModuleService('hotelService')->findAll($this->getLang(), $priceGroupId, $this->request->getQuery(), $sort);
+        
+        foreach ($hotels as &$hotel) {
+            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+            
+            // Dummy
+            $hotel['penality_enabled'] = true;
+            $hotel['has_free_rooms'] = true;
+            $hotel['card_required'] = false;
+        }
+        
+        return $this->json([
+            'region' => $region,
+
+            // Request variables
+            'regionId' => $regionId,
+            'typeIds' => $typeIds,
+            'facilityIds' => $facilityIds,
+            'priceIds' => $pricesIds,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'rate' => $rate,
+            'priceStart' => $priceStart,
+            'priceStop' => $priceStop,
+            'rooms' => $rooms,
+            'adults' => $adults,
+            'kids' => $kids,
+            'sort' => $sort,
+
+            'hotelTypes' => $this->getModuleService('hotelTypeService')->fetchAllWithCount($this->getLang()),
+            'hotels' => $hotels,
+            'regions' => $this->getModuleService('regionService')->fetchList($this->getLang()),
+            'facilities' => $this->getModuleService('facilitiyService')->getItemList(null, $this->getLang(), true)
+        ]);
+    }
+
+    /**
+     * Returns initial data
+     * 
+     * @return array
+     */
+    public function getInitial()
+    {
+        $data = $this->getModuleService('regionService')->findHotels($this->getLang());
+
+        foreach ($data as &$item) {
+            $item['image'] = $this->appendBaseUrl($item['image']);
+        }
+
+        return $this->json($data);
     }
 
     /**
