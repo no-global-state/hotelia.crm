@@ -82,7 +82,7 @@ use Krystal\Form\Element;
                         return null;
                     }
 
-                    return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Hotel@deleteAction', $row['id']), ['class' => 'btn btn-danger']);
+                    return Element::link('<i class="glyphicon glyphicon-remove"></i>', $this->url('Site:Hotel@deleteAction', $row['id']), ['class' => 'btn btn-danger', 'data-button' => 'delete']);
                 }
             ]
 
