@@ -26,7 +26,8 @@ final class BookingRoomMapper extends AbstractMapper
             self::column('qty'),
             self::column('guests'),
             RoomCategoryTranslationMapper::column('name') => 'category',
-            ReservationMapper::column('room_id')
+            ReservationMapper::column('room_id'),
+            RoomTypeBedTranslationMapper::column('name') => 'bed' // Optional bed
         ];
 
         $db = $this->db->select($columns, true)
@@ -56,10 +57,19 @@ final class BookingRoomMapper extends AbstractMapper
                             BookingReservationRelation::column('master_id') => self::getRawColumn('booking_id'),
                             BookingReservationRelation::column('slave_id') => ReservationMapper::getRawColumn('id')
                         ])
+                        // Bed relation
+                        ->leftJoin(RoomTypeBedMapper::getTableName(), [
+                            RoomTypeBedMapper::column('id') => self::getRawColumn('bed_id'),
+                        ])
+                        // Bed translation
+                        ->leftJoin(RoomTypeBedTranslationMapper::getTableName(), [
+                            RoomTypeBedTranslationMapper::column('id') => RoomTypeBedMapper::getRawColumn('id'),
+                            RoomTypeBedTranslationMapper::column('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
+                        ])
                         // Constraints
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                         ->andWhereEquals(self::column('booking_id'), $bookingId);
-                        
+
         return $db->queryAll();
     }
 }

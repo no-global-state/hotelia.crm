@@ -34,6 +34,7 @@ CREATE TABLE velveto_bookings_rooms (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `booking_id` INT NOT NULL,
     `room_type_id` INT NOT NULL,
+    `bed_id` INT DEFAULT NULL COMMENT 'Optional bed ID',
     `guests` INT NOT NULL,
     `qty` INT NOT NULL,
 
