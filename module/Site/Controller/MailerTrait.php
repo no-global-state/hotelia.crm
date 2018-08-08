@@ -111,8 +111,16 @@ trait MailerTrait
      */
     private function renderMail(string $template, array $vars) : string
     {
-        return $this->view->setTheme('mail')
-                          ->render($template, $vars);
+        // Original theme
+        $theme = $this->view->getTheme();
+
+        $content = $this->view->setTheme('mail')
+                              ->render($template, $vars);
+
+        // Restore original theme
+        $this->view->setTheme($theme);
+
+        return $content;
     }
 
     /**
