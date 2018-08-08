@@ -291,6 +291,8 @@ final class RoomService
      */
     public function createRooms(int $langId, int $hotelId, TranslatorInterface $translator) : array
     {
+        $output = [];
+
         foreach ($this->createTable($langId, $hotelId) as $floor => $room) {
             $data = ArrayUtils::arrayList($room, 'id', 'name');
 

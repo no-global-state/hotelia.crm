@@ -79,7 +79,7 @@ final class Booking extends AbstractCrmController
             return $this->view->render('booking/details', [
                 'details' => $details,
                 'icon' => 'glyphicon glyphicon-search',
-                'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId()),
+                'rooms' => $this->getModuleService('roomService')->createRooms($this->getCurrentLangId(), $this->getHotelId(), $this->translator),
 
                 // From collection
                 'genders' => (new GenderCollection)->getAll(),
