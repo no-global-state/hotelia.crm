@@ -48,7 +48,7 @@ final class BookingRoomMapper extends AbstractMapper
                             RoomMapper::column('type_id') => self::getRawColumn('room_type_id')
                         ])
                         // Reservation relation
-                        ->innerJoin(ReservationMapper::getTableName(), [
+                        ->leftJoin(ReservationMapper::getTableName(), [
                             ReservationMapper::column('room_id') => RoomMapper::getRawColumn('id')
                         ])
                         // Junction relation
@@ -59,7 +59,7 @@ final class BookingRoomMapper extends AbstractMapper
                         // Constraints
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                         ->andWhereEquals(self::column('booking_id'), $bookingId);
-
+                        
         return $db->queryAll();
     }
 }
