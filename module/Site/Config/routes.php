@@ -46,6 +46,10 @@ return [
         'controller' => 'Site@languageAction',
     ],
     
+    '/state/currency/(:var)' => [
+        'controller' => 'Site@currencyAction',
+    ],
+
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction'

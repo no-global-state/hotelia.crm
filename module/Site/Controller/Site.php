@@ -14,6 +14,23 @@ final class Site extends AbstractSiteController
     use HotelTrait;
 
     /**
+     * Changes currency
+     * 
+     * @param string $currency
+     * @return void
+     */
+    public function currencyAction(string $currency)
+    {
+        $exchangeService = $this->getModuleService('exchangeService');
+
+        if ($exchangeService->saveCurrency($currency)) {
+            $this->response->redirectToPreviousPage();
+        } else {
+            // Invalid currency
+        }
+    }
+
+    /**
      * Redirects to payment gateway
      * 
      * @param string $token
