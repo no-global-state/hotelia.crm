@@ -29,6 +29,7 @@ use Site\Service\DictionaryService;
 use Site\Service\MealsService;
 use Site\Service\BedService;
 use Site\Service\BookingService;
+use Site\Service\ExchangeService;
 
 final class Module extends AbstractModule
 {
@@ -130,6 +131,8 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'exchangeService' => new ExchangeService($this->getServiceLocator()->get('sessionBag')),
+            
             'bookingService' => new BookingService(
                 $this->createMapper('\Site\Storage\MySQL\BookingMapper'),
                 $this->createMapper('\Site\Storage\MySQL\BookingGuestsMapper'),
