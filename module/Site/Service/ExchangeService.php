@@ -119,6 +119,24 @@ final class ExchangeService
     }
 
     /**
+     * Render price taking in account current currency
+     * 
+     * @param boolean $foreigner
+     * @param float $price
+     * @param string $currency Fall-back currency
+     * @return mixed
+     */
+    public function renderPrice(bool $foreigner, float $price, string $currency)
+    {
+        if ($foreigner && $this->hasCurrency()) {
+            return $this->calculate($price);
+        } else {
+            // Default
+            return number_format($price) . PHP_EOL . $currency;
+        }
+    }
+
+    /**
      * Calculates currency
      * 
      * @param mixed $value
