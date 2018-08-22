@@ -36,6 +36,28 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Find similar hotels excluding provided one
+     * 
+     * @param int $id Hotel ID to be excluded
+     * @param int $langId Language ID filter
+     * @param int $priceGroupId Active price group ID
+     * @param int $regionId Region ID filter
+     * @param int $limit Limit of hotels to be returned
+     * @return array
+     */
+    public function findSimilar(int $id, int $langId, int $priceGroupId, int $regionId, int $limit = 5) : array
+    {
+        $rows = $this->hotelMapper->findSimilar($id, $langId, $priceGroupId, $regionId, $limit);
+        
+        // Append $rows
+        foreach ($rows as &$row) {
+            $row['cover'] = PhotoService::createImagePath($row['cover_id'], $row['cover'], PhotoService::PARAM_IMAGE_SIZE_SMALL);
+        }
+
+        return $rows;
+    }
+
+    /**
      * Finds hotel name by its associated ID
      * 
      * @param int $hotelId

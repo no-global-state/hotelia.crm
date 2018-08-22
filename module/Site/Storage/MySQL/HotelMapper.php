@@ -156,6 +156,66 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     }
 
     /**
+     * Find similar hotels excluding provided one
+     * 
+     * @param int $id Hotel ID to be excluded
+     * @param int $langId Language ID filter
+     * @param int $priceGroupId Active price group ID
+     * @param int $regionId Region ID filter
+     * @param int $limit Limit of hotels to be returned
+     * @return array
+     */
+    public function findSimilar(int $id, int $langId, int $priceGroupId, int $regionId, int $limit = 5) : array
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('rate'),
+            PhotoMapper::column('file') => 'cover',
+            PhotoMapper::column('id') => 'cover_id',
+            HotelTranslationMapper::column('name')
+        ];
+
+        $db = $this->db->select($columns)
+                       ->min(RoomTypePriceMapper::column('price'), 'start_price')
+                       ->from(self::getTableName())
+                       // Hotel translation relation
+                       ->innerJoin(HotelTranslationMapper::getTableName(), [
+                            HotelTranslationMapper::column('id') => self::getRawColumn('id')
+                       ])
+                       // Photo cover relation
+                       ->innerJoin(PhotoCoverMapper::getTableName(), [
+                            PhotoCoverMapper::column('master_id') => self::getRawColumn('id')
+                       ])
+                       // Photo relation
+                       ->innerJoin(PhotoMapper::getTableName(), [
+                            PhotoMapper::column('id') => PhotoCoverMapper::getRawColumn('slave_id')
+                       ])
+                       // Room relation
+                       ->innerJoin(RoomMapper::getTableName(), [
+                            RoomMapper::column('hotel_id') => self::getRawColumn('id')
+                       ])
+                       // Room type relation
+                       ->innerJoin(RoomTypePriceMapper::getTableName(), [
+                            RoomTypePriceMapper::column('room_type_id') => RoomMapper::getRawColumn('type_id')
+                       ])
+                       // Constraints
+                       ->whereEquals(self::column('region_id'), $regionId)
+                       ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+                       ->andWhereNotEquals(self::column('id'), $id)
+                       ->groupBy([
+                            self::column('id'),
+                            self::column('rate'),
+                            PhotoMapper::column('file'),
+                            PhotoMapper::column('id'),
+                            HotelTranslationMapper::column('name')
+                       ])
+                       ->limit($limit);
+
+        return $db->queryAll();
+    }
+
+    /**
      * Create shared query
      * 
      * @param \Krystal\Db\Sql\Db
@@ -253,7 +313,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
         // Adults count
         if (isset($filters['adults'])) {
-            $db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
+            //$db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
         }
 
         // Type filter
@@ -409,6 +469,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         // Apply pagination
         $db->paginateRaw($count, $filters['page'] ?? 1, $filters['per_page'] ?? 8);
 
+        //d($db);
+        
         return $db->queryAll();
     }
 
@@ -570,4 +632,4 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                     ->desc()
                     ->queryAll();
     }
-}
+}
