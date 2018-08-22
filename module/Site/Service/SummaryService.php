@@ -51,6 +51,34 @@ final class SummaryService
     }
 
     /**
+     * Returns formatted summary
+     * 
+     * @param mixed $discount Optional discount to be applied for the final price
+     * @param \Site\Service\ExchangeService $exchangeService
+     * @param boolean $foreigner
+     * @return array
+     */
+    public function getFormattedSummary($discount = null, ExchangeService $exchangeService, bool $foreigner) : array
+    {
+        $summary = $this->getSummary($discount);
+
+        // Keys to be formatted
+        $keys = [
+            'price', 
+            'discount_price', 
+            'saved_price'
+        ];
+
+        foreach ($keys as $key) {
+            if (isset($summary[$key])) {
+                $summary[$key] = $exchangeService->renderPrice($foreigner, $summary[$key]);
+            }
+        }
+
+        return $summary;
+    }
+
+    /**
      * Returns summary data
      * 
      * @param mixed $discount Optional discount to be applied for the final price
