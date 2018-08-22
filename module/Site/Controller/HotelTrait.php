@@ -188,10 +188,6 @@ trait HotelTrait
 
         $types = $roomTypeService->fetchList($langId, $hotelId);
 
-        // Grab similar hotels
-        $similar = $this->getModuleService('hotelService')->findAll($langId, $priceGroupId, ['region_id' => $hotel['region_id']], 5);
-        $similar = $this->normalizeImagePath($similar, 'cover');
-
         return [
             'roomTypes' => $this->getModuleService('roomTypeService')->fetchList($langId, $hotelId),
 
@@ -209,7 +205,6 @@ trait HotelTrait
             'hotel' => $hotel,
 
             // Similar hotels
-            'hotels' => $similar,
             'reviewTypes' => $this->getModuleService('reviewService')->findTypes($langId),
             'reviews' => $this->getModuleService('reviewService')->fetchAll($hotelId),
 

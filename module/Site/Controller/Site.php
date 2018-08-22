@@ -377,6 +377,17 @@ final class Site extends AbstractSiteController
 
             return false;
         } else {
+            // Grab similar hotels
+            $similar = $this->getModuleService('hotelService')->findSimilar(
+                $params['hotelId'], 
+                $this->getCurrentLangId(),
+                $this->getPriceGroupId(),
+                $params['regionId']
+            );
+
+            // And append them to template
+            $params['hotels'] = $similar;
+
             return $this->view->render('hotel', $params);
         }
     }
