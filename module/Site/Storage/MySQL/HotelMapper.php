@@ -204,6 +204,10 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
                        ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
                        ->andWhereNotEquals(self::column('id'), $id)
+                       // ORDER BY RAND() alternative
+                       ->andWhere(self::column('id'), '>=', new RawSqlFragment(
+                            sprintf('FLOOR(1 + RAND()*(SELECT MAX(id) FROM %s))', self::getTableName())
+                       ))
                        ->groupBy([
                             self::column('id'),
                             self::column('rate'),
