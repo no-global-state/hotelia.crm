@@ -30,6 +30,7 @@ use Site\Service\MealsService;
 use Site\Service\BedService;
 use Site\Service\BookingService;
 use Site\Service\ExchangeService;
+use Site\Service\SummaryService;
 
 final class Module extends AbstractModule
 {
@@ -131,6 +132,7 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'summaryService' => new SummaryService($this->getServiceLocator()->get('sessionBag')),
             'exchangeService' => new ExchangeService($this->getServiceLocator()->get('sessionBag')),
             
             'bookingService' => new BookingService(

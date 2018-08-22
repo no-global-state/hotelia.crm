@@ -4,7 +4,6 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
-use Site\Service\SummaryService;
 use Site\Gateway\GatewayFactory;
 use Krystal\Iso\ISO3166\Country;
 
@@ -175,7 +174,7 @@ final class Site extends AbstractSiteController
             $params['departure']
         );
 
-        $summary = new SummaryService($this->sessionBag);
+        $summary = $this->getModuleService('summaryService');
 
         // If to remove
         if ($params['qty'] == 0) {
@@ -220,7 +219,7 @@ final class Site extends AbstractSiteController
     private function createSummary(int $hotelId)
     {
         // Clear previous summary if any
-        $summary = (new SummaryService($this->sessionBag))->getData();
+        $summary = $this->getModuleService('summaryService')->getData();
 
         return $this->getModuleService('roomTypeService')->createSummary($summary, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
     }
@@ -259,14 +258,14 @@ final class Site extends AbstractSiteController
                 'departure' => $departure,
                 'room' => $room,
                 'selectedRooms' => $this->createSummary($hotelId),
-                'selectedSummary' => (new SummaryService($this->sessionBag))->getSummary(),
+                'selectedSummary' => $this->getModuleService('summaryService')->getSummary(),
                 'hotel' => $hotel,
                 'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price']),
                 'qty' => $qty
             ]);
 
         } elseif ($this->request->isPost()) {
-            $summary = (new SummaryService($this->sessionBag))->getSummary();
+            $summary = $this->getModuleService('summaryService')->getSummary();
 
             $hotelId = $this->request->getQuery('hotel_id');
 
@@ -373,7 +372,7 @@ final class Site extends AbstractSiteController
 
         if ($params === false) {
             // Clear previous summary if any
-            $summary = new SummaryService($this->sessionBag);
+            $summary = $this->getModuleService('summaryService')->getSummary();
             $summary->clear();
 
             return false;
