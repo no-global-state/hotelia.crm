@@ -124,39 +124,38 @@ final class ExchangeService
      * @param boolean $foreigner
      * @param float $price
      * @param string $currency Fall-back currency
+     * @param boolean $format Whether to format value
      * @return mixed
      */
-    public function renderPrice(bool $foreigner, float $price, string $currency)
+    public function renderPrice(bool $foreigner, float $price, bool $format = true)
     {
         if ($foreigner && $this->hasCurrency()) {
-            return $this->calculate($price);
+            $value = $this->calculate($price);
         } else {
             // Default
-            return number_format($price) . PHP_EOL . $currency;
+            $value = $price;
         }
+
+        if ($format === true) {
+            $value = number_format($value);
+        }
+
+        return $value;
     }
 
     /**
      * Calculates currency
      * 
      * @param mixed $value
-     * @param boolean $rate Whether to append rate on final result
      * @return string
      */
-    public function calculate($value, bool $rate = true)
+    public function calculate($value)
     {
         $currency = $this->getCurrency();
         $data = $this->getData();
 
         if (isset($data['rates'][$currency])) {
-            $result = number_format($data['rates'][$currency] * (float) $value);
-
-            if ($rate === true) {
-                return sprintf('%s %s', $result, $currency);
-            } else {
-                return $result;
-            }
-
+            return $data['rates'][$currency] * (float) $value;
         } else {
             return false;
         }
