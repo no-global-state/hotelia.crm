@@ -189,7 +189,9 @@ final class Site extends AbstractSiteController
         $hotel = $this->getModuleService('hotelService')->fetchById($params['hotel_id'], $this->getCurrentLangId(), $this->getPriceGroupId());
         $discount = $hotel['discount'];
 
-        return $this->json($summary->getSummary($discount));
+        $output = $summary->getFormattedSummary($discount, $this->getModuleService('exchangeService'), $this->getPriceGroupId() == 1);
+
+        return $this->json($output);
     }
 
     /**
