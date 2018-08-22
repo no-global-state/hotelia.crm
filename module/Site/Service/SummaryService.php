@@ -75,7 +75,7 @@ final class SummaryService
 
         $output = [
             'qty' => $qty,
-            'price' => number_format($price),
+            'price' => $price,
             'guests' => $guests
         ];
 
@@ -83,10 +83,6 @@ final class SummaryService
         if ($discount !== null) {
             $output['discount_price'] = Math::getDiscount($price, $discount);
             $output['saved_price'] = $price - $output['discount_price'];
-
-            // Format output
-            $output['discount_price'] = number_format($output['discount_price']);
-            $output['saved_price'] = number_format($output['saved_price']);
         }
 
         return $output;
