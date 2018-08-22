@@ -202,6 +202,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        // Constraints
                        ->whereEquals(self::column('region_id'), $regionId)
                        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+                       ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
                        ->andWhereNotEquals(self::column('id'), $id)
                        ->groupBy([
                             self::column('id'),
