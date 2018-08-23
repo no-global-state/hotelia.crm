@@ -203,6 +203,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        ->whereEquals(self::column('region_id'), $regionId)
                        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
                        ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
+                       ->andWhereEquals(self::column('active'), new RawSqlFragment(1))
+                       ->andWhereEquals(self::column('closed'), new RawSqlFragment(0))
                        ->andWhereNotEquals(self::column('id'), $id)
                        // ORDER BY RAND() alternative
                        ->andWhere(self::column('id'), '>=', new RawSqlFragment(
@@ -479,8 +481,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         // Apply pagination
         $db->paginateRaw($count, $filters['page'] ?? 1, $filters['per_page'] ?? 8);
 
-        //d($db);
-        
         return $db->queryAll();
     }
 
