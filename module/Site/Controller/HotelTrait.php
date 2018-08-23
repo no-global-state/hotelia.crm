@@ -82,8 +82,8 @@ trait HotelTrait
         $typeIds = $this->request->getQuery('type', []);
         $facilityIds = $this->request->getQuery('facility', []);
         $pricesIds = $this->request->getQuery('prices', []);
-        $arrival = $this->request->getQuery('arrival', ReservationService::getToday());
-        $departure = $this->request->getQuery('departure', ReservationService::addOneDay(ReservationService::getToday()));
+        $arrival = $this->request->getQuery('arrival');
+        $departure = $this->request->getQuery('departure');
         $rate = $this->request->getQuery('rate', 0);
         $priceStart = $this->request->getQuery('price-start', 10);
         $priceStop = $this->request->getQuery('price-stop', 100);
@@ -91,6 +91,14 @@ trait HotelTrait
         $adults = $this->request->getQuery('adults', 1);
         $kids = $this->request->getQuery('kids', 0);
         $stars = $this->request->getQuery('stars', []);
+
+        if (!$arrival) {
+            $arrival = ReservationService::getToday();
+        }
+
+        if (!$departure) {
+            $departure = ReservationService::addOneDay(ReservationService::getToday());
+        }
 
         // Sorting param
         $sort = $this->request->getQuery('sort', 'discount');
