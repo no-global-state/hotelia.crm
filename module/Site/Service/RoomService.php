@@ -49,6 +49,36 @@ final class RoomService
     }
 
     /**
+     * Append free room types
+     * 
+     * @param array $hotels
+     * @param integer $langId Language ID constraint
+     * @param string $arrival Arrival date
+     * @param string $departure Departure date
+     * @param int $adults Optional number of adults constraint
+     * @param int $children Optional number of children constraint
+     * @return array
+     */
+    public function appendFreeRoomTypes(array $hotels, int $langId, string $arrival, string $departure, $adults = null, $children = null)
+    {
+        // Extract hotel IDs
+        $hotelIds = array_column($hotels, 'id');
+
+        // Find free room types
+        $types = $this->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure, $adults, $children);
+
+        foreach ($hotels as &$hotel) {
+            foreach($types as $type) {
+                if ($type['hotel_id'] == $hotel['id']) {
+                    $hotel['room_types'][] = $type;
+                }
+            }
+        }
+
+        return $hotels;
+    }
+
+    /**
      * Find free room types
      * 
      * @param integer $langId Language ID constraint
