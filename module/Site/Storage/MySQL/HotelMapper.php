@@ -286,35 +286,43 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             // Photo relation
             ->leftJoin(PhotoMapper::getTableName(), [
                 PhotoMapper::column('id') => PhotoCoverMapper::getRawColumn('slave_id')
-            ])
-            // Facility relation
-            ->leftJoin(FacilityRelationMapper::getTableName(), [
+            ]);
+            
+        // Facility filter
+        if (isset($filters['facility']) && is_array($filters['facility'])) {
+            $db->leftJoin(FacilityRelationMapper::getTableName(), [
                 FacilityRelationMapper::column('master_id') => self::getRawColumn('id')
-            ])
-            // Room type relation
-            ->leftJoin(RoomTypeMapper::getTableName(), [
-                RoomTypeMapper::column('hotel_id') => self::getRawColumn('id'),
-                    #RoomTypeMapper::column('id') => RoomMapper::getRawColumn('type_id')
-            ])
-            // Room type translation relation
-            ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
-                RoomTypeTranslationMapper::column('id') => RoomTypeMapper::getRawColumn('id'),
-                RoomTypeTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
-            ])
-            // Room category relation
-            ->leftJoin(RoomCategoryMapper::getTableName(), [
-                RoomCategoryMapper::column('id') => RoomTypeMapper::getRawColumn('category_id'),
-            ])
-            // Room category translation mapper
-            ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
-                RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id'),
-                RoomCategoryTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
-            ])
-            // Constraints
-            ->whereEquals(HotelTranslationMapper::column('lang_id'), new RawSqlFragment($langId))
-            ->andWhereEquals(self::column('active'), new RawSqlFragment(1))
-            ->andWhereEquals(self::column('closed'), new RawSqlFragment(0))
-            ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), new RawSqlFragment($priceGroupId));
+            ]);
+        }
+
+        /*
+        // Facility relation
+        // Room type relation
+        ->leftJoin(RoomTypeMapper::getTableName(), [
+            RoomTypeMapper::column('hotel_id') => self::getRawColumn('id'),
+                #RoomTypeMapper::column('id') => RoomMapper::getRawColumn('type_id')
+        ])
+        // Room type translation relation
+        ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
+            RoomTypeTranslationMapper::column('id') => RoomTypeMapper::getRawColumn('id'),
+            RoomTypeTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+        ])
+        // Room category relation
+        ->leftJoin(RoomCategoryMapper::getTableName(), [
+            RoomCategoryMapper::column('id') => RoomTypeMapper::getRawColumn('category_id'),
+        ])
+        // Room category translation mapper
+        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+            RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id'),
+            RoomCategoryTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+        ])
+        */
+
+        // Constraints
+        $db->whereEquals(HotelTranslationMapper::column('lang_id'), new RawSqlFragment($langId))
+           ->andWhereEquals(self::column('active'), new RawSqlFragment(1))
+           ->andWhereEquals(self::column('closed'), new RawSqlFragment(0))
+           ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), new RawSqlFragment($priceGroupId));
 
         // Adults count
         if (isset($filters['adults'])) {
