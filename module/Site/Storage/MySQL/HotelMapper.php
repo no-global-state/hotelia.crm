@@ -296,12 +296,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         }
 
         /*
-        // Facility relation
-        // Room type relation
-        ->leftJoin(RoomTypeMapper::getTableName(), [
-            RoomTypeMapper::column('hotel_id') => self::getRawColumn('id'),
-                #RoomTypeMapper::column('id') => RoomMapper::getRawColumn('type_id')
-        ])
         // Room type translation relation
         ->leftJoin(RoomTypeTranslationMapper::getTableName(), [
             RoomTypeTranslationMapper::column('id') => RoomTypeMapper::getRawColumn('id'),
@@ -317,6 +311,15 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             RoomCategoryTranslationMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
         ])
         */
+        
+        // Adults count
+        if (isset($filters['adults'])) {
+            // Room type relation
+            $db->leftJoin(RoomTypeMapper::getTableName(), [
+                RoomTypeMapper::column('hotel_id') => self::getRawColumn('id'),
+                RoomTypeMapper::column('id') => RoomMapper::getRawColumn('type_id')
+            ]);
+        }
 
         // Constraints
         $db->whereEquals(HotelTranslationMapper::column('lang_id'), new RawSqlFragment($langId))
@@ -326,7 +329,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
         // Adults count
         if (isset($filters['adults'])) {
-            //$db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
+            $db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
         }
 
         // Type filter
@@ -415,12 +418,6 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             PhotoMapper::column('file') => 'cover',
             PhotoMapper::column('id') => 'cover_id'
         ];
-
-        // Adults count
-        if (isset($filters['adults'])) {
-            //$columns[RoomCategoryTranslationMapper::column('name')] = 'room';
-            //$columns[RoomTypeMapper::column('id')] = 'type_id';
-        }
 
         $db = $this->db->select($columns, true)
                        ->min(RoomTypePriceMapper::column('price'), 'start_price')
