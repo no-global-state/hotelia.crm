@@ -371,12 +371,12 @@ final class Site extends AbstractSiteController
         $params = $this->findHotel($this->getPriceGroupId(), $this->getCurrentLangId());
 
         if ($params === false) {
-            // Clear previous summary if any
-            $summary = $this->getModuleService('summaryService')->getSummary();
-            $summary->clear();
-
             return false;
         } else {
+            // Clear previous summary if any
+            $summary = $this->getModuleService('summaryService');
+            $summary->clear();
+
             // Grab similar hotels
             $similar = $this->getModuleService('hotelService')->findSimilar(
                 $params['hotelId'], 
