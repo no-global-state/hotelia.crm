@@ -479,7 +479,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         }
 
         // Apply pagination
-        $db->paginateRaw($count, $filters['page'] ?? 1, $filters['per_page'] ?? 8);
+        $db->paginateRaw($count, !empty($filters['page']) ? $filters['page'] : 1, $filters['per_page'] ?? 8);
 
         return $db->queryAll();
     }
