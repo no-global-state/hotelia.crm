@@ -66,9 +66,11 @@ final class RoomMapper extends AbstractMapper
      * @param array $hotelIds Hotel IDs to be considered
      * @param string $arrival Arrival date
      * @param string $departure Departure date
+     * @param int $adults Optional number of adults constraint
+     * @param int $children Optional number of children constraint
      * @return array
      */
-    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure) : array
+    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
     {
         // Columns to be selected
         $columns = [
@@ -99,14 +101,25 @@ final class RoomMapper extends AbstractMapper
                         // Language ID constraint
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                         ->andWhereNotIn(self::column('id'), new RawSqlFragment($this->createBookingQuery($hotelIds, $arrival, $departure)))
-                        ->andWhereIn(self::column('hotel_id'), $hotelIds)
-                        ->groupBy([
-                            self::column('hotel_id'),
-                            self::column('type_id'),
-                            RoomCategoryTranslationMapper::column('name')
-                        ])
-                        // Sort by name
-                        ->orderBy(self::column('name'));
+                        ->andWhereIn(self::column('hotel_id'), $hotelIds);
+
+        // Optional adults constraint
+        if ($adults !== null) {
+            $db->andWhereEquals(RoomTypeMapper::column('persons'), $adults);
+        }
+
+        // Optional children constraint
+        if ($children !== null) {
+            $db->andWhereEquals(RoomTypeMapper::column('children'), $children);
+        }
+
+        $db->groupBy([
+            self::column('hotel_id'),
+            self::column('type_id'),
+            RoomCategoryTranslationMapper::column('name')
+        ])
+        // Sort by name
+        ->orderBy(self::column('name'));
 
         return $db->queryAll();
     }

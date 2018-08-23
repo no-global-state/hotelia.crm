@@ -55,11 +55,13 @@ final class RoomService
      * @param array $hotelIds Hotel IDs to be considered
      * @param string $arrival Arrival date
      * @param string $departure Departure date
+     * @param int $adults Optional number of adults constraint
+     * @param int $children Optional number of children constraint
      * @return array
      */
-    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure) : array
+    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
     {
-        return $this->roomMapper->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure);
+        return $this->roomMapper->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure, $adults, $children);
     }
 
     /**
