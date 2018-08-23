@@ -109,7 +109,7 @@ final class RoomMapper extends AbstractMapper
         }
 
         // Optional children constraint
-        if ($children !== null) {
+        if ($children !== null && $children != 0) {
             $db->andWhereEquals(RoomTypeMapper::column('children'), $children);
         }
 
@@ -117,9 +117,7 @@ final class RoomMapper extends AbstractMapper
             self::column('hotel_id'),
             self::column('type_id'),
             RoomCategoryTranslationMapper::column('name')
-        ])
-        // Sort by name
-        ->orderBy(self::column('name'));
+        ]);
 
         return $db->queryAll();
     }
