@@ -49,6 +49,20 @@ final class RoomService
     }
 
     /**
+     * Find free room types
+     * 
+     * @param integer $langId Language ID constraint
+     * @param array $hotelIds Hotel IDs to be considered
+     * @param string $arrival Arrival date
+     * @param string $departure Departure date
+     * @return array
+     */
+    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure) : array
+    {
+        return $this->roomMapper->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure);
+    }
+
+    /**
      * Fetches cleaning data of rooms
      * 
      * @param int $langId

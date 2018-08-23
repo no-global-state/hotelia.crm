@@ -60,6 +60,58 @@ final class RoomMapper extends AbstractMapper
     }
 
     /**
+     * Find free room types
+     * 
+     * @param integer $langId Language ID constraint
+     * @param array $hotelIds Hotel IDs to be considered
+     * @param string $arrival Arrival date
+     * @param string $departure Departure date
+     * @return array
+     */
+    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure) : array
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('hotel_id'),
+            self::column('type_id'),
+            RoomCategoryTranslationMapper::column('name') => 'type'
+        ];
+
+        $db = $this->db->select($columns)
+                       ->count(self::column('type_id'), 'free_count')
+                       ->from(self::getTableName())
+                        // Room type mapper
+                        ->leftJoin(RoomTypeMapper::getTableName(), [
+                            self::column('type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
+                        // Room inventory relation
+                        ->leftJoin(RoomInventoryMapper::getTableName(), [
+                            RoomInventoryMapper::column('room_id') => self::getRawColumn('id')
+                        ])
+                        // Room category relation
+                        ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomTypeMapper::column('category_id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Room category translation relation
+                        ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id')
+                        ])
+                        // Language ID constraint
+                        ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                        ->andWhereNotIn(self::column('id'), new RawSqlFragment($this->createBookingQuery($hotelIds, $arrival, $departure)))
+                        ->andWhereIn(self::column('hotel_id'), $hotelIds)
+                        ->groupBy([
+                            self::column('hotel_id'),
+                            self::column('type_id'),
+                            RoomCategoryTranslationMapper::column('name')
+                        ])
+                        // Sort by name
+                        ->orderBy(self::column('name'));
+
+        return $db->queryAll();
+    }
+
+    /**
      * Finds free available rooms based on date range and attached hotel ID
      * 
      * @param integer $langId
@@ -104,7 +156,7 @@ final class RoomMapper extends AbstractMapper
                         ])
                         // Language ID constraint
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
-                        ->andWhereNotIn(self::column('id'), new RawSqlFragment($this->createBookingQuery($hotelId, $arrival, $departure)))
+                        ->andWhereNotIn(self::column('id'), new RawSqlFragment($this->createBookingQuery([$hotelId], $arrival, $departure)))
                         ->andWhereIn('type_id', $typeIds) // Will not be appended if $typeIds is empty
                         ->andWhereIn(RoomInventoryMapper::column('inventory_id'), $inventoryIds) // Will not be appended if $inventoryIds is empty
                         ->andWhereEquals(self::column('hotel_id'), $hotelId);
@@ -122,12 +174,12 @@ final class RoomMapper extends AbstractMapper
     /**
      * Create query that finds non-available rooms
      * 
-     * @param integer $hotelId
+     * @param array $hotelIds A collection of hotel IDs
      * @param string $arrival
      * @param string $departure
      * @return string
      */
-    private function createBookingQuery($hotelId, $arrival, $departure)
+    private function createBookingQuery(array $hotelIds, $arrival, $departure)
     {
         // @TODO: Escape these values
         $arrival = sprintf("'%s'", $arrival);
@@ -158,7 +210,7 @@ final class RoomMapper extends AbstractMapper
            ->andWhere('departure', '<', $departure)
            ->closeBracket()
 
-           ->andWhereEquals(ReservationMapper::column('hotel_id'), $hotelId);
+           ->andWhereIn(ReservationMapper::column('hotel_id'), $hotelIds);
 
         return $qb->getQueryString();
     }
