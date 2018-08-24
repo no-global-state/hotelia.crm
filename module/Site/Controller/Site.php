@@ -401,7 +401,7 @@ final class Site extends AbstractSiteController
     {
         return $this->view->render('home', [
             // Defaults
-            'adults' => 1,
+            'adults' => 2,
             'kids' => 0,
             'rooms' => 1,
 
