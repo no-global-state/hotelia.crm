@@ -274,6 +274,7 @@ final class Site extends AbstractSiteController
             $params = [
                 'hotel_id' => $hotelId,
                 'price_group_id' => $this->getPriceGroupId(),
+                'lang_id' => $this->getCurrentLangId(),
                 'arrival' => $this->request->getQuery('arrival'),
                 'departure' => $this->request->getQuery('departure'),
                 'phone' => $this->request->getPost('phone'),
