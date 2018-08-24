@@ -283,10 +283,13 @@ final class Site extends AbstractSiteController
 
             // Grab booking service and insert
             $bs = $this->getModuleService('bookingService');
-            $bs->save($params, $this->request->getPost('guest'), $this->createSummary($hotelId));
+            $token = $bs->save($params, $this->request->getPost('guest'), $this->createSummary($hotelId));
+
+            // Create payment URL for client
+            $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$token]);
 
             // Send user notification
-            $this->bookingProcessedNotify($this->request->getPost('email'));
+            $this->paymentConfirmNotify($this->request->getPost('email'), $paymentUrl);
 
             // Notify owner
             $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
