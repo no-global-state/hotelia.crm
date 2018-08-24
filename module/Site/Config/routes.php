@@ -17,6 +17,10 @@ return [
         'controller' => 'Booking@detailsAction'
     ],
     
+    '/crm/booking/delete/(:var)' => [
+        'controller' => 'Booking@deleteAction'
+    ],
+
     // Meals
     '/crm/meals' => [
         'controller' => 'Meals@indexAction'

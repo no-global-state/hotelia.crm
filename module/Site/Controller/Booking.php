@@ -61,6 +61,20 @@ final class Booking extends AbstractCrmController
     }
 
     /**
+     * Deletes booking info by its ID
+     * 
+     * @param int $id Booking ID
+     * @return void
+     */
+    public function deleteAction(int $id)
+    {
+        $this->getModuleService('bookingService')->deleteById($id);
+
+        $this->flashBag->set('success', 'Selected reservation has been removed successfully');
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Render details
      * 
      * @param int $id Booking ID
