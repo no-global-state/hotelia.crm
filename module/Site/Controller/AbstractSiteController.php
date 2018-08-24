@@ -34,7 +34,7 @@ abstract class AbstractSiteController extends AbstractController
                 $call = [];
             }
         }
-        
+
         return $call;
     }
 
@@ -234,23 +234,30 @@ abstract class AbstractSiteController extends AbstractController
         $code = $bag->has(self::PARAM_COOKIE_LANG_CODE) ? $bag->get(self::PARAM_COOKIE_LANG_CODE) : $this->appConfig->getLanguage();
         $this->loadTranslations($code);
 
+        $foreigner = $this->getPriceGroupId() == 1;
+        $exchange = $this->getModuleService('exchangeService');
+
         // Add shared variables
         $this->view->addVariables(array(
             // Languages
             'language' => $code,
             'dictionary' => $this->createDictionary(),
-            'currency' => $this->getCurrency(),
+            'currency' => $foreigner && $exchange->hasCurrency() ? $exchange->getCurrency() : $this->getCurrency(),
 
             'params' => $this->paramBag->getAll(),
             'locale' => $this->appConfig->getLanguage(),
             'appName' => $this->paramBag->get('appName'),
             'priceGroups' => $this->getModuleService('priceGroupService')->fetchAll(),
             'activePriceGroupId' => $this->getPriceGroupId(),
+            'exchange' => $exchange,
+
+            // Foreigner
+            'foreigner' => $foreigner
         ));
 
         // Load defaults
         $this->loadDefaults();
-        
+
         // Load language if explicitly provided
         if ($this->paramBag->has('siteLanguage')) {
             $siteLanguage = $this->paramBag->get('siteLanguage');
