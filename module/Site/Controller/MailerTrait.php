@@ -47,27 +47,15 @@ trait MailerTrait
     }
 
     /**
-     * Notify about booking being processed
-     * 
-     * @param string $to
-     * @return boolean
-     */
-    protected function bookingProcessedNotify(string $to)
-    {
-        $subject = 'Your booking is being processed';
-        return $this->sendMail($to, $subject, 'booking-on-moderation');
-    }
-
-    /**
      * Emails about the need of payment confirmation
      * 
-     * @param string $to
+     * @param string $to Client email
      * @param string $link Payment confirmation link
      * @return boolean
      */
-    protected function paymentNeedsConfirmNotify(string $to, string $link) : bool
+    protected function paymentConfirmNotify(string $to, string $link) : bool
     {
-        $subject = 'Please confirm your payment';
+        $subject = 'Please confirm booking payment';
 
         return $this->sendMail($to, $subject, 'payment-to-be-confirmed', [
             'link' => $link
