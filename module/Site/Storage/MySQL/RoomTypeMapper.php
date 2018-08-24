@@ -3,6 +3,7 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\RawSqlFragment;
+use Site\Collection\RoomQualityCollection;
 
 final class RoomTypeMapper extends AbstractMapper
 {
@@ -213,6 +214,8 @@ final class RoomTypeMapper extends AbstractMapper
                        ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
                        ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
                        ->andWhereEquals(RoomMapper::column('type_id'), $typeId, true)
+                        // And where not on repair
+                       ->andWhereNotEquals(RoomMapper::column('quality'), RoomQualityCollection::STATUS_ON_REPAIR)
                        ->groupBy($columns);
 
         return $db->queryAll();

@@ -8,6 +8,7 @@ use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
 use Closure;
+use Site\Collection\RoomQualityCollection;
 
 final class ReservationMapper extends AbstractMapper implements FilterableServiceInterface
 {
@@ -244,7 +245,9 @@ final class ReservationMapper extends AbstractMapper implements FilterableServic
                         // Hotel ID constraint
                         ->whereEquals(RoomMapper::column('hotel_id'), $hotelId)
                         // Language ID constraint
-                        ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId);
+                        ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                        // And where not on repair
+                        ->andWhereNotEquals(RoomMapper::column('quality'), RoomQualityCollection::STATUS_ON_REPAIR);
 
         // If type is provided, the filter by its ID
         if ($type != null) {

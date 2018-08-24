@@ -4,6 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\RawSqlFragment;
 use Krystal\Db\Sql\QueryBuilder;
+use Site\Collection\RoomQualityCollection;
 
 final class RoomMapper extends AbstractMapper
 {
@@ -467,6 +468,8 @@ final class RoomMapper extends AbstractMapper
                         ->whereEquals(self::column('hotel_id'), $hotelId)
                         // Language ID constraint
                         ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                        // And where not on repair
+                        ->andWhereNotEquals(self::column('quality'), RoomQualityCollection::STATUS_ON_REPAIR)
                         ->orderBy(self::column('id'))
                         ->desc();
 

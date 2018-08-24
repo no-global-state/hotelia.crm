@@ -4,6 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Db\Sql\RawSqlFragment;
+use Site\Collection\RoomQualityCollection;
 
 final class HotelMapper extends AbstractMapper implements FilterableServiceInterface
 {
@@ -327,7 +328,9 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         $db->whereEquals(HotelTranslationMapper::column('lang_id'), new RawSqlFragment($langId))
            ->andWhereEquals(self::column('active'), new RawSqlFragment(1))
            ->andWhereEquals(self::column('closed'), new RawSqlFragment(0))
-           ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), new RawSqlFragment($priceGroupId));
+           ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), new RawSqlFragment($priceGroupId))
+           // And where not on repair
+           ->andWhereNotEquals(RoomMapper::column('quality'), RoomQualityCollection::STATUS_ON_REPAIR);
 
         // Adults count
         if (isset($filters['adults'])) {
