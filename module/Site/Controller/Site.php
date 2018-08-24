@@ -51,7 +51,7 @@ final class Site extends AbstractSiteController
                 // Payment fields of target hotel
                 $this->getModuleService('paymentFieldService')->findAllByHotelId($booking['hotel_id']),
                 // URL on successful payment
-                $this->createUrl('Site:Site@confirmPaymentAction', [$token])
+                $this->request->getBaseUrl() . $this->createUrl('Site:Site@confirmPaymentAction', [$token])
             );
 
             return $this->view->disableLayout()->render('gateway', [
