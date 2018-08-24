@@ -236,14 +236,14 @@ final class BookingService
     }
 
     /**
-     * Saves a booking
+     * Saves a booking and returns its last token
      * 
      * @param array $params Booking parameters
      * @param array $guests Guests 
      * @param array $rooms Rooms
-     * @return boolean
+     * @return string
      */
-    public function save(array $params, array $guests, array $rooms) : bool
+    public function save(array $params, array $guests, array $rooms) : string
     {
         // Append a token
         $params['token'] = TextUtils::uniqueString();
@@ -252,7 +252,7 @@ final class BookingService
         $params['datetime'] = date('Y-m-d H:i:s');
 
         // Insert new booking
-        $this->bookingMapper->persist($params);
+        $row = $this->bookingMapper->persistRow($params);
 
         // Get last booking ID
         $bookingId = $this->getLastId();
@@ -273,6 +273,6 @@ final class BookingService
             ]);
         }
 
-        return true;
+        return $row['token'];
     }
 }
