@@ -117,6 +117,17 @@ final class BookingService
     }
 
     /**
+     * Deletes booking info by its ID
+     * 
+     * @param int $id Booking ID
+     * @return boolean
+     */
+    public function deleteById(int $id) : bool
+    {
+        return $this->bookingMapper->deleteByPk($id);
+    }
+
+    /**
      * Find details by booking ID
      * 
      * @param int $id Booking ID
