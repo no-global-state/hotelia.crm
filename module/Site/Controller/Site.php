@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Site\Gateway\GatewayFactory;
+use Site\Collection\BookingStatusCollection;
 use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
@@ -80,7 +81,7 @@ final class Site extends AbstractSiteController
 
             // Send email about successful confirmation
             $this->paymentSuccessNotify($booking['email']);
-            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id']), 1);
+            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
 
             return $this->view->render('payment-confirm');
         } else {
