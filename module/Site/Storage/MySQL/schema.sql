@@ -4,6 +4,7 @@ CREATE TABLE velveto_bookings (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `hotel_id` INT NOT NULL,
     `price_group_id` INT COMMENT 'Attached price group ID',
+    `lang_id` INT NOT NULL,
     `datetime` DATETIME NOT NULL,
     `status` SMALLINT NOT NULL,
     `arrival` DATE NOT NULL,
@@ -16,7 +17,8 @@ CREATE TABLE velveto_bookings (
     `token` varchar(32) NOT NULL,
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
-    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE,
+    FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_bookings_guests (
