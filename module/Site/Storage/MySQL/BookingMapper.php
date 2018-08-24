@@ -24,6 +24,7 @@ final class BookingMapper extends AbstractMapper
             self::column('id'),
             self::column('hotel_id'),
             self::column('price_group_id'),
+            self::column('lang_id'),
             self::column('datetime'),
             self::column('status'),
             self::column('arrival'),
