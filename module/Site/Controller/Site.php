@@ -83,7 +83,19 @@ final class Site extends AbstractSiteController
             $this->paymentSuccessNotify($booking['email']);
             $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
 
-            return $this->view->render('payment-confirm');
+            // Grab hotel information
+            $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
+
+            $details = $bookingService->findDetails($booking['id'], $booking['lang_id']);
+
+            // For voucher
+            return $this->view->render('payment-confirm', [
+                'hotel' => $hotel,
+                'booking' => $details['booking'],
+                'rooms' => $details['rooms'],
+                'guests' => $details['guests']
+            ]);
+
         } else {
             // Trigger 404
             return false;
