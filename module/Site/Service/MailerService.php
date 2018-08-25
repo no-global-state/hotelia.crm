@@ -32,6 +32,11 @@ final class MailerService
      */
     public function send(string $to, string $subject, string $body) : bool
     {
+        // Avoid exception if case invalid email provided
+        if (!filter_var($to, \FILTER_VALIDATE_EMAIL)) {
+            return false;
+        }
+
         $from = [$this->config['from']];
         $transport = \Swift_MailTransport::newInstance(null);
 
