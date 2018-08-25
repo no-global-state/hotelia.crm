@@ -143,6 +143,9 @@ final class BookingService
             $guests = $this->bookingGuestsMapper->findByBookingId($id);
             $rooms = $this->bookingRoomMapper->findDetailsByBookingId($id, $langId);
 
+            // Append nights count
+            $booking['nights'] = ReservationService::getDaysDiff($booking['arrival'], $booking['departure']);
+
             return [
                 'booking' => $booking,
                 'guests' => $guests,
