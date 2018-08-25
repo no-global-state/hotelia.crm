@@ -304,10 +304,13 @@ final class Site extends AbstractSiteController
 
             // Grab booking service and insert
             $bs = $this->getModuleService('bookingService');
-            $token = $bs->save($params, $this->request->getPost('guest'), $this->createSummary($hotelId));
+            $booking = $bs->save($params, $this->request->getPost('guest'), $this->createSummary($hotelId));
 
+            // Save external relation if possible
+            $this->getModuleService('externalService')->saveIfPossible($booking['id']);
+            
             // Create payment URL for client
-            $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$token]);
+            $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 
             // Send user notification
             $this->paymentConfirmNotify($this->request->getPost('email'), $paymentUrl);
