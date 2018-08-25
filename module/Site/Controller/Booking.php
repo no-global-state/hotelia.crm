@@ -45,15 +45,12 @@ final class Booking extends AbstractCrmController
 
         if ($data !== false) {
             // Update status as well
-            $bookingService->updateStatusById($data['id'], BookingStatusCollection::STATUS_AWAITING_PAYMENT);
+            $bookingService->updateStatusById($data['booking']['id'], BookingStatusCollection::STATUS_ACCEPTED);
 
             // And finally, do save
             $ids = $this->getModuleService('reservationService')->saveMany($data['reservations']);
 
             $bookingService->insertRelation($bookingService->getLastId(), $ids);
-
-            // Notify about the need to confirm payment
-            $this->paymentNeedsConfirmNotify($data['booking']['email'], $this->createUrl('Site:Site@gatewayAction', [$booking['token']]));
 
             $this->flashBag->set('success', 'Reservation has been made');
             return 1;

@@ -10,7 +10,7 @@ final class BookingStatusCollection extends ArrayCollection
     const STATUS_NEW = 0;
     const STATUS_CONFIRMED = 1;
     const STATUS_REJECTED = 2;
-    const STATUS_AWAITING_PAYMENT = 3;
+    const STATUS_ACCEPTED = 3;
 
     /**
      * {@inheritDoc}
@@ -19,6 +19,6 @@ final class BookingStatusCollection extends ArrayCollection
         self::STATUS_NEW => 'New',
         self::STATUS_CONFIRMED => 'Confirmed',
         self::STATUS_REJECTED => 'Rejected',
-        self::STATUS_AWAITING_PAYMENT => 'Awaiting payment'
+        self::STATUS_ACCEPTED => 'Accepted'
     ];
 }

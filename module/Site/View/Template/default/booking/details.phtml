@@ -7,7 +7,7 @@ use Krystal\Form\Element;
 use Site\Collection\GenderCollection;
 use Site\Collection\BookingStatusCollection;
 
-$disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_CONFIRMED;
+$disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_ACCEPTED;
 
 ?>
 
@@ -53,11 +53,13 @@ $disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_CON
                                     ['column' => 'phone'],
                                     ['column' => 'email'],
                                     ['column' => 'comment'],
-                                    ['column' => 'near_preferred'],
+                                    ['column' => 'near_preferred', 'value' => function() use ($details){
+                                        return $this->translate($details['booking']['near_preferred'] == 1 ? 'Yes' : 'No');
+                                    }],
                                     ['column' => 'datetime', 'title' => 'Date and time'],
                                     ['column' => 'price_group'],
                                     ['column' => 'amount', 'value' => function() use ($details){
-                                        return $details['booking']['amount'] . PHP_EOL . $details['booking']['currency'];
+                                        return number_format($details['booking']['amount']) . PHP_EOL . $details['booking']['currency'];
                                     }],
                                 ]
                             ], $this->translator))->render(); ?>

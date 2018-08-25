@@ -72,6 +72,11 @@ use Site\Collection\BookingStatusCollection;
             },
 
             'delete' => function($row){
+                // Don't show removal button if booking accepted
+                if ($row['status'] == BookingStatusCollection::STATUS_ACCEPTED) {
+                    return null;
+                }
+
                 return Element::icon('glyphicon glyphicon-remove', $this->url('Site:Booking@deleteAction', $row['id']), ['class' => 'btn btn-danger', 'data-button' => 'delete']);
             }
         ]
