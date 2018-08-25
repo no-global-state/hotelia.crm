@@ -244,9 +244,9 @@ final class BookingService
      * @param array $params Booking parameters
      * @param array $guests Guests 
      * @param array $rooms Rooms
-     * @return string
+     * @return array
      */
-    public function save(array $params, array $guests, array $rooms) : string
+    public function save(array $params, array $guests, array $rooms) : array
     {
         // Append a token
         $params['token'] = TextUtils::uniqueString();
@@ -276,6 +276,9 @@ final class BookingService
             ]);
         }
 
-        return $row['token'];
+        return [
+            'id' => $row['id'],
+            'token' => $row['token']
+        ];
     }
 }
