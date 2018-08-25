@@ -26,8 +26,6 @@ final class Crm extends AbstractCrmController
     {
         // If hotel ID provided
         if ($this->getHotelId() !== null) {
-            $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
-
             // If wizard is not finished, then redirect to it
             if (!$this->getModuleService('hotelService')->isWizardFinished($this->getHotelId())) {
                 // Redirect to Wizard URL
@@ -44,7 +42,7 @@ final class Crm extends AbstractCrmController
                 'states' => $reservationService->countStates($this->getHotelId()),
                 'reservations' => $reservationService->fetchLatest($this->getHotelId()),
                 'priceGroupReservations' => $reservationService->getReservationCountByGroups($this->getHotelId()),
-                'transactions' => $mapper->fetchLast($this->getHotelId()),
+                'transactions' => $this->getModuleService('transactionService')->fetchLast($this->getHotelId()),
                 'stat' => $this->getModuleService('roomService')->createStat($this->getHotelId()),
                 'pageTitle' => 'My property',
                 'icon' => 'glyphicon glyphicon-blackboard'

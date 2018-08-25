@@ -2,10 +2,9 @@
 
 namespace Site\Storage\MySQL;
 
-use Krystal\Db\Filter\FilterableServiceInterface;
 use Krystal\Db\Filter\InputDecorator;
 
-final class TransactionMapper extends AbstractMapper implements FilterableServiceInterface
+final class TransactionMapper extends AbstractMapper
 {
     /**
      * {@inheritDoc}

@@ -22,10 +22,10 @@ final class Transaction extends AbstractCrmController
 
         $route = $this->createUrl(sprintf('Site:Transaction@%s', !$shared ? 'indexAction' : 'listAction'), [null]);
 
-        $mapper = $this->createMapper('\Site\Storage\MySQL\TransactionMapper');
+        $service = $this->getModuleService('transactionService');
 
         $invoker = new FilterInvoker($this->request->getQuery(), $route);
-        $data = $invoker->invoke($mapper, $this->getPerPageCount(), $params);
+        $data = $invoker->invoke($service, $this->getPerPageCount(), $params);
 
         return $this->view->render('helpers/transaction', array(
             'icon' => 'glyphicon glyphicon-credit-card',
@@ -33,7 +33,7 @@ final class Transaction extends AbstractCrmController
             'route' => $route,
             'query' => $this->request->getQuery(),
             'data' => $data,
-            'paginator' => $mapper->getPaginator()
+            'paginator' => $service->getPaginator()
         ));
     }
 
