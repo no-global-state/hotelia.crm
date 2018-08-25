@@ -77,6 +77,27 @@ final class Api extends AbstractCrmController
     }
     
     /**
+     * Get bookings by external user ID
+     * 
+     * @return string
+     */
+    public function getBookings() : string
+    {
+        // External user ID
+        $id = $this->request->getQuery('id');
+        $langId = $this->request->getQuery('lang_id');
+
+        if ($id && $langId) {
+            $bookings = $this->getModuleService('externalService')->findAllByExternalId($id, $langId);
+            return $this->json($bookings);
+        } else {
+            return $this->json([
+                'error' => 'Not enough request parameters'
+            ]);
+        }
+    }
+
+    /**
      * Returns filter parameters
      * 
      * @return array

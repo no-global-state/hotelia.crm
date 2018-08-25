@@ -241,6 +241,10 @@ return [
     '/api/filter' => [
         'controller' => 'Api@filter'
     ],
+    
+    '/api/get-bookings/(:var)' => [
+        'controller' => 'Api@getBookings'
+    ],
 
     // Property
     '/crm/property/(:var)' => [
