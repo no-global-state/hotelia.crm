@@ -42,13 +42,11 @@ final class TransactionMapper extends AbstractMapper
         // Columns to be selected
         $columns = [
             self::column('id'),
+            self::column('price_group_id'),
             self::column('hotel_id'),
             self::column('datetime'),
-            self::column('holder'),
-            self::column('payment_system'),
             self::column('amount'),
-            self::column('currency'),
-            self::column('comment'),
+            PriceGroupMapper::column('currency'),
             HotelTranslationMapper::column('name') => 'hotel'
         ];
 
@@ -62,6 +60,10 @@ final class TransactionMapper extends AbstractMapper
                        ->leftJoin(HotelTranslationMapper::getTableName(), [
                             HotelTranslationMapper::column('id') => HotelMapper::getRawColumn('id')
                        ])
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => self::getRawColumn('price_group_id')
+                       ])
                        // Language constraint
                        ->whereEquals(HotelTranslationMapper::column('lang_id'), 1);
 
@@ -72,10 +74,7 @@ final class TransactionMapper extends AbstractMapper
 
         // The rest
         $db->andWhereEquals('datetime', $input['datetime'], true)
-           ->andWhereLike('holder', '%'.$input['holder'].'%', true)
-           ->andWhereLike('payment_system', '%'.$input['payment_system'].'%', true)
            ->andWhereLike('amount', $input['amount'], true)
-           ->andWhereEquals('currency', $input['currency'], true)
            // Hotel name filter
            ->andWhereLike(HotelTranslationMapper::column('name'), '%'.$input['hotel'].'%', true)
            ->orderBy($sortingColumn ? self::column($sortingColumn) : self::column('id'));

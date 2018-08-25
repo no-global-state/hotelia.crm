@@ -323,15 +323,13 @@ CREATE TABLE velveto_hotels_photos_covers (
 
 CREATE TABLE velveto_hotels_transactions (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    `hotel_id` INT DEFAULT 1 COMMENT 'Attached hotel ID',
-    `datetime` TIMESTAMP,
-    `holder` varchar(255) NOT NULL COMMENT 'Card holder name',
-    `payment_system` varchar(30) NOT NULL,
+    `hotel_id` INT NOT NULL COMMENT 'Attached hotel ID',
+    `price_group_id` INT NOT NULL COMMENT 'Attached price group ID',
+    `datetime` DATETIME NOT NULL,
     `amount` FLOAT NOT NULL,
-    `currency` varchar(20) NOT NULL,
-    `comment` TEXT NOT NULL,
 
-    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE
+    FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
+    FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE
 );
 
 CREATE TABLE velveto_users (
