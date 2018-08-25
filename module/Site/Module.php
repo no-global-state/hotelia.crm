@@ -32,6 +32,7 @@ use Site\Service\BookingService;
 use Site\Service\ExchangeService;
 use Site\Service\SummaryService;
 use Site\Service\ExternalService;
+use Site\Service\TransactionService;
 
 final class Module extends AbstractModule
 {
@@ -133,6 +134,7 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
+            'transactionService' => new TransactionService($this->createMapper('\Site\Storage\MySQL\TransactionMapper')),
             'externalService' => new ExternalService($this->createMapper('\Site\Storage\MySQL\BookingExternalRelationMapper')),
             'summaryService' => new SummaryService($this->getServiceLocator()->get('sessionBag')),
             'exchangeService' => new ExchangeService($this->getServiceLocator()->get('sessionBag')),
