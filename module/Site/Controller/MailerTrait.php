@@ -66,12 +66,14 @@ trait MailerTrait
      * Notify about successful payment
      * 
      * @param string $to
+     * @param array $params Template variables
      * @return boolean
      */
-    protected function paymentSuccessNotify(string $to) : bool
+    protected function voucherNotify(string $to, array $params) : bool
     {
         $subject = 'Your booking is complete';
-        return $this->sendMail($to, $subject, 'payment-confirmed');
+
+        return $this->sendMail($to, $subject, 'voucher', $params);
     }
 
     /**
@@ -126,6 +128,8 @@ trait MailerTrait
             'from' => sprintf('no-reply@%s', $this->request->getDomain())
         ]);
 
-        return $mailer->send($to, $subject, $this->renderMail($template, $vars));
+        $body = $this->renderMail($template, $vars);
+
+        return $mailer->send($to, $subject, $body);
     }
 }

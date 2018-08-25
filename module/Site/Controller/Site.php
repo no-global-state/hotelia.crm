@@ -79,22 +79,28 @@ final class Site extends AbstractSiteController
             // Update status as well
             $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
 
-            // Send email about successful confirmation
-            $this->paymentSuccessNotify($booking['email']);
-            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
-
             // Grab hotel information
             $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
 
+            // Normalize full cover path
+            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+            
             $details = $bookingService->findDetails($booking['id'], $booking['lang_id']);
 
-            // For voucher
-            return $this->view->render('payment-confirm', [
+            // Shared params for email and view
+            $params = [
                 'hotel' => $hotel,
                 'booking' => $details['booking'],
                 'rooms' => $details['rooms'],
                 'guests' => $details['guests']
-            ]);
+            ];
+
+            // Email notifications
+            $this->voucherNotify($booking['email'], $params);
+            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
+
+            // For voucher
+            return $this->view->render('payment-confirm', $params);
 
         } else {
             // Trigger 404
