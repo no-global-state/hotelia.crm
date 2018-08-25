@@ -55,14 +55,15 @@ final class ExternalService
     }
 
     /**
-     * Finds all by external user ID
+     * Find all bookings by external user ID
      * 
      * @param int $id External user ID
+     * @param int $langId Language ID constraint
      * @return array
      */
-    public function findAllByExternalId(int $id) : array
+    public function findAllByExternalId(int $id, int $langId) : array
     {
-        return $this->externalMapper->findAllByExternalId($id);
+        return $this->externalMapper->findAllByExternalId($id, $langId);
     }
 
     /**
