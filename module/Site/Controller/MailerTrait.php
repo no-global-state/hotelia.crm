@@ -14,7 +14,7 @@ trait MailerTrait
      */
     private function dict(string $alias)
     {
-        return $this->getModuleService('dictionaryService')->findByAlias($alias);
+        return $this->getModuleService('dictionaryService')->findByAlias($alias, 1);
     }
 
     /**
