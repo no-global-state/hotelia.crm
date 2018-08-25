@@ -7,6 +7,17 @@ use Site\Service\MailerService;
 trait MailerTrait
 {
     /**
+     * Grab translations from dictionary
+     * 
+     * @param string $alias
+     * @return string
+     */
+    private function dict(string $alias)
+    {
+        return $this->getModuleService('dictionaryService')->findByAlias($alias);
+    }
+
+    /**
      * Notify administration about new booking
      * 
      * @param string $hotelName
@@ -14,7 +25,7 @@ trait MailerTrait
      */
     protected function bookingAdminNotify(string $hotelName) : bool
     {
-        $subject = 'New booking from the site';
+        $subject = $this->dict('MAIL_SUBJECT_NEW_BOOKING');
         $to = $_ENV['adminEmail'];
 
         return $this->sendMail($to, $subject, 'booking-owner-new', [
@@ -30,7 +41,7 @@ trait MailerTrait
      */
     protected function bookingOwnerNotify(string $to) : bool
     {
-        $subject = 'You have a new booking from site';
+        $subject = $this->dict('MAIL_SUBJECT_NEW_BOOKING');
         return $this->sendMail($to, $subject, 'booking-owner-new');
     }
 
@@ -55,7 +66,7 @@ trait MailerTrait
      */
     protected function paymentConfirmNotify(string $to, string $link) : bool
     {
-        $subject = 'Please confirm booking payment';
+        $subject = $this->dict('MAIL_SUBJECT_PAYMENT_CONF_PL');
 
         return $this->sendMail($to, $subject, 'payment-to-be-confirmed', [
             'link' => $link
@@ -71,7 +82,7 @@ trait MailerTrait
      */
     protected function voucherNotify(string $to, array $params) : bool
     {
-        $subject = 'Your booking is complete';
+        $subject = $this->dict('MAIL_SUBJECT_BOOKING_COMPLETE');
 
         return $this->sendMail($to, $subject, 'voucher', $params);
     }
@@ -84,7 +95,7 @@ trait MailerTrait
      */
     protected function transactionAdminNotify(string $hotelName) : bool
     {
-        $subject = 'New transaction';
+        $subject = $this->dict('MAIL_SUBJECT_NEW_TRANSACTION');
         $to = $_ENV['adminEmail'];
 
         return $this->sendMail($to, $subject, 'payment-transaction', [
