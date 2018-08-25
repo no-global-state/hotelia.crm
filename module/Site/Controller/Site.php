@@ -100,6 +100,9 @@ final class Site extends AbstractSiteController
             $this->voucherNotify($booking['email'], $params);
             $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
 
+            // Save successful transaction
+            $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
+
             // For voucher
             return $this->view->render('payment-confirm', $params);
 

@@ -2,6 +2,7 @@
 
 namespace Site\Service;
 
+use Krystal\Date\TimeHelper;
 use Krystal\Db\Filter\FilterableServiceInterface;
 use Site\Storage\MySQL\TransactionMapper;
 
@@ -23,6 +24,24 @@ final class TransactionService implements FilterableServiceInterface
     public function __construct(TransactionMapper $transactionMapper)
     {
         $this->transactionMapper = $transactionMapper;
+    }
+
+    /**
+     * Saves new transaction
+     * 
+     * @param int $hotelId
+     * @param int $priceGroupId
+     * @param float $amount
+     * @return boolean
+     */
+    public function save(int $hotelId, int $priceGroupId, float $amount) : bool
+    {
+        return $this->transactionMapper->persist([
+            'hotel_id' => $hotelId,
+            'price_group_id' => $priceGroupId,
+            'amount' => $amount,
+            'datetime' => TimeHelper::getNow()
+        ]);
     }
 
     /**
