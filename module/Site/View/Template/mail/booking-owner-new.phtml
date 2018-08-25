@@ -1,7 +1,7 @@
 
-<p>Hello there!</p>
-You have a new booking from site. Please check your account.
+<p><?= $dictionary('MAIL_BOOKING_HELLO'); ?></p>
+<?= $dictionary('MAIL_BOOKING_NEW_NOTIFICATION'); ?>
 
 <?php if (isset($hotelName)): ?>
-<p>Hotel: <?= $hotelName; ?></p>
+<p><?= $dictionary('HOTEL'); ?>: <?= $hotelName; ?></p>
 <?php endif; ?>
