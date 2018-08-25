@@ -89,6 +89,12 @@ final class Api extends AbstractCrmController
 
         if ($id && $langId) {
             $bookings = $this->getModuleService('externalService')->findAllByExternalId($id, $langId);
+
+            // Append invoice URL
+            foreach ($bookings as &$booking) {
+                $booking['invoice'] = $this->request->getBaseUrl() . $this->createUrl('Site:Site@invoiceAction', [$booking['token']]);
+            }
+
             return $this->json($bookings);
         } else {
             return $this->json([

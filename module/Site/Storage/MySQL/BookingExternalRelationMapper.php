@@ -37,6 +37,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
             BookingMapper::column('comment'),
             BookingMapper::column('near_preferred'),
             BookingMapper::column('amount'),
+            BookingMapper::column('token'),
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
         ];
