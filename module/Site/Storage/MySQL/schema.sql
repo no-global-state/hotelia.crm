@@ -52,6 +52,13 @@ CREATE TABLE velveto_bookings_reservations (
     FOREIGN KEY (slave_id) REFERENCES velveto_reservation(id) ON DELETE CASCADE
 );
 
+CREATE TABLE velveto_bookings_external (
+    `master_id` INT NOT NULL COMMENT 'External user ID',
+    `slave_id` INT NOT NULL COMMENT 'Booking ID',
+
+    FOREIGN KEY (slave_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE
+);
+
 /* Bookings */
 
 CREATE TABLE velveto_meals (
