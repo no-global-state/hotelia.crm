@@ -62,6 +62,53 @@ final class Site extends AbstractSiteController
             return false;
         }
     }
+    
+    /**
+     * Create invoice data from booking
+     * 
+     * @param array $booking
+     * @return array
+     */
+    private function createInvoice(array $booking) : array
+    {
+        // Grab hotel information
+        $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
+
+        // Normalize full cover path
+        $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+
+        $details = $this->getModuleService('bookingService')->findDetails($booking['id'], $booking['lang_id']);
+
+        // Shared params for email and view
+        return [
+            'hotel' => $hotel,
+            'booking' => $details['booking'],
+            'rooms' => $details['rooms'],
+            'guests' => $details['guests']
+        ];
+    }
+
+    /**
+     * Renders invoice by its token
+     * 
+     * @param string $token
+     * @return mixed
+     */
+    public function invoiceAction(string $token)
+    {
+        $bookingService = $this->getModuleService('bookingService');
+        $booking = $bookingService->findByToken($token);
+
+        // If found such token
+        if ($booking) {
+            $params = $this->createInvoice($booking);
+
+            return $this->view->render('payment-confirm', $params);
+        } else {
+            // Trigger 404
+            return false;
+        }
+    }
 
     /**
      * Confirms payment by its token when payment is done
@@ -80,22 +127,8 @@ final class Site extends AbstractSiteController
             // Update status as well
             $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
 
-            // Grab hotel information
-            $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
-
-            // Normalize full cover path
-            $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+            $params = $this->createInvoice($booking);
             
-            $details = $bookingService->findDetails($booking['id'], $booking['lang_id']);
-
-            // Shared params for email and view
-            $params = [
-                'hotel' => $hotel,
-                'booking' => $details['booking'],
-                'rooms' => $details['rooms'],
-                'guests' => $details['guests']
-            ];
-
             // Email notifications
             $this->voucherNotify($booking['email'], $params);
             $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));

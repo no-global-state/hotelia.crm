@@ -53,7 +53,7 @@ return [
     '/state/currency/(:var)' => [
         'controller' => 'Site@currencyAction',
     ],
-
+    
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction'
@@ -405,6 +405,10 @@ return [
     '/crm/languages/delete/(:var)' => [
         'controller' => 'Language@deleteAction',
         'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+    ],
+    
+    '/invoice/(:var)' => [
+        'controller' => 'Site@invoiceAction'
     ],
     
     '/confirm-payment/(:var)' => [
