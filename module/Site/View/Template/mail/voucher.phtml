@@ -1,1 +1,90 @@
-<?= $this->renderRaw('Site', 'site', 'payment-confirm', $params); ?>
+<table class="container">
+    <tr>
+        <td>
+            <div class="voucher-wrapper">
+                <h2><?= $dictionary('BOOKING_SUCCESS_CONFIRM'); ?></h2>
+
+                <table class="row">
+                  <tr>
+                    <th class="small-12 large-6 first columns">
+                        <img width="226" height="auto" src="<?= $hotel['cover']; ?>" />
+                        <table class="table table-responsive table-striped">
+                            <thead>
+                                <tr>
+                                    <td><?= $dictionary('CHECKIN_SHORT'); ?></td>
+                                    <td><?= $booking['arrival']; ?> <small>(<?= $dictionary('FROM'); ?> <?= $hotel['checkin_from']; ?>)</small></td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('CHECKOUT_SHORT'); ?></td>
+                                    <td><?= $booking['departure']; ?> <small>(<?= $dictionary('UPTO'); ?> <?= $hotel['checkout_to']; ?>)</small></td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('NUMBER_OF_NIGHTS'); ?></td>
+                                    <td><?= $booking['nights']; ?></td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('NUMBER_OF_GUESTS'); ?></td>
+                                    <td><?= count($guests); ?></td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('BOOKING_DATE_AND_TIME'); ?> <small>(GMT+5)</small></td>
+                                    <td><?= $booking['datetime']; ?></td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><?= $dictionary('BOOKING_PAYED_AMOUNT'); ?></td>
+                                    <td><?= sprintf('%s %s', number_format($booking['amount']), $booking['currency']); ?></td>
+                                </tr>
+                            </thead>
+                        </table>
+
+                        <?php foreach ($rooms as $room): ?>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <h3><?= $room['category']; ?></h3>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('NUMBER_OF_ROOMS'); ?></td>
+                                    <td><small>x</small> <?= $room['qty']; ?></td>
+                                </tr>
+
+                                <tr>
+                                    <td><?= $dictionary('NUMBER_OF_GUESTS'); ?></td>
+                                    <td><small>x</small> <?= $room['guests']; ?></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <?php endforeach; ?>
+                    </th>
+
+                    <th class="small-12 large-8 last columns">
+                        <h2><?= $hotel['name']; ?></h2>
+                        <p><?= sprintf('%s, %s', $hotel['district'], $hotel['region']); ?></p>
+                        <p><?= $dictionary('PHONE'); ?>: <?= $hotel['phone']; ?></p>
+
+                        <address><?= $hotel['address']; ?></address>
+                        <article>
+                            <?= $hotel['description']; ?>
+                        </article>
+
+                        <br />
+                        <h2><?= $dictionary('BOOKING_EXTRA_INFO'); ?></h2>
+
+                        <article><?= $dictionary('BOOKING_ADDITIONAL_INFO'); ?></article>
+                        <br />
+                    </th>
+                    <th class="expander"></th>
+                  </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>
