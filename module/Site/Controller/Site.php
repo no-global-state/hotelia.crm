@@ -4,7 +4,7 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
-use Site\Gateway\GatewayFactory;
+use Site\Gateway\GatewayService;
 use Site\Collection\BookingStatusCollection;
 use Krystal\Iso\ISO3166\Country;
 
@@ -44,7 +44,7 @@ final class Site extends AbstractSiteController
 
         if ($booking) {
             // Create payment gateway
-            $gateway = GatewayFactory::build(
+            $gateway = GatewayService::factory(
                 $booking['id'],
                 $booking['price_group_id'],
                 $booking['amount'],
@@ -117,31 +117,36 @@ final class Site extends AbstractSiteController
      */
     public function confirmPaymentAction()
     {
-        $token = $this->request->getQuery('token');
+        if (!GatewayService::transactionFailed()) {
+            $token = $this->request->getQuery('token');
 
-        $bookingService = $this->getModuleService('bookingService');
-        $booking = $bookingService->findByToken($token);
+            $bookingService = $this->getModuleService('bookingService');
+            $booking = $bookingService->findByToken($token);
 
-        // If found such token
-        if ($booking) {
-            // Update status as well
-            $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
+            // If found such token
+            if ($booking) {
+                // Update status as well
+                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
 
-            $params = $this->createInvoice($booking);
-            
-            // Email notifications
-            $this->voucherNotify($booking['email'], $params);
-            $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
+                $params = $this->createInvoice($booking);
 
-            // Save successful transaction
-            $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
+                // Email notifications
+                $this->voucherNotify($booking['email'], $params);
+                $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
 
-            // For voucher
-            return $this->view->render('payment-confirm', $params);
+                // Save successful transaction
+                $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
 
+                // For voucher
+                return $this->view->render('payment-confirm', $params);
+
+            } else {
+                // Trigger 404
+                return false;
+            }
         } else {
-            // Trigger 404
-            return false;
+            
+            return 'Transaction canceled';
         }
     }
 
