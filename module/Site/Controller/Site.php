@@ -6,12 +6,28 @@ use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Site\Gateway\GatewayService;
 use Site\Collection\BookingStatusCollection;
+use Site\Coupons\DefaultAdapter;
 use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
 {
     use MailerTrait;
     use HotelTrait;
+
+    /**
+     * Validates coupon code
+     * 
+     * @return string
+     */
+    public function couponAction()
+    {
+        // Returns query data
+        $data = $this->request->getQuery();
+        
+        $response = $this->getModuleService('couponService')->apply($data, new DefaultAdapter());
+
+        return $this->json($response);
+    }
 
     /**
      * Changes currency

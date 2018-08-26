@@ -54,6 +54,10 @@ return [
         'controller' => 'Site@currencyAction',
     ],
     
+    '/coupon/(:var)' => [
+        'controller' => 'Site@couponAction'
+    ],
+    
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction'
