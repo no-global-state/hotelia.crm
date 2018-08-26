@@ -4,6 +4,7 @@ namespace Site\Service;
 
 use Site\Storage\MySQL\DictionaryMapper;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Templating\StringTemplate;
 
 final class DictionaryService
 {
@@ -52,9 +53,10 @@ final class DictionaryService
      * 
      * @param string $alias
      * @param int $languageId
+     * @param array $vars Extra vars to be replaced in the string
      * @return string
      */
-    public function findByAlias(string $alias, int $languageId) : string
+    public function findByAlias(string $alias, int $languageId, array $vars = []) : string
     {
         static $rows = null;
 
@@ -62,7 +64,7 @@ final class DictionaryService
             $rows = ArrayUtils::arrayList($this->fetchAll($languageId), 'alias', 'value');
         }
 
-        return isset($rows[$alias]) ? $rows[$alias] : $alias;
+        return isset($rows[$alias]) ? StringTemplate::template($rows[$alias], $vars) : $alias;
     }
 
     /**

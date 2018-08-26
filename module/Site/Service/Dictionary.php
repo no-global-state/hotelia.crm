@@ -35,21 +35,23 @@ final class Dictionary
      * Translates a string by alias
      * 
      * @param string $alias
+     * @param array $vars Extra vars to be replaced in the string
      * @return string
      */
-    public function __invoke(string $alias)
+    public function __invoke(string $alias, array $vars = [])
     {
-        return $this->t($alias);
+        return $this->t($alias, $vars);
     }
 
     /**
      * Translates a string by alias
      * 
      * @param string $alias
+     * @param array $vars Extra vars to be replaced in the string
      * @return string
      */
-    public function t(string $alias) : string
+    public function t(string $alias, array $vars = []) : string
     {
-        return $this->dictionaryService->findByAlias($alias, $this->languageId);
+        return $this->dictionaryService->findByAlias($alias, $this->languageId, $vars);
     }
 }
