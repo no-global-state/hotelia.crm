@@ -145,8 +145,8 @@ final class Site extends AbstractSiteController
                 return false;
             }
         } else {
-            
-            return 'Transaction canceled';
+
+            return $this->view->render('payment-canceled');
         }
     }
 
