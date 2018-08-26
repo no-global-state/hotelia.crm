@@ -4,8 +4,9 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
-use Krystal\Text\Math;
 use Site\Helpers\ApiHelper;
+use Site\Service\ExternalService;
+use Krystal\Text\Math;
 
 final class Api extends AbstractCrmController
 {
@@ -23,7 +24,9 @@ final class Api extends AbstractCrmController
      */
     private function getLang() : int
     {
-        return $this->request->getQuery('lang', 1);
+        $value = $this->request->getQuery('lang', 1);
+
+        return ExternalService::externalLangId($value);
     }
 
     /**
@@ -46,7 +49,7 @@ final class Api extends AbstractCrmController
     public function hotel()
     {
         $priceGroupId = $this->request->getQuery('price_group_id', 1);
-        $lang = $this->request->getQuery('lang', 1);
+        $lang = $this->getLang();
 
         $data = $this->findHotel($priceGroupId, $lang);
 
@@ -85,7 +88,7 @@ final class Api extends AbstractCrmController
     {
         // External user ID
         $id = $this->request->getQuery('id');
-        $langId = $this->request->getQuery('lang_id');
+        $langId = $this->getLang();
 
         if ($id && $langId) {
             $bookings = $this->getModuleService('externalService')->findAllByExternalId($id, $langId);
@@ -111,7 +114,7 @@ final class Api extends AbstractCrmController
     public function getFilter()
     {
         // Request vars
-        $lang = $this->request->getQuery('lang', 1);
+        $lang = $this->getLang();
         $priceGroupId = $this->request->getQuery('price_group_id', 1);
 
         $data = $this->getSharedFilter($lang, $priceGroupId);
@@ -133,7 +136,7 @@ final class Api extends AbstractCrmController
         $typeIds = $request['type_id'] ?? [];
 
         // Main
-        $languageId = $request['lang'] ?? 1;
+        $languageId = $this->getLang();
         $priceGroupId = $request['price_group_id'] ?? 1;
 
         // Append one more key

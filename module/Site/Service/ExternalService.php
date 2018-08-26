@@ -26,6 +26,19 @@ final class ExternalService
     }
 
     /**
+     * Maps through external language ID and returns attached one
+     * 
+     * @param int $id External language ID
+     * @return int
+     */
+    public static function externalLangId(int $id)
+    {
+        $map = $_ENV['languages'];
+
+        return isset($map[$id]) ? $map[$id] : 2;
+    }
+
+    /**
      * Query external service to grab external user ID
      * 
      * @return void
