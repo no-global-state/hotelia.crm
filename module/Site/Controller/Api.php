@@ -30,6 +30,16 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Returns price group ID from query
+     * 
+     * @return int
+     */
+    private function getPriceGroup() : int
+    {
+        return (int) $this->request->getQuery('price_group_id', 1);
+    }
+    
+    /**
      * Dummy payment action
      * 
      * @return string
@@ -48,11 +58,7 @@ final class Api extends AbstractCrmController
      */
     public function hotel()
     {
-        $priceGroupId = $this->request->getQuery('price_group_id', 1);
-        $lang = $this->getLang();
-
-        $data = $this->findHotel($priceGroupId, $lang);
-
+        $data = $this->findHotel($this->getPriceGroup(), $this->getLang());
         return $this->json($data);
     }
 
@@ -113,15 +119,11 @@ final class Api extends AbstractCrmController
      */
     public function getFilter()
     {
-        // Request vars
-        $lang = $this->getLang();
-        $priceGroupId = $this->request->getQuery('price_group_id', 1);
-
-        $data = $this->getSharedFilter($lang, $priceGroupId);
+        $data = $this->getSharedFilter($this->getLang(), $this->getPriceGroup());
 
         return $this->json($data);
     }
-    
+
     /**
      * Performs a filter
      * 
@@ -137,7 +139,7 @@ final class Api extends AbstractCrmController
 
         // Main
         $languageId = $this->getLang();
-        $priceGroupId = $request['price_group_id'] ?? 1;
+        $priceGroupId = $this->getPriceGroup();
 
         // Append one more key
         $request['facility'] = array_merge($request['facility_id'] ?? [], $request['meals_id'] ?? []);
@@ -193,9 +195,7 @@ final class Api extends AbstractCrmController
      */
     public function search()
     {
-        $priceGroupId = $this->request->getQuery('price_group_id', 1);
-        $hotels = $this->searchAll($priceGroupId, $this->getLang());
-
+        $hotels = $this->searchAll($this->getPriceGroup(), $this->getLang());
         return $this->json($hotels);
     }
 
