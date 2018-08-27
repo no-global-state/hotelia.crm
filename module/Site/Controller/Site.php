@@ -6,7 +6,6 @@ use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Site\Gateway\GatewayService;
 use Site\Collection\BookingStatusCollection;
-use Site\Coupons\DefaultAdapter;
 use Krystal\Iso\ISO3166\Country;
 
 final class Site extends AbstractSiteController
@@ -23,8 +22,8 @@ final class Site extends AbstractSiteController
     {
         // Returns query data
         $data = $this->request->getQuery();
-        
-        $response = $this->getModuleService('couponService')->apply($data, new DefaultAdapter());
+
+        $response = $this->getModuleService('couponService')->apply($data);
 
         return $this->json($response);
     }

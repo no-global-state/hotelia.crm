@@ -34,6 +34,7 @@ use Site\Service\SummaryService;
 use Site\Service\ExternalService;
 use Site\Service\TransactionService;
 use Site\Service\CouponService;
+use Site\Coupons\DefaultAdapter;
 
 final class Module extends AbstractModule
 {
@@ -135,7 +136,7 @@ final class Module extends AbstractModule
         $authManager->setAuthService($userService);
 
         return array(
-            'couponService' => new CouponService($this->getServiceLocator()->get('sessionBag')),
+            'couponService' => new CouponService($this->getServiceLocator()->get('sessionBag'), new DefaultAdapter()),
             'transactionService' => new TransactionService($this->createMapper('\Site\Storage\MySQL\TransactionMapper')),
             'externalService' => new ExternalService($this->createMapper('\Site\Storage\MySQL\BookingExternalRelationMapper')),
             'summaryService' => new SummaryService($this->getServiceLocator()->get('sessionBag')),

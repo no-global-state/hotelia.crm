@@ -18,14 +18,23 @@ final class CouponService
     private $sessionBag;
 
     /**
+     * Any compliant coupon adapter
+     * 
+     * @var \Site\Service\CouponAdapterInterface
+     */
+    private $adapter;
+
+    /**
      * State initialization
      * 
      * @param \Krystal\Http\PersistentStorageInterface $sessionBag
+     * @param \Site\Service\CouponAdapterInterface $adapter
      * @return void
      */
-    public function __construct(PersistentStorageInterface $sessionBag)
+    public function __construct(PersistentStorageInterface $sessionBag, CouponAdapterInterface $adapter)
     {
         $this->sessionBag = $sessionBag;
+        $this->adapter = $adapter;
     }
 
     /**
@@ -52,12 +61,11 @@ final class CouponService
      * Validates coupon code
      * 
      * @param array $params HTTP query params
-     * @param \Site\Service\CouponAdapterInterface $implementation
      * @return array
      */
-    public function apply(array $params, CouponAdapterInterface $implementation) : array
+    public function apply(array $params) : array
     {
-        $result = $implementation->query($params);
+        $result = $this->adapter->query($params);
 
         if (!isset($result['active']) || !isset($result['response'])) {
             throw new RuntimeException('Implementation must return an array that contain both "active" and "response" keys');
