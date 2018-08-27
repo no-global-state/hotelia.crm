@@ -76,7 +76,7 @@ final class CouponService
             $this->sessionBag->set(self::STORAGE_KEY, true);
 
             // Save parameters
-            $this->sessionBag->set(self::STORAGE_VARS_KEY, $params)
+            $this->sessionBag->set(self::STORAGE_VARS_KEY, $params);
         } else {
             $this->discardCoupon();
         }
