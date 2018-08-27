@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
 use Site\Service\SummaryService;
+use Site\Service\Dictionary;
 use Site\Helpers\ApiHelper;
 use Site\Service\ExternalService;
 use Krystal\Text\Math;
@@ -12,11 +13,38 @@ use Krystal\Text\Math;
 final class Api extends AbstractCrmController
 {
     use HotelTrait;
+    use MailerTrait;
 
     /**
      * {@inheritDoc}
      */
     protected $authActive = false;
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function bootstrap($action)
+    {
+        $this->view->addVariables([
+            'dictionary' => $this->createDictionary()
+        ]);
+    }
+
+    /**
+     * Creates dictionary instance
+     * 
+     * @return \Site\Service\Dictionary
+     */
+    private function createDictionary()
+    {
+        static $dictionary;
+
+        if (is_null($dictionary)) {
+            $dictionary = new Dictionary($this->getModuleService('dictionaryService'), $this->getLang());
+        }
+
+        return $dictionary;
+    }
 
     /**
      * Returns language parameter from query string
@@ -53,7 +81,7 @@ final class Api extends AbstractCrmController
         // Create request vars
         $rooms = $request['rooms'];
         $priceGroupId = $request['price_group_id'];
-        $langId = 1;
+        $langId = ExternalService::internalLangId($request['lang_id']);
         $hotelId = $request['hotel_id'];
         $arrival = $request['arrival'];
         $departure = $request['departure'];
@@ -91,7 +119,7 @@ final class Api extends AbstractCrmController
 
         // Notify admin
         $this->bookingAdminNotify($this->getModuleService('hotelService')->findNameById($hotelId, 1));
-        
+
         return $this->json([
             'url' => $paymentUrl
         ]);
