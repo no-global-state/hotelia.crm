@@ -13,7 +13,11 @@ use Site\Service\LanguageService;;
         <li class="nav"><a href="#basic" data-toggle="tab"><i class="glyphicon glyphicon-bookmark"></i> <? $this->show('Basic'); ?></a></li>
         <li class="nav"><a href="#facilities" data-toggle="tab"><i class="glyphicon glyphicon-check"></i> <? $this->show('Facilities'); ?></a></li>
         <li class="nav"><a href="#gallery" data-toggle="tab"><i class="glyphicon glyphicon-picture"></i> <? $this->show('Gallery'); ?></a></li>
+
+        <?php if ($admin): ?>
         <li class="nav"><a href="#payment" data-toggle="tab"><i class="glyphicon glyphicon-download-alt"></i> <? $this->show('Payment gateway'); ?></a></li>
+        <?php endif; ?>
+
         <li class="nav"><a href="#contact-person" data-toggle="tab"><i class="glyphicon glyphicon-user"></i> <? $this->show('Contact person'); ?></a></li>
         <li class="nav"><a href="#check-in-out" data-toggle="tab"><i class="glyphicon glyphicon-off"></i> <? $this->show('Check-in / Check-out'); ?></a></li>
         <li class="nav"><a href="#meals" data-toggle="tab"><i class="glyphicon glyphicon-glass"></i> <? $this->show('Meals'); ?></a></li>
