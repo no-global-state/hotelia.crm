@@ -15,6 +15,7 @@ CREATE TABLE velveto_bookings (
     `near_preferred` BOOLEAN NOT NULL,
     `amount` FLOAT NOT NULL COMMENT 'Total charged amount',
     `token` varchar(32) NOT NULL,
+    `discount` BOOLEAN NOT NULL COMMENT 'Whether discount code has been applied',
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (price_group_id) REFERENCES velveto_price_groups(id) ON DELETE CASCADE,

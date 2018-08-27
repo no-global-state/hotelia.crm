@@ -35,6 +35,7 @@ final class BookingMapper extends AbstractMapper
             self::column('near_preferred'),
             self::column('amount'),
             self::column('token'),
+            self::column('discount'),
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
         ];
