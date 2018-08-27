@@ -369,6 +369,7 @@ final class Site extends AbstractSiteController
                 'phone' => $this->request->getPost('phone'),
                 'email' => $this->request->getPost('email'),
                 'comment' => $this->request->getPost('comment'),
+                'near_preferred' => $this->request->getPost('near_preferred'),
                 'amount' => $summary['price']
             ];
 
