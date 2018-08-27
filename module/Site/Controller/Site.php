@@ -152,6 +152,13 @@ final class Site extends AbstractSiteController
                 // Save successful transaction
                 $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
 
+                // Handle coupon on demand
+                $coupon = $this->getModuleService('couponService');
+
+                if ($coupon->appliedCoupon()) {
+                    $coupon->afterOrder();
+                }
+
                 // For voucher
                 return $this->view->render('payment-confirm', $params);
 
