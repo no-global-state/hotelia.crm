@@ -9,6 +9,7 @@ use RuntimeException;
 final class CouponService
 {
     const STORAGE_KEY = 'coupon';
+    const STORAGE_VARS_KEY = 'coupon_params';
 
     /**
      * Session bag
@@ -73,10 +74,27 @@ final class CouponService
 
         if ($result['active'] === true) {
             $this->sessionBag->set(self::STORAGE_KEY, true);
+
+            // Save parameters
+            $this->sessionBag->set(self::STORAGE_VARS_KEY, $params)
         } else {
             $this->discardCoupon();
         }
 
         return $result['response'];
+    }
+
+    /**
+     * Runs after order is complete
+     * 
+     * @return void
+     */
+    public function afterOrder()
+    {
+        $params = $this->sessionBag->get(self::STORAGE_VARS_KEY);
+
+        if ($params) {
+            return $this->adapter->after($params);
+        }
     }
 }
