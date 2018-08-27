@@ -7,6 +7,7 @@ use Site\Service\ReservationService;
 use Site\Gateway\GatewayService;
 use Site\Collection\BookingStatusCollection;
 use Krystal\Iso\ISO3166\Country;
+use Krystal\Text\Math;
 
 final class Site extends AbstractSiteController
 {
@@ -351,6 +352,7 @@ final class Site extends AbstractSiteController
             $summary = $this->getModuleService('summaryService')->getSummary();
 
             $hotelId = $this->request->getQuery('hotel_id');
+            $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId(), $this->getPriceGroupId());
 
             // Request parameters
             $params = [
@@ -364,6 +366,18 @@ final class Site extends AbstractSiteController
                 'comment' => $this->request->getPost('comment'),
                 'amount' => $summary['price']
             ];
+
+            // Append discount on demand
+            $params['discount'] = (int) $this->getModuleService('couponService')->appliedCoupon();
+
+            // If there's active applied discount, then save discount price
+            if ($this->getModuleService('couponService')->appliedCoupon()) {
+                // Apply discount
+                $params['amount'] = Math::getDiscount($params['amount'], $hotel['discount']);
+
+                // And don't keep it again
+                $this->getModuleService('couponService')->discardCoupon();
+            }
 
             // Grab booking service and insert
             $bs = $this->getModuleService('bookingService');
