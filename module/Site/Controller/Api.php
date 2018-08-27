@@ -4,6 +4,7 @@ namespace Site\Controller;
 
 use Site\Service\PhotoService;
 use Site\Service\ReservationService;
+use Site\Service\SummaryService;
 use Site\Helpers\ApiHelper;
 use Site\Service\ExternalService;
 use Krystal\Text\Math;
@@ -40,17 +41,62 @@ final class Api extends AbstractCrmController
     }
     
     /**
-     * Dummy payment action
+     * Saves booking inquiry and returns payment link
      * 
      * @return string
      */
-    public function payment()
+    public function payment() : string
     {
+        // Get request variables from POST JSON request
+        $request = $this->request->getJsonBody();
+
+        // Create request vars
+        $rooms = $request['rooms'];
+        $priceGroupId = $request['price_group_id'];
+        $langId = 1;
+        $hotelId = $request['hotel_id'];
+        $arrival = $request['arrival'];
+        $departure = $request['departure'];
+
+        $client = $request['client'];
+
+        // Booking parameters
+        $params = [
+            'hotel_id' => $hotelId,
+            'price_group_id' => $priceGroupId,
+            'lang_id' => $langId,
+            'arrival' => $arrival,
+            'departure' => $departure,
+            'phone' => $client['phone'],
+            'email' => $client['email'],
+            'comment' => '',
+            'near_preferred' => 1,
+            'amount' => SummaryService::parseRawData($rooms)['price']
+        ];
+
+        // We don't save email and phone for guests, but for booking only
+        unset($client['email'], $client['phone']);
+
+        // Room data to be save
+        $data = $this->getModuleService('roomTypeService')->createSummary($rooms, $priceGroupId, $hotelId, $langId);
+
+        // Save booking
+        $booking = $this->getModuleService('bookingService')->save($params, [$client], $data);
+
+        // Create payment URL for client
+        $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
+
+        // Notify owner
+        $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
+
+        // Notify admin
+        $this->bookingAdminNotify($this->getModuleService('hotelService')->findNameById($hotelId, 1));
+        
         return $this->json([
-            'url' => '#'
+            'url' => $paymentUrl
         ]);
     }
-    
+
     /**
      * Renders hotel page
      * 
