@@ -31,6 +31,19 @@ final class ExternalService
      * @param int $id External language ID
      * @return int
      */
+    public static function internalLangId(int $id)
+    {
+        $map = array_flip($_ENV['languages']);
+
+        return isset($map[$id]) ? $map[$id] : 2;
+    }
+
+    /**
+     * Maps through external language ID and returns attached one
+     * 
+     * @param int $id External language ID
+     * @return int
+     */
     public static function externalLangId(int $id)
     {
         $map = $_ENV['languages'];
