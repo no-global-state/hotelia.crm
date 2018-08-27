@@ -39,6 +39,16 @@ final class CouponService
     }
 
     /**
+     * Discards a coupon
+     * 
+     * @return boolean
+     */
+    public function discardCoupon()
+    {
+        return $this->sessionBag->remove(self::STORAGE_KEY);
+    }
+
+    /**
      * Validates coupon code
      * 
      * @param array $params HTTP query params
@@ -55,6 +65,8 @@ final class CouponService
 
         if ($result['active'] === true) {
             $this->sessionBag->set(self::STORAGE_KEY, true);
+        } else {
+            $this->discardCoupon();
         }
 
         return $result['response'];
