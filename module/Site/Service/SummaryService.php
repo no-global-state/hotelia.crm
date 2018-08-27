@@ -79,12 +79,13 @@ final class SummaryService
     }
 
     /**
-     * Returns summary data
+     * Parse raw session data into normalized one
      * 
+     * @param array $data Raw session data
      * @param mixed $discount Optional discount to be applied for the final price
      * @return array
      */
-    public function getSummary($discount = null) : array
+    public static function parseRawData(array $data, $discount = null) : array
     {
         // Defaults
         $qty = 0;
@@ -93,7 +94,7 @@ final class SummaryService
         // Guest counter
         $guests = 0;
 
-        foreach ($this->getData() as $target => $params) {
+        foreach ($data as $target => $params) {
             foreach ($params as $index => $item) {
                 $qty += $item['qty'];
                 $price += $item['price'];
@@ -114,6 +115,17 @@ final class SummaryService
         }
 
         return $output;
+    }
+
+    /**
+     * Returns summary data
+     * 
+     * @param mixed $discount Optional discount to be applied for the final price
+     * @return array
+     */
+    public function getSummary($discount = null) : array
+    {
+        return self::parseRawData($this->getData(), $discount);
     }
 
     /**
