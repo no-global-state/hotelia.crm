@@ -21,12 +21,17 @@ final class Site extends AbstractSiteController
      */
     public function couponAction()
     {
-        // Returns query data
-        $data = $this->request->getQuery();
+        $summary = $this->getModuleService('summaryService')->getSummary();
 
-        $response = $this->getModuleService('couponService')->apply($data);
+        if ($summary) {
+            // Returns query data
+            $data = $this->request->getQuery();
+            $data['people_count'] = $summary['guests'];
 
-        return $this->json($response);
+            $response = $this->getModuleService('couponService')->apply($data);
+
+            return $this->json($response);
+        }
     }
 
     /**
