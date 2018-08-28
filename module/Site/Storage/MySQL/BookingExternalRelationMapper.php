@@ -15,6 +15,51 @@ final class BookingExternalRelationMapper extends AbstractMapper
     }
 
     /**
+     * Find total bookings by external user ID
+     * 
+     * @param int $id External user ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findTotalByExternalId(int $id, int $langId)
+    {
+        // Columns to be selected
+        $columns = [
+            BookingMapper::column('amount'),
+            PriceGroupMapper::column('currency'),
+            HotelTranslationMapper::column('name') => 'hotel',
+            new RawSqlFragment(sprintf('DATE(%s) AS date', BookingMapper::column('datetime'))),
+            new RawSqlFragment(sprintf('TIME(%s) AS time', BookingMapper::column('datetime'))),
+        ];
+        
+        $db = $this->db->select($columns)
+                       ->from(BookingMapper::getTableName())
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => BookingMapper::getRawColumn('price_group_id')
+                       ])
+                       // Hotel relation
+                       ->leftJoin(HotelMapper::getTableName(), [
+                            HotelMapper::column('id') => BookingMapper::getRawColumn('hotel_id')
+                       ])
+                       // Hotel translation relation
+                       ->leftJoin(HotelTranslationMapper::getTableName(), [
+                            HotelTranslationMapper::column('id') => HotelMapper::getRawColumn('id')
+                       ])
+                       // External relation
+                       ->leftJoin(self::getTableName(), [
+                            self::column('slave_id') => BookingMapper::getRawColumn('id')
+                       ])
+                       // Constraints
+                       ->whereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+                       ->andWhereEquals(self::column('master_id'), $id)
+                       ->orderBy(self::column('id'))
+                       ->desc();
+
+        return $db->queryAll();
+    }
+
+    /**
      * Find bookings by hotel ID
      * 
      * @param int $hotelId Hotel ID

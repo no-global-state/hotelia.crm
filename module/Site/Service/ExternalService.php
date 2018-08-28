@@ -159,6 +159,26 @@ final class ExternalService
     }
 
     /**
+     * Find total bookings by external user ID
+     * 
+     * @param int $id External user ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findTotalByExternalId(int $id, int $langId)
+    {
+        $rows = $this->externalMapper->findTotalByExternalId($id, $langId);
+
+        foreach ($rows as &$row) {
+            // Append price
+            $row['price'] = sprintf('%s %s', number_format($row['amount']), $row['currency']);
+            unset($row['amount'], $row['currency']);
+        }
+
+        return $rows;
+    }
+
+    /**
      * Find all bookings by external user ID
      * 
      * @param int $id External user ID
