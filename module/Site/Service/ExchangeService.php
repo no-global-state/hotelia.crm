@@ -10,7 +10,6 @@ final class ExchangeService
     const PARAM_CURRENCY = 'currency';
     const PARAM_CURRENCY_DATA = 'currency_data';
     const PARAM_DEFAULT_CURRENCY = 'USD';
-    const PARAM_SERVICE_URL = 'http://exchange.local/';
 
     /**
      * Session bag service
@@ -37,7 +36,7 @@ final class ExchangeService
      */
     private function fetchData() : array
     {
-        $response = (new CurlHttplCrawler)->get(self::PARAM_SERVICE_URL);
+        $response = (new CurlHttplCrawler)->get($_ENV['exchangeService']);
         return json_decode($response, true);
     }
 
