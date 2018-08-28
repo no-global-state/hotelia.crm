@@ -81,7 +81,7 @@ final class Api extends AbstractCrmController
         // Create request vars
         $rooms = $request['rooms'];
         $priceGroupId = $request['price_group_id'];
-        $langId = ExternalService::internalLangId($request['lang_id']);
+        $langId = ExternalService::internalLangId($request['lang']);
         $hotelId = $request['hotel_id'];
         $arrival = $request['arrival'];
         $departure = $request['departure'];
