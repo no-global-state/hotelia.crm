@@ -2,6 +2,8 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class BookingExternalRelationMapper extends AbstractMapper
 {
     /**
@@ -10,6 +12,66 @@ final class BookingExternalRelationMapper extends AbstractMapper
     public static function getTableName()
     {
         return self::getWithPrefix('velveto_bookings_external');
+    }
+
+    /**
+     * Find bookings by hotel ID
+     * 
+     * @param int $hotelId Hotel ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findBookingsByHotelId(int $hotelId, int $langId) : array
+    {
+        // Columns to be selected
+        $columns = [
+            BookingMapper::column('id'),
+            BookingMapper::column('arrival'),
+            BookingMapper::column('departure'),
+            new RawSqlFragment(sprintf('DATEDIFF(%s, %s) AS nights', BookingMapper::column('departure'), BookingMapper::column('arrival'))),
+            BookingMapper::column('status'),
+            BookingMapper::column('amount'),
+            PriceGroupMapper::column('currency'),
+            BookingRoomMapper::column('qty'),
+            BookingRoomMapper::column('guests'),
+            RoomCategoryTranslationMapper::column('name') => 'room',
+            HotelMapper::column('checkin_from') => 'checkin',
+            HotelMapper::column('checkout_from') => 'checkout'
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(BookingRoomMapper::getTableName())
+                       // Booking relation
+                       ->leftJoin(BookingMapper::getTableName(), [
+                            BookingMapper::column('id') => BookingRoomMapper::getRawColumn('booking_id')
+                       ])
+                       // Price group relation
+                       ->leftJoin(PriceGroupMapper::getTableName(), [
+                            PriceGroupMapper::column('id') => BookingMapper::getRawColumn('price_group_id')
+                       ])
+                       // Room type relation
+                       ->leftJoin(RoomTypeMapper::getTableName(), [
+                            RoomTypeMapper::column('id') => BookingRoomMapper::getRawColumn('room_type_id')
+                       ])
+                       // Room category relation
+                       ->leftJoin(RoomCategoryMapper::getTableName(), [
+                            RoomCategoryMapper::column('id') => RoomTypeMapper::getRawColumn('category_id')
+                       ])
+                       // Room category translation relation
+                       ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
+                            RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id')
+                       ])
+                       // Hotel relation
+                       ->leftJoin(HotelMapper::getTableName(), [
+                            HotelMapper::column('id') => BookingMapper::getRawColumn('hotel_id')
+                       ])
+                       // Constraints
+                       ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                       ->andWhereEquals(BookingMapper::column('hotel_id'), $hotelId)
+                       ->orderBy(BookingRoomMapper::column('id'))
+                       ->desc();
+
+        return $db->queryAll();
     }
 
     /**
