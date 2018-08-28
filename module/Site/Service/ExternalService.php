@@ -103,6 +103,36 @@ final class ExternalService
     }
 
     /**
+     * Format items
+     * 
+     * @param array $items
+     * @return array
+     */
+    private function formatItems(array $items) : array
+    {
+        // Alter keys for better readability
+        foreach ($items as &$item) {
+            $item['checkin'] = $this->formatTime($item, 'checkin', 'from');
+            $item['checkout'] = $this->formatTime($item, 'checkout', 'to');
+
+            // Unset dates
+            unset($item['arrival'], $item['departure']);
+
+            // Now format the price
+            $item['price'] = sprintf('%s %s', number_format($item['amount']), $item['currency']);
+            // And unset used ones
+            unset($item['amount'], $item['currency']);
+
+            // Now format title
+            $item['title'] = sprintf('%s %s, %s %s', $item['nights'], 'nights', $item['qty'], 'room');
+            // And unset used ones
+            unset($item['nights'], $item['qty']);
+        }
+
+        return $items;
+    }
+
+    /**
      * Find booked hotels by external user ID
      * 
      * @param int $id External user ID
@@ -116,25 +146,7 @@ final class ExternalService
         // Append rooms key
         foreach ($bookings as &$booking) {
             $items = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
-
-            // Alter keys for better readability
-            foreach ($items as &$item) {
-                $item['checkin'] = $this->formatTime($item, 'checkin', 'from');
-                $item['checkout'] = $this->formatTime($item, 'checkout', 'to');
-
-                // Unset dates
-                unset($item['arrival'], $item['departure']);
-
-                // Now format the price
-                $item['price'] = sprintf('%s %s', number_format($item['amount']), $item['currency']);
-                // And unset used ones
-                unset($item['amount'], $item['currency']);
-                
-                // Now format title
-                $item['title'] = sprintf('%s %s, %s %s', $item['nights'], 'nights', $item['qty'], 'room');
-                // And unset used ones
-                unset($item['nights'], $item['qty']);
-            }
+            $items = $this->formatItems($items);
 
             // Append rooms
             $booking['rooms'] = $items;
