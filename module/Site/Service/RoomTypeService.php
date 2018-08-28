@@ -116,7 +116,7 @@ final class RoomTypeService
                     $output[$target] = [
                         'qty' => $extract($params, 'qty'),
                         'guests' => $extract($params, 'guests'),
-                        'price' => $extract($params, 'price'),
+                        'price' => isset($item['price']) ? $extract($params, 'price') : 0,
                         'name' => $room['name'],
                         'cover' => $room['cover']
                     ];

@@ -97,7 +97,7 @@ final class SummaryService
         foreach ($data as $target => $params) {
             foreach ($params as $index => $item) {
                 $qty += $item['qty'];
-                $price += $item['price'];
+                $price += isset($item['price']) ? $item['price'] : 0;
                 $guests += $item['guests'];
             }
         }
