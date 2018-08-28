@@ -46,7 +46,10 @@ final class BookingExternalRelationMapper extends AbstractMapper
                        ])
                        // Constraints
                        ->whereEquals(self::column('master_id'), $id)
-                       ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId);
+                       ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+                       // Order by latest
+                       ->orderBy(self::column('id'))
+                       ->desc();
 
         return $db->queryAll();
     }

@@ -54,6 +54,8 @@ CREATE TABLE velveto_bookings_reservations (
 );
 
 CREATE TABLE velveto_bookings_external (
+
+    `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `master_id` INT NOT NULL COMMENT 'External user ID',
     `slave_id` INT NOT NULL COMMENT 'Booking ID',
 
