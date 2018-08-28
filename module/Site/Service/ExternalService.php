@@ -86,18 +86,19 @@ final class ExternalService
      * @param array $item
      * @param string $key Inner key of $item
      * @param string $subject
+     * @param \Site\Service\Dictionary $dictionary Dictionary to translate strings
      * @return string
      */
-    private function formatTime(array $item, string $key, string $subject) : string
+    private function formatTime(array $item, string $key, string $subject, Dictionary $dictionary) : string
     {
         $timestamp = strtotime($item[$key]);
 
         return sprintf('%s, %s %s, %s (%s %s)', 
-            date('D', $timestamp), 
+            $dictionary(date('D', $timestamp)), 
             date('d', $timestamp), 
-            date('F', $timestamp), 
+            $dictionary(date('F', $timestamp)), 
             date('Y', $timestamp),
-            $subject,
+            $dictionary($subject),
             $item[$key]
         );
     }
@@ -106,14 +107,15 @@ final class ExternalService
      * Format items
      * 
      * @param array $items
+     * @param \Site\Service\Dictionary $dictionary Dictionary to translate strings
      * @return array
      */
-    private function formatItems(array $items) : array
+    private function formatItems(array $items, Dictionary $dictionary) : array
     {
         // Alter keys for better readability
         foreach ($items as &$item) {
-            $item['checkin'] = $this->formatTime($item, 'checkin', 'from');
-            $item['checkout'] = $this->formatTime($item, 'checkout', 'to');
+            $item['checkin'] = $this->formatTime($item, 'checkin', 'from', $dictionary);
+            $item['checkout'] = $this->formatTime($item, 'checkout', 'to', $dictionary);
 
             // Unset dates
             unset($item['arrival'], $item['departure']);
@@ -124,7 +126,7 @@ final class ExternalService
             unset($item['amount'], $item['currency']);
 
             // Now format title
-            $item['title'] = sprintf('%s %s, %s %s', $item['nights'], 'nights', $item['qty'], 'room');
+            $item['title'] = sprintf('%s %s, %s %s', $item['nights'], $dictionary('nights'), $item['qty'], $dictionary('room'));
             // And unset used ones
             unset($item['nights'], $item['qty']);
         }
@@ -137,16 +139,17 @@ final class ExternalService
      * 
      * @param int $id External user ID
      * @param int $langId Language ID constraint
+     * @param \Site\Service\Dictionary $dictionary Dictionary to translate strings
      * @return array
      */
-    public function findHotelsByExternalId(int $id, int $langId) : array
+    public function findHotelsByExternalId(int $id, int $langId, Dictionary $dictionary) : array
     {
         $bookings = $this->externalMapper->findHotelsByExternalId($id, $langId);
 
         // Append rooms key
         foreach ($bookings as &$booking) {
             $items = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
-            $items = $this->formatItems($items);
+            $items = $this->formatItems($items, $dictionary);
 
             // Append rooms
             $booking['rooms'] = $items;

@@ -77,10 +77,9 @@ final class Api extends AbstractCrmController
     {
         // Request variables
         $id = $this->request->getQuery('id'); // External user ID
-        $langId = $this->request->getQuery('lang'); // Language ID
 
         // Find ever reserved hotels by external user ID
-        $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($id, $langId);
+        $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($id, $this->getLang(), $this->createDictionary());
 
         return $this->json($bookings);
     }
