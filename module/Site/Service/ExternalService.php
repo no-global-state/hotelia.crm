@@ -89,7 +89,14 @@ final class ExternalService
      */
     public function findHotelsByExternalId(int $id, int $langId) : array
     {
-        return $this->externalMapper->findHotelsByExternalId($id, $langId);
+        $bookings = $this->externalMapper->findHotelsByExternalId($id, $langId);
+
+        // Append rooms key
+        foreach ($bookings as &$booking) {
+            $booking['rooms'] = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
+        }
+
+        return $bookings;
     }
 
     /**
