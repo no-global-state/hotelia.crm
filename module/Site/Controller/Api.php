@@ -67,7 +67,16 @@ final class Api extends AbstractCrmController
     {
         return (int) $this->request->getQuery('price_group_id', 1);
     }
-    
+
+    /**
+     * Returns statistic by user ID
+     * 
+     * @return string
+     */
+    public function statistic() : string
+    {
+    }
+
     /**
      * Saves booking inquiry and returns payment link
      * 
