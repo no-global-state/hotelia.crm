@@ -148,8 +148,9 @@ final class RoomTypeMapper extends AbstractMapper
         // Shared columns
         $columns = [
             self::column('id'),
-            RoomCategoryTranslationMapper::column('name'),
+            self::column('smoking'),
             self::column('persons'),
+            RoomCategoryTranslationMapper::column('name'),
             RoomTypeTranslationMapper::column('description'),
             PriceGroupMapper::column('currency'),
             RoomTypeGalleryMapper::column('file') => 'cover',
