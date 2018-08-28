@@ -12,8 +12,9 @@
 namespace Site\Controller\Architecture;
 
 use Site\Collection\ChildrenCountCollection;
-use Site\Controller\AbstractCrmController;
 use Site\Collection\FacilityTypeCollection;
+use Site\Collection\SmokingCollection;
+use Site\Controller\AbstractCrmController;
 use Site\Service\RoomTypeService;
 use Krystal\Db\Filter\InputDecorator;
 use Krystal\Stdlib\ArrayUtils;
@@ -47,7 +48,6 @@ final class RoomType extends AbstractCrmController
         return $this->view->render('room-type/form', [
             'icon' => 'glyphicon glyphicon-pencil',
             'type' => $type,
-            'children' => (new ChildrenCountCollection())->getAll(),
             'types' => $this->getModuleService('roomTypeService')->fetchAll($this->getCurrentLangId(), $this->getHotelId()),
             'categories' => $this->getModuleService('roomCategoryService')->fetchFilteredList($this->getCurrentLangId(), $this->getHotelId(), $categoryId),
             'priceGroups' => RoomTypeService::normalizeEntity($type, $priceGroups),
@@ -55,6 +55,8 @@ final class RoomType extends AbstractCrmController
 
             // Facilities
             'types' => (new FacilityTypeCollection)->getAll(),
+            'children' => (new ChildrenCountCollection())->getAll(),
+            'smoking' => (new SmokingCollection)->getAll(),
             'checklist' => $this->getModuleService('roomTypeService')->findFacilities($id, $this->getCurrentLangId(), null),
 
             // Room images
