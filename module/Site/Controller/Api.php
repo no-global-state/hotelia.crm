@@ -69,6 +69,21 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Render all bookings (without details)
+     * 
+     * @return array
+     */
+    public function bookings() : string
+    {
+        // Request variables
+        $id = $this->request->getQuery('id'); // External user ID
+
+        $bookings = $this->getModuleService('externalService')->findTotalByExternalId($id, $this->getLang());
+
+        return $this->json($bookings);
+    }
+
+    /**
      * Returns statistic by user ID
      * 
      * @return string

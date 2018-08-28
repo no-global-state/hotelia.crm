@@ -253,6 +253,10 @@ return [
     '/api/statistic/(:var)' => [
         'controller' => 'Api@statistic'
     ],
+    
+    '/api/bookings/(:var)' => [
+        'controller' => 'Api@bookings'
+    ],
 
     // Property
     '/crm/property/(:var)' => [
