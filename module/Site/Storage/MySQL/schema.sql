@@ -380,6 +380,7 @@ CREATE TABLE velveto_room_types (
     `category_id` INT NOT NULL COMMENT 'Attached Category ID',
     `persons` INT NOT COMMENT 'Maximal amount of persons for the room',
     `children` INT COMMENT 'Children capacity count',
+    `smoking` INT  DEFAULT 3 COMMENT 'Smoking constant',
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (category_id) REFERENCES velveto_room_categories(id) ON DELETE CASCADE

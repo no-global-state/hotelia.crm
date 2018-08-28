@@ -37,6 +37,7 @@ final class RoomTypeMapper extends AbstractMapper
             self::column('category_id'),
             self::column('persons'),
             self::column('children'),
+            self::column('smoking'),
             RoomTypeTranslationMapper::column('description'),
         ];
     }
