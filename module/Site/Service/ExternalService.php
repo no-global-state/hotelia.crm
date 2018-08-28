@@ -81,6 +81,18 @@ final class ExternalService
     }
 
     /**
+     * Find booked hotels by external user ID
+     * 
+     * @param int $id External user ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findHotelsByExternalId(int $id, int $langId) : array
+    {
+        return $this->externalMapper->findHotelsByExternalId($id, $langId);
+    }
+
+    /**
      * Find all bookings by external user ID
      * 
      * @param int $id External user ID
