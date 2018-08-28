@@ -114,8 +114,8 @@ final class ExternalService
     {
         // Alter keys for better readability
         foreach ($items as &$item) {
-            $item['checkin'] = $this->formatTime($item, 'checkin', 'from', $dictionary);
-            $item['checkout'] = $this->formatTime($item, 'checkout', 'to', $dictionary);
+            $item['checkin'] = $this->formatTime($item, 'checkin', 'FROM', $dictionary);
+            $item['checkout'] = $this->formatTime($item, 'checkout', 'UPTO', $dictionary);
 
             // Unset dates
             unset($item['arrival'], $item['departure']);
@@ -126,7 +126,7 @@ final class ExternalService
             unset($item['amount'], $item['currency']);
 
             // Now format title
-            $item['title'] = sprintf('%s %s, %s %s', $item['nights'], $dictionary('nights'), $item['qty'], $dictionary('room'));
+            $item['title'] = sprintf('%s %s, %s %s', $item['nights'], $dictionary('NIGHTS'), $item['qty'], $dictionary('ROOMS'));
             // And unset used ones
             unset($item['nights'], $item['qty']);
         }
