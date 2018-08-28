@@ -81,6 +81,28 @@ final class ExternalService
     }
 
     /**
+     * Formats raw date into human readable format
+     * 
+     * @param array $item
+     * @param string $key Inner key of $item
+     * @param string $subject
+     * @return string
+     */
+    private function formatTime(array $item, string $key, string $subject) : string
+    {
+        $timestamp = strtotime($item[$key]);
+
+        return sprintf('%s, %s %s, %s (%s %s)', 
+            date('D', $timestamp), 
+            date('d', $timestamp), 
+            date('F', $timestamp), 
+            date('Y', $timestamp),
+            $subject,
+            $item[$key]
+        );
+    }
+
+    /**
      * Find booked hotels by external user ID
      * 
      * @param int $id External user ID
@@ -93,7 +115,19 @@ final class ExternalService
 
         // Append rooms key
         foreach ($bookings as &$booking) {
-            $booking['rooms'] = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
+            $items = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
+
+            // Alter keys for better readability
+            foreach ($items as &$item) {
+                $item['checkin'] = $this->formatTime($item, 'checkin', 'from');
+                $item['checkout'] = $this->formatTime($item, 'checkout', 'to');
+
+                // Unset dates
+                unset($item['arrival'], $item['departure']);
+            }
+
+            // Append rooms
+            $booking['rooms'] = $items;
         }
 
         return $bookings;
