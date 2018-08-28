@@ -24,6 +24,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
         // Columns to be selected
         $columns = [
             HotelMapper::column('id'),
+            HotelMapper::column('rate'),
             HotelMapper::column('phone'),
             HotelMapper::column('email'),
             HotelTranslationMapper::column('name'),
