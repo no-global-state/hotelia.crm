@@ -89,7 +89,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
             HotelMapper::column('rate'),
             HotelMapper::column('phone'),
             HotelMapper::column('email'),
-            HotelTranslationMapper::column('name'),
+            HotelTranslationMapper::column('name') => 'hotel',
             HotelTranslationMapper::column('address'),
         ];
 
