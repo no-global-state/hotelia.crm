@@ -124,6 +124,11 @@ final class ExternalService
 
                 // Unset dates
                 unset($item['arrival'], $item['departure']);
+
+                // Now format the price
+                $item['price'] = sprintf('%s %s', number_format($item['amount']), $item['currency']);
+                // And unset used ones
+                unset($item['amount'], $item['currency']);
             }
 
             // Append rooms
