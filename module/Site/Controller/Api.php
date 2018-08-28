@@ -76,7 +76,7 @@ final class Api extends AbstractCrmController
     public function bookings() : string
     {
         // Request variables
-        $id = $this->request->getQuery('id'); // External user ID
+        $id = $this->request->getQuery('user_id'); // External user ID
 
         $bookings = $this->getModuleService('externalService')->findTotalByExternalId($id, $this->getLang());
 
@@ -91,7 +91,7 @@ final class Api extends AbstractCrmController
     public function statistic() : string
     {
         // Request variables
-        $id = $this->request->getQuery('id'); // External user ID
+        $id = $this->request->getQuery('user_id'); // External user ID
 
         // Find ever reserved hotels by external user ID
         $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($id, $this->getLang(), $this->createDictionary());
