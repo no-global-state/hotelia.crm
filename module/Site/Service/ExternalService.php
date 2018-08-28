@@ -129,6 +129,11 @@ final class ExternalService
                 $item['price'] = sprintf('%s %s', number_format($item['amount']), $item['currency']);
                 // And unset used ones
                 unset($item['amount'], $item['currency']);
+                
+                // Now format title
+                $item['title'] = sprintf('%s %s, %s %s', $item['nights'], 'nights', $item['qty'], 'room');
+                // And unset used ones
+                unset($item['nights'], $item['qty']);
             }
 
             // Append rooms
