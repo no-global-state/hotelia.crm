@@ -76,6 +76,25 @@
                         </article>
 
                         <br />
+                        
+                        <!-- Cancellation-->
+                        <h2><?= $dictionary('BOOKING_CANCELLATION_TITLE'); ?></h2>
+                        <p>
+                            <?php if ($hotel['penality_enabled']): ?>
+
+                            <?= $dictionary('BOOKING_CANCELLATION_GENERIC', [
+                                'before' => $hotel['penality_not_taken_after'],
+                                'lately' => $hotel['penality_not_later_arrival']
+                            ]); ?>
+
+                            <?= $dictionary('BOOKING_CANCELLATION_TO_CANCEL'); ?>, <a href="<?= $this->url('Site:Site@cancelAction', $booking['token']); ?>"><?= $dictionary('BOOKING_CANCELLATION_LINK'); ?></a>.
+                            <?php else: ?>
+                            <?= $dictionary('BOOKING_CANCELLATION_NO_REFUND'); ?>
+                            <?php endif; ?>
+                        </p>
+                        <!-- Cancellation-->
+
+                        <br />
                         <h2><?= $dictionary('BOOKING_EXTRA_INFO'); ?></h2>
 
                         <article><?= $dictionary('BOOKING_ADDITIONAL_INFO'); ?></article>
