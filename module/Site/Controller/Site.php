@@ -508,8 +508,22 @@ final class Site extends AbstractSiteController
      * @param string $token
      * @return string
      */
-    public function cancelAction(string $token) : string
+    public function cancelAction(string $token)
     {
+        $booking = $this->getModuleService('bookingService')->findByToken($token);
+
+        // In case invalid token provided
+        if (!$booking) {
+            return false;
+        } else {
+            $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $this->getCurrentLangId(), $this->getPriceGroupId());
+
+            return $this->view->render('booking-cancel-info', [
+                'booking' => $booking,
+                'token' => $token,
+                'hotel' => $hotel
+            ]);
+        }
     }
 
     /**
@@ -520,7 +534,12 @@ final class Site extends AbstractSiteController
      */
     public function cancelConfirmAction(string $token) : string
     {
-        
+        $result = $this->getModuleService('bookingService')->cancel($token);
+
+        // In case couldn't cancel
+        return $this->view->render('booking-cancel-status', [
+            'success' => $result
+        ]);
     }
 
     /**
