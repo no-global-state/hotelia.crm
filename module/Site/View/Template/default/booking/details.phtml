@@ -34,95 +34,114 @@ $disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_ACC
             </ul>
         </div>
 
-        <form method="POST" class="form-horizontal" role="form" action="<?= $this->url('Site:Booking@reserveAction'); ?>">
-            <div class="tab-content">
-                <div class="tab-pane active" role="tabpanel" id="step1">
-                  <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <h4><?php $this->show('Basic'); ?></h4>
+        <div class="tab-content">
+            <div class="tab-pane active" role="tabpanel" id="step1">
+              <div class="container-fluid">
+                <form action="<?= $this->url('Site:Booking@updateStatusAction'); ?>" method="POST" class="form-horizontal">
+                    <?= Element::hidden('id', $details['booking']['id']); ?>
 
-                            <?= (new ListView($details['booking'], [
-                                'columns' => [
-                                    ['column' => 'id', 'title' => '#'],
-                                    ['column' => 'status', 'translate' => true, 'value' => function() use ($details){
-                                        return (new BookingStatusCollection)->findByKey($details['booking']['status']);
-                                    }],
-                                    ['column' => 'arrival'],
-                                    ['column' => 'departure'],
-                                    ['column' => 'phone'],
-                                    ['column' => 'email'],
-                                    ['column' => 'comment'],
-                                    ['column' => 'near_preferred', 'value' => function() use ($details){
-                                        return $this->translate($details['booking']['near_preferred'] == 1 ? 'Yes' : 'No');
-                                    }],
-                                    ['column' => 'datetime', 'title' => 'Date and time'],
-                                    ['column' => 'price_group'],
-                                    ['column' => 'amount', 'value' => function() use ($details){
-                                        return number_format($details['booking']['amount']) . PHP_EOL . $details['booking']['currency'];
-                                    }],
-                                ]
-                            ], $this->translator))->render(); ?>
+                    <div class="row">
+                        <div class="col-lg-8">
+                            <div class="form-group">
+                              <label class="col-lg-2 control-label"><? $this->show('Status'); ?></label>
+                              <div class="col-lg-10">
+                                <?= Element::select('status', $this->translateArray((new BookingStatusCollection)->getAll()), $details['booking']['status'], ['class' => 'form-control']); ?>
+                              </div>
+                            </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
-
-                            <?= Grid::render($details['guests'], [
-                                // A column to be considered as a primary key
-                                'pk' => 'id',
-                                'batch' => false,
-                                'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-                                'columns' => [
-                                    [
-                                        'column' => 'first_name'
-                                    ],
-                                    
-                                    [
-                                        'column' => 'last_name'
-                                    ],
-
-                                    [
-                                        'column' => 'gender',
-                                        'translateable' => true,
-                                        'value' => function($row){
-                                            return (new GenderCollection)->findByKey($row['gender']);
-                                        }
-                                    ],
-
-                                    [
-                                        'column' => 'country',
-                                        'value' => function($row){
-                                            return (new Country())->getCountryByCode($row['country']);
-                                        }
-                                    ]
-                                ]
-
-                            ], $this->translator); ?>
-
-                            <br />
-
-                            <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
-
-                            <?= Grid::render($details['rooms'], [
-                                // A column to be considered as a primary key
-                                'pk' => 'id',
-                                'batch' => false,
-                                'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
-                                'columns' => [
-                                    ['column' => 'category'],
-                                    ['column' => 'guests'],
-                                    ['column' => 'qty'],
-                                    ['column' => 'bed']
-                                ]
-
-                            ], $this->translator); ?>
+                        <div class="col-lg-4">
+                            <button class="btn btn-success" type="submit"><?php $this->show('Update status'); ?></button>
                         </div>
                     </div>
-                  </div>
-                </div>
+                </form>
+              
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h4><?php $this->show('Basic'); ?></h4>
 
-                <div class="tab-pane" role="tabpanel" id="step2">
+                        <?= (new ListView($details['booking'], [
+                            'columns' => [
+                                ['column' => 'id', 'title' => '#'],
+                                ['column' => 'status', 'translate' => true, 'value' => function() use ($details){
+                                    return (new BookingStatusCollection)->findByKey($details['booking']['status']);
+                                }],
+                                ['column' => 'arrival'],
+                                ['column' => 'departure'],
+                                ['column' => 'phone'],
+                                ['column' => 'email'],
+                                ['column' => 'comment'],
+                                ['column' => 'near_preferred', 'value' => function() use ($details){
+                                    return $this->translate($details['booking']['near_preferred'] == 1 ? 'Yes' : 'No');
+                                }],
+                                ['column' => 'datetime', 'title' => 'Date and time'],
+                                ['column' => 'price_group'],
+                                ['column' => 'amount', 'value' => function() use ($details){
+                                    return number_format($details['booking']['amount']) . PHP_EOL . $details['booking']['currency'];
+                                }],
+                            ]
+                        ], $this->translator))->render(); ?>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <h4><?php $this->show('Guests'); ?> <small>(<?= count($details['guests']); ?>)</small></h4>
+
+                        <?= Grid::render($details['guests'], [
+                            // A column to be considered as a primary key
+                            'pk' => 'id',
+                            'batch' => false,
+                            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                            'columns' => [
+                                [
+                                    'column' => 'first_name'
+                                ],
+                                
+                                [
+                                    'column' => 'last_name'
+                                ],
+
+                                [
+                                    'column' => 'gender',
+                                    'translateable' => true,
+                                    'value' => function($row){
+                                        return (new GenderCollection)->findByKey($row['gender']);
+                                    }
+                                ],
+
+                                [
+                                    'column' => 'country',
+                                    'value' => function($row){
+                                        return (new Country())->getCountryByCode($row['country']);
+                                    }
+                                ]
+                            ]
+
+                        ], $this->translator); ?>
+
+                        <br />
+
+                        <h4><?php $this->show('Rooms'); ?> <small>(<?= count($details['rooms']); ?>)</small></h4>
+
+                        <?= Grid::render($details['rooms'], [
+                            // A column to be considered as a primary key
+                            'pk' => 'id',
+                            'batch' => false,
+                            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+                            'columns' => [
+                                ['column' => 'category'],
+                                ['column' => 'guests'],
+                                ['column' => 'qty'],
+                                ['column' => 'bed']
+                            ]
+
+                        ], $this->translator); ?>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" role="tabpanel" id="step2">
+                <form method="POST" class="form-horizontal" role="form" action="<?= $this->url('Site:Booking@reserveAction'); ?>">
                     <h3><? $this->show('Guest information'); ?></h3>
                     <br />
                     <?= Element::hidden('id', $details['booking']['id']); ?>
@@ -173,8 +192,9 @@ $disabled = $details['booking']['status'] == BookingStatusCollection::STATUS_ACC
                         <li><button type="submit" class="btn btn-success btn-info-full next-step"><?php $this->show('Finish booking'); ?></button></li>
                     </ul>
                     <?php endif; ?>
-                </div>
+                
+                </form>
             </div>
-        </form>
+        </div>
     </div>
 </section>
