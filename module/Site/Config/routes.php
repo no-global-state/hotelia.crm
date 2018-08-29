@@ -58,6 +58,15 @@ return [
         'controller' => 'Site@couponAction'
     ],
     
+    // Booking cancel
+    '/cancel/(:var)' => [
+        'controller' => 'Site@cancelAction'
+    ],
+    
+    '/cancel-confirm/(:var)' => [
+        'controller' => 'Site@cancelConfirmAction'
+    ],
+    
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction'

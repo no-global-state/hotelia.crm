@@ -133,6 +133,35 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Finds only cancellation-related data by its token
+     * 
+     * @param string $token
+     * @return array
+     */
+    public function findCancelationDataByToken(string $token)
+    {
+        // Columns to be selected
+        $columns = [
+            HotelMapper::column('penality_enabled'),
+            HotelMapper::column('penality_not_taken_after'),
+            HotelMapper::column('penality_not_later_arrival'),
+            self::column('datetime'),
+            self::column('arrival'),
+            self::column('status'),
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(self::getTableName())
+                       // Hotel relation
+                       ->leftJoin(HotelMapper::getTableName(), [
+                            HotelMapper::column('id') => self::getRawColumn('hotel_id')
+                       ])
+                       ->whereEquals(self::column('token'), $token);
+
+        return $db->query();
+    }
+
+    /**
      * Find booking row by its associated token
      * 
      * @param string $token
