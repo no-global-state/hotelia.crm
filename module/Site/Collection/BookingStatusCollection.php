@@ -21,6 +21,8 @@ final class BookingStatusCollection extends ArrayCollection
         self::STATUS_NEW => 'New',
         self::STATUS_CONFIRMED => 'Confirmed',
         self::STATUS_REJECTED => 'Rejected',
-        self::STATUS_ACCEPTED => 'Accepted'
+        self::STATUS_ACCEPTED => 'Accepted',
+        self::STATUS_REFUND_IN_PROGRESS => 'Refund in progress',
+        self::STATUS_REFUNED => 'Refunded'
     ];
 }
