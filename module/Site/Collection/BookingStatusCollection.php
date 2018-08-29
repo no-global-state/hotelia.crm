@@ -11,6 +11,8 @@ final class BookingStatusCollection extends ArrayCollection
     const STATUS_CONFIRMED = 1;
     const STATUS_REJECTED = 2;
     const STATUS_ACCEPTED = 3;
+    const STATUS_REFUND_IN_PROGRESS = 4;
+    const STATUS_REFUNED = 5;
 
     /**
      * {@inheritDoc}
