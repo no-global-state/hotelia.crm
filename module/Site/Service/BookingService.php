@@ -6,6 +6,7 @@ use Krystal\Text\TextUtils;
 use Site\Storage\MySQL\BookingMapper;
 use Site\Storage\MySQL\BookingGuestsMapper;
 use Site\Storage\MySQL\BookingRoomMapper;
+use Site\Collection\BookingStatusCollection;
 
 final class BookingService
 {
@@ -43,6 +44,40 @@ final class BookingService
         $this->bookingMapper = $bookingMapper;
         $this->bookingGuestsMapper = $bookingGuestsMapper;
         $this->bookingRoomMapper = $bookingRoomMapper;
+    }
+
+    /**
+     * Cancels booking by its token
+     * 
+     * @param string $token
+     * @return boolean
+     */
+    public function cancel(string $token) : bool
+    {
+        $data = $this->bookingMapper->findCancelationDataByToken($token);
+
+        // Invalid token checking
+        if (!$data) {
+            return false;
+        }
+
+        // Don't let to cancel twice, if already canceled
+        if ($data['status'] == BookingStatusCollection::STATUS_REFUND_IN_PROGRESS || $data['status'] == BookingStatusCollection::STATUS_REFUNED) {
+            return false;
+        }
+
+        // Finally process
+        $service = new CancelationService($data['datetime'], $data['arrival']);
+
+        $canCancel = $service->canCancel($data['penality_not_taken_after'], $data['penality_not_later_arrival']);
+
+        if ($canCancel) {
+            // Update status to in progress
+            $this->bookingMapper->updateStatusByToken($token, BookingStatusCollection::STATUS_REFUND_IN_PROGRESS);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
