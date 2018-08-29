@@ -503,6 +503,27 @@ final class Site extends AbstractSiteController
     }
 
     /**
+     * Renders cancel
+     * 
+     * @param string $token
+     * @return string
+     */
+    public function cancelAction(string $token) : string
+    {
+    }
+
+    /**
+     * Confirms canceling reservation
+     * 
+     * @param string $token
+     * @return string
+     */
+    public function cancelConfirmAction(string $token) : string
+    {
+        
+    }
+
+    /**
      * Renders home page
      * 
      * @return string
