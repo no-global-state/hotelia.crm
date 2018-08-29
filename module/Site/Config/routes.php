@@ -8,6 +8,10 @@ return [
     '/crm/booking/reserve' => [
         'controller' => 'Booking@reserveAction'
     ],
+
+    '/crm/booking/update-status' => [
+        'controller' => 'Booking@updateStatusAction'
+    ],
     
     '/crm/booking' => [
         'controller' => 'Booking@indexAction'

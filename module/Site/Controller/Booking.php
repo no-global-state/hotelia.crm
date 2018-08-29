@@ -29,6 +29,22 @@ final class Booking extends AbstractCrmController
     }
 
     /**
+     * Update booking status
+     * 
+     * @return int
+     */
+    public function updateStatusAction() : int
+    {
+        $data = $this->request->getPost();
+
+        $bookingService = $this->getModuleService('bookingService');
+        $bookingService->updateStatusById($data['id'], $data['status']);
+
+        $this->flashBag->set('success', 'Booking status has been updated successfully');
+        return 1;
+    }
+
+    /**
      * Makes actual reservation
      * 
      * @return string
