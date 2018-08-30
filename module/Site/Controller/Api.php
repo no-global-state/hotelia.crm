@@ -136,6 +136,11 @@ final class Api extends AbstractCrmController
         // We don't save email and phone for guests, but for booking only
         unset($client['email'], $client['phone']);
 
+        if (isset($request['user_id'])) {
+            // Save external relation if possible
+            $this->getModuleService('externalService')->saveIfPossible($booking['id'], $request['user_id']);
+        }
+
         // Room data to be save
         $data = $this->getModuleService('roomTypeService')->createSummary($rooms, $priceGroupId, $hotelId, $langId);
 
