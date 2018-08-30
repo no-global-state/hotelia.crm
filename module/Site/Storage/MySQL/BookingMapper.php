@@ -36,6 +36,7 @@ final class BookingMapper extends AbstractMapper
             self::column('amount'),
             self::column('token'),
             self::column('discount'),
+            self::column('cancellation_time'),
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
         ];
@@ -54,12 +55,16 @@ final class BookingMapper extends AbstractMapper
      * @param string $column
      * @param string $value
      * @param int $status
+     * @param array $extra Extra columns to be updated
      * @return boolean Depending on success
      */
-    private function updateStatusByColumn(string $column, string $value, int $status) : bool
+    private function updateStatusByColumn(string $column, string $value, int $status, array $extra = array()) : bool
     {
+        // Columns and their values to be updated
+        $data = array_merge(['status' => $status], $extra);
+
         // Affected row count
-        $rowCount = $this->db->update(self::getTableName(), ['status' => $status])
+        $rowCount = $this->db->update(self::getTableName(), $data)
                              ->whereEquals($column, $value)
                              ->execute(true);
 
@@ -95,11 +100,21 @@ final class BookingMapper extends AbstractMapper
      * 
      * @param string $token
      * @param int $status
+     * @param string $cancellationTime Optional cancellation time to be updated
      * @return boolean Depending on success
      */
-    public function updateStatusByToken(string $token, int $status) : bool
+    public function updateStatusByToken(string $token, int $status, string $cancellationTime = null) : bool
     {
-        return $this->updateStatusByColumn('token', $token, $status);
+        if ($cancellationTime !== null) {
+            // Extra columns to be updated
+            $extra = [
+                self::column('cancellation_time') => $cancellationTime
+            ];
+        } else {
+            $extra = [];
+        }
+
+        return $this->updateStatusByColumn('token', $token, $status, $extra);
     }
 
     /**
@@ -148,6 +163,7 @@ final class BookingMapper extends AbstractMapper
             self::column('datetime'),
             self::column('arrival'),
             self::column('status'),
+            self::column('cancellation_time')
         ];
 
         $db = $this->db->select($columns)

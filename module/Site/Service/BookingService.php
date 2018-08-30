@@ -2,6 +2,7 @@
 
 namespace Site\Service;
 
+use Krystal\Date\TimeHelper;
 use Krystal\Text\TextUtils;
 use Site\Storage\MySQL\BookingMapper;
 use Site\Storage\MySQL\BookingGuestsMapper;
@@ -73,7 +74,7 @@ final class BookingService
 
         if ($canCancel) {
             // Update status to in progress
-            $this->bookingMapper->updateStatusByToken($token, BookingStatusCollection::STATUS_REFUND_IN_PROGRESS);
+            $this->bookingMapper->updateStatusByToken($token, BookingStatusCollection::STATUS_REFUND_IN_PROGRESS, TimeHelper::getNow());
             return true;
         } else {
             return false;
