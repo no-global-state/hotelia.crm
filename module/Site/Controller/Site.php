@@ -211,7 +211,8 @@ final class Site extends AbstractSiteController
      */
     public function leaveReviewAction(string $token) : string
     {
-        $booking = $this->getModuleService('bookingService')->findByToken($token);
+        $bookingService = $this->getModuleService('bookingService');
+        $booking = $bookingService->findByToken($token);
 
         if ($booking) {
             $hotelId = $booking['hotel_id'];
@@ -224,6 +225,9 @@ final class Site extends AbstractSiteController
 
                 // Append the review
                 $reviewService->add($this->getCurrentLangId(), $hotelId, $input);
+
+                // Update NULL with just added review ID
+                $bookingService->updateReviewId($booking['id'], $reviewService->getLastId());
 
                 // Notify about new feedback
                 $email = $this->getModuleService('hotelService')->findEmailById($hotelId);
