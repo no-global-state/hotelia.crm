@@ -45,6 +45,16 @@ final class ReviewService
     }
 
     /**
+     * Returns last ID
+     * 
+     * @return integer
+     */
+    public function getLastId()
+    {
+        return $this->reviewMapper->getMaxId();
+    }
+
+    /**
      * Fetch averages
      * 
      * @param int $hotelId
@@ -98,7 +108,7 @@ final class ReviewService
 
         // Persist a review
         $this->reviewMapper->persist($data);
-        $id = $this->reviewMapper->getMaxId();
+        $id = $this->getLastId();
 
         // Insert marks
         foreach ($input['mark'] as $typeId => $mark) {
