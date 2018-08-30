@@ -444,6 +444,10 @@ return [
         'controller' => 'Site@feedbackAction'
     ],
     
+    '/leave-review/(:var)' => [
+        'controller' => 'Site@leaveReviewAction'
+    ],
+    
     '/gateway/(:var)' => [
         'controller' => 'Site@gatewayAction'
     ],

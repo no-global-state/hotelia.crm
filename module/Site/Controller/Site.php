@@ -189,32 +189,67 @@ final class Site extends AbstractSiteController
         $hotelId = $this->request->getQuery('hotel_id');
         $reviewService = $this->getModuleService('reviewService');
 
-        if ($this->request->isPost()) {
-            $input = $this->request->getPost();
-
-            // Append the review
-            $reviewService->add($this->getCurrentLangId(), $hotelId, $input);
-
-            // Notify about new feedback
-            $email = $this->getModuleService('hotelService')->findEmailById($hotelId);
-            $this->feedbackNewNotify($email);
-
-            $this->flashBag->set('success', 'Your review has been added successfully');
-            $this->response->refresh();
-        }
-
         $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId());
         $rates = $reviewService->fetchAverages($hotelId, $this->getCurrentLangId());
         $reviews= $reviewService->fetchAll($hotelId);
-        $mapper = $this->createMapper('\Site\Storage\MySQL\ReviewTypeMapper');
-        $items = $mapper->fetchAll($this->getCurrentLangId());
+        $items = $this->createMapper('\Site\Storage\MySQL\ReviewTypeMapper')->fetchAll($this->getCurrentLangId());
 
         return $this->view->render('feedback', [
             'reviewTypes' => $items,
             'rates' => $rates,
             'hotel' => $hotel,
-            'reviews' => $reviews
+            'reviews' => $reviews,
+            'form' => false
         ]);
+    }
+
+    /**
+     * Leaves a review by token
+     * 
+     * @param string $token
+     * @return string
+     */
+    public function leaveReviewAction(string $token) : string
+    {
+        $booking = $this->getModuleService('bookingService')->findByToken($token);
+
+        if ($booking) {
+            $hotelId = $booking['hotel_id'];
+
+            $reviewService = $this->getModuleService('reviewService');
+
+            // Add 
+            if ($this->request->isPost()) {
+                $input = $this->request->getPost();
+
+                // Append the review
+                $reviewService->add($this->getCurrentLangId(), $hotelId, $input);
+
+                // Notify about new feedback
+                $email = $this->getModuleService('hotelService')->findEmailById($hotelId);
+                $this->feedbackNewNotify($email);
+
+                $this->flashBag->set('success', 'Your review has been added successfully');
+                $this->response->refresh();
+            }
+
+            $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId());
+            $rates = $reviewService->fetchAverages($hotelId, $this->getCurrentLangId());
+            $reviews= $reviewService->fetchAll($hotelId);
+            $items = $this->createMapper('\Site\Storage\MySQL\ReviewTypeMapper')->fetchAll($this->getCurrentLangId());
+
+            return $this->view->render('feedback', [
+                'reviewTypes' => $items,
+                'rates' => $rates,
+                'hotel' => $hotel,
+                'reviews' => $reviews,
+                'form' => true
+            ]);
+
+        } else {
+            // Invalid token provided
+            return false;
+        }
     }
 
     /**
