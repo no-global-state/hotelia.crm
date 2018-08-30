@@ -64,9 +64,24 @@ final class ReviewMapper extends AbstractMapper
      */
     public function fetchAll(int $hotelId) : array
     {
-        return $this->db->select('*')
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('lang_id'),
+            self::column('hotel_id'),
+            self::column('date'),
+            self::column('title'),
+            self::column('review'),
+        ];
+
+        return $this->db->select(array_merge($columns, [new RawSqlFragment(sprintf('ROUND(AVG(%s), 1) AS mark', ReviewMarkMapper::column('mark')))]))
                         ->from(self::getTableName())
+                        // Mark relation
+                        ->innerJoin(ReviewMarkMapper::getTableName(), [
+                            ReviewMarkMapper::column('review_id') => self::getRawColumn('id')
+                        ])
                         ->whereEquals('hotel_id', $hotelId)
+                        ->groupBy($columns)
                         ->orderBy($this->getPk())
                         ->desc()
                         ->queryAll();
