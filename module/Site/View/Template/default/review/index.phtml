@@ -6,7 +6,9 @@
                 <th><?php $this->show('Date'); ?></th>
                 <th><?php $this->show('Review'); ?></th>
                 <th><?php $this->show('Rating'); ?></th>
+                <?php if ($admin): ?>
                 <th><?php $this->show('Actions'); ?></th>
+                <?php endif; ?>
             </tr>
         </thead>
 
@@ -17,10 +19,12 @@
                 <td><?= $review['date']; ?></td>
                 <td><?= $review['review']; ?></td>
                 <td><?= $review['mark']; ?></td>
+                <?php if ($admin): ?>
                 <td>
                     <a href="<?= $this->url('Site:Review:Review@editAction', $review['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a data-button="delete" href="<?= $this->url('Site:Review:Review@deleteAction', $review['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
                 </td>
+                <?php endif; ?>
             </tr>
             <?php endforeach; ?>
         </tbody>
