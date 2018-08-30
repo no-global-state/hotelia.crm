@@ -216,6 +216,7 @@ final class Site extends AbstractSiteController
 
         if ($booking) {
             $hotelId = $booking['hotel_id'];
+            $allowed = !boolval($booking['review_id']); // Whether posted review before?
 
             $reviewService = $this->getModuleService('reviewService');
 
@@ -247,7 +248,8 @@ final class Site extends AbstractSiteController
                 'rates' => $rates,
                 'hotel' => $hotel,
                 'reviews' => $reviews,
-                'form' => true
+                'form' => true,
+                'allowed' => $allowed
             ]);
 
         } else {
