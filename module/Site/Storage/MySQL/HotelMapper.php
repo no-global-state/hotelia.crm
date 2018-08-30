@@ -279,8 +279,11 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
             ])
             // Review relation
             ->leftJoin(ReviewMapper::getTableName(), [
-                ReviewMapper::column('hotel_id') => self::getRawColumn('id'),
-                ReviewMapper::column('lang_id') => HotelTranslationMapper::getRawColumn('lang_id')
+                ReviewMapper::column('hotel_id') => self::getRawColumn('id')
+            ])
+            // Review mark relation
+            ->leftJoin(ReviewMarkMapper::getTableName(), [
+                ReviewMarkMapper::column('review_id') => ReviewMapper::getRawColumn('id')
             ])
             // Photo cover relation
             ->leftJoin(PhotoCoverMapper::getTableName(), [
@@ -427,6 +430,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         $db = $this->db->select($columns, true)
                        ->min(RoomTypePriceMapper::column('price'), 'start_price')
                        ->count(new RawSqlFragment('DISTINCT ' . ReviewMapper::column('id')) , 'review_count')
+                       ->round(new RawSqlFragment(sprintf('AVG(%s)', ReviewMarkMapper::column('mark'))), 1, 'average')
                        ->from(self::getTableName());
 
         $this->appendSharedRelations($db, $langId, $priceGroupId, $filters);
