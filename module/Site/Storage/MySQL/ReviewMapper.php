@@ -73,7 +73,7 @@ final class ReviewMapper extends AbstractMapper
             self::column('title'),
             self::column('review'),
             BookingMapper::column('arrival'),
-            BookingMapper::departure('arrival'),
+            BookingMapper::column('departure'),
         ];
 
         return $this->db->select(array_merge($columns, [new RawSqlFragment(sprintf('ROUND(AVG(%s), 1) AS mark', ReviewMarkMapper::column('mark')))]))
