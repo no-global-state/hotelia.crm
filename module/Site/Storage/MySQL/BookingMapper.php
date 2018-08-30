@@ -2,6 +2,9 @@
 
 namespace Site\Storage\MySQL;
 
+use Krystal\Date\TimeHelper;
+use Krystal\Db\Sql\RawSqlFragment;
+
 final class BookingMapper extends AbstractMapper
 {
     /**
@@ -19,6 +22,9 @@ final class BookingMapper extends AbstractMapper
      */
     private function createSharedSelect()
     {
+        // Get current date (without time)
+        $today = TimeHelper::getNow(false);
+
         // Columns to be selected
         $columns = [
             self::column('id'),
@@ -40,6 +46,7 @@ final class BookingMapper extends AbstractMapper
             self::column('cancellation_time'),
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
+            new RawSqlFragment(sprintf("if ('%s' > departure AND review_id = NULL, 1, 0) AS can_leave_review", $today))
         ];
 
         return $this->db->select($columns)
