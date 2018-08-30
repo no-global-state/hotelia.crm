@@ -440,8 +440,8 @@ return [
         'controller' => 'Site@confirmPaymentAction'
     ],
 
-    '/feedback/(:var)' => [
-        'controller' => 'Site@feedbackAction'
+    '/reviews/(:var)' => [
+        'controller' => 'Site@reviewsAction'
     ],
     
     '/leave-review/(:var)' => [

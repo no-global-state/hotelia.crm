@@ -181,12 +181,11 @@ final class Site extends AbstractSiteController
     /**
      * Renders feedback form
      * 
+     * @param int $hotelId
      * @return string
      */
-    public function feedbackAction() : string
+    public function reviewsAction(int $hotelId) : string
     {
-        // Request variable
-        $hotelId = $this->request->getQuery('hotel_id');
         $reviewService = $this->getModuleService('reviewService');
 
         $hotel = $this->getModuleService('hotelService')->fetchById($hotelId, $this->getCurrentLangId());
