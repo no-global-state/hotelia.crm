@@ -73,6 +73,18 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Updates review ID by attached booking ID
+     * 
+     * @param int $bookingId
+     * @param int $reviewId
+     * @return boolean
+     */
+    public function updateReviewId(int $bookingId, int $reviewId) : bool
+    {
+        return $this->updateColumnsByPk($bookingId, ['review_id' => $reviewId]);
+    }
+
+    /**
      * Inserts relation
      * 
      * @param int $bookingId

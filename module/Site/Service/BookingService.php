@@ -48,6 +48,18 @@ final class BookingService
     }
 
     /**
+     * Updates review ID by attached booking ID
+     * 
+     * @param int $bookingId
+     * @param int $reviewId
+     * @return boolean
+     */
+    public function updateReviewId(int $bookingId, int $reviewId) : bool
+    {
+        return $this->bookingMapper->updateReviewId($bookingId, $reviewId);
+    }
+
+    /**
      * Cancels booking by its token
      * 
      * @param string $token
