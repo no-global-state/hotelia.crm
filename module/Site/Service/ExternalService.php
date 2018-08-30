@@ -194,7 +194,7 @@ final class ExternalService
      * Save relation about external user ID and its booking ID
      * 
      * @param int $bookingId
-     * @param mixed $user User ID in case needs to be overridden
+     * @param mixed $userId User ID in case needs to be overridden
      * @return boolean
      */
     public function saveIfPossible(int $bookingId, $userId = null) : bool
