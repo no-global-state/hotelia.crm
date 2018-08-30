@@ -221,9 +221,7 @@ CREATE TABLE velveto_reviews (
     `lang_id` INT NOT NULL,
     `hotel_id` INT NOT NULL,
     `date` TIMESTAMP NOT NULL,
-    `title` varchar(255) NOT NULL COMMENT 'Review title',
-    `review` TEXT COMMENT 'Review itself',
-    `rating` SMALLINT NOT NULL COMMENT 'Summary rating',
+    `review` TEXT COMMENT 'Review itself'
 
     FOREIGN KEY (hotel_id) REFERENCES velveto_hotels(id) ON DELETE CASCADE,
     FOREIGN KEY (lang_id) REFERENCES velveto_languages(id) ON DELETE CASCADE

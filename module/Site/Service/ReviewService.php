@@ -102,7 +102,6 @@ final class ReviewService
         $data = [
             'lang_id' => $langId,
             'hotel_id' => $hotelId,
-            'title' => '',
             'review' => $input['review']
         ];
 

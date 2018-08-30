@@ -70,7 +70,6 @@ final class ReviewMapper extends AbstractMapper
             self::column('lang_id'),
             self::column('hotel_id'),
             self::column('date'),
-            self::column('title'),
             self::column('review'),
             BookingMapper::column('arrival'),
             BookingMapper::column('departure'),

@@ -3,7 +3,6 @@
         <thead>
             <tr>
                 <th>#</th>
-                <th><?php $this->show('Title'); ?></th>
                 <th><?php $this->show('Date'); ?></th>
                 <th><?php $this->show('Review'); ?></th>
                 <th><?php $this->show('Rating'); ?></th>
@@ -15,10 +14,9 @@
             <?php foreach ($reviews as $index => $review): ?>
             <tr>
                 <td><?= $index + 1; ?></td>
-                <td><?= $review['title']; ?></td>
                 <td><?= $review['date']; ?></td>
                 <td><?= $review['review']; ?></td>
-                <td><?= $review['rating']; ?></td>
+                <td><?= $review['mark']; ?></td>
                 <td>
                     <a href="<?= $this->url('Site:Review:Review@editAction', $review['id']); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
                     <a data-button="delete" href="<?= $this->url('Site:Review:Review@deleteAction', $review['id']); ?>"><i class="glyphicon glyphicon-remove"></i></a>
