@@ -84,6 +84,15 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Run batch mailer
+     * 
+     * @return string
+     */
+    public function receivers()
+    {
+    }
+
+    /**
      * Returns statistic by user ID
      * 
      * @return string

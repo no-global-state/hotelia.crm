@@ -270,6 +270,10 @@ return [
     '/api/bookings/(:var)' => [
         'controller' => 'Api@bookings'
     ],
+    
+    '/api/run-mail-receivers' => [
+        'controller' => 'Api@receivers'
+    ],
 
     // Property
     '/crm/property/(:var)' => [
