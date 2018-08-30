@@ -508,7 +508,8 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         ]);
 
         $db = $this->db->select($columns)
-                       ->min(RoomTypePriceMapper::column('price'), 'start_price')
+                       ->min(RoomTypePriceMapper::column('price'), 'start_price') // Minimal price
+                       ->count(new RawSqlFragment(sprintf('DISTINCT %s', ReviewMapper::column('id'))), 'review_count') // Count reviews
                        ->from(self::getTableName())
                        // Hotel translation relation
                        ->leftJoin(HotelTranslationMapper::getTableName(), [
@@ -560,6 +561,10 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
                        // Photo relation
                        ->leftJoin(PhotoMapper::getTableName(), [
                             PhotoMapper::column('id') => PhotoCoverMapper::getRawColumn('slave_id')
+                       ])
+                       // Review relation (to count reviews)
+                       ->leftJoin(ReviewMapper::getTableName(), [
+                            ReviewMapper::column('hotel_id') => self::getRawColumn('id')
                        ])
                        // Constraints
                        ->whereEquals(self::column(self::PARAM_COLUMN_ID), $id)
