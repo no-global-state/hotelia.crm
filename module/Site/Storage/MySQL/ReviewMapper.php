@@ -72,6 +72,8 @@ final class ReviewMapper extends AbstractMapper
             self::column('date'),
             self::column('title'),
             self::column('review'),
+            BookingMapper::column('arrival'),
+            BookingMapper::departure('arrival'),
         ];
 
         return $this->db->select(array_merge($columns, [new RawSqlFragment(sprintf('ROUND(AVG(%s), 1) AS mark', ReviewMarkMapper::column('mark')))]))
@@ -80,7 +82,11 @@ final class ReviewMapper extends AbstractMapper
                         ->innerJoin(ReviewMarkMapper::getTableName(), [
                             ReviewMarkMapper::column('review_id') => self::getRawColumn('id')
                         ])
-                        ->whereEquals('hotel_id', $hotelId)
+                        // Booking relation
+                        ->leftJoin(BookingMapper::getTableName(), [
+                            BookingMapper::column('review_id') => self::getRawColumn('id')
+                        ])
+                        ->whereEquals(self::column('hotel_id'), $hotelId)
                         ->groupBy($columns)
                         ->orderBy($this->getPk())
                         ->desc()
