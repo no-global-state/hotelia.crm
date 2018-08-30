@@ -48,6 +48,16 @@ final class BookingService
     }
 
     /**
+     * Fetch today receivers that should get some kind of notifications
+     * 
+     * @return array
+     */
+    public function fetchTodayReceivers() : array
+    {
+        return $this->bookingMapper->fetchTodayReceivers();
+    }
+
+    /**
      * Updates review ID by attached booking ID
      * 
      * @param int $bookingId

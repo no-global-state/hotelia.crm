@@ -58,6 +58,42 @@ final class BookingMapper extends AbstractMapper
     }
 
     /**
+     * Fetch today receivers that should get some kind of notifications
+     * 
+     * @return array
+     */
+    public function fetchTodayReceivers()
+    {
+        // Columns to be selected
+        $columns = [
+            self::column('id'),
+            self::column('lang_id'),
+            self::column('token'),
+            self::column('email'),
+            self::column('arrival'),
+            self::column('departure'),
+            HotelTranslationMapper::column('name') => 'hotel',
+            LanguageMapper::column('code') => 'language'
+        ];
+
+        $db = $this->db->select($columns)
+                       ->from(self::getTableName())
+                       // Hotel translation relation
+                       ->leftJoin(HotelTranslationMapper::getTableName(), [
+                            HotelTranslationMapper::column('id') => self::getRawColumn('hotel_id'),
+                            HotelTranslationMapper::column('lang_id') => self::getRawColumn('lang_id')
+                       ])
+                       // Language relation
+                       ->leftJoin(LanguageMapper::getTableName(), [
+                            LanguageMapper::column('id') => self::getRawColumn('lang_id')
+                       ])
+                       ->where(self::column('review_id'), 'IS', new RawSqlFragment('NULL'))
+                       ->andWhere(sprintf('DATEDIFF(CURDATE(), %s)', self::column('departure')), '=', new RawSqlFragment(1));
+
+        return $db->queryAll();
+    }
+
+    /**
      * Updates status by column and value
      * 
      * @param string $column
