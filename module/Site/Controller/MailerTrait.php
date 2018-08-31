@@ -19,6 +19,26 @@ trait MailerTrait
     }
 
     /**
+     * Notify receivers
+     * 
+     * @param array $bookings
+     * @return boolean
+     */
+    protected function notifyReceivers(array $bookings) : bool
+    {
+        foreach ($bookings as $booking) {
+            $subject = $this->dict('BOOKING_MAIL_REVIEW_SUBJECT', $booking['lang_id']);
+
+            $this->sendMail($booking['email'], $subject, 'rate-stay', [
+                'booking' => $booking,
+                'url' => $this->request->getBaseUrl() . $this->createUrl('Site:Site@leaveReviewAction', [$booking['token']])
+            ]);
+        }
+
+        return true;
+    }
+
+    /**
      * Notify administration about new booking
      * 
      * @param string $hotelName
