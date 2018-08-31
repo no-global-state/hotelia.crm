@@ -1,0 +1,14 @@
+
+<p><?= $dictionary('MAIL_BOOKING_HELLO'); ?>!</p>
+
+<p>
+    <?= $dictionary('BOOKING_MAIL_REVIEW_SUGGEST', [
+        'hotel' => $booking['hotel'],
+        'arrival' => $booking['arrival'],
+        'departure' => $booking['departure']
+    ]); ?>
+
+    <?= $dictionary('BOOKING_MAIL_REVIEW_LINK_SUGGEST'); ?>, <a href="<?= $url; ?>"><?= $dictionary('BOOKING_CANCELLATION_LINK'); ?></a>
+</p>
+
+<p><?= $dictionary('THANKS_FOR_USING_OUR_SERVICE'); ?></p>

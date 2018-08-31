@@ -90,6 +90,11 @@ final class Api extends AbstractCrmController
      */
     public function receivers()
     {
+        $rows = $this->getModuleService('bookingService')->fetchTodayReceivers();
+
+        $this->notifyReceivers($rows);
+
+        return 'DONE';
     }
 
     /**
