@@ -10,11 +10,12 @@ trait MailerTrait
      * Grab translations from dictionary
      * 
      * @param string $alias
+     * @param int $languageId
      * @return string
      */
-    private function dict(string $alias)
+    private function dict(string $alias, $langId = 1)
     {
-        return $this->getModuleService('dictionaryService')->findByAlias($alias, 1);
+        return $this->getModuleService('dictionaryService')->findByAlias($alias, $langId);
     }
 
     /**
