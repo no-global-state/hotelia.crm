@@ -28,8 +28,8 @@ abstract class AbstractSiteController extends AbstractController
                 $ip = $this->request->getClientIp();
                 $session = $this->sessionBag;
 
-                $service = new BehaviorService($ip, $_ENV['behavior']);
-                $call = $service->getDefaults($session, $this->getModuleService('languageService')->fetchAll());
+                $service = new BehaviorService($ip, $session, $_ENV['behavior']);
+                $call = $service->getDefaults($this->getModuleService('languageService')->fetchAll());
 
             } else {
                 $call = [];
