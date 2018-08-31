@@ -63,7 +63,7 @@ final class BehaviorService
         
         // Filter and override languages
         $active['languages'] = self::getIncludedLanguages($languages, $active);
-        $active['country'] = $this->session->get('country');
+        $active['country'] = $this->getCurrentCountry();
 
         return $active;
     }
@@ -171,18 +171,24 @@ final class BehaviorService
     }
 
     /**
+     * Returns current country
+     * 
+     * @return string
+     */
+    private function getCurrentCountry() : string
+    {
+        return $this->session->getOnce('country', function(){
+            return $this->getCountryCode();
+        });
+    }
+
+    /**
      * Parse configuration array
      * 
      * @return array
      */
     private function findActiveByCurrentCountry() : array
     {
-        $key = 'country';
-
-        $country = $this->session->getOnce($key, function(){
-            return $this->getCountryCode();
-        });
-
-        return $this->findLinear($key, $country);
+        return $this->findLinear('country', $this->getCurrentCountry());
     }
 }
