@@ -18,6 +18,13 @@ final class BehaviorService
     private $ip;
 
     /**
+     * Session handler
+     * 
+     * @var \Krystal\Http\PersistentStorageInterface
+     */
+    private $session;
+
+    /**
      * Configuration data
      * 
      * @var array
@@ -28,29 +35,35 @@ final class BehaviorService
      * State initialization
      * 
      * @param string $ip
+     * @param \Krystal\Http\PersistentStorageInterface $session
      * @param array $configuration
      * @return void
      */
-    public function __construct(string $ip, array $configuration)
+    public function __construct(string $ip, PersistentStorageInterface $session, array $configuration)
     {
         $this->ip = $ip;
+        $this->session = $session;
         $this->configuration = $configuration;
     }
 
     /**
      * Returns defaults
      * 
-     * @param \Krystal\Http\PersistentStorageInterface $session
      * @param array $languages Raw collection of languages to be filtered
      * @return array
      */
-    public function getDefaults(PersistentStorageInterface $session = null, array $languages) : array
+    public function getDefaults(array $languages) : array
     {
-        // Find active item
-        $active = $this->findActive($session);
-
+        if ($this->session->has('price_group_id')) {
+            $active = $this->findLinear('price_group_id', $this->session->get('price_group_id'));
+        } else {
+            // Find active item
+            $active = $this->findActiveByCurrentCountry();
+        }
+        
         // Filter and override languages
         $active['languages'] = self::getIncludedLanguages($languages, $active);
+        $active['country'] = $this->session->get('country');
 
         return $active;
     }
@@ -160,21 +173,15 @@ final class BehaviorService
     /**
      * Parse configuration array
      * 
-     * @param \Krystal\Http\PersistentStorageInterface $session
      * @return array
      */
-    private function findActive(PersistentStorageInterface $session = null) : array
+    private function findActiveByCurrentCountry() : array
     {
         $key = 'country';
 
-        // This should be saved in session
-        if ($session !== null) {
-            $country = $session->getOnce($key, function(){
-                return $this->getCountryCode();
-            });
-        } else {
-            $country = $this->getCountryCode();
-        }
+        $country = $this->session->getOnce($key, function(){
+            return $this->getCountryCode();
+        });
 
         return $this->findLinear($key, $country);
     }
