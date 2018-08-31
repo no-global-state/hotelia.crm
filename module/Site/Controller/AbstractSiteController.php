@@ -248,7 +248,7 @@ abstract class AbstractSiteController extends AbstractController
 
         // Language loading
         $bag = $this->request->getCookieBag();
-        $code = $bag->has(self::PARAM_COOKIE_LANG_CODE) ? $bag->get(self::PARAM_COOKIE_LANG_CODE) : $this->appConfig->getLanguage();
+        $code = $bag->has(self::PARAM_COOKIE_LANG_CODE) ? $bag->get(self::PARAM_COOKIE_LANG_CODE) : $this->paramBag->get('siteLanguage');
         $this->loadTranslations($code);
 
         $foreigner = $this->getPriceGroupId() == 1;
