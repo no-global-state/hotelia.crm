@@ -9,6 +9,7 @@ use Site\Service\Dictionary;
 use Site\Helpers\ApiHelper;
 use Site\Service\ExternalService;
 use Krystal\Text\Math;
+use Krystal\Stdlib\ArrayUtils;
 
 final class Api extends AbstractCrmController
 {
@@ -124,7 +125,9 @@ final class Api extends AbstractCrmController
         $request = $this->request->getJsonBody();
 
         // Create request vars
-        $rooms = $request['rooms'];
+        $rooms = $request['rooms']; // Raw
+        $rooms = ArrayUtils::arrayPartition($rooms, 'room_type_id', false); // Parsed
+
         $priceGroupId = $request['price_group_id'];
         $langId = ExternalService::internalLangId($request['lang']);
         $hotelId = $request['hotel_id'];
