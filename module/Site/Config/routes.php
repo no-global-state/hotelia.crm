@@ -404,7 +404,7 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST]
     ],
     
-    '/' => [
+    '/(:var)' => [
         'controller' => 'Site@homeAction'
     ],
     

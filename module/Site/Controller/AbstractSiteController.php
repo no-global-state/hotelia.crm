@@ -6,6 +6,7 @@ use Krystal\Application\Controller\AbstractController;
 use Krystal\Validate\Renderer;
 use Site\Service\Dictionary;
 use Site\Service\BehaviorService;
+use Site\Service\ExternalService;
 
 abstract class AbstractSiteController extends AbstractController
 {
@@ -73,6 +74,30 @@ abstract class AbstractSiteController extends AbstractController
         // Nothing of the above
         } else {
             return $default;
+        }
+    }
+
+    /**
+     * Sets language
+     * 
+     * @param string|int $code Language code or ID
+     * @return boolean
+     */
+    protected function setLanguage(string $target) : bool
+    {
+        if (is_numeric($target)) {
+            $language = $this->getModuleService('languageService')->fetchById($target);
+        } else {
+            $language = $this->getModuleService('languageService')->fetchByCode($target);
+        }
+
+        if ($language) {
+            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_ID, $language['id']);
+            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_CODE, $language['code']);
+
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -210,6 +235,20 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function bootstrap()
     {
+        // Optionals
+        $priceGroupId = $this->request->getQuery('price_group_id');
+        $lang = $this->request->getQuery('lang');
+
+        // If default price group set, use it
+        if ($priceGroupId) {
+            $this->setPriceGroupId($priceGroupId);
+        }
+
+        // If language code ID, use it as a default one
+        if ($lang) {
+            $this->setLanguage(ExternalService::externalLangId($lang));
+        }
+
         $this->view->setTheme('site');
         $this->appConfig->setTheme('site');
 

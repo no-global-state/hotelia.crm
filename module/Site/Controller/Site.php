@@ -265,13 +265,7 @@ final class Site extends AbstractSiteController
      */
     public function languageAction(string $code)
     {
-        $id = $this->getModuleService('languageService')->findIdByCode($code);
-
-        if ($id) {
-            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_ID, $id);
-            $this->request->getCookieBag()->set(self::PARAM_COOKIE_LANG_CODE, $code);
-        }
-
+        $this->setLanguage($code);
         $this->response->redirectToPreviousPage();
     }
 
@@ -586,7 +580,7 @@ final class Site extends AbstractSiteController
      * Renders home page
      * 
      * @return string
-     */
+         */
     public function homeAction()
     {
         return $this->view->render('home', [
