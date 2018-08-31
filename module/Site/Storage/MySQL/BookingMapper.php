@@ -46,7 +46,7 @@ final class BookingMapper extends AbstractMapper
             self::column('cancellation_time'),
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
-            new RawSqlFragment(sprintf("if ('%s' > departure AND review_id = NULL, 1, 0) AS can_leave_review", $today))
+            new RawSqlFragment(sprintf("if ('%s' > departure AND review_id IS NULL, 1, 0) AS can_leave_review", $today))
         ];
 
         return $this->db->select($columns)
