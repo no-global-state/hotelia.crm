@@ -274,6 +274,10 @@ return [
     '/api/run-mail-receivers' => [
         'controller' => 'Api@receivers'
     ],
+    
+    '/api/save-external/(:var)' => [
+        'controller' => 'Api@saveExternal'
+    ],
 
     // Property
     '/crm/property/(:var)' => [

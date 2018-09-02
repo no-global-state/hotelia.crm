@@ -70,6 +70,21 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Save external user ID
+     * 
+     * @param int $userId External user ID
+     * @return void
+     */
+    public function saveExternal(int $userId)
+    {
+        $bookingId = $this->getModuleService('bookingService')->getLastId();
+
+        return $this->json([
+            'success' => $this->getModuleService('externalService')->saveIfPossible($bookingId, $userId)
+        ]);
+    }
+
+    /**
      * Render all bookings (without details)
      * 
      * @return array
