@@ -187,7 +187,14 @@ final class ExternalService
      */
     public function findAllByExternalId(int $id, int $langId) : array
     {
-        return $this->externalMapper->findAllByExternalId($id, $langId);
+        $bookings = $this->externalMapper->findAllByExternalId($id, $langId);
+
+        // Append night count
+        foreach ($bookings as &$booking) {
+            $booking['nights'] = ReservationService::getDaysDiff($booking['arrival'], $booking['departure']);
+        }
+
+        return $bookings;
     }
 
     /**
