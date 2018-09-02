@@ -87,7 +87,7 @@
                                 'lately' => $hotel['penality_not_later_arrival']
                             ]); ?>
 
-                            <?= $dictionary('BOOKING_CANCELLATION_TO_CANCEL'); ?>, <a href="<?= $this->url('Site:Site@cancelAction', $booking['token']); ?>"><?= $dictionary('BOOKING_CANCELLATION_LINK'); ?></a>.
+                            <?= $dictionary('BOOKING_CANCELLATION_TO_CANCEL'); ?>, <a href="<?= $cancelUrl; ?>"><?= $dictionary('BOOKING_CANCELLATION_LINK'); ?></a>.
                             <?php else: ?>
                             <?= $dictionary('BOOKING_CANCELLATION_NO_REFUND'); ?>
                             <?php endif; ?>

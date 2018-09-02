@@ -83,7 +83,7 @@ final class Site extends AbstractSiteController
             return false;
         }
     }
-    
+
     /**
      * Create invoice data from booking
      * 
@@ -105,7 +105,8 @@ final class Site extends AbstractSiteController
             'hotel' => $hotel,
             'booking' => $details['booking'],
             'rooms' => $details['rooms'],
-            'guests' => $details['guests']
+            'guests' => $details['guests'],
+            'cancelUrl' => $this->request->getBaseUrl() . $this->createUrl('Site:Site@cancelAction', [$booking['token']])
         ];
     }
 
@@ -425,7 +426,7 @@ final class Site extends AbstractSiteController
 
             // Save external relation if possible
             $this->getModuleService('externalService')->saveIfPossible($booking['id']);
-            
+
             // Create payment URL for client
             $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 
