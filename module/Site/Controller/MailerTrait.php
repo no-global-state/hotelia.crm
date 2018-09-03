@@ -79,22 +79,6 @@ trait MailerTrait
     }
 
     /**
-     * Emails about the need of payment confirmation
-     * 
-     * @param string $to Client email
-     * @param string $link Payment confirmation link
-     * @return boolean
-     */
-    protected function paymentConfirmNotify(string $to, string $link) : bool
-    {
-        $subject = $this->dict('MAIL_SUBJECT_PAYMENT_CONF_PL');
-
-        return $this->sendMail($to, $subject, 'payment-to-be-confirmed', [
-            'link' => $link
-        ]);
-    }
-
-    /**
      * Notify about successful payment
      * 
      * @param string $to
