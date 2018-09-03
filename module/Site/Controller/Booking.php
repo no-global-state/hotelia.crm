@@ -12,6 +12,15 @@ final class Booking extends AbstractCrmController
     use MailerTrait;
 
     /**
+     * Renders all bookings
+     * 
+     * @return string
+     */
+    public function allAction()
+    {
+    }
+
+    /**
      * Renders main grid
      * 
      * @return string
