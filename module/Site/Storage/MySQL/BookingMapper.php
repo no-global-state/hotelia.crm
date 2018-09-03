@@ -181,14 +181,19 @@ final class BookingMapper extends AbstractMapper
      * @param int $status Status code
      * @return int
      */
-    public function countByStatus(int $hotelId, int $status) : int
+    public function countByStatus($hotelId = null, int $status) : int
     {
-        return $this->db->select()
-                        ->count($this->getPk())
-                        ->from(self::getTableName())
-                        ->whereEquals('status', $status)
-                        ->andWhereEquals('hotel_id', $hotelId)
-                        ->queryScalar();
+        $db = $this->db->select()
+                       ->count($this->getPk())
+                       ->from(self::getTableName())
+                       ->whereEquals('status', $status);
+
+        // Append filter on demand
+        if ($hotelId !== null) {
+            $db->andWhereEquals('hotel_id', $hotelId);
+        }
+
+        return $db->queryScalar();
     }
 
     /**

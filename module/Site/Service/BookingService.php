@@ -222,7 +222,7 @@ final class BookingService
      * @param int $status Status code
      * @return int
      */
-    public function countByStatus(int $hotelId, int $status) : int
+    public function countByStatus($hotelId = null, int $status) : int
     {
         return $this->bookingMapper->countByStatus($hotelId, $status);
     }
