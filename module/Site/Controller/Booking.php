@@ -12,12 +12,35 @@ final class Booking extends AbstractCrmController
     use MailerTrait;
 
     /**
+     * Creates the grid
+     * 
+     * @param array $bookings
+     * @param boolean $all
+     * @return string
+     */
+    private function createGrid(array $bookings, bool $all) : string
+    {
+        // Append one breadcrumb
+        $this->view->getBreadcrumbBag()
+                   ->addOne('Bookings from the site');
+
+        return $this->view->render('booking/index', [
+            'icon' => 'glyphicon glyphicon-envelope',
+            'bookings' => $bookings,
+            'all' => $all
+        ]);
+    }
+
+    /**
      * Renders all bookings
      * 
      * @return string
      */
     public function allAction()
     {
+        $bookings = $this->getModuleService('bookingService')->findShared($this->getCurrentLangId());
+
+        return $this->createGrid($bookings, true);
     }
 
     /**
@@ -27,14 +50,9 @@ final class Booking extends AbstractCrmController
      */
     public function indexAction()
     {
-        // Append one breadcrumb
-        $this->view->getBreadcrumbBag()
-                   ->addOne('Bookings from the site');
+        $bookings = $this->getModuleService('bookingService')->findAll($this->getHotelId());
 
-        return $this->view->render('booking/index', [
-            'icon' => 'glyphicon glyphicon-envelope',
-            'bookings' => $this->getModuleService('bookingService')->findAll($this->getHotelId())
-        ]);
+        return $this->createGrid($bookings, false);
     }
 
     /**
