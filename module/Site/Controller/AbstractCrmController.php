@@ -226,15 +226,24 @@ abstract class AbstractCrmController extends AbstractAuthAwareController
             'admin' => $this->sessionBag->get('admin'),
         ));
 
+        // Grab booking service
+        $bookingService = $this->getService('Site', 'bookingService');
+
         // If logged as a hotel owner
         if ($this->getHotelId() !== null) {
-            // Grab booking service
-            $bookingService = $this->getService('Site', 'bookingService');
 
             $this->view->addVariables([
                 // New bookings
                 'newBookingsCount' => $bookingService->countByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW),
                 'newBookings' => $bookingService->findByStatus($this->getHotelId(), BookingStatusCollection::STATUS_NEW)
+            ]);
+        }
+
+        // If admin, then append shared booking count
+        if ($this->getAuthService()->getRole() == UserService::USER_ROLE_ADMIN) {
+            $this->view->addVariables([
+                // New shared bookings
+                'newSharedBookings' => $bookingService->countByStatus(null, BookingStatusCollection::STATUS_NEW)
             ]);
         }
 

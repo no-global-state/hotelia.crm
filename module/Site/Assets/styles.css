@@ -8,6 +8,10 @@
     background: #a70000;
 }
 
+.side-nav>li>ul>li.menu-item-new>a {
+    color: #fff;
+}
+
 .navbar-inverse,
 .top-nav>.open>.dropdown-menu {
   background: #4c739a !important;  
