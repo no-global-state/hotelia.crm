@@ -250,6 +250,17 @@ final class BookingService
     }
 
     /**
+     * Find bookings from all hotels
+     * 
+     * @param int $langId
+     * @return array
+     */
+    public function findShared(int $langId) : array
+    {
+        return $this->bookingMapper->findShared($langId);
+    }
+
+    /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID

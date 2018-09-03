@@ -18,15 +18,16 @@ final class BookingMapper extends AbstractMapper
     /**
      * Creates shared select
      * 
+     * @param array $extra Extra columns to be selected
      * @return \Krystal\Db\Sql\Db
      */
-    private function createSharedSelect()
+    private function createSharedSelect(array $extra = [])
     {
         // Get current date (without time)
         $today = TimeHelper::getNow(false);
 
         // Columns to be selected
-        $columns = [
+        $columns = array_merge([
             self::column('id'),
             self::column('hotel_id'),
             self::column('price_group_id'),
@@ -47,7 +48,7 @@ final class BookingMapper extends AbstractMapper
             PriceGroupMapper::column('name') => 'price_group',
             PriceGroupMapper::column('currency'),
             new RawSqlFragment(sprintf("if ('%s' > departure AND review_id IS NULL, 1, 0) AS can_leave_review", $today))
-        ];
+        ], $extra);
 
         return $this->db->select($columns)
                         ->from(self::getTableName())
@@ -244,6 +245,28 @@ final class BookingMapper extends AbstractMapper
         return $this->createSharedSelect()
                     ->whereEquals(self::column('token'), $token)
                     ->query();
+    }
+
+    /**
+     * Find bookings from all hotels
+     * 
+     * @param int $langId
+     * @return array
+     */
+    public function findShared(int $langId) : array
+    {
+        $db = $this->createSharedSelect([
+            HotelTranslationMapper::column('name') => 'hotel'
+        ])
+        // Hotel translation relation
+        ->leftJoin(HotelTranslationMapper::getTableName(), [
+            HotelTranslationMapper::column('id') => self::getRawColumn('hotel_id')
+        ])
+        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+        ->orderBy($this->getPk())
+        ->desc();
+
+        return $db->queryAll();
     }
 
     /**
