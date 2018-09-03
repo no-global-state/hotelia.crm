@@ -68,6 +68,15 @@ use Site\Collection\BookingStatusCollection;
                 'value' => function($row){
                     return number_format($row['amount']) . PHP_EOL . $row['currency'];
                 }
+            ],
+            
+            [
+                'column' => 'discount',
+                'label' => 'With discount',
+                'translateable' => true,
+                'value' => function($row){
+                    return $row['discount'] ? 'Yes' : 'No';
+                }
             ]
         ],
         
