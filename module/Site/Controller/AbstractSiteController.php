@@ -8,12 +8,36 @@ use Krystal\Validate\Renderer;
 use Site\Service\Dictionary;
 use Site\Service\BehaviorService;
 use Site\Service\ExternalService;
+use Closure;
 
 abstract class AbstractSiteController extends AbstractController
 {
     const PARAM_SESSION_PRICE_GROUP = 'price_group_id';
     const PARAM_COOKIE_LANG_ID = 'language_id';
     const PARAM_COOKIE_LANG_CODE = 'language_code';
+
+    /**
+     * Do something in different language, rather than current session
+     * 
+     * @param \Closure $callback Middle callback to be invoked
+     * @return void
+     */
+    protected function inDefaultLanguage(Closure $callback)
+    {
+        // Save current language
+        $languageId = $this->getCurrentLangId();
+
+        // Set new language
+        $this->setLanguage(1); // Set default language
+        $this->view->addVariable('dictionary') = $this->createDictionary();
+
+        // Do something
+        $callback();
+
+        // And restore previous language
+        $this->setLanguage($languageId);
+        $this->view->addVariable('dictionary') = $this->createDictionary();
+    }
 
     /**
      * Returns behavior defaults
