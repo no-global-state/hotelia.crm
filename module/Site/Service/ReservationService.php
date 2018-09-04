@@ -35,6 +35,27 @@ final class ReservationService
     }
 
     /**
+     * Checks whether in stack there's one selected room
+     * 
+     * @param array $selectedRooms
+     * @return boolean
+     */
+    public static function hasMoreThanOneRoom(array $selectedRooms) : bool
+    {
+        if (count($selectedRooms) > 1) {
+            return true;
+        } else {
+            foreach ($selectedRooms as $selectedRoom) {
+                if ($selectedRoom['qty'] > 1){
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Gets reservation count dropped by groups
      * 
      * @param int $hotelId
