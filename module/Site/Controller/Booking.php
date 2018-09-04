@@ -27,7 +27,8 @@ final class Booking extends AbstractCrmController
         return $this->view->render('booking/index', [
             'icon' => 'glyphicon glyphicon-envelope',
             'bookings' => $bookings,
-            'all' => $all
+            'all' => $all,
+            'count' => count($bookings)
         ]);
     }
 
