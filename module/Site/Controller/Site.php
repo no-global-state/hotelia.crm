@@ -154,8 +154,16 @@ final class Site extends AbstractSiteController
 
                 // Email notifications
                 $this->voucherNotify($booking['email'], $params);
+
+                // Save current language
+                $languageId = $this->getCurrentLangId();
+                $this->setLanguage(1); // Set default language
+                
                 $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
 
+                // Restore previous language
+                $this->setLanguage($languageId);
+                
                 // Save successful transaction
                 $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
 
@@ -427,11 +435,19 @@ final class Site extends AbstractSiteController
             // Create payment URL for client
             $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 
+            // Save current language
+            $languageId = $this->getCurrentLangId();
+
+            $this->setLanguage(1); // Set default language
+
             // Notify owner
             $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
 
             // Notify admin
             $this->bookingAdminNotify($this->getModuleService('hotelService')->findNameById($hotelId, 1));
+
+            // Restore previous language
+            $this->setLanguage($languageId);
 
             return $this->view->render('thank-you', [
                 'paymentUrl' => $paymentUrl
