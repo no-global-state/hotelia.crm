@@ -81,8 +81,12 @@ use Site\Collection\BookingStatusCollection;
         ],
         
         'actions' => [
-            'details' => function($row){
-                return Element::link('<i class="glyphicon glyphicon-search"></i>', $this->url('Site:Booking@detailsAction', $row['id']), ['class' => 'btn btn-primary']);
+            'details' => function($row) use ($all){
+                if ($all) {
+                    return null;
+                }
+
+                return Element::icon('glyphicon glyphicon-search', $this->url('Site:Booking@detailsAction', $row['id']), ['class' => 'btn btn-primary']);
             },
 
             'delete' => function($row){
