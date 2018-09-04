@@ -156,7 +156,7 @@ final class Site extends AbstractSiteController
                 $this->voucherNotify($booking['email'], $params);
 
                 // Do send in default language
-                $this->inDefaultLanguage(function(){
+                $this->inDefaultLanguage(function() use ($booking){
                     $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
                 });
 
@@ -432,7 +432,7 @@ final class Site extends AbstractSiteController
             $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 
             // Do send emails in default language
-            $this->inDefaultLanguage(function(){
+            $this->inDefaultLanguage(function() use ($hotelId){
                 // Notify owner
                 $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
 
