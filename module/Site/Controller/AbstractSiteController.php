@@ -29,14 +29,14 @@ abstract class AbstractSiteController extends AbstractController
 
         // Set new language
         $this->setLanguage(1); // Set default language
-        $this->view->addVariable('dictionary') = $this->createDictionary();
+        $this->view->addVariable('dictionary', $this->createDictionary());
 
         // Do something
         $callback();
 
         // And restore previous language
         $this->setLanguage($languageId);
-        $this->view->addVariable('dictionary') = $this->createDictionary();
+        $this->view->addVariable('dictionary', $this->createDictionary());
     }
 
     /**
