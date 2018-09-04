@@ -2,6 +2,7 @@
 
 namespace Site\Controller;
 
+use Krystal\Cache\MemoryCache;
 use Krystal\Application\Controller\AbstractController;
 use Krystal\Validate\Renderer;
 use Site\Service\Dictionary;
@@ -151,13 +152,20 @@ abstract class AbstractSiteController extends AbstractController
      */
     protected function createDictionary()
     {
-        static $dictionary;
+        static $cache = null;
 
-        if (is_null($dictionary)) {
-            $dictionary = new Dictionary($this->getModuleService('dictionaryService'), $this->getCurrentLangId());
+        if (is_null($cache)) {
+            $cache = new MemoryCache();
         }
 
-        return $dictionary;
+        if ($cache->has($this->getCurrentLangId())) {
+            return $cache->get($this->getCurrentLangId());
+        } else {
+            $instance = new Dictionary($this->getModuleService('dictionaryService'), $this->getCurrentLangId());
+            $cache->set($this->getCurrentLangId(), $instance, null);
+
+            return $instance;
+        }
     }
 
     /**
