@@ -86,7 +86,7 @@ use Site\Service\LanguageService;
                   <label class="col-lg-2 control-label"><? $this->show('Number of people'); ?></label>
                   <div class="col-lg-10">
                     <div class="input-group">
-                        <?= Element::number('price_group_ids[capacity][]', $capacity, array('class' => 'form-control')); ?>
+                        <?= Element::number('price_group_ids[capacity][]', $capacity, array('class' => 'form-control', 'min' => 1)); ?>
                         <span class="input-group-addon"><a data-button="price-policy-delete" href="#"><i class="glyphicon glyphicon-remove"></i></a></span>
                     </div>
                   </div>
@@ -96,7 +96,7 @@ use Site\Service\LanguageService;
                 <div class="form-group">
                   <label class="col-lg-2 control-label"><strong><? $this->show('Price'); ?> (<?= $item['currency']; ?>)</strong> <?= $item['name']; ?></label>
                   <div class="col-lg-10">
-                    <?= Element::number(sprintf('price_group_ids[group][%s][]', $item['id']), isset($item['price']) ? $item['price'] : null, array('class' => 'form-control')); ?>
+                    <?= Element::number(sprintf('price_group_ids[group][%s][]', $item['id']), isset($item['price']) ? $item['price'] : null, array('class' => 'form-control', 'min' => 1)); ?>
                   </div>
                 </div>
                 <?php endforeach; ?>
