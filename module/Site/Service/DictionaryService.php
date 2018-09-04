@@ -5,6 +5,7 @@ namespace Site\Service;
 use Site\Storage\MySQL\DictionaryMapper;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Templating\StringTemplate;
+use Krystal\Cache\MemoryCache;
 
 final class DictionaryService
 {
@@ -58,10 +59,17 @@ final class DictionaryService
      */
     public function findByAlias(string $alias, int $languageId, array $vars = []) : string
     {
-        static $rows = null;
+        static $cache = null;
 
-        if (is_null($rows)) {
+        if (is_null($cache)) {
+            $cache = new MemoryCache();
+        }
+
+        if ($cache->has($languageId)) {
+            $rows = $cache->get($languageId);
+        } else {
             $rows = ArrayUtils::arrayList($this->fetchAll($languageId), 'alias', 'value');
+            $cache->set($languageId, $rows, null);
         }
 
         return isset($rows[$alias]) ? StringTemplate::template($rows[$alias], $vars) : $alias;
