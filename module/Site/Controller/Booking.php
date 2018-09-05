@@ -14,12 +14,34 @@ final class Booking extends AbstractCrmController
     /**
      * Creates the grid
      * 
-     * @param array $bookings
      * @param boolean $all
+     * @param string $action
+     * @param int $page Current page number
      * @return string
      */
-    private function createGrid(array $bookings, bool $all) : string
+    private function createGrid(bool $all, string $action, $page) : string
     {
+        if (!$page) {
+            $page = 1;
+        }
+
+        $perPageCount = 15; // Default per page count
+
+        $route = $this->createUrl(sprintf('Site:Booking@%s', $action), []);
+
+        // Grab the service
+        $service = $this->getModuleService('bookingService');
+
+        if ($all == true) {
+            $bookings = $service->findShared($this->getCurrentLangId(), $page, $perPageCount);
+        } else {
+            $bookings = $service->findAll($this->getHotelId(), $page, $perPageCount);
+        }
+
+        // Configure paginator
+        $paginator = $service->getPaginator();
+        $paginator->setUrl($route);
+
         // Append one breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Bookings from the site');
@@ -28,32 +50,31 @@ final class Booking extends AbstractCrmController
             'icon' => 'glyphicon glyphicon-envelope',
             'bookings' => $bookings,
             'all' => $all,
-            'count' => count($bookings)
+            'count' => $paginator->getTotalAmount(),
+            'paginator' => $paginator
         ]);
     }
 
     /**
      * Renders all bookings
      * 
+     * @param int $page Current page number
      * @return string
      */
-    public function allAction()
+    public function allAction($page = 1) : string
     {
-        $bookings = $this->getModuleService('bookingService')->findShared($this->getCurrentLangId());
-
-        return $this->createGrid($bookings, true);
+        return $this->createGrid(true, __FUNCTION__, $page);
     }
 
     /**
      * Renders main grid
      * 
+     * @param int $page Current page number
      * @return string
      */
-    public function indexAction()
+    public function indexAction($page = 1) : string
     {
-        $bookings = $this->getModuleService('bookingService')->findAll($this->getHotelId());
-
-        return $this->createGrid($bookings, false);
+        return $this->createGrid(false, __FUNCTION__, $page);
     }
 
     /**

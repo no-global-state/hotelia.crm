@@ -97,7 +97,7 @@ $homeUrl = $this->url($role == UserService::USER_ROLE_ADMIN ? 'Site:Property@ind
                   <a href="javascript:;" data-toggle="collapse" data-target="#menu-admin"><? $this->show('Administration'); ?> <span class="caret"></span></a>
                   <ul id="menu-admin" class="collapse">
                     <li class="<?= isset($newSharedBookings) && $newSharedBookings > 0 ? 'menu-item-new' : null; ?>">
-                        <a href="<?= $this->url('Site:Booking@allAction'); ?>"><i class="glyphicon glyphicon-envelope"></i>
+                        <a href="<?= $this->url('Site:Booking@allAction', null); ?>"><i class="glyphicon glyphicon-envelope"></i>
                             <? $this->show('All bookings'); ?> <?php if (isset($newSharedBookings) && $newSharedBookings > 0): ?><span>(<?= $newSharedBookings; ?>)</span><?php endif; ?>
                         </a>
                     </li>

@@ -5,7 +5,7 @@ use Site\Service\UserService;
 return [
 
     // Booking
-    '/crm/all-bookings' => [
+    '/crm/all-bookings/(:var)' => [
         'controller' => 'Booking@allAction'
     ],
     
@@ -17,7 +17,7 @@ return [
         'controller' => 'Booking@updateStatusAction'
     ],
     
-    '/crm/booking' => [
+    '/crm/booking/(:var)' => [
         'controller' => 'Booking@indexAction'
     ],
     
