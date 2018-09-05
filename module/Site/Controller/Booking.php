@@ -149,7 +149,7 @@ final class Booking extends AbstractCrmController
         if ($details !== false) {
             // Append breadcrumbs
             $this->view->getBreadcrumbBag()
-                       ->addOne('Bookings from the site', $this->createUrl('Site:Booking@indexAction'))
+                       ->addOne('Bookings from the site', $this->createUrl('Site:Booking@indexAction', [null]))
                        ->addOne('Booking details');
 
             return $this->view->render('booking/details', [
