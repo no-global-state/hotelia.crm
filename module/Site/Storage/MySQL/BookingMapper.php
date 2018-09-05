@@ -256,9 +256,11 @@ final class BookingMapper extends AbstractMapper
      * Find bookings from all hotels
      * 
      * @param int $langId
+     * @param int $page Current page number
+     * @param int $perPageCount Per page count
      * @return array
      */
-    public function findShared(int $langId) : array
+    public function findShared(int $langId, int $page, int $perPageCount) : array
     {
         $db = $this->createSharedSelect([
             HotelTranslationMapper::column('name') => 'hotel'
@@ -268,8 +270,11 @@ final class BookingMapper extends AbstractMapper
             HotelTranslationMapper::column('id') => self::getRawColumn('hotel_id')
         ])
         ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
-        ->orderBy($this->getPk())
+        ->orderBy(self::column($this->getPk()))
         ->desc();
+
+        // Apply pagination
+        $db->paginate($page, $perPageCount);
 
         return $db->queryAll();
     }
@@ -278,15 +283,21 @@ final class BookingMapper extends AbstractMapper
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID
+     * @param int $page Current page number
+     * @param int $perPageCount Per page count
      * @return array
      */
-    public function findAll(int $hotelId) : array
+    public function findAll(int $hotelId, int $page, int $perPageCount) : array
     {
-        return $this->createSharedSelect()
-                    ->whereEquals('hotel_id', $hotelId)
-                    ->orderBy($this->getPk())
-                    ->desc()
-                    ->queryAll();
+        $db = $this->createSharedSelect()
+                   ->whereEquals('hotel_id', $hotelId)
+                   ->orderBy(self::column($this->getPk()))
+                   ->desc();
+
+        // Apply pagination
+        $db->paginate($page, $perPageCount);
+
+        return $db->queryAll();
     }
 
     /**

@@ -48,6 +48,16 @@ final class BookingService
     }
 
     /**
+     * Returns paginator instance
+     * 
+     * @return \Krystal\Paginate\Paginator
+     */
+    public function getPaginator()
+    {
+        return $this->bookingMapper->getPaginator();
+    }
+
+    /**
      * Fetch today receivers that should get some kind of notifications
      * 
      * @return array
@@ -253,22 +263,26 @@ final class BookingService
      * Find bookings from all hotels
      * 
      * @param int $langId
+     * @param int $page Current page number
+     * @param int $perPageCount Per page count
      * @return array
      */
-    public function findShared(int $langId) : array
+    public function findShared(int $langId, int $page, int $perPageCount) : array
     {
-        return $this->bookingMapper->findShared($langId);
+        return $this->bookingMapper->findShared($langId, $page, $perPageCount);
     }
 
     /**
      * Find all booking rows
      * 
      * @param int $hotelId Attached hotel ID
+     * @param int $page Current page number
+     * @param int $perPageCount Per page count
      * @return array
      */
-    public function findAll(int $hotelId) : array
+    public function findAll(int $hotelId, int $page, int $perPageCount) : array
     {
-        return $this->bookingMapper->findAll($hotelId);
+        return $this->bookingMapper->findAll($hotelId, $page, $perPageCount);
     }
 
     /**
