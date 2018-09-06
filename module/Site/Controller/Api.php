@@ -280,7 +280,7 @@ final class Api extends AbstractCrmController
         $typeIds = $request['type_id'] ?? [];
 
         // Main
-        $languageId = $request['lang'] ?? 1;
+        $languageId = isset($request['lang']) ? ExternalService::externalLangId($request['lang']) : 1;
         $priceGroupId = $request['price_group_id'] ?? 1;
 
         // Append one more key
