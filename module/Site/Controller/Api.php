@@ -280,8 +280,8 @@ final class Api extends AbstractCrmController
         $typeIds = $request['type_id'] ?? [];
 
         // Main
-        $languageId = $this->getLang();
-        $priceGroupId = $this->getPriceGroup();
+        $languageId = $request['lang'] ?? 1;
+        $priceGroupId = $request['price_group_id'] ?? 1;
 
         // Append one more key
         $request['facility'] = array_merge($request['facility_id'] ?? [], $request['meals_id'] ?? []);
