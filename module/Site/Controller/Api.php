@@ -136,7 +136,7 @@ final class Api extends AbstractCrmController
     public function statistic() : string
     {
         // Find ever reserved hotels by external user ID
-        $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($this->getTarget(), $this->getLang(), $this->createDictionary());
+        $bookings = $this->getModuleService('externalService')->findHotelsByExternal($this->getTarget(), $this->getLang(), $this->createDictionary());
 
         return $this->json($bookings);
     }

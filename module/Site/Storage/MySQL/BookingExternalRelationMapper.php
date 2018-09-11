@@ -80,7 +80,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findTotalByExternalId($serial, int $langId) : array
+    public function findTotalByExternalSerial($serial, int $langId) : array
     {
         return $this->findTotalByExternal(self::column('serial'), $serial, $langId);
     }
@@ -198,7 +198,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
      */
     public function findHotelsByExternalId(int $id, int $langId) : array
     {
-        return $this->findHotelsByExternal(self::column('master_id'), $id);
+        return $this->findHotelsByExternal(self::column('master_id'), $id, $langId);
     }
 
     /**
