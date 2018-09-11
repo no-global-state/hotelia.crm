@@ -191,6 +191,11 @@ final class Api extends AbstractCrmController
             $this->getModuleService('externalService')->saveIfPossible($booking['id'], $request['user_id']);
         }
 
+        if (isset($request['serial'])) {
+            // Save external relation if possible
+            $this->getModuleService('externalService')->saveIfPossible($booking['id'], 0, $request['serial']);
+        }
+
         // Create payment URL for client
         $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 

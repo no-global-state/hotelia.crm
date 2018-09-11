@@ -214,9 +214,10 @@ final class ExternalService
      * 
      * @param int $bookingId
      * @param mixed $userId User ID in case needs to be overridden
+     * @param mixed Optional serial
      * @return boolean
      */
-    public function saveIfPossible(int $bookingId, $userId = null) : bool
+    public function saveIfPossible(int $bookingId, $userId = null, $serial = '') : bool
     {
         if ($userId === null) {
             $userId = $this->getExternalId();
@@ -228,7 +229,8 @@ final class ExternalService
 
         return $this->externalMapper->persist([
             'master_id' => $userId,
-            'slave_id' => $bookingId
+            'slave_id' => $bookingId,
+            'serial' => $serial
         ]);
     }
 }
