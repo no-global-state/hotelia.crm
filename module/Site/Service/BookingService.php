@@ -331,6 +331,9 @@ final class BookingService
      */
     public function save(array $params, array $guests, array $rooms) : array
     {
+        // Mark new booking status as temporary
+        $params['status'] = BookingStatusCollection::STATUS_TEMPORARY;
+
         // Append a token
         $params['token'] = TextUtils::uniqueString();
 

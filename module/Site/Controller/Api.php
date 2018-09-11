@@ -182,12 +182,6 @@ final class Api extends AbstractCrmController
         // Create payment URL for client
         $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
 
-        // Notify owner
-        $this->bookingOwnerNotify($this->getModuleService('hotelService')->findEmailById($hotelId));
-
-        // Notify admin
-        $this->bookingAdminNotify($this->getModuleService('hotelService')->findNameById($hotelId, 1));
-
         return $this->json([
             'url' => $paymentUrl
         ]);
