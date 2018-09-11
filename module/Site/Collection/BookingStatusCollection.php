@@ -7,6 +7,7 @@ use Krystal\Stdlib\ArrayCollection;
 final class BookingStatusCollection extends ArrayCollection
 {
     /* Status codes */
+    const STATUS_TEMPORARY = -1;
     const STATUS_NEW = 0;
     const STATUS_CONFIRMED = 1;
     const STATUS_REJECTED = 2;
