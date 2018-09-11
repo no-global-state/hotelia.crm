@@ -61,6 +61,7 @@ CREATE TABLE velveto_bookings_external (
     `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     `master_id` INT NOT NULL COMMENT 'External user ID',
     `slave_id` INT NOT NULL COMMENT 'Booking ID',
+    `serial` varchar(255) NULL COMMENT 'Extra serial',
 
     FOREIGN KEY (slave_id) REFERENCES velveto_bookings(id) ON DELETE CASCADE
 );
