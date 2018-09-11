@@ -270,7 +270,7 @@ final class BookingMapper extends AbstractMapper
         ->leftJoin(HotelTranslationMapper::getTableName(), [
             HotelTranslationMapper::column('id') => self::getRawColumn('hotel_id')
         ])
-        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+        ->whereEquals(HotelTranslationMapper::column('lang_id'), $langId)
         ->andWhereNotEquals(BookingMapper::column('status'), BookingStatusCollection::STATUS_TEMPORARY)
         ->orderBy(self::column($this->getPk()))
         ->desc();
