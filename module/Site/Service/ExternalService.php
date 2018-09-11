@@ -185,13 +185,17 @@ final class ExternalService
     /**
      * Find all bookings by external user ID
      * 
-     * @param int $id External user ID
+     * @param mixed $target External user ID or serial
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findAllByExternalId(int $id, int $langId) : array
+    public function findAllByExternal($target, int $langId) : array
     {
-        $bookings = $this->externalMapper->findAllByExternalId($id, $langId);
+        if (is_numeric($target)) {
+            $rows = $this->externalMapper->findAllByExternalId($target, $langId);
+        } else {
+            $rows = $this->externalMapper->findAllByExternalSerial($target, $langId);
+        }
 
         // Append night count
         foreach ($bookings as &$booking) {
