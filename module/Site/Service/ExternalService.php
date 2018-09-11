@@ -161,13 +161,17 @@ final class ExternalService
     /**
      * Find total bookings by external user ID
      * 
-     * @param int $id External user ID
+     * @param mixed $target External user ID or serial
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findTotalByExternalId(int $id, int $langId)
+    public function findTotalByExternal($target, int $langId)
     {
-        $rows = $this->externalMapper->findTotalByExternalId($id, $langId);
+        if (is_numeric($target)) {
+            $rows = $this->externalMapper->findTotalByExternalId($target, $langId);
+        } else {
+            $rows = $this->externalMapper->findTotalByExternalSerial($target, $langId);
+        }
 
         foreach ($rows as &$row) {
             // Append price
