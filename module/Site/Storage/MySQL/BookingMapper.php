@@ -4,6 +4,7 @@ namespace Site\Storage\MySQL;
 
 use Krystal\Date\TimeHelper;
 use Krystal\Db\Sql\RawSqlFragment;
+use Site\Collection\BookingStatusCollection;
 
 final class BookingMapper extends AbstractMapper
 {
@@ -270,6 +271,7 @@ final class BookingMapper extends AbstractMapper
             HotelTranslationMapper::column('id') => self::getRawColumn('hotel_id')
         ])
         ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+        ->andWhereNotEquals(BookingMapper::column('status'), BookingStatusCollection::STATUS_TEMPORARY)
         ->orderBy(self::column($this->getPk()))
         ->desc();
 
@@ -291,6 +293,7 @@ final class BookingMapper extends AbstractMapper
     {
         $db = $this->createSharedSelect()
                    ->whereEquals('hotel_id', $hotelId)
+                   ->andWhereNotEquals(BookingMapper::column('status'), BookingStatusCollection::STATUS_TEMPORARY)
                    ->orderBy(self::column($this->getPk()))
                    ->desc();
 

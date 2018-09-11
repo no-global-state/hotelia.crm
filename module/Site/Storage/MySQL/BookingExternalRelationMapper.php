@@ -3,6 +3,7 @@
 namespace Site\Storage\MySQL;
 
 use Krystal\Db\Sql\RawSqlFragment;
+use Site\Collection\BookingStatusCollection;
 
 final class BookingExternalRelationMapper extends AbstractMapper
 {
@@ -213,7 +214,8 @@ final class BookingExternalRelationMapper extends AbstractMapper
                        ])
                        // Constraints
                        ->whereEquals(self::column('master_id'), $id)
-                       ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId);
+                       ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
+                       ->andWhereNotEquals(BookingMapper::column('status'), BookingStatusCollection::STATUS_TEMPORARY);
 
         return $db->queryAll();
     }
