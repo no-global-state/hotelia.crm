@@ -133,57 +133,6 @@ final class Site extends AbstractSiteController
     }
 
     /**
-     * Confirms payment by its token when payment is done
-     * 
-     * @return string|boolean
-     */
-    public function confirmPaymentAction()
-    {
-        if (!GatewayService::transactionFailed()) {
-            $token = $this->request->getQuery('token');
-
-            $bookingService = $this->getModuleService('bookingService');
-            $booking = $bookingService->findByToken($token);
-
-            // If found such token
-            if ($booking) {
-                // Update status as well
-                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
-
-                $params = $this->createInvoice($booking);
-
-                // Email notifications
-                $this->voucherNotify($booking['email'], $params);
-
-                // Do send in default language
-                $this->inDefaultLanguage(function() use ($booking){
-                    $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
-                });
-
-                // Save successful transaction
-                $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
-
-                // Handle coupon on demand
-                $coupon = $this->getModuleService('couponService');
-
-                if ($coupon->appliedCoupon()) {
-                    $coupon->afterOrder();
-                }
-
-                // For voucher
-                return $this->view->render('payment-confirm', $params);
-
-            } else {
-                // Trigger 404
-                return false;
-            }
-        } else {
-
-            return $this->view->render('payment-canceled');
-        }
-    }
-
-    /**
      * Renders feedback form
      * 
      * @param int $hotelId
@@ -350,6 +299,56 @@ final class Site extends AbstractSiteController
         $summary = $this->getModuleService('summaryService')->getData();
 
         return $this->getModuleService('roomTypeService')->createSummary($summary, $this->getPriceGroupId(), $hotelId, $this->getCurrentLangId());
+    }
+
+    /**
+     * Confirms payment by its token when payment is done
+     * 
+     * @return string|boolean
+     */
+    public function confirmPaymentAction()
+    {
+        if (!GatewayService::transactionFailed()) {
+            $token = $this->request->getQuery('token');
+
+            $bookingService = $this->getModuleService('bookingService');
+            $booking = $bookingService->findByToken($token);
+
+            // If found such token
+            if ($booking) {
+                // Update status as well
+                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
+
+                $params = $this->createInvoice($booking);
+
+                // Email notifications
+                $this->voucherNotify($booking['email'], $params);
+
+                // Do send in default language
+                $this->inDefaultLanguage(function() use ($booking){
+                    $this->transactionAdminNotify($this->getModuleService('hotelService')->findNameById($booking['hotel_id'], 1));
+                });
+
+                // Save successful transaction
+                $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
+
+                // Handle coupon on demand
+                $coupon = $this->getModuleService('couponService');
+
+                if ($coupon->appliedCoupon()) {
+                    $coupon->afterOrder();
+                }
+
+                // For voucher
+                return $this->view->render('payment-confirm', $params);
+
+            } else {
+                // Trigger 404
+                return false;
+            }
+        } else {
+            return $this->view->render('payment-canceled');
+        }
     }
 
     /**
