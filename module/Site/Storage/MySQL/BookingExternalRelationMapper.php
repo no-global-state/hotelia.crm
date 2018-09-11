@@ -18,11 +18,12 @@ final class BookingExternalRelationMapper extends AbstractMapper
     /**
      * Find total bookings by external user ID
      * 
-     * @param int $id External user ID
+     * @param string $column
+     * @param string $value
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findTotalByExternalId(int $id, int $langId)
+    private function findTotalByExternal($column, $value, int $langId) : array
     {
         // Columns to be selected
         $columns = [
@@ -32,7 +33,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
             new RawSqlFragment(sprintf('DATE(%s) AS date', BookingMapper::column('datetime'))),
             new RawSqlFragment(sprintf('TIME(%s) AS time', BookingMapper::column('datetime'))),
         ];
-        
+
         $db = $this->db->select($columns)
                        ->from(BookingMapper::getTableName())
                        // Price group relation
@@ -53,11 +54,35 @@ final class BookingExternalRelationMapper extends AbstractMapper
                        ])
                        // Constraints
                        ->whereEquals(HotelTranslationMapper::column('lang_id'), $langId)
-                       ->andWhereEquals(self::column('master_id'), $id)
+                       ->andWhereEquals($column, $value)
                        ->orderBy(self::column('id'))
                        ->desc();
 
         return $db->queryAll();
+    }
+
+    /**
+     * Find total bookings by external user ID
+     * 
+     * @param int $id External user ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findTotalByExternalId(int $id, int $langId) : array
+    {
+        return $this->findTotalByExternal(self::column('master_id'), $id, $langId);
+    }
+
+    /**
+     * Find total bookings by external user ID
+     * 
+     * @param string $serial External serial
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findTotalByExternalId($serial, int $langId) : array
+    {
+        return $this->findTotalByExternal(self::column('serial'), $serial, $langId);
     }
 
     /**
@@ -123,11 +148,12 @@ final class BookingExternalRelationMapper extends AbstractMapper
     /**
      * Find booked hotels by external user ID
      * 
-     * @param int $id External user ID
+     * @param string $column
+     * @param string $value
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findHotelsByExternalId(int $id, int $langId) : array
+    private function findHotelsByExternal($column, $value, int $langId) : array
     {
         // Columns to be selected
         $columns = [
@@ -154,7 +180,7 @@ final class BookingExternalRelationMapper extends AbstractMapper
                            HotelTranslationMapper::column('id') => HotelMapper::getRawColumn('id')
                        ])
                        // Constraints
-                       ->whereEquals(self::column('master_id'), $id)
+                       ->whereEquals($column, $value)
                        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
                        // Order by latest
                        ->orderBy(self::column('id'))
@@ -164,13 +190,38 @@ final class BookingExternalRelationMapper extends AbstractMapper
     }
 
     /**
-     * Find all bookings by external user ID
+     * Find booked hotels by external user ID
      * 
      * @param int $id External user ID
      * @param int $langId Language ID constraint
      * @return array
      */
-    public function findAllByExternalId(int $id, int $langId) : array
+    public function findHotelsByExternalId(int $id, int $langId) : array
+    {
+        return $this->findHotelsByExternal(self::column('master_id'), $id);
+    }
+
+    /**
+     * Find booked hotels by external user ID
+     * 
+     * @param string $serial
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findHotelsByExternalSerial($serial, int $langId) : array
+    {
+        return $this->findHotelsByExternal(self::column('serial'), $serial, $langId);
+    }
+
+    /**
+     * Find all by external
+     * 
+     * @param string $column
+     * @param string $value
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    private function findAllByExternal($column, $value, int $langId) : array
     {
         // Columns to be selected
         $columns = [
@@ -213,10 +264,34 @@ final class BookingExternalRelationMapper extends AbstractMapper
                             BookingMapper::column('price_group_id') => PriceGroupMapper::getRawColumn('id')
                        ])
                        // Constraints
-                       ->whereEquals(self::column('master_id'), $id)
+                       ->whereEquals($column, $value)
                        ->andWhereEquals(HotelTranslationMapper::column('lang_id'), $langId)
                        ->andWhereNotEquals(BookingMapper::column('status'), BookingStatusCollection::STATUS_TEMPORARY);
 
         return $db->queryAll();
+    }
+
+    /**
+     * Find all bookings by external user ID
+     * 
+     * @param int $id External user ID
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findAllByExternalId(int $id, int $langId) : array
+    {
+        return $this->findAllByExternal(self::column('master_id'), $id, $langId);
+    }
+
+    /**
+     * Find all bookings by external user ID
+     * 
+     * @param string $serial External serial
+     * @param int $langId Language ID constraint
+     * @return array
+     */
+    public function findAllByExternalSerial(int $serial, int $langId) : array
+    {
+        return $this->findAllByExternal(self::column('serial'), $serial);
     }
 }
