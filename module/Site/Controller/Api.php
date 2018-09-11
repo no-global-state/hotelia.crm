@@ -70,6 +70,24 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Returns either serial or user ID from query string
+     * 
+     * @return mixed
+     */
+    private function getTarget()
+    {
+        if ($this->request->hasQuery('user_id')) {
+            return $this->request->getQuery('user_id');
+        }
+
+        if ($this->request->hasQuery('serial')) {
+            return $this->request->getQuery('serial');
+        }
+
+        return null;
+    }
+
+    /**
      * Save external user ID
      * 
      * @param int $userId External user ID
@@ -91,10 +109,7 @@ final class Api extends AbstractCrmController
      */
     public function bookings() : string
     {
-        // Request variables
-        $id = $this->request->getQuery('user_id'); // External user ID
-
-        $bookings = $this->getModuleService('externalService')->findTotalByExternalId($id, $this->getLang());
+        $bookings = $this->getModuleService('externalService')->findTotalByExternal($this->getTarget(), $this->getLang());
 
         return $this->json($bookings);
     }
@@ -120,11 +135,8 @@ final class Api extends AbstractCrmController
      */
     public function statistic() : string
     {
-        // Request variables
-        $id = $this->request->getQuery('user_id'); // External user ID
-
         // Find ever reserved hotels by external user ID
-        $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($id, $this->getLang(), $this->createDictionary());
+        $bookings = $this->getModuleService('externalService')->findHotelsByExternalId($this->getTarget(), $this->getLang(), $this->createDictionary());
 
         return $this->json($bookings);
     }
@@ -228,12 +240,10 @@ final class Api extends AbstractCrmController
      */
     public function getBookings() : string
     {
-        // External user ID
-        $id = $this->request->getQuery('id');
         $langId = $this->getLang();
 
-        if ($id && $langId) {
-            $bookings = $this->getModuleService('externalService')->findAllByExternalId($id, $langId);
+        if ($this->getTarget() !== null && $langId) {
+            $bookings = $this->getModuleService('externalService')->findAllByExternal($this->getTarget(), $langId);
 
             // Append invoice URL
             foreach ($bookings as &$booking) {
