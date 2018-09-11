@@ -137,14 +137,18 @@ final class ExternalService
     /**
      * Find booked hotels by external user ID
      * 
-     * @param int $id External user ID
+     * @param mixed $target External user ID or serial
      * @param int $langId Language ID constraint
      * @param \Site\Service\Dictionary $dictionary Dictionary to translate strings
      * @return array
      */
-    public function findHotelsByExternalId(int $id, int $langId, Dictionary $dictionary) : array
+    public function findHotelsByExternal($target, int $langId, Dictionary $dictionary) : array
     {
-        $bookings = $this->externalMapper->findHotelsByExternalId($id, $langId);
+        if (is_numeric($target)) {
+            $bookings = $this->externalMapper->findHotelsByExternalId($target, $langId);
+        } else {
+            $bookings = $this->externalMapper->findHotelsByExternalSerial($target, $langId);
+        }
 
         // Append rooms key
         foreach ($bookings as &$booking) {
