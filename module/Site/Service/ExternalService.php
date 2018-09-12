@@ -122,8 +122,6 @@ final class ExternalService
 
             // Now format the price
             $item['price'] = sprintf('%s %s', number_format($item['amount']), $item['currency']);
-            // And unset used ones
-            unset($item['amount'], $item['currency']);
 
             // Now format title
             $item['title'] = sprintf('%s %s, %s %s', $item['nights'], $dictionary('NIGHTS'), $item['qty'], $dictionary('ROOMS'));
@@ -150,6 +148,10 @@ final class ExternalService
             $bookings = $this->externalMapper->findHotelsByExternalSerial($target, $langId);
         }
 
+        // Total amount
+        $amount = 0;
+        $currency = null;
+
         // Append rooms key
         foreach ($bookings as &$booking) {
             $items = $this->externalMapper->findBookingsByHotelId($booking['id'], $langId);
@@ -157,7 +159,16 @@ final class ExternalService
 
             // Append rooms
             $booking['rooms'] = $items;
+
+            // Count total amount
+            foreach ($items as $item) {
+                $amount += $item['amount'];
+                $currency = $item['currency'];
+            }
         }
+
+        // Append total charged amount
+        $booking['charged'] = sprintf('%s %s', number_format($amount), $currency);
 
         return $bookings;
     }
