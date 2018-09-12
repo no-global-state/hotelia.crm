@@ -196,9 +196,9 @@ final class ExternalService
     public function findAllByExternal($target, int $langId) : array
     {
         if (is_numeric($target)) {
-            $rows = $this->externalMapper->findAllByExternalId($target, $langId);
+            $bookings = $this->externalMapper->findAllByExternalId($target, $langId);
         } else {
-            $rows = $this->externalMapper->findAllByExternalSerial($target, $langId);
+            $bookings = $this->externalMapper->findAllByExternalSerial($target, $langId);
         }
 
         // Append night count
