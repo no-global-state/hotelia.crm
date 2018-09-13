@@ -72,7 +72,7 @@ final class DictionaryService
             $cache->set($languageId, $rows, null);
         }
 
-        return isset($rows[$alias]) ? StringTemplate::template($rows[$alias], $vars) : $alias;
+        return isset($rows[$alias]) ? StringTemplate::template($rows[$alias], $vars) : StringTemplate::template($alias, $vars);
     }
 
     /**
