@@ -12,7 +12,7 @@
 return array(
 
     'production' => false,
-    'timezone' => 'UTC',
+    //'timezone' => 'UTC',
 
     /**
      * Framework components configuration
