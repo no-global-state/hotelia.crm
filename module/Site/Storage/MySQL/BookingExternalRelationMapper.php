@@ -161,8 +161,10 @@ final class BookingExternalRelationMapper extends AbstractMapper
             HotelMapper::column('rate'),
             HotelMapper::column('phone'),
             HotelMapper::column('email'),
+            HotelMapper::column('discount'),
             HotelTranslationMapper::column('name') => 'hotel',
             HotelTranslationMapper::column('address'),
+            BookingMapper::column('discount') => 'with_discount'
         ];
 
         $db = $this->db->select($columns, true)

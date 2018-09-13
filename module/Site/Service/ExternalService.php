@@ -3,6 +3,7 @@
 namespace Site\Service;
 
 use Krystal\Http\Client\CurlHttplCrawler;
+use Krystal\Text\Math;
 use Site\Storage\MySQL\BookingExternalRelationMapper;
 
 final class ExternalService
@@ -149,7 +150,8 @@ final class ExternalService
         }
 
         // Total amount
-        $amount = 0;
+        $charged = 0;
+        $payed = 0;
         $currency = null;
 
         // Append rooms key
@@ -162,13 +164,21 @@ final class ExternalService
 
             // Count total amount
             foreach ($items as $item) {
-                $amount += $item['amount'];
+                $charged += $item['amount'];
                 $currency = $item['currency'];
+
+                // Total payed amount (calculate it here)
+                if ($booking['with_discount']) {
+                    $payed += Math::getDiscount($item['amount'], $booking['discount']);
+                } else {
+                    $payed += $item['amount'];
+                }
             }
         }
 
         // Append total charged amount
-        $booking['charged'] = sprintf('%s %s', number_format($amount), $currency);
+        $booking['charged'] = sprintf('%s %s', number_format($charged), $currency);
+        $booking['payed'] = sprintf('%s %s', number_format($payed), $currency);
 
         return $bookings;
     }
