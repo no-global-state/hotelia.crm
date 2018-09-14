@@ -317,7 +317,7 @@ final class Site extends AbstractSiteController
             // If found such token
             if ($booking) {
                 // Update status as well
-                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_CONFIRMED);
+                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_NEW);
 
                 $params = $this->createInvoice($booking);
 
