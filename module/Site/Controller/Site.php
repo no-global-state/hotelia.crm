@@ -396,7 +396,8 @@ final class Site extends AbstractSiteController
                 'selectedSummary' => $this->getModuleService('summaryService')->getSummary(),
                 'hotel' => $hotel,
                 'summary' => ReservationService::calculateStayPrice($arrival, $departure, $room['price']),
-                'qty' => $qty
+                'qty' => $qty,
+                'disablePriceGroups' => true
             ]);
 
         } elseif ($this->request->isPost()) {
