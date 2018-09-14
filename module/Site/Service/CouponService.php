@@ -8,7 +8,6 @@ use RuntimeException;
 
 final class CouponService
 {
-    const STORAGE_KEY = 'coupon';
     const STORAGE_VARS_KEY = 'coupon_params';
 
     /**
@@ -45,7 +44,9 @@ final class CouponService
      */
     public function appliedCoupon() : bool
     {
-        return $this->sessionBag->get(self::STORAGE_KEY) === true;
+        $params = $this->sessionBag->get(self::STORAGE_VARS_KEY);
+
+        return is_array($params) && !empty($params);
     }
 
     /**
@@ -55,7 +56,7 @@ final class CouponService
      */
     public function discardCoupon()
     {
-        return $this->sessionBag->remove(self::STORAGE_KEY);
+        return $this->sessionBag->remove(self::STORAGE_VARS_KEY);
     }
 
     /**
@@ -73,8 +74,6 @@ final class CouponService
         }
 
         if ($result['active'] === true) {
-            $this->sessionBag->set(self::STORAGE_KEY, true);
-
             // Save parameters
             $this->sessionBag->set(self::STORAGE_VARS_KEY, $params);
         } else {
@@ -94,7 +93,8 @@ final class CouponService
         $params = $this->sessionBag->get(self::STORAGE_VARS_KEY);
 
         if ($params) {
-            return $this->adapter->after($params);
+            $this->adapter->after($params);
+            $this->discardCoupon();
         }
     }
 }

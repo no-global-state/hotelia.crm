@@ -426,9 +426,6 @@ final class Site extends AbstractSiteController
             if ($this->getModuleService('couponService')->appliedCoupon()) {
                 // Apply discount
                 $params['amount'] = Math::getDiscount($params['amount'], $hotel['discount']);
-
-                // And don't keep it again
-                $this->getModuleService('couponService')->discardCoupon();
             }
 
             // Grab booking service and insert
