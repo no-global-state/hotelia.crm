@@ -23,6 +23,17 @@ final class TransactionMapper extends AbstractMapper
     }
 
     /**
+     * Delete all rows associated with hotel ID
+     * 
+     * @param int $hotelId
+     * @return boolean
+     */
+    public function deleteAllByHotelId(int $hotelId)
+    {
+        return $this->deleteByColumn('hotel_id', $hotelId);
+    }
+
+    /**
      * Fetch latest transactions
      * 
      * @param int $hotelId

@@ -27,6 +27,17 @@ final class TransactionService implements FilterableServiceInterface
     }
 
     /**
+     * Delete all rows associated with hotel ID
+     * 
+     * @param int $hotelId
+     * @return boolean
+     */
+    public function deleteAllByHotelId(int $hotelId)
+    {
+        return $this->transactionMapper->deleteAllByHotelId($hotelId);
+    }
+
+    /**
      * Saves new transaction
      * 
      * @param int $hotelId
