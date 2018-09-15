@@ -2,11 +2,16 @@
 
 use Site\Service\UserService;
 
+// Non main-admin
+$nonAdmin = [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER, UserService::USER_ROLE_TRANSLATOR];
+$regular = [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]; // Translator and admin are allowed
+
 return [
 
     // Booking
     '/crm/all-bookings/(:var)' => [
-        'controller' => 'Booking@allAction'
+        'controller' => 'Booking@allAction',
+        'disallow' => $nonAdmin
     ],
     
     '/crm/booking/reserve' => [
@@ -31,23 +36,28 @@ return [
 
     // Meals
     '/crm/meals' => [
-        'controller' => 'Meals@indexAction'
+        'controller' => 'Meals@indexAction',
+        'disallow' => $regular
     ],
     
     '/crm/meals/add' => [
-        'controller' => 'Meals@addAction'
+        'controller' => 'Meals@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/meals/edit/(:var)' => [
-        'controller' => 'Meals@editAction'
+        'controller' => 'Meals@editAction',
+        'disallow' => $regular
     ],
     
     '/crm/meals/delete/(:var)' => [
-        'controller' => 'Meals@deleteAction'
+        'controller' => 'Meals@deleteAction',
+        'disallow' => $nonAdmin
     ],
     
     '/crm/meals/save' => [
-        'controller' => 'Meals@saveAction'
+        'controller' => 'Meals@saveAction',
+        'disallow' => $regular
     ],
     
     '/state/price-group/(:var)' => [
@@ -77,65 +87,80 @@ return [
     
     // Dictionary
     '/crm/dictionary' => [
-        'controller' => 'Dictionary@indexAction'
+        'controller' => 'Dictionary@indexAction',
+        'disallow' => $regular
     ],
     
     '/crm/dictionary/add' => [
-        'controller' => 'Dictionary@addAction'
+        'controller' => 'Dictionary@addAction',
+        'disallow' => $nonAdmin
     ],
-    
+
     '/crm/dictionary/edit/(:var)' => [
-        'controller' => 'Dictionary@editAction'
+        'controller' => 'Dictionary@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/dictionary/delete/(:var)' => [
-        'controller' => 'Dictionary@deleteAction'
+        'controller' => 'Dictionary@deleteAction',
+        'disallow' => $nonAdmin
     ],
-    
+
     '/crm/dictionary/save' => [
-        'controller' => 'Dictionary@saveAction'
+        'controller' => 'Dictionary@saveAction',
+        'disallow' => $regular
     ],
 
     // District
     '/crm/district' => [
-        'controller' => 'District@indexAction'
+        'controller' => 'District@indexAction',
+        'disallow' => $regular
     ],
 
     '/crm/district/edit/(:var)' => [
-        'controller' => 'District@editAction'
+        'controller' => 'District@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/district/delete/(:var)' => [
-        'controller' => 'District@deleteAction'
+        'controller' => 'District@deleteAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/district/add' => [
-        'controller' => 'District@addAction'
+        'controller' => 'District@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/district/save' => [
-        'controller' => 'District@saveAction'
+        'controller' => 'District@saveAction',
+        'disallow' => $regular
     ],
 
     // Room category
     '/crm/room-category' => [
-        'controller' => 'RoomCategory@indexAction'
+        'controller' => 'RoomCategory@indexAction',
+        'disallow' => $regular
     ],
 
     '/crm/room-category/add' => [
-        'controller' => 'RoomCategory@addAction'
+        'controller' => 'RoomCategory@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/room-category/save' => [
-        'controller' => 'RoomCategory@saveAction'
+        'controller' => 'RoomCategory@saveAction',
+        'disallow' => $regular
     ],
 
     '/crm/room-category/edit/(:var)' => [
-        'controller' => 'RoomCategory@editAction'
+        'controller' => 'RoomCategory@editAction',
+        'disallow' => $regular
     ],
     
     '/crm/room-category/delete/(:var)' => [
-        'controller' => 'RoomCategory@deleteAction'
+        'controller' => 'RoomCategory@deleteAction',
+        'disallow' => $nonAdmin
     ],
 
     // Hotel switch
@@ -286,33 +311,33 @@ return [
     // Property
     '/crm/property/(:var)' => [
         'controller' => 'Property@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
     
     '/crm/property/do/tweak' => [
         'controller' => 'Property@tweakAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
 
     // Price groups
     '/crm/price-groups' => [
         'controller' => 'PriceGroup@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     '/crm/price-groups/edit/(:var)' => [
         'controller' => 'PriceGroup@editAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     '/crm/price-groups/delete/(:var)' => [
         'controller' => 'PriceGroup@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     '/crm/price-groups/save' => [
         'controller' => 'PriceGroup@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     
     // Room gallery
@@ -335,29 +360,27 @@ return [
     // Regions
     '/crm/regions' => [
         'controller' => 'Region@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
-
     '/crm/regions/view/(:var)' => [
         'controller' => 'Region@districtAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
-
     '/crm/regions/edit/(:var)' => [
         'controller' => 'Region@editAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
     '/crm/regions/delete/(:var)' => [
         'controller' => 'Region@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     '/crm/regions/add' => [
         'controller' => 'Region@addAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     '/crm/regions/save' => [
         'controller' => 'Region@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
 
     // Reviews
@@ -380,27 +403,27 @@ return [
     // Review types
     '/crm/review-type' => [
         'controller' => 'Review:ReviewType@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
     
     '/crm/review-type/add' => [
         'controller' => 'Review:ReviewType@addAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     '/crm/review-type/edit/(:var)' => [
         'controller' => 'Review:ReviewType@editAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
 
     '/crm/review-type/delete/(:var)' => [
         'controller' => 'Review:ReviewType@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     
     '/crm/review-type/save' => [
         'controller' => 'Review:ReviewType@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
     
     '/crm/feedback' => [
@@ -430,22 +453,22 @@ return [
     
     '/crm/languages' => [
         'controller' => 'Language@indexAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     
     '/crm/languages/save' => [
         'controller' => 'Language@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     '/crm/languages/edit/(:var)' => [
         'controller' => 'Language@editAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     
     '/crm/languages/delete/(:var)' => [
         'controller' => 'Language@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
     
     '/invoice/(:var)' => [
@@ -535,74 +558,86 @@ return [
     ],
 
     '/crm/facility' => [
-        'controller' => 'Facility:Grid@indexAction'
+        'controller' => 'Facility:Grid@indexAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/checklist' => [
-        'controller' => 'Facility:Grid@checklistAction'
+        'controller' => 'Facility:Grid@checklistAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/category/view/(:var)' => [
-        'controller' => 'Facility:Grid@categoryAction'
+        'controller' => 'Facility:Grid@categoryAction',
+        'disallow' => $regular
     ],
 
     // Item data
     '/crm/facility/data/index/(:var)' => [
-        'controller' => 'Facility:ItemData@indexAction'
+        'controller' => 'Facility:ItemData@indexAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/data/add/(:var)' => [
-        'controller' => 'Facility:ItemData@addAction'
+        'controller' => 'Facility:ItemData@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/facility/data/edit/item/(:var)/(:var)' => [
-        'controller' => 'Facility:ItemData@editAction'
+        'controller' => 'Facility:ItemData@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/data/delete/(:var)' => [
-        'controller' => 'Facility:ItemData@deleteAction'
+        'controller' => 'Facility:ItemData@deleteAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/facility/data/save' => [
-        'controller' => 'Facility:ItemData@saveAction'
+        'controller' => 'Facility:ItemData@saveAction',
+        'disallow' => $regular
     ],
 
     // Categories
     '/crm/facility/category/add' => [
-        'controller' => 'Facility:Category@addAction'
+        'controller' => 'Facility:Category@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/facility/category/save' => [
         'controller' => 'Facility:Category@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
 
     '/crm/facility/category/edit/(:var)' => [
-        'controller' => 'Facility:Category@editAction'
+        'controller' => 'Facility:Category@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/category/delete/(:var)' => [
         'controller' => 'Facility:Category@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     // Item
     '/crm/facility/item/add' => [
-        'controller' => 'Facility:Item@addAction'
+        'controller' => 'Facility:Item@addAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/facility/item/save' => [
         'controller' => 'Facility:Item@saveAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $regular
     ],
 
     '/crm/facility/item/edit/(:var)' => [
-        'controller' => 'Facility:Item@editAction'
+        'controller' => 'Facility:Item@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/facility/item/delete/(:var)' => [
         'controller' => 'Facility:Item@deleteAction',
-        'disallow' => [UserService::USER_ROLE_GUEST, UserService::USER_ROLE_USER]
+        'disallow' => $nonAdmin
     ],
 
     // Hotel-specific transactions
@@ -612,7 +647,8 @@ return [
     
     // All transactions
     '/crm/transaction/list/(:var)' => [
-        'controller' => 'Transaction@listAction'
+        'controller' => 'Transaction@listAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/hotel' => [
@@ -741,23 +777,28 @@ return [
 
     // Room bed
     '/crm/room-bed' => [
-        'controller' => 'RoomBed@indexAction'
+        'controller' => 'RoomBed@indexAction',
+        'disallow' => $regular
     ],
     
     '/crm/room-bed/add' => [
-        'controller' => 'RoomBed@addAction'
+        'controller' => 'RoomBed@addAction',
+        'disallow' => $nonAdmin
     ],
     
     '/crm/room-bed/edit/(:var)' => [
-        'controller' => 'RoomBed@editAction'
+        'controller' => 'RoomBed@editAction',
+        'disallow' => $regular
     ],
 
     '/crm/room-bed/delete/(:var)' => [
-        'controller' => 'RoomBed@deleteAction'
+        'controller' => 'RoomBed@deleteAction',
+        'disallow' => $nonAdmin
     ],
 
     '/crm/room-bed/save' => [
-        'controller' => 'RoomBed@saveAction'
+        'controller' => 'RoomBed@saveAction',
+        'disallow' => $regular
     ],
 
     '/crm/architecture/room-type' => [
