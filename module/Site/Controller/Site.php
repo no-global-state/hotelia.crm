@@ -59,29 +59,7 @@ final class Site extends AbstractSiteController
      */
     public function gatewayAction(string $token)
     {
-        // Grab booking service
-        $bookingService = $this->getModuleService('bookingService');
-        $booking = $bookingService->findByToken($token);
-
-        if ($booking) {
-            // Create payment gateway
-            $gateway = GatewayService::factory(
-                $booking['id'],
-                $booking['price_group_id'],
-                $booking['amount'],
-                // Payment fields of target hotel
-                $this->getModuleService('paymentFieldService')->findAllByHotelId($booking['hotel_id']),
-                // URL on successful payment
-                $this->request->getBaseUrl() . $this->createUrl('Site:Site@confirmPaymentAction', ['token' => $token])
-            );
-
-            return $this->view->disableLayout()->render('gateway', [
-                'gateway' => $gateway
-            ]);
-
-        } else {
-            return false;
-        }
+        return $this->renderGateway($token, 'Site:Site@confirmPaymentAction');
     }
 
     /**

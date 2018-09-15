@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Site\Service\ReservationService;
 use Site\Service\PhotoService;
 use Site\Service\BedService;
+use Site\Gateway\GatewayService;
 
 trait HotelTrait
 {
@@ -66,6 +67,40 @@ trait HotelTrait
         $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
 
         $paginator->setUrl($url);
+    }
+
+    /**
+     * Renders gateway by its token
+     * 
+     * @param string $token
+     * @param string $callback Back controller action
+     * @return string|boolean
+     */
+    final protected function renderGateway(string $token, string $callback)
+    {
+        // Grab booking service
+        $bookingService = $this->getModuleService('bookingService');
+        $booking = $bookingService->findByToken($token);
+
+        if ($booking) {
+            // Create payment gateway
+            $gateway = GatewayService::factory(
+                $booking['id'],
+                $booking['price_group_id'],
+                $booking['amount'],
+                // Payment fields of target hotel
+                $this->getModuleService('paymentFieldService')->findAllByHotelId($booking['hotel_id']),
+                // URL on successful payment
+                $this->request->getBaseUrl() . $this->createUrl($callback, ['token' => $token])
+            );
+
+            return $this->view->disableLayout()->render('gateway', [
+                'gateway' => $gateway
+            ]);
+
+        } else {
+            return false;
+        }
     }
 
     /**
