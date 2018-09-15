@@ -60,31 +60,6 @@ return [
         'disallow' => $regular
     ],
     
-    '/state/price-group/(:var)' => [
-        'controller' => 'Site@priceGroupAction',
-    ],
-
-    '/state/language/(:var)' => [
-        'controller' => 'Site@languageAction',
-    ],
-    
-    '/state/currency/(:var)' => [
-        'controller' => 'Site@currencyAction',
-    ],
-    
-    '/coupon/(:var)' => [
-        'controller' => 'Site@couponAction'
-    ],
-    
-    // Booking cancel
-    '/cancel/(:var)' => [
-        'controller' => 'Site@cancelAction'
-    ],
-    
-    '/cancel-confirm/(:var)' => [
-        'controller' => 'Site@cancelConfirmAction'
-    ],
-    
     // Dictionary
     '/crm/dictionary' => [
         'controller' => 'Dictionary@indexAction',
@@ -253,61 +228,6 @@ return [
         'controller' => 'Discount@editAction'
     ],
 
-    // API
-    '/api/payment' => [
-        'controller' => 'Api@payment'
-    ],
-    
-    '/api/available/(:var)' => [
-        'controller' => 'Api@available'
-    ],
-
-    '/api/get-initial/(:var)' => [
-        'controller' => 'Api@getInitial'
-    ],
-    
-    '/api/search/(:var)' => [
-        'controller' => 'Api@search'
-    ],
-    
-    '/api/hotel/(:var)' => [
-        'controller' => 'Api@hotel'
-    ],
-    
-    '/api/register' => [
-        'controller' => 'Api@register'
-    ],
-    
-    // Returns filter data
-    '/api/get-filter/(:var)' => [
-        'controller' => 'Api@getFilter'
-    ],
-    
-    // Perform filtering
-    '/api/filter' => [
-        'controller' => 'Api@filter'
-    ],
-    
-    '/api/get-bookings/(:var)' => [
-        'controller' => 'Api@getBookings'
-    ],
-    
-    '/api/statistic/(:var)' => [
-        'controller' => 'Api@statistic'
-    ],
-    
-    '/api/bookings/(:var)' => [
-        'controller' => 'Api@bookings'
-    ],
-    
-    '/api/run-mail-receivers' => [
-        'controller' => 'Api@receivers'
-    ],
-    
-    '/api/save-external/(:var)' => [
-        'controller' => 'Api@saveExternal'
-    ],
-
     // Property
     '/crm/property/(:var)' => [
         'controller' => 'Property@indexAction',
@@ -435,14 +355,6 @@ return [
         'disallow' => [UserService::USER_ROLE_GUEST]
     ],
     
-    '/' => [
-        'controller' => 'Site@homeAction'
-    ],
-    
-    '/home/(:var)' => [
-        'controller' => 'Site@homeAction'
-    ],
-    
     '/crm' => [
         'controller' => 'Crm@indexAction'
     ],
@@ -471,72 +383,8 @@ return [
         'disallow' => $nonAdmin
     ],
     
-    '/invoice/(:var)' => [
-        'controller' => 'Site@invoiceAction'
-    ],
-    
-    '/confirm-payment/(:var)' => [
-        'controller' => 'Site@confirmPaymentAction'
-    ],
-
-    '/reviews/(:var)' => [
-        'controller' => 'Site@reviewsAction'
-    ],
-    
-    '/leave-review/(:var)' => [
-        'controller' => 'Site@leaveReviewAction'
-    ],
-    
-    '/gateway/(:var)' => [
-        'controller' => 'Site@gatewayAction'
-    ],
-    
-    '/payment/(:var)' => [
-        'controller' => 'Site@paymentAction'
-    ],
-
-    '/calculate/(:var)' => [
-        'controller' => 'Site@calculate'
-    ],
-
-    '/search/(:var)' => [
-        'controller' => 'Site@searchAction'
-    ],
-    
-    '/hotel/review/add' => [
-        'controller' => 'Site@reviewAction'
-    ],
-    
-    '/hotel/book/(:var)' => [
-        'controller' => 'Site@bookAction'
-    ],
-
-    '/hotel/(:var)' => [
-        'controller' => 'Site@hotelAction'
-    ],
-
-    '/hotel/delete/(:var)' => [
-        'controller' => 'Hotel@deleteAction'
-    ],
-
-    '/site/captcha/(:var)' => [
-        'controller' => 'Site@captchaAction'
-    ],
-
     '/crm/home' => [
         'controller' => 'Crm@indexAction'
-    ],
-
-    '/auth/login' => [
-        'controller' => 'Auth@indexAction'
-    ],
-
-    '/auth/logout' => [
-        'controller' => 'Auth@logoutAction'
-    ],
-
-    '/register' => [
-        'controller' => 'Register@indexAction'
     ],
 
     '/crm/photo/add' => [

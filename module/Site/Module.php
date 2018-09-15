@@ -119,7 +119,10 @@ final class Module extends AbstractModule
      */
     public function getRoutes()
     {
-        return include(__DIR__.'/Config/routes.php');
+        return array_merge(
+            include(__DIR__.'/Config/routes.php'),
+            include(__DIR__.'/Config/public.php')
+        );
 	}
 
     /**
