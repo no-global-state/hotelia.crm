@@ -38,6 +38,21 @@ final class Transaction extends AbstractCrmController
     }
 
     /**
+     * Clear transactions of current hotel
+     * 
+     * @return void
+     */
+    public function clearAction()
+    {
+        // Delete all transactions by current hotel ID
+        $this->getModuleService('transactionService')->deleteAllByHotelId($this->getHotelId());
+
+        $this->flashBag->set('success', 'Transaction history has been successfully cleared');
+
+        $this->response->redirectToPreviousPage();
+    }
+
+    /**
      * Render all transactions
      * 
      * @return string

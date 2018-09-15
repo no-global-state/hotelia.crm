@@ -493,6 +493,11 @@ return [
         'controller' => 'Transaction@indexAction'
     ],
     
+    // Clear transactions of current hotel
+    '/crm/transaction/clear' => [
+        'controller' => 'Transaction@clearAction'
+    ],
+    
     // All transactions
     '/crm/transaction/list/(:var)' => [
         'controller' => 'Transaction@listAction',
