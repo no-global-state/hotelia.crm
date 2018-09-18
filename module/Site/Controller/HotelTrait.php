@@ -149,7 +149,7 @@ trait HotelTrait
         $hotels = $this->getModuleService('facilitiyService')->appendFacilityMapToHotels($hotels);
 
         // Append room types
-        $hotels = $this->getModuleService('roomService')->appendFreeRoomTypes($hotels, $this->getCurrentLangId(), $arrival, $departure, $adults, $kids);
+        $hotels = $this->getModuleService('roomService')->appendFreeRoomTypes($hotels, $this->getCurrentLangId(), $priceGroupId, $arrival, $departure, $adults, $kids);
 
         foreach ($hotels as &$hotel) {
             $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);

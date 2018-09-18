@@ -337,7 +337,7 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
 
         // Adults count
         if (isset($filters['adults'])) {
-            $db->andWhereEquals(RoomTypeMapper::column('persons'), (int) $filters['adults']);
+            $db->andWhereEquals(RoomTypePriceMapper::column('capacity'), (int) $filters['adults']);
         }
 
         // Type filter
