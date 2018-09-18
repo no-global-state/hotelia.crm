@@ -53,19 +53,20 @@ final class RoomService
      * 
      * @param array $hotels
      * @param integer $langId Language ID constraint
+     * @param int $priceGroupId Current price group ID
      * @param string $arrival Arrival date
      * @param string $departure Departure date
      * @param int $adults Optional number of adults constraint
      * @param int $children Optional number of children constraint
      * @return array
      */
-    public function appendFreeRoomTypes(array $hotels, int $langId, string $arrival, string $departure, $adults = null, $children = null)
+    public function appendFreeRoomTypes(array $hotels, int $langId, int $priceGroupId, string $arrival, string $departure, $adults = null, $children = null)
     {
         // Extract hotel IDs
         $hotelIds = array_column($hotels, 'id');
 
         // Find free room types
-        $types = $this->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure, $adults, $children);
+        $types = $this->findFreeRoomTypes($langId, $priceGroupId, $hotelIds, $arrival, $departure, $adults, $children);
 
         foreach ($hotels as &$hotel) {
             foreach($types as $type) {
@@ -82,6 +83,7 @@ final class RoomService
      * Find free room types
      * 
      * @param integer $langId Language ID constraint
+     * @param int $priceGroupId Current price group ID
      * @param array $hotelIds Hotel IDs to be considered
      * @param string $arrival Arrival date
      * @param string $departure Departure date
@@ -89,9 +91,9 @@ final class RoomService
      * @param int $children Optional number of children constraint
      * @return array
      */
-    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
+    public function findFreeRoomTypes(int $langId, int $priceGroupId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
     {
-        return $this->roomMapper->findFreeRoomTypes($langId, $hotelIds, $arrival, $departure, $adults, $children);
+        return $this->roomMapper->findFreeRoomTypes($langId, $priceGroupId, $hotelIds, $arrival, $departure, $adults, $children);
     }
 
     /**

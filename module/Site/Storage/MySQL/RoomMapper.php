@@ -64,6 +64,7 @@ final class RoomMapper extends AbstractMapper
      * Find free room types
      * 
      * @param integer $langId Language ID constraint
+     * @param int $priceGroupId Current price group ID
      * @param array $hotelIds Hotel IDs to be considered
      * @param string $arrival Arrival date
      * @param string $departure Departure date
@@ -71,7 +72,7 @@ final class RoomMapper extends AbstractMapper
      * @param int $children Optional number of children constraint
      * @return array
      */
-    public function findFreeRoomTypes(int $langId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
+    public function findFreeRoomTypes(int $langId, int $priceGroupId, array $hotelIds, string $arrival, string $departure, $adults = null, $children = null) : array
     {
         // Columns to be selected
         $columns = [
@@ -99,14 +100,19 @@ final class RoomMapper extends AbstractMapper
                         ->leftJoin(RoomCategoryTranslationMapper::getTableName(), [
                             RoomCategoryTranslationMapper::column('id') => RoomCategoryMapper::getRawColumn('id')
                         ])
+                        // Room type price relation
+                        ->leftJoin(RoomTypePriceMapper::getTableName(), [
+                            RoomTypePriceMapper::column('room_type_id') => RoomTypeMapper::getRawColumn('id')
+                        ])
                         // Language ID constraint
                         ->whereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
+                        ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
                         ->andWhereNotIn(self::column('id'), new RawSqlFragment($this->createBookingQuery($hotelIds, $arrival, $departure)))
                         ->andWhereIn(self::column('hotel_id'), $hotelIds);
 
         // Optional adults constraint
         if ($adults !== null) {
-            $db->andWhereEquals(RoomTypeMapper::column('persons'), $adults);
+            $db->andWhereEquals(RoomTypePriceMapper::column('capacity'), $adults);
         }
 
         // Optional children constraint
