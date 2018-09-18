@@ -150,7 +150,7 @@ final class Api extends AbstractCrmController
      */
     public function thankAction()
     {
-        return $this->view->render('thank-you-api');
+        return $this->confirm('thank-you-api');
     }
 
     /**

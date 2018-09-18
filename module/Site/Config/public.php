@@ -82,7 +82,7 @@ return [
         'controller' => 'Api@saveExternal'
     ],
     
-    '/api/thank-you' => [
+    '/api/thank-you/(:var)' => [
         'controller' => 'Api@thankAction'
     ],
     

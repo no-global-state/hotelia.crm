@@ -6,6 +6,7 @@ use Site\Service\ReservationService;
 use Site\Service\PhotoService;
 use Site\Service\BedService;
 use Site\Gateway\GatewayService;
+use Site\Collection\BookingStatusCollection;
 
 trait HotelTrait
 {
@@ -67,6 +68,65 @@ trait HotelTrait
         $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
 
         $paginator->setUrl($url);
+    }
+
+    /**
+     * Confirms a payment
+     * 
+     * @param string $template Template name to be rendered on success
+     * @return mixed
+     */
+    final protected function confirm(string $template)
+    {
+        if (!GatewayService::transactionFailed()) {
+            $token = $this->request->getQuery('token');
+
+            $bookingService = $this->getModuleService('bookingService');
+            $booking = $bookingService->findByToken($token);
+
+            // If found such token
+            if ($booking) {
+                // Update status as well
+                $bookingService->updateStatusById($booking['id'], BookingStatusCollection::STATUS_NEW);
+
+                $params = $this->createInvoice($booking);
+
+                // Email notifications
+                $this->voucherNotify($booking['email'], $params);
+
+                // Do send in default language
+                $this->inDefaultLanguage(function() use ($booking){
+                    $hotelService = $this->getModuleService('hotelService');
+                    $name = $hotelService->findNameById($booking['hotel_id'], 1); // Hotel name
+
+                    // Notify administration
+                    $this->bookingAdminNotify($name);
+                    $this->transactionAdminNotify($name);
+
+                    // Notify owner
+                    $this->bookingOwnerNotify($hotelService->findEmailById($booking['hotel_id']));
+                });
+
+                // Save successful transaction
+                $this->getModuleService('transactionService')->save($booking['hotel_id'], $booking['price_group_id'], $booking['amount']);
+
+                // Handle coupon on demand
+                $coupon = $this->getModuleService('couponService');
+
+                if ($coupon->appliedCoupon()) {
+                    $coupon->afterOrder();
+                }
+
+                // For voucher
+                return $this->view->render($template, $params);
+
+            } else {
+                // Trigger 404
+                return false;
+            }
+        } else {
+            return $this->view->render('payment-canceled');
+        }
     }
 
     /**
