@@ -26,6 +26,8 @@ final class Api extends AbstractCrmController
      */
     protected function bootstrap($action)
     {
+        $this->view->setTheme('site');
+
         $this->view->addVariables([
             'dictionary' => $this->createDictionary()
         ]);
@@ -142,6 +144,27 @@ final class Api extends AbstractCrmController
     }
 
     /**
+     * Renders thank you page
+     * 
+     * @return string
+     */
+    public function thankAction()
+    {
+        return $this->view->render('thank-you-api');
+    }
+
+    /**
+     * Renders gateway for mobile applications
+     * 
+     * @param string $token
+     * @return mixed
+     */
+    public function mobileGatewayAction(string $token)
+    {
+        return $this->renderGateway($token, 'Site:Api@thankAction');
+    }
+
+    /**
      * Saves booking inquiry and returns payment link
      * 
      * @return string
@@ -197,7 +220,7 @@ final class Api extends AbstractCrmController
         }
 
         // Create payment URL for client
-        $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Site@gatewayAction', [$booking['token']]);
+        $paymentUrl = $this->request->getBaseUrl() . $this->createUrl('Site:Api@mobileGatewayAction', [$booking['token']]);
 
         return $this->json([
             'url' => $paymentUrl

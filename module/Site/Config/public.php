@@ -82,6 +82,14 @@ return [
         'controller' => 'Api@saveExternal'
     ],
     
+    '/api/thank-you' => [
+        'controller' => 'Api@thankAction'
+    ],
+    
+    '/api/gateway/(:var)' => [
+        'controller' => 'Api@mobileGatewayAction'
+    ],
+    
     '/' => [
         'controller' => 'Site@homeAction'
     ],
