@@ -63,32 +63,6 @@ final class Site extends AbstractSiteController
     }
 
     /**
-     * Create invoice data from booking
-     * 
-     * @param array $booking
-     * @return array
-     */
-    private function createInvoice(array $booking) : array
-    {
-        // Grab hotel information
-        $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
-
-        // Normalize full cover path
-        $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
-
-        $details = $this->getModuleService('bookingService')->findDetails($booking['id'], $booking['lang_id']);
-
-        // Shared params for email and view
-        return [
-            'hotel' => $hotel,
-            'booking' => $details['booking'],
-            'rooms' => $details['rooms'],
-            'guests' => $details['guests'],
-            'cancelUrl' => $this->request->getBaseUrl() . $this->createUrl('Site:Site@cancelAction', [$booking['token']])
-        ];
-    }
-
-    /**
      * Renders invoice by its token
      * 
      * @param string $token

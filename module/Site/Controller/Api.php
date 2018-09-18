@@ -11,7 +11,7 @@ use Site\Service\ExternalService;
 use Krystal\Text\Math;
 use Krystal\Stdlib\ArrayUtils;
 
-final class Api extends AbstractCrmController
+final class Api extends AbstractSiteController
 {
     use HotelTrait;
     use MailerTrait;
@@ -24,7 +24,7 @@ final class Api extends AbstractCrmController
     /**
      * {@inheritDoc}
      */
-    protected function bootstrap($action)
+    protected function bootstrap()
     {
         $this->view->setTheme('site');
 
@@ -38,7 +38,7 @@ final class Api extends AbstractCrmController
      * 
      * @return \Site\Service\Dictionary
      */
-    private function createDictionary()
+    protected function createDictionary()
     {
         static $dictionary;
 

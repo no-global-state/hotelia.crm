@@ -7,6 +7,7 @@ use Site\Service\PhotoService;
 use Site\Service\BedService;
 use Site\Gateway\GatewayService;
 use Site\Collection\BookingStatusCollection;
+use Closure;
 
 trait HotelTrait
 {
@@ -68,6 +69,32 @@ trait HotelTrait
         $url = str_replace(rawurlencode($placeholder), $placeholder, $url);
 
         $paginator->setUrl($url);
+    }
+
+    /**
+     * Create invoice data from booking
+     * 
+     * @param array $booking
+     * @return array
+     */
+    final protected function createInvoice(array $booking) : array
+    {
+        // Grab hotel information
+        $hotel = $this->getModuleService('hotelService')->fetchById($booking['hotel_id'], $booking['lang_id'], $booking['price_group_id']);
+
+        // Normalize full cover path
+        $hotel['cover'] = $this->appendUploadUrl($hotel['cover']);
+
+        $details = $this->getModuleService('bookingService')->findDetails($booking['id'], $booking['lang_id']);
+
+        // Shared params for email and view
+        return [
+            'hotel' => $hotel,
+            'booking' => $details['booking'],
+            'rooms' => $details['rooms'],
+            'guests' => $details['guests'],
+            'cancelUrl' => $this->request->getBaseUrl() . $this->createUrl('Site:Site@cancelAction', [$booking['token']])
+        ];
     }
 
     /**
