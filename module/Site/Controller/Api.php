@@ -307,6 +307,9 @@ final class Api extends AbstractSiteController
     {
         $request = $this->request->getJsonBody();
 
+        // No need to apply pagination on mobile devices
+        $request['pagination'] = false;
+
         // Request variables
         $regionId = $request['region_id'] ?? null;
         $typeIds = $request['type_id'] ?? [];

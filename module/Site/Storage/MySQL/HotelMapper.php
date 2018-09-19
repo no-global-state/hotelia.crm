@@ -480,13 +480,15 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
         // Apply sorting
         $db->orderBy($sort);
 
-        // Apply limit if provided
-        if (is_int($limit)) {
-            $db->limit($limit);
-        }
+        if (!(isset($filters['pagination']) && $filters['pagination'] === false)) {
+            // Apply limit if provided
+            if (is_int($limit)) {
+                $db->limit($limit);
+            }
 
-        // Apply pagination
-        $db->paginateRaw($count, !empty($filters['page']) ? $filters['page'] : 1, $filters['per_page'] ?? 8);
+            // Apply pagination
+            $db->paginateRaw($count, !empty($filters['page']) ? $filters['page'] : 1, $filters['per_page'] ?? 8);
+        }
 
         return $db->queryAll();
     }
