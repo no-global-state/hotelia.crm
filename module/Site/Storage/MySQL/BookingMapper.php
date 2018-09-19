@@ -90,7 +90,8 @@ final class BookingMapper extends AbstractMapper
                             LanguageMapper::column('id') => self::getRawColumn('lang_id')
                        ])
                        ->where(self::column('review_id'), 'IS', new RawSqlFragment('NULL'))
-                       ->andWhere(sprintf('DATEDIFF(CURDATE(), %s)', self::column('departure')), '=', new RawSqlFragment(1));
+                       ->andWhere(sprintf('DATEDIFF(CURDATE(), %s)', self::column('departure')), '=', new RawSqlFragment(1))
+                       ->andWhereNotEquals(self::column('status'), '-1');
 
         return $db->queryAll();
     }
