@@ -75,6 +75,24 @@ final class RoomTypeService
     }
 
     /**
+     * Find price by room type ID
+     * 
+     * @param array $rooms
+     * @param int $priceGroupId
+     * @return array
+     */
+    public function appendPriceByRoomTypeId(array $rooms, int $priceGroupId)
+    {
+        foreach ($rooms as &$room) {
+            $price = $this->roomTypePriceMapper->findPriceByRoomTypeId($room['room_type_id'], $priceGroupId, $room['guests']);
+            
+            $room['price'] = $price * $room['qty'];
+        }
+
+        return $rooms;
+    }
+
+    /**
      * Returns last ID
      * 
      * @return int

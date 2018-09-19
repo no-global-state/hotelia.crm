@@ -13,6 +13,24 @@ final class RoomTypePriceMapper extends AbstractMapper
     }
 
     /**
+     * Find price by room type ID
+     * 
+     * @param int $roomTypeId
+     * @param int $priceGroupId
+     * @param int $qty
+     * @return array
+     */
+    public function findPriceByRoomTypeId(int $roomTypeId, int $priceGroupId, $qty)
+    {
+        return $this->db->select('price')
+                        ->from(self::getTableName())
+                        ->whereEquals('room_type_id', $roomTypeId)
+                        ->andWhereEquals('price_group_id', $priceGroupId)
+                        ->andWhereEquals('capacity', $qty)
+                        ->queryScalar();
+    }
+
+    /**
      * Find a price by its attached ID
      * 
      * @param int $id

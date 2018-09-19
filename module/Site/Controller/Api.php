@@ -174,17 +174,22 @@ final class Api extends AbstractSiteController
         // Get request variables from POST JSON request
         $request = $this->request->getJsonBody();
 
+        $priceGroupId = $request['price_group_id'];
+
         // Create request vars
         $rooms = $request['rooms']; // Raw
-        $rooms = ArrayUtils::arrayPartition($rooms, 'room_type_id', false); // Parsed
 
-        $priceGroupId = $request['price_group_id'];
+        // Append prices
+        $rooms = $this->getModuleService('roomTypeService')->appendPriceByRoomTypeId($rooms, $priceGroupId);
+        $rooms = ArrayUtils::arrayPartition($rooms, 'room_type_id', false); // Parsed
+        
         $langId = ExternalService::internalLangId($request['lang']);
         $hotelId = $request['hotel_id'];
         $arrival = $request['arrival'];
         $departure = $request['departure'];
 
         $client = $request['client'];
+
 
         // Booking parameters
         $params = [
