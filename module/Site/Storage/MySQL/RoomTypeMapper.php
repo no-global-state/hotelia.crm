@@ -159,7 +159,7 @@ final class RoomTypeMapper extends AbstractMapper
 
         // To be selected
         $select = array_merge($columns, [
-            new RawSqlFragment(sprintf('(COUNT(%s) - COUNT(%s)) AS free_count', 
+            new RawSqlFragment(sprintf('CAST((COUNT(%s) - COUNT(%s))  / 2 AS SIGNED) AS free_count', 
                 RoomMapper::column('type_id'), 
                 ReservationMapper::column('id')
             ))
