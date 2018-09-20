@@ -152,14 +152,14 @@ final class RoomTypeMapper extends AbstractMapper
             self::column('persons'),
             RoomCategoryTranslationMapper::column('name'),
             RoomTypeTranslationMapper::column('description'),
-            PriceGroupMapper::column('currency'),
+            //PriceGroupMapper::column('currency'),
             RoomTypeGalleryMapper::column('file') => 'cover',
             RoomTypeGalleryMapper::column('id') => 'cover_id'
         ];
 
         // To be selected
         $select = array_merge($columns, [
-            new RawSqlFragment(sprintf('CAST((COUNT(%s) - COUNT(%s))  / 2 AS SIGNED) AS free_count', 
+            new RawSqlFragment(sprintf('COUNT(%s) - COUNT(%s) AS free_count', 
                 RoomMapper::column('type_id'), 
                 ReservationMapper::column('id')
             ))
@@ -195,6 +195,7 @@ final class RoomTypeMapper extends AbstractMapper
                             self::column('id') => RoomTypeTranslationMapper::getRawColumn('id'),
                             RoomTypeTranslationMapper::column('lang_id') => RoomCategoryTranslationMapper::getRawColumn('lang_id')
                        ])
+                       /*
                        // Room type price relation
                        ->leftJoin(RoomTypePriceMapper::getTableName(), [
                             RoomTypePriceMapper::column('room_type_id') => RoomTypeMapper::getRawColumn('id')
@@ -203,6 +204,7 @@ final class RoomTypeMapper extends AbstractMapper
                        ->leftJoin(PriceGroupMapper::getTableName(), [
                             RoomTypePriceMapper::column('price_group_id') => PriceGroupMapper::getRawColumn('id')
                        ])
+                       */
                        // Room type cover
                        ->leftJoin(RoomTypeCoverMapper::getTableName(), [
                             RoomTypeCoverMapper::column('master_id') => RoomTypeMapper::getRawColumn('id')
@@ -214,12 +216,13 @@ final class RoomTypeMapper extends AbstractMapper
                        // Constraints
                        ->whereEquals(RoomMapper::column('hotel_id'), $hotelId)
                        ->andWhereEquals(RoomCategoryTranslationMapper::column('lang_id'), $langId)
-                       ->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
+                       //->andWhereEquals(RoomTypePriceMapper::column('price_group_id'), $priceGroupId)
                        ->andWhereEquals(RoomMapper::column('type_id'), $typeId, true)
                         // And where not on repair
                        ->andWhereNotEquals(RoomMapper::column('quality'), RoomQualityCollection::STATUS_ON_REPAIR)
                        ->groupBy($columns);
 
+                       
         return $db->queryAll();
     }
 

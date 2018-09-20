@@ -79,14 +79,19 @@ final class RoomTypeService
      * 
      * @param array $rooms
      * @param int $priceGroupId
+     * @param string $arrival Arrival date
+     * @param string $departure Departure date
      * @return array
      */
-    public function appendPriceByRoomTypeId(array $rooms, int $priceGroupId)
+    public function appendPriceByRoomTypeId(array $rooms, int $priceGroupId, string $arrival, string $departure)
     {
+        // Get days count
+        $days = abs(ReservationService::getDaysDiff($arrival, $departure));
+
         foreach ($rooms as &$room) {
             $price = $this->roomTypePriceMapper->findPriceByRoomTypeId($room['room_type_id'], $priceGroupId, $room['guests']);
-            
-            $room['price'] = $price * $room['qty'];
+
+            $room['price'] = $price * $room['qty'] * $days;
         }
 
         return $rooms;
