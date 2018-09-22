@@ -175,6 +175,14 @@ final class Api extends AbstractSiteController
         $request = $this->request->getJsonBody();
 
         $priceGroupId = $request['price_group_id'];
+        $hotelId = $request['hotel_id'];
+
+        // Grab discount on demand
+        if (isset($request['discount']) && $request['discount'] == true) {
+            $discount = $this->getModuleService('hotelService')->findDiscountById($hotelId);
+        } else {
+            $discount = false;
+        }
 
         // Create request vars
         $rooms = $request['rooms']; // Raw
@@ -183,14 +191,12 @@ final class Api extends AbstractSiteController
         $departure = $request['departure'];
 
         // Append prices
-        $rooms = $this->getModuleService('roomTypeService')->appendPriceByRoomTypeId($rooms, $priceGroupId, $arrival, $departure);
+        $rooms = $this->getModuleService('roomTypeService')->appendPriceByRoomTypeId($rooms, $priceGroupId, $arrival, $departure, $discount);
         $rooms = ArrayUtils::arrayPartition($rooms, 'room_type_id', false); // Parsed
-        
+
         $langId = ExternalService::internalLangId($request['lang']);
-        $hotelId = $request['hotel_id'];
 
         $client = $request['client'];
-
 
         // Booking parameters
         $params = [

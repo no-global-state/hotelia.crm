@@ -10,6 +10,7 @@ use Site\Storage\MySQL\RoomTypePriceMapper;
 use Site\Storage\MySQL\FacilitiyCategoryMapper;
 use Site\Module;
 use Krystal\Stdlib\ArrayUtils;
+use Krystal\Text\Math;
 
 final class RoomTypeService
 {
@@ -81,9 +82,10 @@ final class RoomTypeService
      * @param int $priceGroupId
      * @param string $arrival Arrival date
      * @param string $departure Departure date
+     * @param mixed $discount Optional discount
      * @return array
      */
-    public function appendPriceByRoomTypeId(array $rooms, int $priceGroupId, string $arrival, string $departure)
+    public function appendPriceByRoomTypeId(array $rooms, int $priceGroupId, string $arrival, string $departure, $discount = false)
     {
         // Get days count
         $days = abs(ReservationService::getDaysDiff($arrival, $departure));
@@ -92,6 +94,11 @@ final class RoomTypeService
             $price = $this->roomTypePriceMapper->findPriceByRoomTypeId($room['room_type_id'], $priceGroupId, $room['guests']);
 
             $room['price'] = $price * $room['qty'] * $days;
+
+            // If numeric discount is provided, then apply it
+            if ($discount !== false) {
+                $room['price'] = Math::getDiscount($room['price'], $discount);
+            }
         }
 
         return $rooms;
