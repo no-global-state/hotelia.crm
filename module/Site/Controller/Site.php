@@ -27,6 +27,7 @@ final class Site extends AbstractSiteController
             // Returns query data
             $data = $this->request->getQuery();
             $data['people_count'] = $summary['guests'];
+            $data['price_group_id'] = $this->getPriceGroupId();
 
             $response = $this->getModuleService('couponService')->apply($data);
 
