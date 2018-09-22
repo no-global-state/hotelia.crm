@@ -49,6 +49,17 @@ final class HotelMapper extends AbstractMapper implements FilterableServiceInter
     }
 
     /**
+     * Finds hotel discount by its associated ID
+     * 
+     * @param int $hotelId
+     * @return mixed
+     */
+    public function findDiscountById(int $hotelId)
+    {
+        return $this->findColumnByPk($hotelId, 'discount');
+    }
+
+    /**
      * Finds hotel email by its associated ID
      * 
      * @param int $hotelId

@@ -70,6 +70,17 @@ final class HotelService implements FilterableServiceInterface
     }
 
     /**
+     * Finds hotel discount by its associated ID
+     * 
+     * @param int $hotelId
+     * @return int
+     */
+    public function findDiscountById(int $hotelId) : int
+    {
+        return (int) $this->hotelMapper->findColumnByPk($hotelId, 'discount');
+    }
+
+    /**
      * Finds hotel email by its associated ID
      * 
      * @param int $hotelId
