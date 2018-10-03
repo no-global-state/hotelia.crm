@@ -86,9 +86,10 @@ use Site\Service\LanguageService;
                   <label class="col-lg-2 control-label"><? $this->show('Number of people'); ?></label>
                   <div class="col-lg-10">
                     <div class="input-group">
-                        <?= Element::number('price_group_ids[capacity][]', $capacity, array('class' => 'form-control', 'min' => 1)); ?>
+                        <?= Element::number('price_group_ids[capacity][]', $capacity, array('class' => 'form-control room-capacity', 'min' => 1)); ?>
                         <span class="input-group-addon"><a data-button="price-policy-delete" href="#"><i class="glyphicon glyphicon-remove"></i></a></span>
                     </div>
+                    <small class="form-text text-danger hidden room-capacity-hint"><?php $this->show('This value has been already defined. You can not declare it twice'); ?></small>
                   </div>
                 </div>
 

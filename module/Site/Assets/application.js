@@ -1,6 +1,54 @@
 
 $(function(){
 
+    // Price group unique count validation
+    (function(){
+        var inputSelector = '.room-capacity';
+        var buttonSelector = "button[type='submit']";
+        var hasError = false;
+        var hiddenClass = 'hidden';
+
+        // Since capacity elements are dynamic, use event delegation to handle them
+        $(document).on('change', inputSelector, function(event){
+            var values = [];
+
+            // Find attached hint
+            var $hint = $(this).parent().parent().find('.room-capacity-hint');
+
+            // Start checking another declared inputs
+            $(inputSelector).each(function(){
+                var oldValue = this.value; 
+
+                if ($.inArray(oldValue, values) >= 0){
+                    event.preventDefault();
+                    hasError = true;
+
+                    // Remove entered value
+                    $(this).val('');
+
+                    // Show hint
+                    $hint.removeClass(hiddenClass);
+
+                    return false; // Stop
+                }
+
+                // Hide hint
+                $hint.addClass(hiddenClass);
+
+                values.push(this.value);
+                hasError = false;
+            });
+
+            // If there's error
+            if (hasError) {
+                $(buttonSelector).addClass('disabled').prop('disabled', true);
+            } else {
+                $(buttonSelector).removeClass('disabled').prop('disabled', false);
+            }
+        });
+    })($);
+    
+
     // Price group stat
     if (window.priceGroupStat) {
         var config = {
